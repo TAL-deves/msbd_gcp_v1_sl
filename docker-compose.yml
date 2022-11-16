@@ -1,0 +1,40 @@
+# version: "3.8"
+# services:
+#     nodeserver:
+#         build:
+#             context: ./Backend
+#         ports:
+#             - "8082:8082"
+#     frontend:
+#         build:
+#             context: ./Frontend
+#         ports:
+#             - "80:80"
+#             - "443:443"
+
+version: "3.8"
+services:
+    nodeserver:
+        build:
+            context: ./backend
+        restart: on-failure
+        # container_name: nodejsserver
+        # hostname: nodejsserver
+        # networks:
+        #     - app-network
+        ports:
+            - "8082:8082"
+    frontend:
+        build:
+            context: ./frontend
+        container_name: nginx
+        hostname: nginx
+        # networks:
+        #     - app-network
+        ports:
+            - "80:80"
+            - "443:443"
+# networks:
+#     app-network: 
+#         external: true
+

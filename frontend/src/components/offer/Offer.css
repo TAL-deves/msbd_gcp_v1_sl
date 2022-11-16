@@ -1,0 +1,14 @@
+.Offer{
+    background-color: var(--secondaryColor);
+    height: 36px;
+    min-height: 36px;
+}
+.Toolbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.Typography{
+    padding-top: 7px;
+}
