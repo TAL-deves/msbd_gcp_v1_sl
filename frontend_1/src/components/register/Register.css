@@ -1,0 +1,26 @@
+.hide {
+    display: none;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+.instructions{
+    color: red;
+}
+.errmsg{
+    color: red;
+}
+
+.barwidth{
+    margin-top: 5%;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.stepperButton{
+   display: flex;
+   justify-content: space-between;
+   margin-top: 15%;
+}

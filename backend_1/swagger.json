@@ -1,0 +1,625 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API documentation of the platform. Authentication API's are active now",
+    "version": "1.0.0",
+    "title": "Platform APIs",
+    "contact": {
+      "email": "taldeves@gmail.com"
+    }
+  },
+  "schemes": ["http"],
+  "host": "server_ip_address",
+  "basePath": "/api",
+  "paths": {
+    "/user": {
+      "get": {
+        "summary": "Get user data",
+        "description": "All users",
+        "produces": ["application/json"],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+              "data": {
+                  "type": "array"
+              }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/google": {
+      "get": {
+        "summary": "Login with google",
+        "description": "Login with google",
+        "produces": ["application/json"],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/success"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/google/callback": {
+      "get": {
+        "summary": "callback link to website with an access token in response",
+        "description": "callback link to website with an access token in response",
+        "produces": ["application/json"],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/success"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/facebook": {
+      "get": {
+        "summary": "Login with facebook",
+        "description": "Login with facebook",
+        "produces": ["application/json"],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/success"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/facebook/callback": {
+      "get": {
+        "summary": "callback link to website with a token in response",
+        "description": "callback link to website with a token in response",
+        "produces": ["application/json"],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/success"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "summary": "Register an user",
+        "description": "User registration",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fullname": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "username": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "require": true
+                  }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/success"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/error"
+                }
+              }
+          }
+        }
+      }
+    },
+    "/verify": {
+        "post": {
+          "summary": "Verify registered user",
+          "description": "User verification",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "OTP verification",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                      "type": "string",
+                      "require": true
+                    },
+                    "otp": {
+                      "type": "integer",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/videologdata": {
+        "post": {
+          "summary": "Send video log to DB",
+          "description": "Send video log to DB",
+          "produces": ["application/json"],
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                "data": {
+                    "type": "array"
+                }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/certificate": {
+        "get": {
+          "summary": "Certificate getting",
+          "description": "Certificate getting",
+          "produces": ["application/json"],
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                "data": {
+                    "type": "array"
+                }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/oauth/token": {
+        "post": {
+          "summary": "Get an access token for login",
+          "description": "User login",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "user object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                      "type": "string",
+                      "require": true
+                    },
+                    "password": {
+                      "type": "string",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/logout": {
+        "post": {
+          "summary": "Logout user",
+          "description": "logout and revoke token",
+          "produces": ["application/json"],
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/forget-password": {
+        "post": {
+          "summary": "forget-password",
+          "description": "forget-password",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "user object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                      "type": "string",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/request-password": {
+        "post": {
+          "summary": "request-password",
+          "description": "request-password",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "user object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                      "type": "string",
+                      "require": true
+                    },
+                    "otp": {
+                      "type": "string",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/reset-password": {
+        "post": {
+          "summary": "reset-password",
+          "description": "reset-password",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "user object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                      "type": "string",
+                      "require": true
+                    },
+                    "otp": {
+                      "type": "string",
+                      "require": true
+                    },
+                    "password": {
+                      "type": "string",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      },
+      "/resend-otp": {
+        "post": {
+          "summary": "resend-otp",
+          "description": "resend OTP. maximum 3 try",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "user object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                      "type": "string",
+                      "require": true
+                    }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/success"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value",
+              "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/error"
+                  }
+                }
+            }
+          }
+        }
+      }
+  },
+  
+  "definitions": {
+    "success": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        },
+        "result": {
+          "type": "object",
+          "idError": "boolean",
+          "status": "integer",
+          "errorMsg": "string"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        },
+        "result": {
+          "type": "object",
+          "idError": "boolean",
+          "status": "integer",
+          "errorMsg": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.port_title{
+    padding-left: 50%;
+}
+.portfolio_content{
+    padding-left: 50%;
+}
+.singlecontentportfolio{
+    display: flex;
+    align-items: center;
+}

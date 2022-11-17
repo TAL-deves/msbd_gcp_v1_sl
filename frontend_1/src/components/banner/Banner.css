@@ -1,0 +1,17 @@
+.Hero{
+    background-color: var(--white);
+  }
+  .HeroSection{
+    background-image: url('./ban.gif');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    padding-right: 40%;
+  }
+  .GridItems{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  } 
