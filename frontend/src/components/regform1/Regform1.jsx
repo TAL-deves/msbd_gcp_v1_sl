@@ -260,7 +260,7 @@ const Regform1 = () => {
             sx={{width:"100%", marginY:"1rem", color:"blue"}} 
             label="Phone Number"
             defaultCountry="BD" 
-            
+            // autoFocus
             value={phone} 
             onChange={handleChange} 
             required
@@ -304,16 +304,16 @@ const Regform1 = () => {
               required
               fullWidth
               id="username  "
-              label="User name "
+              label="Full name "
               name="username"
               autoComplete="username"
-              autoFocus
+              // autoFocus
               value={username}
               InputProps={{
                 disableUnderline: true,
               }}
               inputProps={{
-                maxLength: 24,
+                maxLength: 50,
               }}
               onChange={(e) => setUser(e.target.value)}
               // aria-describedby="uidnote"
@@ -325,9 +325,9 @@ const Regform1 = () => {
                 : false}
                 helperText={
                   userFocus && username && !validName
-                ? <>4 to 24 characters <br />
-                 Must begin with a letter <br />
-                 Letters, numbers, underscores, hyphens allowed</>
+                ? <>4 to 50 letters <br />
+                 {/* Must begin with a letter <br />
+                 Letters, numbers, underscores, hyphens allowed</> */}</>
                 : false
                 }
             />

@@ -27,7 +27,7 @@ const RefundPolicy = () => {
                 <li class="li3">Refund requests are only valid for registered users</li>
                 <li class="li3">Refund request must be made via email with 24 hours from the time of the transaction is made against specific refund request</li>
                 <li class="li3">The user must mention the number or email address used for user registration in the refund request email</li>
-                <li class="li3">Refund will be made through online financial services or mobile financial services within 7-14 working days after the refund request is accepted and refund is processed by Tech Analytica Limited</li>
+                <li class="li3">Refund will be made through online financial services or mobile financial services within 7-10 working days after the refund request is accepted and refund is processed by Tech Analytica Limited</li>
                 <li class="li3">Upon refund request is accepted, the user shall receive an email as confirmation</li>
                 <li class="li3">While processing the refund, any charges imposed by the online or mobile financial service provider will be borne by the user</li>
                 <li class="li3">Tech Analytica Limited has the full authority to refuse any refund request if the reason specified against is not legit or bogus</li>
@@ -58,7 +58,7 @@ const RefundPolicy = () => {
                 <ul class="ul1">
                 <li class="li3">Once a refund is processed, the specific course against that refund is deleted from the user&rsquo;s profile along with any progress data.</li>
                 <li class="li3">Upon completion of the refund process, the user will be notified via a confirmation email/SMS to the registered email address or phone number.</li>
-                <li class="li3">After the refund request is approved and processed, if the user do not receive the refund within 14 working days, the user must email to info@techanalyticaltd.com and let us know.</li>
+                <li class="li3">After the refund request is approved and processed, if the user do not receive the refund within 7-10 working days, the user must email to info@techanalyticaltd.com and let us know.</li>
                 </ul>
                 <p class="p4">&nbsp;</p>
                 <p class="p3"><span class="s1">Tech Analytica Limited has the complete authority to change or amend the Refund Policy time to time and case by case scenario. </span></p>

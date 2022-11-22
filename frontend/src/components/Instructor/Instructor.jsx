@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CircularProgress,
   Container,
   CssBaseline,
   Grid,
@@ -82,6 +83,7 @@ const Instructor = () => {
   };
 
   const [instructorState, setInstructorState] = useState([]);
+  const [load, setLoad] = useState(true);
 
   let fetchData = async () => {
     await api.post(`${process.env.REACT_APP_API_URL}/api/allinstructors`)
@@ -89,7 +91,7 @@ const Instructor = () => {
       .then((data) => {
         // //console.log(" data", data)
         setInstructorState(data.data.data.instructorData)
-                
+        setLoad(false);  
       });
   };
   //console.log("instructor data",instructorState)
@@ -174,6 +176,11 @@ const Instructor = () => {
             /> */}
           </Box>
           </Box>
+          {load ? (
+            <CircularProgress sx={{
+              color:"primary.main"
+            }} />
+          ) : (
           <Container>
         <Slider {...settings} ref={sliderRef}>
         {instructorState.map((obj) => {
@@ -190,7 +197,7 @@ const Instructor = () => {
           );
         })}
        </Slider>
-       </Container>
+       </Container>)}
      
         </Container>
       </Box>

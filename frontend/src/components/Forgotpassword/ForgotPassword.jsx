@@ -37,7 +37,7 @@ function getSteps() {
 
 
 const ForgotPassword = () => {
-  const {Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
+  const {validPhone,Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
     emailRef,errRef, validName, setValidName,
    userFocus, setUserFocus,validEmail, setValidEmail,
      email, setEmail,emailFocus, setEmailFocus,
@@ -144,10 +144,11 @@ const ForgotPassword = () => {
             sx={{ mr: 1, mb: 5 }}
           >
             Submit
-          </Button> : <Button
+          </Button> : 
+          <Button
             variant="contained"
             color="primary"
-           disabled={(!validEmail )} 
+           disabled={(!validPhone )} 
             // disabled={errMsg}
            
             onClick={()=>handleNext()}

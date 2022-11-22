@@ -37,7 +37,7 @@ import 'aos/dist/aos.css';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 const ClientFeedback = () => {
-  AOS.init({duration:3000});
+  AOS.init({duration:1000});
   const {t}= useContext(globalContext)
   const sliderRef = useRef(null);
   
@@ -132,7 +132,7 @@ const ClientFeedback = () => {
           {clientState.map((obj) => {
             return (
               <div key={obj.id}>
-                <ClientCard
+                <ClientCard 
                   name={obj.name}
                   img={obj.image}
                   feedback={obj.feedback}

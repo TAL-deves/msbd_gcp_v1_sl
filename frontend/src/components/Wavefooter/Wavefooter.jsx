@@ -10,7 +10,7 @@ import yellow_youtube from "../downloadApp/yellow_youtube.json";
 import yellow_insta from "../downloadApp/yellow_insta.json";
 import yellow_twitter from "../downloadApp/yellow_twitter.json";
 import SSLCommerz from "../downloadApp/SSLCommerz.png";
-import logo from "../navbar/msbdlogo.png";
+
 import logo1 from "../navbar/logo1.png";
 import logo2 from "../navbar/logo2.png";
 import Ms_logo from "../navbar/Ms_logo.svg";
@@ -19,6 +19,7 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import Lottie from "lottie-react";
+import swal from 'sweetalert';
 
 
 
@@ -126,7 +127,7 @@ export default function Wavefooter() {
               <Box  sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800", marginBottom:".5rem"}}>Mind School BD</Box>
               <Box>
                 <Link href="/about" sx={{ textDecoration: "none" }} color="inherit">
-                  About
+                  About Us
                 </Link>
               </Box>
               <Box>
@@ -183,8 +184,8 @@ export default function Wavefooter() {
               </Typography>
               {/* app */}
               <Box sx={{ display: "flex" }}>
-                <Link href="https://techanalyticaltd.com/" target="new">
-                  <Box
+                {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                  <Box onClick={()=>{swal("","App Coming Soon","");}}
                     sx={{
                       // backgroundColor: "other.logocolor",
                       backgroundColor: "secondary.main",
@@ -199,9 +200,9 @@ export default function Wavefooter() {
                   >
                     <img src={googlebtn} alt="google" width="98vw" />
                   </Box>
-                </Link>
-                <Link href="https://techanalyticaltd.com/" target="new">
-                  <Box
+                {/* </Link> */}
+                {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                  <Box onClick={()=>{swal("","App Coming Soon","");}}
                     sx={{
                       // backgroundColor: "other.footercolor",
                       backgroundColor: "secondary.main",
@@ -216,7 +217,7 @@ export default function Wavefooter() {
                   >
                     <img src={applebtn} alt="google" width="90vw" />
                   </Box>
-                </Link>
+                {/* </Link> */}
               </Box>
 
             </Grid>

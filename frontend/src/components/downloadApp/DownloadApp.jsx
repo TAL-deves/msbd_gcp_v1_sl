@@ -19,6 +19,7 @@ import {motion} from "framer-motion";
 import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import swal from "sweetalert";
 
 const DownloadApp = () => {
   AOS.init({duration:2000});
@@ -47,7 +48,7 @@ const DownloadApp = () => {
             justifyContent: "center",
           }}
         >
-          <Grid
+          <Grid data-aos="fade-up"
             item
             lg={6}
             md={6}
@@ -89,8 +90,8 @@ const DownloadApp = () => {
               }}
             >
               <motion.div whileHover={{scale:1.03}}>
-              <Link href="https://techanalyticaltd.com/" target="new">
-                <Box
+              {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                <Box onClick={()=>{swal("","App Coming Soon","");}}
                   sx={{
                     backgroundColor: "other.footercolor",
                     cursor: "pointer",
@@ -105,12 +106,12 @@ const DownloadApp = () => {
                 >
                   <img src={googlebtn} alt="google" width="72%" />
                 </Box>
-              </Link>
+              {/* </Link> */}
               </motion.div>
               &nbsp;
               <motion.div whileHover={{scale:1.03}}>
-              <Link href="https://techanalyticaltd.com/" target="new">
-                <Box
+              {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                <Box onClick={()=>{swal("","App Coming Soon","");}}
                   sx={{
                     // backgroundColor: "secondary.main",
                     backgroundColor: "other.footercolor",
@@ -126,16 +127,17 @@ const DownloadApp = () => {
                 >
                   <img src={applebtn} alt="google" width="60%" />
                 </Box>
-              </Link>
+              {/* </Link> */}
               </motion.div>
             </Grid>
           </Grid>
 
-          <Grid
+          <Grid data-aos="fade-up"
             item
             xs={6}
             sx={{
-              display: { md: "flex", lg: "flex", sm: "flex", xs: "none" },
+              // display: { md: "flex", lg: "flex", sm: "flex", xs: "none" },
+              display: "flex",flexDirection:{ md: "row", lg: "row", sm: "row", xs: "column" },
               justifyContent: "space-around",
             }}
           >

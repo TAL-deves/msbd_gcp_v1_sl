@@ -33,12 +33,12 @@ let instructorData = [
   },
   {
     _id: 10004,
-    name: "Nazish S. Qazi",
+    name: "Nazish Shameem Qazi",
     designation: "Heartfulness Meditation Trainer",
     image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
     description: `I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!`,
     courses: ["C007"],
-  },
+  }
 ];
 
 module.exports = {

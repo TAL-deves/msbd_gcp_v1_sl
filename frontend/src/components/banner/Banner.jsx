@@ -22,7 +22,7 @@ const Banner = () => {
 
   return (
     <Container>
-      <Box
+      <Box data-aos="fade-right"
         sx={{
           flexGrow: 1,
           display: "flex",

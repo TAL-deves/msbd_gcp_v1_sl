@@ -37,10 +37,6 @@ const expressSession = require("express-session");
 // import ResponseDetails from './Details/responseDetails.js';
 // var request = require("request");
 
-const coursesData = require("./data/courses");
-const allCourses = require("./data/allCourses");
-const allInstructors = require("./data/instructors");
-
 let tokenModel = require("./Database/models/token");
 
 const { v4: uuidv4 } = require("uuid");
@@ -75,6 +71,12 @@ const path = require("path");
 const { vdochiper } = require("./services/vdoChipher");
 const axios = require("axios");
 
+const coursesData = require("./data/courses");
+const allCourses = require("./data/allCourses");
+const allInstructors = require("./data/instructors");
+
+// const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
+
 // const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 // let express to use this
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -102,12 +104,12 @@ mongoose.connect(process.env.DATABASE_CONNECT, function (err, res) {
 app.use(express.json());
 app.use(
   cors({
-    // origin: "*",   //Testing
+    origin: "*", //Testing
     // origin: true,
-    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
+    // origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-    exposedHeaders: ['x-auth-token']
+    // exposedHeaders: ['x-auth-token']
   })
 );
 app.use(
@@ -671,26 +673,26 @@ app.get(
 
 // ! ******* sign up google from mobile  *******/ (Encryption done)
 app.post("/api/signupmobile", async (req, res) => {
-try {
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
 
-  let userExists = await signUpTemplateCopy.findOne({
-    googleId: req.body.googleId
-  })
-
-  // console.log("userExists   ----   ", userExists);
-
-  if(!userExists){
-    const signUpUser = new signUpTemplateCopy({
-      fullname: req.body.name,
-      username: req.body.googleId,
-      email: req.body.email,
-      password:req.body.googleId,
-      googleId: req.body.googleId
+    let userExists = await signUpTemplateCopy.findOne({
+      googleId: req.body.googleId,
     });
 
-    await signUpUser.save()
+    // console.log("userExists   ----   ", userExists);
+
+    if (!userExists) {
+      const signUpUser = new signUpTemplateCopy({
+        fullname: req.body.name,
+        username: req.body.googleId,
+        email: req.body.email,
+        password: req.body.googleId,
+        googleId: req.body.googleId,
+      });
+
+      await signUpUser.save();
       var options = {
         body: {
           grant_type: "password",
@@ -716,55 +718,48 @@ try {
       let token = await obtainToken(options);
       let foundtoken = token;
 
+      let responseToSend = encryptionOfData(foundtoken);
+
+      res.send(responseToSend);
+    } else {
+      var options = {
+        body: {
+          grant_type: "password",
+          username: req.body.googleId,
+          password: req.body.googleId,
+          loginMethod: "google",
+          profileName: req.body.name,
+        },
+        headers: {
+          "user-agent": "Thunder Client (https://www.thunderclient.com)",
+          accept: "*/*",
+          "content-type": "application/x-www-form-urlencoded",
+          authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+          "content-length": "81",
+          "accept-encoding": "gzip, deflate, br",
+          host: process.env.SERVER_URL,
+          connection: "close",
+        },
+        method: "POST",
+        query: {},
+      };
+
+      let token = await obtainToken(options);
+      let foundtoken = token;
 
       let responseToSend = encryptionOfData(foundtoken);
 
-
       res.send(responseToSend);
-  } else {
-    var options = {
-      body: {
-        grant_type: "password",
-        username: req.body.googleId,
-        password: req.body.googleId,
-        loginMethod: "google",
-        profileName: req.body.name,
-      },
-      headers: {
-        "user-agent": "Thunder Client (https://www.thunderclient.com)",
-        accept: "*/*",
-        "content-type": "application/x-www-form-urlencoded",
-        authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
-        "content-length": "81",
-        "accept-encoding": "gzip, deflate, br",
-        host: process.env.SERVER_URL,
-        connection: "close",
-      },
-      method: "POST",
-      query: {},
-    };
-
-    let token = await obtainToken(options);
-    let foundtoken = token;
-
-    let responseToSend = encryptionOfData(foundtoken);
-
-
-    res.send(responseToSend);
-  }
-
-} catch (error) {
-  let setSendResponseData = new sendResponseData(null, 500, "Server error!");
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, "Server error!");
     let responseToSend = encryptionOfData(setSendResponseData.error());
 
     res.send(responseToSend);
-}
-})
-
+  }
+});
 
 // ! ******* login google from mobile *******/ (Encryption done)
-
-
 
 // ! ******* Clearing previous token data *******/ (Encryption done)
 app.post("/api/clearalltoken", async (req, res) => {
@@ -850,7 +845,7 @@ app.post("/api/checkuser", async (req, res) => {
       );
       res.send(responseToSend);
     } else {
-      let setSendResponseData = new sendResponseData("Success", 200, null);
+      let setSendResponseData = new sendResponseData("Email address", 200, null);
       let responseToSend = encryptionOfData(
         setSendResponseData.successWithMessage()
       );
@@ -901,50 +896,58 @@ app.post("/api/signup", async (req, res, next) => {
       });
 
       // console.log(req.body);
-      let smssent = JSON.parse(await sendSms({
-        reciever: req.body.phoneNumber,
-        OTP: otpGenerated
-      }))
-      if(smssent.status_code === 200){
-      signUpUser.save();
+      let smssent = JSON.parse(
+        await sendSms({
+          reciever: req.body.phoneNumber,
+          OTP: otpGenerated,
+        })
+      );
+      if (smssent.status_code === 200) {
+        signUpUser.save();
         if (signUpUser) {
-      let setSendResponseData = new sendResponseData(
-        "User registered!",
-        202,
-        null
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
+          let setSendResponseData = new sendResponseData(
+            "User registered!",
+            202,
+            null
+          );
+          let responseToSend = encryptionOfData(
+            setSendResponseData.successWithMessage()
+          );
 
-      res.send(responseToSend);
-      // res.send({
-      //   data: {
-      //     message: "User registered!",
-      //     // fullname: data.fullname,
-      //     // username: data.username,
-      //     // email: data.email,
-      //     // otp: data.otp, //temporary visible
-      //     // createdOn: data.creation_date,
-      //   },
-      //   result: {
-      //     isError: false,
-      //     status: 202,
-      //     errorMsg: "",
-      //   },
-      // });
-      // })
-      // .catch((error) => {
+          res.send(responseToSend);
+          // res.send({
+          //   data: {
+          //     message: "User registered!",
+          //     // fullname: data.fullname,
+          //     // username: data.username,
+          //     // email: data.email,
+          //     // otp: data.otp, //temporary visible
+          //     // createdOn: data.creation_date,
+          //   },
+          //   result: {
+          //     isError: false,
+          //     status: 202,
+          //     errorMsg: "",
+          //   },
+          // });
+          // })
+          // .catch((error) => {
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            500,
+            "Server error"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
 
+          res.send(responseToSend);
+        }
       } else {
-        let setSendResponseData = new sendResponseData(null, 500, "Server error");
-        let responseToSend = encryptionOfData(setSendResponseData.error());
-
-        res.send(responseToSend);
-      }
-
-      } else {
-        let setSendResponseData = new sendResponseData(null, smssent.status_code, "OTP service down! Please try again later.");
+        let setSendResponseData = new sendResponseData(
+          null,
+          smssent.status_code,
+          "OTP service down! Please try again later."
+        );
         let responseToSend = encryptionOfData(setSendResponseData.error());
 
         res.send(responseToSend);
@@ -964,16 +967,16 @@ app.post("/api/verify", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
+    console.log("req.body --- ", req.body);
     const { email, otp } = req.body;
     const user = await validateUserSignUp(email, otp);
-
-    let setSendResponseData = new sendResponseData(
-      user,
-      200,
-      user.result.errorMsg
-    );
+    // let setSendResponseData = new sendResponseData(
+    //   user,
+    //   200,
+    //   user.result.errorMsg
+    // );
     let responseToSend = encryptionOfData(
-      setSendResponseData.successWithMessage()
+      user
     );
     res.send(responseToSend);
   } catch (error) {
@@ -991,8 +994,11 @@ app.post("/api/resend-otp", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
+    console.log("req.body resend ---- ",req.body);
+
     const user = await signUpTemplateCopy.findOne({
       email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
       active: false,
     });
 
@@ -1014,6 +1020,7 @@ app.post("/api/resend-otp", async (req, res) => {
         let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
           {
             email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
             locked: false,
           },
           {
@@ -1032,7 +1039,7 @@ app.post("/api/resend-otp", async (req, res) => {
         }); // Sending OTP to email address
 
         sendSms({
-          reciever: user.email,
+          reciever: user.phoneNumber,
           OTP: otpGenerated,
         });
 
@@ -1234,22 +1241,28 @@ app.post("/api/oauth/token", async (req, res, next) => {
                   });
 
                   if (!userLoginInfo.loggedinID) {
-                    const newId = uuidv4();
-                    await userLoginInfo.updateOne({
-                      loggedinID: newId,
-                    });
-                    console.log("\ntrying to send response", obj);
-                    // let setSendResponseData = new sendResponseData(
-                    //   obj,
-                    //   200,
-                    //   null
-                    // );
-                    // let responseToSend = encryptionOfData(
-                    //   setSendResponseData.successWithMessage()
-                    // );
-                    let responseToSend = encryptionOfData(obj);
-                    console.log("successfull login");
-                    res.send(responseToSend);
+                    if (
+                      userLoginInfo.active === true &&
+                      userLoginInfo.locked === false
+                    ) {
+                      const newId = uuidv4();
+                      await userLoginInfo.updateOne({
+                        loggedinID: newId,
+                      });
+                      let responseToSend = encryptionOfData(obj);
+                      console.log("successfull login");
+                      res.send(responseToSend);
+                    } else {
+                      let setSendResponseData = new sendResponseData(
+                        null,
+                        403,
+                        "Account is not active or locked! Please contact support."
+                      );
+                      let responseToSend = encryptionOfData(
+                        setSendResponseData.error()
+                      );
+                      res.send(responseToSend);
+                    }
                   } else {
                     let setSendResponseData = new sendResponseData(
                       obj,
@@ -1259,7 +1272,6 @@ app.post("/api/oauth/token", async (req, res, next) => {
                     let responseToSend = encryptionOfData(
                       setSendResponseData.error()
                     );
-
                     res.send(responseToSend);
                   }
                 });
@@ -1311,12 +1323,12 @@ app.post("/api/userprofile", async (req, res) => {
     req.body = recievedResponseData;
 
     let userSessionStatus = await tokenChecking(req);
-    if(userSessionStatus.data != null){
+    if (userSessionStatus.data != null) {
       console.log("User is allowed");
       let userProfileData = await signUpTemplateCopy.findOne({
         username: req.body.username,
       });
-  
+
       if (userProfileData) {
         let setSendResponseData = new sendResponseData(
           userProfileData,
@@ -1341,8 +1353,6 @@ app.post("/api/userprofile", async (req, res) => {
       let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
-
-    
   } catch (error) {
     let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -1569,6 +1579,8 @@ app.post("/api/forget-password", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
+   
+    console.log("req.body    ----   ", req.body)
 
     const user = await signUpTemplateCopy.findOne({
       email: req.body.email,
@@ -1907,7 +1919,6 @@ app.post("/api/courseavailed", async (req, res, next) => {
         res.send(responseToSend);
       }
     });
-
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
 
@@ -2582,7 +2593,26 @@ app.post("/api/sessioncheck", async (req, res) => {
 //! Testing point
 
 app.post("/api/keepalive", async (req, res) => {
-  res.send("okay");
+  var configurationForFileUpdates = {
+    method: "get",
+    url: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js",
+    headers: {},
+  };
+
+  await axios(config)
+    .then(function (response) {
+      fs.writeFile("./data/dummydata.js", response.data, (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("File written successfully\n");
+        }
+      });
+
+      res.send("okay");
+    })
+    .catch(function (error) {
+      res.send("Error");
+    });
 });
 
 app.post("/api/atestingpoint", async (req, res) => {
@@ -2602,7 +2632,6 @@ app.post("/api/atestingpoint", async (req, res) => {
   }
 });
 
-// app.use(encryptionService);
 
 let port = process.env.PORT;
 app.listen(port, () => {

@@ -12,6 +12,7 @@ import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
+import swal from "sweetalert";
 
 const InstructorCard = (props) => {
   AOS.init({duration:2000});
@@ -25,7 +26,7 @@ const InstructorCard = (props) => {
     <motion.div whileHover={{scale:1.03}}>
       
     <Card 
-    // data-aos="slide-up"
+     data-aos="slide-up"
      sx={{ margin: "0 5px", "&:hover":{boxShadow:"5", position:"top"} }}>
       <CardMedia
         component="img"
@@ -39,8 +40,8 @@ const InstructorCard = (props) => {
         sx={{
           // maxWidth: "50%",
           // width:"100%",
-         height:"25vh",
-         width:{xs:"100%", md:"100%"}
+        //  height:"25vh",
+         width:{xs:"100%",sm:"100%", md:"100%"}
         }}
       />
       <Box sx={{display:"flex", 
@@ -76,10 +77,27 @@ const InstructorCard = (props) => {
         </Typography> */}
       </CardContent>
       <CardActions>
-      <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
+
+           {/* uncomment after gcp upload  */}
+      {/* <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
               textDecoration:"none"
-            }}>
-        <Button size="small" variant="contained" sx={{color:"secondary.main"}}>
+            }}> */}
+           
+        {/* <Button size="small" variant="contained" sx={{color:"secondary.main"}}>
+          <Typography
+            sx={{
+              fontSize: "1rem",
+            }}
+          >
+            {t("instructor_details")}
+          </Typography>
+        </Button> */}
+{/* </Link> */}
+
+
+        <Button onClick={()=>{
+              swal("","To Be Announced","");
+            }} size="small" variant="contained" sx={{color:"secondary.main"}}>
           <Typography
             sx={{
               fontSize: "1rem",
@@ -88,7 +106,7 @@ const InstructorCard = (props) => {
             {t("instructor_details")}
           </Typography>
         </Button>
-        </Link>
+        
       </CardActions>
       </Box>
     </Card>

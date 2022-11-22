@@ -24,6 +24,8 @@ import { styled, alpha } from "@mui/material/styles";
 
 import { withRouter } from "../components/routing/withRouter";
 import { Image } from "@mui/icons-material";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const VIDEOLOG_URL = "/videologdata";
 const SINGLE_COURSE_URL = "/api/instructorcourses";
@@ -81,6 +83,7 @@ const CardMediaStyle = styled(CardMedia)(({ theme }) => ({
 }));
 
 const InstructorDetails = () => {
+  AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
   const [courses, setCourses] = useState([]);
   const [courseID, setCourseID] = useState();
@@ -123,7 +126,7 @@ const InstructorDetails = () => {
               borderRadius: 1,
             }}
           >
-            <Grid
+            <Grid 
               container
               sx={{
                 display: "flex",
@@ -139,7 +142,7 @@ const InstructorDetails = () => {
                 <br />
                 <br />
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Box>
+                  <Box data-aos="fade-right">
                     {/* <Paper sx={{height:"100px", width:"100px"}}>
                 <img  src={state?.image} alt="" /></Paper> */}
                     <Avatar
@@ -147,14 +150,14 @@ const InstructorDetails = () => {
                       alt="The image"
                       src={state?.image}
                       style={{
-                        width: "auto",
-                        height: "auto",
+                        width: "100%",
+                        height: "100%",
                       }}
                     />
                   </Box>
                 </Box>
               </Grid>
-              <Grid sx={{ marginRight: "5%" }} item lg={4} md={6} sm={12}>
+              <Grid  data-aos="zoom-in" sx={{ marginRight: "5%" }} item lg={4} md={6} sm={12}>
                 <Typography
                   variant="h4"
                   sx={{ paddingLeft: "20%", marginTop: "2%" }}
@@ -175,7 +178,7 @@ const InstructorDetails = () => {
                 {/* <VideoGridWrapper> */}
                 <Grid>
                   <VdoPlayerStyle>
-                    <Box>
+                    <Box data-aos="fade-left">
                       <ReactPlayer
                         url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
                         controls={false}
@@ -230,26 +233,31 @@ const InstructorDetails = () => {
               justifyContent: "center",
             }}
           >
-            Courses List of {state?.title}
+            Courses List of {state?.name}
           </Typography>
-          <Grid spacing={4}>
+          <Grid sx={{
+            display: "flex",justifyContent: "space-around",
+            flexDirection: { sm: "column-reverse", lg: "row",xl:"row",md:"row", xs: "column-reverse" }
+          }}>
             <Grid
               container
-              columns={{ xs: 12, sm: 12, md: 10, lg: 10 }}
+              // columns={{ xs: 10, sm: 10, md: 10, lg: 10 }}
+              xs={10}
+              // lg={8}
               justifyContent="center"
             >
               {courses.map((course) => {
                 return (
-                  <Box key={course.id}>
+                  <Box key={course.id} data-aos="flip-left">
                     <CardGridStyle>
-                      <Card sx={{ maxWidth: 345 }}>
+                      <Card sx={{ width: "100%" }}>
                         <CardActionArea>
                           <CardMediaStyle>
                             <CardMedia
                               component="img"
-                              height="140"
+                              height="200"
                               image={course.thumbnail}
-                              alt="green iguana"
+                              alt={course.title}
                             />
                           </CardMediaStyle>
                           <CardContent>

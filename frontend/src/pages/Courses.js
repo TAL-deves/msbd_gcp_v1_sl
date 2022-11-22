@@ -6,7 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import api from "../api/Axios"
 
-import { Button, Container } from "@mui/material";
+import { Button, Container, Skeleton } from "@mui/material";
 import { add } from '../Store/cartSlice';
 import { useDispatch, useSelector } from "react-redux";
 import CourseCard from "../components/CourseCard/CourseCard";
@@ -81,7 +81,7 @@ const Courses = (props) => {
             //console.log(localCourse.courseID,course.courseID)
             course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
              
-          }
+          } 
           else{
             course["isSelected"] =true
           }
@@ -146,6 +146,7 @@ const Courses = (props) => {
                 <CircularProgress sx={{
                   color: "primary.main"
                 }} />
+                // <Skeleton variant="rectangular" width={210} height={118} /> 
               ) : (
                 <>
                   {courses.map((course) => {

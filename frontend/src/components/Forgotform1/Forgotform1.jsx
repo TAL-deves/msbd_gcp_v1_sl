@@ -20,6 +20,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { multiForgotContext } from '../../pages/ForgotContext';
 import CloseIcon from '@mui/icons-material/Close';
 import primarytheme from '../../style/style';
+import { MuiTelInput } from 'mui-tel-input';
 
 const Forgotform1 = () => {
   const [open, setOpen] = useState(true);
@@ -30,12 +31,17 @@ const Forgotform1 = () => {
         password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus,
          validMatch, setValidMatch,matchFocus, setMatchFocus,
         errMsg, setErrMsg, success, setSuccess,handleSubmit,theme,
-        username, setUser,matchPwd, setMatchPwd, handleSubmitForgetOTP,handleSubmitMailForget}= useContext(multiForgotContext)
+        username, setUser,matchPwd, setMatchPwd, handleSubmitForgetOTP,handleSubmitMailForget, phoneNumber,setPhoneFocus,phone, phoneFocus,validPhone,setPhone}= useContext(multiForgotContext)
 
+
+        const handleChange = (newPhone) => {
+          setPhone(newPhone);
+          // //console.log(phone)
+        }
         return (
         <Box >
             {/* <ThemeProvider theme={theme}> */}
-      <Container sx={{display:"flex", flexDirection:"column",alignItems:"center" }}>
+      <Container sx={{height:"60vh",display:"flex", flexDirection:"column",alignItems:"center" }}>
       
         <Box
           sx={{
@@ -49,7 +55,7 @@ const Forgotform1 = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Enter Your Mail
+            Enter Your Phone Number
           </Typography>
           {errMsg?
        <Stack sx={{ width: '100%' }} spacing={2}>
@@ -103,34 +109,27 @@ const Forgotform1 = () => {
              <p id="uidnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
                             Please provide a valid email<br /></p> */}
 
-              <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              // error={errMsg}
-              autoComplete="email"
-              // autoFocus
-              value={email}
-              InputProps={{
-                disableUnderline: true,
-              }}
-              inputProps={{
-                maxLength: 320,
-              }}
-              onChange={(e) =>
-                 setEmail(e.target.value)}
-              // aria-describedby="uidnote"
-              onFocus={() => setEmailFocus(true)}
-              // onBlur={() => setEmailFocus(false)}
-              error={emailFocus && email && !validEmail ? true : false}
-              helperText={
-                emailFocus && email && !validEmail
-                  ? "Please provide a valid email"
-                  : ""
-              }
+          <MuiTelInput 
+            sx={{width:"100%", marginY:"1rem", color:"blue"}} 
+            label="Phone Number"
+            defaultCountry="BD" 
+            // autoFocus
+            value={phone} 
+            onChange={handleChange} 
+            required
+            inputProps={{
+              maxLength: 16,
+            }}
+            onFocus={() => setPhoneFocus(true)}
+            error={
+              phoneFocus && !validPhone ? 
+              true : 
+              false
+            }
+            helperText={phoneFocus && !validPhone?
+              "Enter valid phone number"
+              : false
+            }
             />
            
             <Grid container>

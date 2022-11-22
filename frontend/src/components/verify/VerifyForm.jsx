@@ -72,7 +72,7 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 const VerifyForm = () => {
   const [open, setOpen] = useState(true);
   const [currentuser, setCurrentuser] = useState("");
-  const [resendbtn, setResendbtn] = useState(false);
+  
 
   const {
     userRef,
@@ -110,13 +110,13 @@ const VerifyForm = () => {
     setUser,
     matchPwd,
     setMatchPwd,
-    registerapiresponse,
+    registerapiresponse,phoneNumber, resendbtn, setResendbtn
   } = useContext(multiStepContext);
   const [otp, setOTP] = useState("");
 //console.log(email)
 const navigate = useNavigate();
   const handleSubmitVerify = async (event) => {
-    
+    // send otp 
     // event.preventDefault();
     const response = await api
       .post(VERIFY_URL, JSON.stringify({ email, otp }), {
@@ -124,8 +124,8 @@ const navigate = useNavigate();
         "Access-Control-Allow-Credentials": true,
       })
       .then((response) => {
-        let data = response.data.data.result.status;
-        let dataMsg = response.data.data.data;
+        let data = response.data.result.status;
+        let dataMsg = response.data.data;
         if (data === 406) {
           setErrMsg("Invalid OTP");
           swal("Invalid OTP", `Please check again`, "error");
@@ -155,7 +155,7 @@ const navigate = useNavigate();
   const handleSubmitResendVerify = async (event) => {
     event.preventDefault();
     const response = await api
-      .post(RESEND_VERIFY_URL, JSON.stringify({ email, otp }), {
+      .post(RESEND_VERIFY_URL, JSON.stringify({ phoneNumber, email, otp }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
@@ -182,7 +182,7 @@ const navigate = useNavigate();
 
   return (
     // <ThemeProvider theme={theme}>
-    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center",height:"60vh"}}>
       <Container component="main" maxWidth="xs">
         
         <Box
@@ -256,10 +256,25 @@ const navigate = useNavigate();
                   // date={Date.now() + 10000}
                   date={Date.now() + 180000}
                   renderer={renderer}
+                  onComplete={()=>setResendbtn(false)}
+                  // onStart={()=>{
+                  //   setResendbtn(true)
+                   
+                  // }}
+                  // autoStart
                 />
               </Grid>
-              <Grid item>
-                <Link
+              <Grid item 
+              >
+                {/* <Button
+                  // href="/forgotpassword"
+                  variant="contained"
+                  onClick={handleSubmitResendVerify}
+                  disabled={resendbtn}
+                >
+                  {"Resend code"}
+                </Button> */}
+                  <Link
                   href="/forgotpassword"
                   variant="body2"
                   onClick={handleSubmitResendVerify}
@@ -280,7 +295,7 @@ const navigate = useNavigate();
         </Box>
       </Container>
       <Box>
-      <Button
+        {/* {resendbtn? <Button
         // className={classes.button}
         variant="contained"
         color="primary"
@@ -288,7 +303,26 @@ const navigate = useNavigate();
         sx={{ mt: "5rem" }}
       >
         Submit
-      </Button>
+      </Button>: */}
+      <Button
+      // className={classes.button}
+      variant="contained"
+      color="primary"
+      onClick={handleSubmitVerify}
+      sx={{ mt: "5rem" }}
+      
+    >
+      Submit
+    </Button>
+      {/* <Button
+        // className={classes.button}
+        variant="contained"
+        color="primary"
+        onClick={handleSubmitVerify}
+        sx={{ mt: "5rem" }}
+      >
+        Submit
+      </Button> */}
       </Box>
     {/* </ThemeProvider> */}
     </Box>

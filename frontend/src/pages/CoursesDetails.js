@@ -32,6 +32,8 @@ import Link from '@mui/material/Link';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 import { instructorData } from "../data/instructorData";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
 
 
@@ -107,6 +109,7 @@ Item.propTypes = {
 };
 
 const CoursesDetails = () => {
+  AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
   const [instructorState, setInstructorState] = useState(instructorData);
   const loggedin= localStorage.getItem("access_token")
@@ -115,7 +118,7 @@ const CoursesDetails = () => {
 
   let state = location.state.courseId;
   
-  //console.log("state",state)
+  console.log("state",state)
   return (
    
     <Box >
@@ -124,7 +127,7 @@ const CoursesDetails = () => {
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}
        sx={{marginTop:"5rem"}}>
-        <Grid item xs={12} lg={6} >
+        <Grid item xs={12} lg={6} data-aos="fade-right">
           <Typography variant="h4" sx={{color:"primary.main"}}>{state?.title}</Typography>
           <Typography variant="h6"
            sx={{marginTop:"2rem", marginBottom:"2rem"}}>
@@ -152,7 +155,7 @@ const CoursesDetails = () => {
              </Button>
            </Routerlink>}
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={6} data-aos="fade-left">
           <Item>
                 {/* <VideoGridWrapper> */}
             {/* <Grid > */}
@@ -205,7 +208,7 @@ const CoursesDetails = () => {
     <Container sx={{marginTop:"5rem"}}>
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={7}>
+        <Grid item xs={12} lg={7} data-aos="fade-right">
         <Typography variant="h4" sx={{color:"primary.main"}}>Course Details:</Typography>
         {/* <Typography variant="h6" >
         <img  src={state?.thumbnail} alt=""/>
@@ -245,13 +248,13 @@ const CoursesDetails = () => {
         ৳{state?.price}
         </Typography>
         </Grid>
-        <Grid item xs={12} lg={5}>
+        <Grid item xs={12} lg={5} data-aos="fade-left">
         <Box>
           {/* instructor card */}
           <InstructorInCourseDetails
                 title={state?.instructor?.name}
                 instructor={state?.instructor?.designation}
-                img={instructorState[0].image}
+                img={state?.instructor?.image}
                 description= {state?.instructor?.description}
               ></InstructorInCourseDetails>
         <Box>

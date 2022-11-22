@@ -21,6 +21,7 @@ import { Alert, AlertTitle, Collapse, IconButton, Stack } from '@mui/material';
 
 const ForgetVerify = () => {
   const [open, setOpen] = useState(true);
+  const [resendbtn, setResendbtn]= useState(true)
   const { renderer,otp, setOTP,handleSubmitMailForget,handleSubmitForgetOTP,handleSubmitVerify, validName, setValidName,
    userFocus, setUserFocus,validEmail, setValidEmail,
      email, setEmail,emailFocus, setEmailFocus,
@@ -32,7 +33,7 @@ const ForgetVerify = () => {
   
   return (
     <Box>
-      <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+      <Container sx={{display:"flex", height:"60vh",flexDirection:"column", alignItems:"center"}}>
         
         <Box
           sx={{
@@ -97,13 +98,23 @@ const ForgetVerify = () => {
               <Grid item xs>
               <Countdown 
                 date={Date.now() + 180000}
-                renderer={renderer}/>
+                // date={Date.now() + 5000}
+                renderer={renderer}
+                onComplete={()=>setResendbtn(false)}
+              />
               </Grid>
               <Grid item>
                
-               <Button variant="contained" onClick={handleSubmitResendVerify} >
+               {/* <Button variant="contained" disabled={resendbtn} onClick={handleSubmitResendVerify} >
                   {"Resend code"}
-                </Button>
+                </Button> */}
+                  <Link
+                  href="/forgotpassword"
+                  variant="body2"
+                  onClick={handleSubmitResendVerify}
+                >
+                  {"Resend code"}
+                </Link>
               </Grid>
             </Grid>
           

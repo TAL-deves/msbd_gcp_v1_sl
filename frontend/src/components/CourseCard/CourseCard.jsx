@@ -93,7 +93,7 @@ const CourseCard = (props) => {
   return (
     <motion.div whileHover={{scale:1.03}}>
       <Box
-      //  data-aos="zoom-in"
+        data-aos="zoom-in"
        >
     <Card sx={{ margin: "0" ,width:"100%", 
     "&:hover":{boxShadow:"5"}}}   >
@@ -163,11 +163,11 @@ const CourseCard = (props) => {
             </Button>
           </Box>
           <Box item>
-          {/* <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
+          <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
               textDecoration:"none"
-            }}> */}
+            }}>
             {/* uncomment again  */}
-              {/* <Button size="small" variant="contained" disabled 
+              <Button size="small" variant="contained"  
               sx={{color:"secondary.main",
             "&:hover":{backgroundColor:"secondary.main",
             color:"primary.main"}}}
@@ -183,10 +183,10 @@ const CourseCard = (props) => {
                   
                 </Typography>
                 
-              </Button> */}
-
+              </Button>
+              </Link>
               {/* only for soft launch */}
-              <Button size="small" variant="contained"  
+              {/* <Button size="small" variant="contained"  
               sx={{color:"secondary.main",
             "&:hover":{backgroundColor:"secondary.main",
             color:"primary.main"}}} onClick={()=>{
@@ -204,8 +204,8 @@ const CourseCard = (props) => {
                   
                 </Typography>
                 
-              </Button>
-              {/* </Link> */}
+              </Button> */}
+              
            
             {/* <Button variant="contained" sx={{margin:".5rem", padding:".3rem"}} onClick={()=>handleAdd(props)}>
             <ShoppingCartIcon/>

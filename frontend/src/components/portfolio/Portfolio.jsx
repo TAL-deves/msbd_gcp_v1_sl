@@ -65,7 +65,7 @@ const Portfolio = () => {
                   justifyContent: "space-around",
                  
                   }}
-                // data-aos="fade-right"  
+                 data-aos="fade-right"  
               >
                 {localStorage.getItem("theme")==="theme"?
                 <img
@@ -98,7 +98,7 @@ const Portfolio = () => {
                 alignItems:"center",
                 
               }} 
-              // data-aos="fade-left"
+               data-aos="fade-left"
               >
                 <Grid >
                   {/* <Grid item > */}

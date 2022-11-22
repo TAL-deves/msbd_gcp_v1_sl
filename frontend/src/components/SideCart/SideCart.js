@@ -98,7 +98,7 @@ const SideCart = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [checkBoxStatus, setCheckBoxStatus] = React.useState(true);
+  const [checkBoxStatus, setCheckBoxStatus] = React.useState(false);
 
   const search = useLocation().search;
   const payment = new URLSearchParams(search).get("payment");
@@ -383,9 +383,17 @@ const ref = useRef(null);
                 />
                
 
-                <Typography sx={{ marginLeft: ".0rem", color: "primary.main", fontSize: ".8rem" }} >I've read and accept the &nbsp;
+                <Typography sx={{ marginLeft: ".0rem", color: "primary.main", fontSize: ".8rem" }} >I've read and agree to the &nbsp;
                   <Link href="/terms-and-conditions" sx={{ color: "primary.main"}}>
-                     terms and conditions
+                     
+                     terms and conditions,
+                    </Link>
+                    &nbsp;
+                  <Link href="/refund-policy" sx={{ color: "primary.main"}}>
+                     refund policy &
+                    </Link>&nbsp;
+                  <Link href="/privacy-policy" sx={{ color: "primary.main"}}>
+                  privacy policy
                     </Link>
                 </Typography>
               </Box> 
@@ -397,6 +405,7 @@ const ref = useRef(null);
           </Button> */}
           {/* only for soft launch  */}
           <Button
+          disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
              onClick={()=>{
               swal("To Be Announced")
              }}
@@ -458,6 +467,7 @@ const ref = useRef(null);
             variant="contained">Proceed to Payment</Button> */}
               {/* only for soft launch  */}
              <Button
+             disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
              onClick={()=>{
               swal("To Be Announced")
              }}
@@ -488,9 +498,15 @@ const ref = useRef(null);
                 />
                
 
-                <Typography sx={{ marginLeft: ".0rem", color: "primary.main", fontSize: ".8rem" }} >I've read and accept the &nbsp;
+                <Typography sx={{ marginLeft: ".0rem", color: "primary.main", fontSize: ".8rem" }} >I've read and agree to the &nbsp;
                   <Link href="/terms-and-conditions" sx={{ color: "primary.main"}}>
-                     terms and conditions
+                     terms and conditions,
+                    </Link> &nbsp;
+                  <Link href="/refund-policy" sx={{ color: "primary.main"}}>
+                     refund policy &
+                    </Link>&nbsp;
+                  <Link href="/privacy-policy" sx={{ color: "primary.main"}}>
+                  privacy policy
                     </Link>
                 </Typography>
               </Box> 
@@ -507,6 +523,7 @@ const ref = useRef(null);
             {/* </Link> */}
            {/* only for soft launch  */}
             <Button
+            disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
               onClick={()=>{swal("To Be Announced")}}
               
                variant="contained">{t("proceed_payment")}
@@ -562,7 +579,8 @@ const ref = useRef(null);
 
             <Button 
               onClick={responseForGift} 
-              disabled={!validEmail}
+              // disabled={!validEmail}
+              disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
               variant="contained">{t("proceed_payment")}</Button>
           </Box>        
         </Modal>

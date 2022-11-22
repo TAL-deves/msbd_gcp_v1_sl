@@ -68,6 +68,8 @@ const Coursedemo = () => {
   const [otp, setOtp] = useState("");
   const [playbackInfo, setPlaybackInfo] = useState("");
   const [coursesVdoList, setCoursesVdoList] = useState([]);
+  const [expanded, setExpanded] = React.useState(false);
+  const [vdotitle, setVdotitle] = React.useState();
   
 
   let location = useLocation();
@@ -81,6 +83,13 @@ const Coursedemo = () => {
   };
   const navigate = useNavigate();
 
+  // for accordion 
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+
+//  review submit 
   let handleSubmitReview = async () => {
     const response = await api
       .post(COURSE_URL, JSON.stringify({ username, courseID, review }), {
@@ -205,7 +214,9 @@ const Coursedemo = () => {
             {coursesVdoList.map((courseVdo) => {
               courseVdo["isVdoAdded"]=false
               return (
-                <Accordion>
+                <Accordion sx={{width:"20rem"}} expanded={expanded === `${courseVdo.title}`} onChange={handleChange(`${courseVdo.title}`)
+              }>
+                                   
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -228,6 +239,7 @@ const Coursedemo = () => {
                         setOtp(data.data.data.otp);
                         setPlaybackInfo(data.data.data.playbackInfo);
                         handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
+                        setVdotitle(`${courseVdo.title}`)
                        
                       });
                     }}>
@@ -244,7 +256,8 @@ const Coursedemo = () => {
             })}
 
           </Box>
-         
+          {/* <Box sx={{display:"flex", flexDirection:"column"}}> */}
+
           <Box
             className="vdo-container"
             ref={container}
@@ -264,10 +277,12 @@ const Coursedemo = () => {
               color:"other.dark"
             }}
           >
+                    <Typography>{vdotitle}</Typography>
             Click Add Video button
           </Box>
-          {/* </Box> */}
-        </Box>
+          
+          </Box>
+        {/* </Box> */}
       </Container>
       <Container sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="h4">Write your Feedback below</Typography>

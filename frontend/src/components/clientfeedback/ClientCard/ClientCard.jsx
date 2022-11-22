@@ -24,7 +24,7 @@ const ClientCard = (props) => {
       <Box sx={{margin:"1.5rem"}}>
     <Card sx={{ maxWidth: 345,
       "&:hover":{boxShadow:"5"} }} 
-      // data-aos="fade-down"
+      data-aos="zoom-in-up"
       >
       <CardHeader
         avatar={

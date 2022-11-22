@@ -30,6 +30,8 @@ const RESEND_VERIFY_URL = '/api/resend-otp-forgotpassword';
 
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+// const PHONE_REGEX = /^[0-9+]{14,15}/;
+const PHONE_REGEX = /^[0-9+]{14,15}/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PWD_REGEX = /^[0-9]{6,20}/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -100,7 +102,14 @@ const userRef = useRef();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [responseprop, setReponseprop] =useState({})
+  const [responseprop, setReponseprop] =useState({});
+  const [phone, setPhone] =useState('');
+  const [validPhone, setValidPhone] = useState(false);
+  const [phoneFocus, setPhoneFocus] = useState(false);
+
+
+
+const phoneNumber = phone.replace(/\s/g, '');
 
 
 
@@ -120,6 +129,10 @@ useEffect(() => {
 useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
 }, [email])
+
+useEffect(() => {
+  setValidPhone(PHONE_REGEX.test(phoneNumber));
+}, [phoneNumber])
 
 useEffect(() => {
     setValidPwd(PWD_REGEX.test(password));
@@ -148,7 +161,7 @@ const handleSubmitMailForget = async (e) => {
     try {
         // //console.log(user, pwd, email)
         const response = await api.post(FORGOTPASSWORD_URL,
-            JSON.stringify({ email}),
+            JSON.stringify({ phoneNumber}),
             {
                 headers: { 'Content-Type': 'application/json' },
                 'Access-Control-Allow-Credentials': true,
@@ -202,7 +215,7 @@ const handleSubmitMailForget = async (e) => {
       // }})
 
       const response = await api
-      .post(REQUESTPASS_URL, JSON.stringify({ email, otp }), {
+      .post(REQUESTPASS_URL, JSON.stringify({ phoneNumber, otp }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
@@ -239,7 +252,7 @@ const handleSubmitNewPassword = async (e) => {
   try {
       // //console.log(user, pwd, email)
       const response = await api.post(RESETPASS_URL,
-          JSON.stringify({ email, otp, password}),
+          JSON.stringify({ phoneNumber, otp, password}),
           {
               headers: { 'Content-Type': 'application/json' },
               'Access-Control-Allow-Credentials': true,
@@ -286,7 +299,7 @@ const handleSubmitNewPassword = async (e) => {
   event.preventDefault();
 
 const response = await api
-      .post(RESEND_VERIFY_URL, JSON.stringify({ email, otp }), {
+      .post(RESEND_VERIFY_URL, JSON.stringify({ phoneNumber, otp }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
@@ -314,7 +327,7 @@ const response = await api
     
     return (
         <div>
-            <multiForgotContext.Provider value={{responseprop, Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
+            <multiForgotContext.Provider value={{setPhone,setPhoneFocus,phone, phoneFocus,validPhone,phoneNumber,responseprop, Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
                 emailRef,errRef, validName, setValidName,
                userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,

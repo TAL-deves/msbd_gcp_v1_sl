@@ -19,6 +19,7 @@ let coursesData = [
     instructor: {
       _id: 10001,
       name: "Dr. Abul Kalam",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
       designation: "Director of Training and founder of inMindSight",
       description: `For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.
       I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.`,
@@ -45,7 +46,8 @@ let coursesData = [
     price: "To be released",
     instructor: {
       _id: 10007,
-      name: "Nazish S. Qazi",
+      name: "Nazish Shameem Qazi",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
       designation: "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
       description:
         "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
@@ -70,6 +72,7 @@ let coursesData = [
     instructor: {
       _id: 10005,
       name: "D. Almasur Rahman",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
       designation: "The Brain Lady",
       description:
         "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
@@ -91,6 +94,7 @@ let coursesData = [
     instructor: {
       _id: 10003,
       name: "Dr. Abul Kalam",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
       designation: "Health & Fitness Coach | Best Selling Instructor",
       description: `Im a certified coach and author. Over the years I've worked with and coached 100,000 students from all over the world. My expertise includes science-based personal development, health & fitness advice in the following areas:
       - Self Improvement
@@ -120,6 +124,7 @@ let coursesData = [
     instructor: {
       _id: 10004,
       name: "Dr. Abul Kalam",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
       designation: "Heartfulness Meditation Trainer",
       description: `I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!`,
       courses: ["C004"],
@@ -146,6 +151,7 @@ let coursesData = [
     instructor: {
       _id: 10006,
       name: "D. Almasur Rahman",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
       designation: "Founder & CEO, Meditation Magazine",
       description:
         "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
@@ -188,6 +194,7 @@ let coursesData = [
     instructor: {
       _id: 10002,
       name: "Dr. Abul Kalam",
+      image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
       designation: "Psychologist",
       description:
         "Dr. Abul Kalam is a Psychologist.",

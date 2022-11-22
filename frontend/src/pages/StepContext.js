@@ -32,7 +32,8 @@ import swal from 'sweetalert';
 //registration 
 const REGISTRATION_URL = '/api/signup';
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+// const USER_REGEX = /^[A-z][A-z0-9-_" "]{3,50}$/;
+const USER_REGEX = /^[A-z" "]{3,50}$/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // const PWD_REGEX = /^[0-9]{6,20}/;
 const PHONE_REGEX = /^[0-9+]{14,15}/;
@@ -109,6 +110,8 @@ const userRef = useRef();
   const [phone, setPhone] =useState('');
   const [validPhone, setValidPhone] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
+
+  const [resendbtn, setResendbtn] = useState(true);
 
 
 const phoneNumber = phone.replace(/\s/g, '');
@@ -269,7 +272,7 @@ const handleSubmitRegistration = async (e) => {
     ).then(response => {
       let data = response.result.isError
       //console.log(data);
-    
+      
     if(data[0] === 'Invalid OTP'){
       setErrMsg("Wrong OTP")
       //console.log("wrong otp")
@@ -294,7 +297,7 @@ const handleSubmitRegistration = async (e) => {
 
     return (
         <div>
-            <multiStepContext.Provider value={{phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
+            <multiStepContext.Provider value={{resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
                 emailRef,errRef, validName, setValidName,
                 userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,
