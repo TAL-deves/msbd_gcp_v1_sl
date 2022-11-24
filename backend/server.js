@@ -954,7 +954,7 @@ app.post("/api/verify", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    // console.log("req.body --- ", req.body);
+    console.log("req.body --- ", req.body);
     const { email, otp } = req.body;
     const user = await validateUserSignUp(email, otp);
     // let setSendResponseData = new sendResponseData(
