@@ -15,6 +15,7 @@ import SideCart from "../components/SideCart/SideCart";
 import StepContext, { multiStepContext } from "./StepContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import SSLCourseCard from "../components/SSLCourseCard/SSLCourseCard";
 
 
 const Courses = (props) => {
@@ -88,7 +89,7 @@ const Courses = (props) => {
         })
         setCourses(listOfCourse)
         setLoad(false);
-        //console.log((courses))
+        // console.log("courses",courses)
       });
   };
 
@@ -149,6 +150,22 @@ const Courses = (props) => {
                 // <Skeleton variant="rectangular" width={210} height={118} /> 
               ) : (
                 <>
+                {/* for ssl  */}
+                <Box sx={{ width: {xs:"100%", sm:"47%", md:"45%", lg:"40%", xl:"40%"}, mb: "1rem",mr:{xs:"0rem", sm:"1rem", md:"1rem", lg:"1rem", xl:"1rem"} }}>
+                <SSLCourseCard
+                          title={courses[0].title}
+                          id={courses[0].courseID}
+                          img={courses[0].thumbnail}
+                          instructor={courses[0].instructor.name}
+                          price={courses[0].price}
+                          hour={courses[0].courseLength}
+                          lecture={courses[0].totalLecture}
+                          fullObject={{ ...courses[0] }}
+                          updateCourse={updateCourse}
+                          
+                        />
+
+                </Box>
                   {courses.map((course) => {
                     return (
                       <Box key={course.courseID}

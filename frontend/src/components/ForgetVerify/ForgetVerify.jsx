@@ -17,12 +17,12 @@ import { useContext } from 'react';
 import { multiStepContext } from '../../pages/StepContext';
 import { multiForgotContext } from '../../pages/ForgotContext';
 import CloseIcon from '@mui/icons-material/Close';
-import { Alert, AlertTitle, Collapse, IconButton, Stack } from '@mui/material';
+import { Alert, AlertTitle, Backdrop, CircularProgress, Collapse, IconButton, Stack } from '@mui/material';
 
 const ForgetVerify = () => {
   const [open, setOpen] = useState(true);
   const [resendbtn, setResendbtn]= useState(true)
-  const { renderer,otp, setOTP,handleSubmitMailForget,handleSubmitForgetOTP,handleSubmitVerify, validName, setValidName,
+  const { backdrop,setBackdrop,renderer,otp, setOTP,handleSubmitMailForget,handleSubmitForgetOTP,handleSubmitVerify, validName, setValidName,
    userFocus, setUserFocus,validEmail, setValidEmail,
      email, setEmail,emailFocus, setEmailFocus,
     password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus,
@@ -30,7 +30,10 @@ const ForgetVerify = () => {
     errMsg, setErrMsg, success, setSuccess,handleSubmitRegistration,theme,
     username, setUser,matchPwd, setMatchPwd, handleSubmitResendVerify}= useContext(multiForgotContext)
 
-  
+    const handleLoading=()=>{
+      setBackdrop(true)
+      handleSubmitForgetOTP()
+    }
   return (
     <Box>
       <Container sx={{display:"flex", height:"60vh",flexDirection:"column", alignItems:"center"}}>
@@ -98,7 +101,6 @@ const ForgetVerify = () => {
               <Grid item xs>
               <Countdown 
                 date={Date.now() + 180000}
-                // date={Date.now() + 5000}
                 renderer={renderer}
                 onComplete={()=>setResendbtn(false)}
               />
@@ -122,11 +124,17 @@ const ForgetVerify = () => {
           
         </Box>
         <Box>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}           
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         <Button
             variant="contained"
             color="primary"
             // disabled={password !== matchPwd}
-            onClick={handleSubmitForgetOTP}
+            onClick={handleLoading}
             sx={{ mt: "6rem",mb: "30%" }}
           >
             Submit

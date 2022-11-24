@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useState, useEffect, useRef } from "react";
 import {
+  Backdrop,
   CircularProgress,
   Grid,
   Modal,
@@ -31,10 +32,10 @@ const theme = createTheme();
 
 function getSteps() {
   return ["", ""];
-}
+} 
 
 const RegisterForm = () => {
-  const {
+  const {backdrop, setBackdrop,
     userRef,
     emailRef,
     errRef,
@@ -81,6 +82,15 @@ const RegisterForm = () => {
   const handleClose = () => setOpen(false);
   const [popup, setPopup] = useState();
 
+
+  const handleLoadingSubmitRegistation=()=>{
+    setBackdrop(true)
+    handleSubmitRegistration()
+  }
+  const handleLoadingNext=()=>{
+    setBackdrop(true)
+    handleNext()
+  }
   const steps = getSteps();
  
   const USERCHECK_URL = '/api/checkuser';
@@ -105,7 +115,8 @@ const RegisterForm = () => {
           
       }
   );   
-
+  setBackdrop(false);
+  
   let errResponse = response.data.result.status
   if(errResponse === 409){
     swal("Error!", `${response.data.result.errMsg}`, "error")
@@ -115,7 +126,9 @@ const RegisterForm = () => {
   }
   else {
     setActiveStep(activeStep + 1);
+    
   }
+  
   };
 
   const handleBack = () => {
@@ -176,29 +189,41 @@ const RegisterForm = () => {
               {/* && registerapiresponse !== null &&
             registerapiresponse?.result?.isError === false */}
               {activeStep === 1 ? (
+                  <><Backdrop
+                  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                  open={backdrop}
+                 
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
                 <Button
                   // className={classes.button}
                   variant="contained"
                   disabled={password === "" || password !== matchPwd}
-                  onClick={handleSubmitRegistration}
+                  onClick={handleLoadingSubmitRegistation} 
                   sx={{ mr: 1, mb: 5 }}
                 >
                   Submit
-                </Button>
+                </Button></>
               ) : (
+                <><Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={backdrop}
+               
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
                 <Button
                   // className={classes.button}
                   variant="contained"
                   color="primary"
                   disabled={!validEmail || !validName || !validPhone}
                   // disabled={errMsg}
-                  onClick={() => {
-                    handleNext();
-                  }}
+                  onClick={()=>{handleLoadingNext()}}
                   sx={{ mr: 5, mb: 5 }}
                 >
                   Next{" "}
-                </Button>
+                </Button></>
               )}
             </div>
           </>

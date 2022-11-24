@@ -32,7 +32,7 @@ import 'aos/dist/aos.css';
 import { Modal, TextField } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import { WindowSharp } from "@mui/icons-material";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { navigate,useNavigate, useLocation, Navigate } from "react-router-dom";
 import { globalContext } from "../../pages/GlobalContext";
 
 
@@ -94,7 +94,7 @@ const SideCart = (props) => {
     setMatchPwd,phone, setPhone,validPhone, phoneFocus,setPhoneFocus
   } = useContext(multiStepContext);
   const {t}= React.useContext(globalContext)
-
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -105,17 +105,22 @@ const SideCart = (props) => {
 
 
   if (payment==="success") {
-    // window.opener.location.reload();
+    // window.opener.location.reload();\
+   
     swal("successful!", "payment done", "success",{timer: 1000
-    }).then(()=>{
-      
-      window.close();
-    })
+    },
     
+    ).then(()=>{
+       
+      navigate("/courses")
+
+      // window.close();
+    })
+    // localStorage.setItem("course",[[]])
   } else if (payment==="failed") {
     swal("Error!", "payment is not successfull", "error",).then(()=>{
       
-      window.close();
+      // window.close();
     })
   }
   
@@ -168,7 +173,8 @@ const SideCart = (props) => {
     let LStotal=0;
    
     for(const courseCost of courses){
-      total= total+Number(courseCost.price)
+      // total= total+Number(courseCost.price)
+      total= 10
       
     }
     // for(const lscourseCost of LScourses){
@@ -223,11 +229,11 @@ const SideCart = (props) => {
 
         window.open(
           `${data.data.data.redirectGatewayURL}`,
-          "",
-          `width=${w}, 
-          height=${h}, 
-          top=${top}, 
-          left=${left}`
+          "_self",
+          // `width=${w}, 
+          // height=${h}, 
+          // top=${top}, 
+          // left=${left}`
         );
         
         // swal("successful!", "This is here", "success")
@@ -397,14 +403,16 @@ const ref = useRef(null);
                     </Link>
                 </Typography>
               </Box> 
-          {/* <Button
-             onClick={response}
-            //  disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
-            disabled
-             variant="contained">Proceed to Payment
-          </Button> */}
-          {/* only for soft launch  */}
+              {/* hard launch  */}
           <Button
+             onClick={response}
+             disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
+            // disabled
+             variant="contained">Proceed to Payment
+          </Button>
+
+          {/* only for soft launch  */}
+          {/* <Button
           disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
              onClick={()=>{
               swal("To Be Announced")
@@ -412,7 +420,7 @@ const ref = useRef(null);
             //  disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
             
              variant="contained">{t("proceed_payment")}
-          </Button>
+          </Button> */}
           {/* <Button 
             disabled={(courseList.length===0)?true:false}
             variant="contained" sx={{marginLeft:"1rem",  overflow:"hidden"}}
@@ -461,19 +469,21 @@ const ref = useRef(null);
               }
             />
           </Typography>
+
+          {/* gift button  */}
           {/* <Button 
             onClick={responseForGift} 
             disabled={!validEmail}
             variant="contained">Proceed to Payment</Button> */}
               {/* only for soft launch  */}
-             <Button
+             {/* <Button
              disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
              onClick={()=>{
               swal("To Be Announced")
              }}
             //  disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
              variant="contained">{t("proceed_payment")}
-            </Button>
+            </Button> */}
         </Box>        
       </Modal>
               </>)
@@ -510,24 +520,31 @@ const ref = useRef(null);
                     </Link>
                 </Typography>
               </Box> 
-            {/* <Link href="/login" style={{
+
+              {/* hard launch  */}
+            <Link href="/login" style={{
             textDecoration:"none"
-          }}> */}
-            {/* <Button
-              //  onClick={response}
-              //  disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
-              disabled
-               variant="contained">Proceed to Payment
-            </Button> */}
-           
-            {/* </Link> */}
-           {/* only for soft launch  */}
+          }}>
             <Button
+              //  onClick={response}
+               disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
+              // disabled
+               variant="contained">Proceed to Payment
+            </Button>
+           
+            </Link>
+           {/* only for soft launch  */}
+            {/* <Button
             disabled={(courseList.length===0)?true:false || checkBoxStatus===false}
               onClick={()=>{swal("To Be Announced")}}
               
                variant="contained">{t("proceed_payment")}
-            </Button>
+            </Button> */}
+
+
+
+
+
             {/* <Button 
               disabled={(courseList.length===0)?true:false}
               variant="contained" sx={{marginLeft:"1rem",  overflow:"hidden"}}

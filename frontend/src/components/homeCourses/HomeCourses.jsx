@@ -112,7 +112,7 @@ const HomeCourses = () => {
             //console.log(localCourse.courseID,course.courseID)
             course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
              
-          }
+          } 
           else{
             course["isSelected"] =true
           }

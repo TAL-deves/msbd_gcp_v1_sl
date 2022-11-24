@@ -143,7 +143,8 @@ const CourseCard = (props) => {
     justifyContent:"space-between"}}>
        
           <Box item mb={1} mr={1}>
-            <Button size="small" variant="contained" sx={{backgroundColor:"secondary.main", color:"primary.main","&:hover":{backgroundColor:"primary.main",
+            <Button size="small" variant="contained" disabled 
+            sx={{backgroundColor:"secondary.main", color:"primary.main","&:hover":{backgroundColor:"primary.main",
             color:"secondary.main"}}}
              onClick={()=>handleAdd(props)
               
@@ -163,10 +164,11 @@ const CourseCard = (props) => {
             </Button>
           </Box>
           <Box item>
-          <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
+            {/* uncomment again  */}
+          {/* <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
               textDecoration:"none"
             }}>
-            {/* uncomment again  */}
+            
               <Button size="small" variant="contained"  
               sx={{color:"secondary.main",
             "&:hover":{backgroundColor:"secondary.main",
@@ -184,9 +186,10 @@ const CourseCard = (props) => {
                 </Typography>
                 
               </Button>
-              </Link>
+              </Link> */}
+
               {/* only for soft launch */}
-              {/* <Button size="small" variant="contained"  
+              <Button size="small" variant="contained"  
               sx={{color:"secondary.main",
             "&:hover":{backgroundColor:"secondary.main",
             color:"primary.main"}}} onClick={()=>{
@@ -204,12 +207,10 @@ const CourseCard = (props) => {
                   
                 </Typography>
                 
-              </Button> */}
+              </Button>
               
            
-            {/* <Button variant="contained" sx={{margin:".5rem", padding:".3rem"}} onClick={()=>handleAdd(props)}>
-            <ShoppingCartIcon/>
-            </Button> */}
+           
           </Box>
         {/* </Box> */}
       </CardActions>

@@ -15,7 +15,7 @@ import api from "../../api/Axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import StepContext, { multiStepContext } from "../../pages/StepContext";
-import { Alert, AlertTitle, Collapse, IconButton, Stack } from "@mui/material";
+import { Alert, AlertTitle, Backdrop, CircularProgress, Collapse, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LocalStorageService from "../../api/localstorage";
 import { login } from "../../api/Axios";
@@ -72,7 +72,7 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 const VerifyForm = () => {
   const [open, setOpen] = useState(true);
   const [currentuser, setCurrentuser] = useState("");
-  
+  const [backdrop, setBackdrop] = useState(false);
 
   const {
     userRef,
@@ -113,6 +113,7 @@ const VerifyForm = () => {
     registerapiresponse,phoneNumber, resendbtn, setResendbtn
   } = useContext(multiStepContext);
   const [otp, setOTP] = useState("");
+
 //console.log(email)
 const navigate = useNavigate();
   const handleSubmitVerify = async (event) => {
@@ -126,6 +127,8 @@ const navigate = useNavigate();
       .then((response) => {
         let data = response.data.result.status;
         let dataMsg = response.data.data;
+
+        setBackdrop(false)
         if (data === 406) {
           setErrMsg("Invalid OTP");
           swal("Invalid OTP", `Please check again`, "error");
@@ -148,6 +151,7 @@ const navigate = useNavigate();
       });
   };
 
+
   //
 
   //resend verify
@@ -162,6 +166,8 @@ const navigate = useNavigate();
       .then((response) => {
         //console.log(response.data.data);
         let data = response.data.result.status
+
+        setBackdrop(false)
         if(data === 302){
           swal("OTP sent!", `Please verify to continue, ${response.data.data} try left`, "warning")
         } else if(data === 406){
@@ -177,6 +183,14 @@ const navigate = useNavigate();
         }
       });
   };
+
+  //
+
+  const handleVerifyLoading=()=>{
+    setBackdrop(true)
+    handleSubmitVerify()
+  }
+
 
   //
 
@@ -226,6 +240,12 @@ const navigate = useNavigate();
           ) : (
             ""
           )}
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}           
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <Box
             component="form"
             onSubmit={handleSubmitVerify}
@@ -274,6 +294,7 @@ const navigate = useNavigate();
                 >
                   {"Resend code"}
                 </Button> */}
+                
                   <Link
                   href="/forgotpassword"
                   variant="body2"
@@ -308,7 +329,7 @@ const navigate = useNavigate();
       // className={classes.button}
       variant="contained"
       color="primary"
-      onClick={handleSubmitVerify}
+      onClick={handleVerifyLoading}
       sx={{ mt: "5rem" }}
       
     >

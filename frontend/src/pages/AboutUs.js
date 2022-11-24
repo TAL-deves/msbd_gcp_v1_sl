@@ -118,7 +118,7 @@ const AboutUs = () => {
                 </Grid>
             </Grid> 
             {/* </Box> */}
-             <Box sx={{mt:"2rem",display:"flex", justifyContent:"space-between"}}>
+             <Box sx={{mt:"2rem",display:"flex",flexDirection:{xs:"column",sm:"row", md:"row", lg:"row", xl:"row"}, justifyContent:"space-between"}}>
               <Box>
                 <Typography sx={{fontSize:"1rem", fontWeight:"800"}}>Registered Office:</Typography>
                 <Typography >Progress Tower (4th Floor)</Typography>

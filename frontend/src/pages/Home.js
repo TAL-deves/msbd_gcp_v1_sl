@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import Banner from '../components/banner/Banner'
 import VideoPlayer from '../components/videoPlayer/VideoPlayer'
-import Player from '../components/Player/Player'
 import PopWindow from '../components/popWindow/PopWindow'
 import HomeCourses from '../components/homeCourses/HomeCourses'
 import Instructor from '../components/Instructor/Instructor'

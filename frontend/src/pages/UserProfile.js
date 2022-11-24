@@ -21,15 +21,18 @@ import { useForceUpdate } from "framer-motion";
 
 const style = {
   position: 'absolute',
-  top: '30%',
+  top: '50%',
+  
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: {md:"50%", xs:"80%", sm:"80%"},
-  bgcolor: 'background.paper',
+  width: { md: "50%", xs: "80%", sm: "80%" },
+  bgcolor: 'other.white',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
+
+
 
 const videoConstraints = {
   width: 420,
@@ -37,9 +40,9 @@ const videoConstraints = {
   facingMode: "user"
 };
 
-const USER_URL="/api/userprofile"
-const UPDATE_USER_URL="/api/updateuserprofile"
-const USER_IMAGE_URL="/api/getuserimage"
+const USER_URL = "/api/userprofile"
+const UPDATE_USER_URL = "/api/updateuserprofile"
+const USER_IMAGE_URL = "/api/getuserimage"
 
 const UserProfile = () => {
   const webcamRef = React.useRef(null);
@@ -48,9 +51,9 @@ const UserProfile = () => {
   const [image, setImage] = useState("")
   const [webimage, setWebImage] = useState('')
   const [username, setUsername] = useState(localStorage.getItem('user'))
-  const [userInfo, setUserInfo]= useState({})
-  const [profession, setProfession]= useState(userInfo.profession)
-  const [age, setAge]= useState()
+  const [userInfo, setUserInfo] = useState({})
+  const [profession, setProfession] = useState(userInfo.profession)
+  const [age, setAge] = useState()
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = useState(true);
   const handleOpen = () => setOpen(true);
@@ -63,7 +66,7 @@ const UserProfile = () => {
       // //console.log(webimage.toString())
 
     },
-    
+
 
     [webcamRef]
   );
@@ -81,66 +84,66 @@ const UserProfile = () => {
     });
   };
 
-  
-  let handleGetUser=async()=>{
-    const response =await api.post(USER_URL,
-      JSON.stringify({username }),
+
+  let handleGetUser = async () => {
+    const response = await api.post(USER_URL,
+      JSON.stringify({ username }),
       {
-          headers: { 'Content-Type': 'application/json' },
-          'Access-Control-Allow-Credentials': true
-      }          
-  );
-  setUserInfo(response.data.data)
-
-// return response.data.data
-
-}
-
-let handleGetUserImage=async()=>{
-  const response =await api.post(USER_IMAGE_URL,
-    JSON.stringify({username }),
-    {
         headers: { 'Content-Type': 'application/json' },
         'Access-Control-Allow-Credentials': true
-    }          
-);
-setUserprofileimage(response.data.data)
-//console.log('setUserprofileimage', response);
+      }
+    );
+    setUserInfo(response.data.data)
 
-// return response.data.data
+    // return response.data.data
 
-}
+  }
 
-useEffect(() => {
-  handleGetUser();
-  handleGetUserImage();
-  
-}, [userprofileimage])
-
-
-
-
-
- let handleUpdateUserProfile=async()=>{
-  const response =await api.post(UPDATE_USER_URL,
-    JSON.stringify({username, profession, age }),
-    {
+  let handleGetUserImage = async () => {
+    const response = await api.post(USER_IMAGE_URL,
+      JSON.stringify({ username }),
+      {
         headers: { 'Content-Type': 'application/json' },
         'Access-Control-Allow-Credentials': true
-    }      
-        
-).then((e)=>{
-  swal("Profile Updated!","",  "success")
-});
-setUserInfo(response.data.data)
-setProfession(userInfo.profession)
-//console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
-// return response.data.data
+      }
+    );
+    setUserprofileimage(response.data.data)
+    //console.log('setUserprofileimage', response);
 
-}
+    // return response.data.data
+
+  }
+
+  useEffect(() => {
+    handleGetUser();
+    handleGetUserImage();
+
+  }, [userprofileimage])
 
 
-  const handleChange = async(e) => {
+
+
+
+  let handleUpdateUserProfile = async () => {
+    const response = await api.post(UPDATE_USER_URL,
+      JSON.stringify({ username, profession, age }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        'Access-Control-Allow-Credentials': true
+      }
+
+    ).then((e) => {
+      swal("Profile Updated!", "", "success")
+    });
+    setUserInfo(response.data.data)
+    setProfession(userInfo.profession)
+    //console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
+    // return response.data.data
+
+  }
+
+
+  const handleChange = async (e) => {
     const file = e.target.files[0];
     // setImage(e.target.files[0])
     setWebImage('')
@@ -170,42 +173,42 @@ setProfession(userInfo.profession)
   const handleApiWeb = (event) => {
     //call the api
     const url = `${process.env.REACT_APP_API_URL}/api/uploadimage`
- 
-    if(image){
-      let webimage= image
-    api.post(url,
-      JSON.stringify({  username, webimage}),
-      {
-          headers: { 'Content-Type': 'application/json' },
-          'Access-Control-Allow-Credentials': true,         
-      }).then((e)=>{
-        // //console.log(e.data.data.result.status)
-        swal("Profile Photo Uploaded!","",  "success")
-        window.reload("/")
-      })
-      
-    }
-      else{
-        
-        api.post(url, 
-          JSON.stringify({  username, webimage}),
-          {
-              headers: { 'Content-Type': 'application/json' },
-              'Access-Control-Allow-Credentials': true,         
-          }).then((e)=>{
-            // //console.log(e.data.data.result.status)
-            swal("Profile Photo Uploaded!","",  "success")
-            handleGetUserImage();
 
-          })
-      }
+    if (image) {
+      let webimage = image
+      api.post(url,
+        JSON.stringify({ username, webimage }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          'Access-Control-Allow-Credentials': true,
+        }).then((e) => {
+          // //console.log(e.data.data.result.status)
+          swal("Profile Photo Uploaded!", "", "success")
+          window.reload("/")
+        })
+
+    }
+    else {
+
+      api.post(url,
+        JSON.stringify({ username, webimage }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          'Access-Control-Allow-Credentials': true,
+        }).then((e) => {
+          // //console.log(e.data.data.result.status)
+          swal("Profile Photo Uploaded!", "", "success")
+          handleGetUserImage();
+
+        })
+    }
     setOpen(false)
     // window.location.href='/courses'
   }
 
 
 
-    
+
   return (
     <Container>
       <Typography
@@ -251,7 +254,7 @@ setProfession(userInfo.profession)
                   fullWidth
                   id="name"
                   label="Name"
-                  value={userInfo.username?userInfo.username:""}
+                  value={userInfo.username ? userInfo.username : ""}
                   name="name"
                   autoComplete="name"
                   disabled
@@ -266,12 +269,13 @@ setProfession(userInfo.profession)
                 <TextField
                   margin="normal"
                   // required
+                  // color="success"
                   fullWidth
                   disabled
                   name="email"
                   label="Email"
                   id="email"
-                  value={userInfo.email?userInfo.email:""}
+                  value={userInfo.email ? userInfo.email : ""}
                 />
                 <TextField
                   margin="normal"
@@ -280,36 +284,36 @@ setProfession(userInfo.profession)
                   label="Profession"
                   id="profession"
                   focused
-                  value={profession?profession:userInfo.profession}
+                  value={profession ? profession : userInfo.profession}
                   // value={userInfo.profession?userInfo.profession:""}
                   // defaultValue={profession}
-                  onChange={(e)=>{setProfession(e.target.value)}}
+                  onChange={(e) => { setProfession(e.target.value) }}
                 />
-                <TextField 
-                margin="normal" 
-                name="age" 
-                label="Age" 
-                focused
-                id="age" 
-                fullWidth
-                value={age?age:userInfo.age}
-                onChange={(e)=>{setAge(e.target.value)}}
+                <TextField
+                  margin="normal"
+                  name="age"
+                  label="Age"
+                  focused
+                  id="age"
+                  fullWidth
+                  value={age ? age : userInfo.age}
+                  onChange={(e) => { setAge(e.target.value) }}
                 />
-               
-              
-                  <input
-                    hidden
-                    accept="image/*"
-                    type="file"
-                  />
-                 <> 
-          </>
+
+
+                <input
+                  hidden
+                  accept="image/*"
+                  type="file"
+                />
+                <>
+                </>
                 <Button
                   // type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
-                   onClick={handleUpdateUserProfile}
+                  onClick={handleUpdateUserProfile}
                 >
                   Submit
                 </Button>
@@ -325,140 +329,142 @@ setProfession(userInfo.profession)
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            flexDirection:"column"
+            flexDirection: "column"
           }}
         >
-          
-          {userprofileimage?
-          <img src={userprofileimage} alt="user profile" width={200} height={200}
-          />:
-          <Avatar
-            alt="ss"
-            sx={{ width: 200, height: 200, objectFit: "cover" }}
-          />
+
+          {userprofileimage ?
+            <img src={userprofileimage} alt="user profile" width={200} height={200}
+            /> :
+            <Avatar
+              alt="ss"
+              sx={{ width: 200, height: 200, objectFit: "cover" }}
+            />
           }
-       
-       
+
+
           <Box>
-          
-              {!webimage && !userInfo.profilephoto? <Button
-                  variant="outlined"
-                  component="label"
-                  sx={{marginTop:"1rem"}}
-                  onClick={handleOpen}
-                  >
-                
-                  Select Photo
-                </Button>:
-                 <Button
-                 variant="outlined"
-                 component="label"
-                 sx={{marginTop:"1rem"}}
-                 onClick={handleOpen}
-                 >
-               
-                 Change Photo
-               </Button>}
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Please upload your image
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Box>
-          <Box sx={{display:"flex"}}>
-          <input name="myFile" accept="image/*" type="file" onChange={handleChange}/>
-               
-          </Box>
-          
-          <Typography sx={{justifyContent:"center"}}>
-            Or
-          </Typography>
-          <Box >
-            {/* <Grid sx={{display:"flex", flexDirection:"row"}}> */}
-            <Grid sx={{display:"flex",
-          flexDirection: {md:"row",lg:"row", sm:"column" ,xs:"column"} }}>
-              <Grid xs={4} md={4}>              
-                <Webcam
-                    audio={false}
-                    height={200}
-                    ref={webcamRef}
-                    mirrored={true}
-                    screenshotFormat="image/webp"
-                    width={220}
-                    videoConstraints={videoConstraints}
-                    sx={{margin:"1rem"}}
-                  />
-              </Grid>
-              <Grid xs={8} md={8} sx={{marginLeft:{xs:"0rem",md:"8rem", lg:"8rem"}}}>
-                {webimage ?<img src={webimage} alt="" 
-                style={{
-                  //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
-                  //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
-                  height:"200px",
-                  width:"200px",
-                   objectFit: "contain"}}/>:  
-                <>{image ?<img src={(image)} alt="" 
-                // style={{maxWidth: "100%", height:"auto"
-                //  }}
-                 />:  
-                <Avatar
-                  alt="ss"
-                  sx={{ width: 200, height: 200, objectFit: "cover" }}
-                />}</>
-                }
-              </Grid>
-            </Grid>
-            
-                  <br/>
-                  <Box sx={{display:"flex", justifyContent:"space-between"}}>
-          {webimage!=''?
-          
-            <Button onClick={(e)=>
-              { 
-                e.preventDefault();
-              
-              setWebImage('')
-              
-              }}
+
+            {!webimage && !userInfo.profilephoto ? <Button
               variant="outlined"
               component="label"
+              sx={{ marginTop: "1rem" }}
+              onClick={handleOpen}
             >
-              Retake Image
+
+              Select Photo
             </Button> :
-            <Button onClick={(e)=>{
-              e.preventDefault();
-              capture();
-              setImage('')
-              
-              }}
-              variant="outlined"
-              component="label"
+              <Button
+                variant="outlined"
+                component="label"
+                sx={{ marginTop: "1rem" }}
+                onClick={handleOpen}
               >
-              Capture
-            </Button>}
-                <Button
-                  variant="outlined"
-                  component="label"
-                  disabled={image===''&& webimage ===''?true:false}
-                  onClick={handleApiWeb}
-                  
-                >
-                  Upload
-                </Button>
-                </Box>
-          </Box>
-          </Box>
-          </Typography>
+
+                Change Photo
+              </Button>}
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" sx={{fontSize:"1.5rem", fontWeight:"800", color:"primary.main", textAlign:"center"}}>
+                  Please upload your image
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  <Box>
+                    <Box >
+                      <input name="myFile" accept="image/*" type="file" onChange={handleChange} />
+
+                    </Box>
+
+                    <Typography sx={{ fontSize:"1.5rem", fontWeight:"800", color:"primary.main", textAlign:"center"}}>
+                      Or
+                    </Typography>
+                    <Box >
+                      {/* <Grid sx={{display:"flex", flexDirection:"row"}}> */}
+                      <Grid sx={{
+                        display: "flex",
+                        flexDirection: { md: "row", lg: "row", sm: "column", xs: "column" }
+                      }}>
+                        <Grid xs={4} md={4}>
+                          <Webcam
+                            audio={false}
+                            height={200}
+                            ref={webcamRef}
+                            mirrored={true}
+                            screenshotFormat="image/webp"
+                            width={220}
+                            videoConstraints={videoConstraints}
+                            sx={{ margin: "1rem" }}
+                          />
+                        </Grid>
+                        <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
+                          {webimage ? <img src={webimage} alt=""
+                            style={{
+                              //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
+                              //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
+                              height: "200px",
+                              width: "200px",
+                              objectFit: "contain"
+                            }} /> :
+                            <>{image ? <img src={(image)} alt=""
+                            // style={{maxWidth: "100%", height:"auto"
+                            //  }}
+                            /> :
+                              <Avatar
+                                alt="ss"
+                                sx={{ width: 200, height: 200, objectFit: "cover" }}
+                              />}</>
+                          }
+                        </Grid>
+                      </Grid>
+
+                      <br />
+                      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        {webimage != '' ?
+
+                          <Button onClick={(e) => {
+                            e.preventDefault();
+
+                            setWebImage('')
+
+                          }}
+                            variant="outlined"
+                            component="label"
+                          >
+                            Retake Image
+                          </Button> :
+                          <Button onClick={(e) => {
+                            e.preventDefault();
+                            capture();
+                            setImage('')
+
+                          }}
+                            variant="outlined"
+                            component="label"
+                          >
+                            Capture
+                          </Button>}
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          disabled={image === '' && webimage === '' ? true : false}
+                          onClick={handleApiWeb}
+
+                        >
+                          Upload
+                        </Button>
+                      </Box>
+                    </Box>
                   </Box>
-                </Modal>
-                </Box>
-         </Grid>        
+                </Typography>
+              </Box>
+            </Modal>
+          </Box>
+        </Grid>
       </Grid>
     </Container>
   );

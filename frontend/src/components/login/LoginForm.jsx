@@ -29,6 +29,8 @@ import {
   Collapse,
   IconButton,
   Stack,
+  CircularProgress,
+  Backdrop,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -54,7 +56,7 @@ const SESSION_CLEAR = `/api/clearalltoken`;
 const theme = createTheme();
 
 const LoginForm = (props) => {
-   
+
   const { t } = useContext(globalContext);
   const {
     userRef,
@@ -74,17 +76,17 @@ const LoginForm = (props) => {
     validMatch,
     setValidMatch,
     matchFocus,
-    setMatchFocus,   
+    setMatchFocus,
     setUser,
     matchPwd,
-    setMatchPwd,addUserobj,phone, setPhone,validPhone, phoneFocus,setPhoneFocus
+    setMatchPwd, addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus
   } = useContext(multiStepContext);
 
-    // mui telnet
-    const handleChange = (newPhone) => {
-      setPhone(newPhone);
-      // //console.log(phone)
-    }
+  // mui telnet
+  const handleChange = (newPhone) => {
+    setPhone(newPhone);
+    // //console.log(phone)
+  }
   const search = useLocation().search;
   const nameg = new URLSearchParams(search).get("gusername");
   const gobject = new URLSearchParams(search).get("gobject");
@@ -96,6 +98,7 @@ const LoginForm = (props) => {
   const [currentuser, setCurrentuser] = useState("");
   const [gName, setGname] = useState("");
   const [fName, setFname] = useState("");
+  const [load, setLoad] = useState(true);
   // const [fName, setfname] = useState('');
 
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
@@ -184,6 +187,7 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [open, setOpen] = useState(true);
+  const [backdrop, setBackdrop] = useState(false);
   const [sessionFound, setSessionFound] = useState(false);
   //to show pass
   const [showPassword, setShowPassword] = useState(false);
@@ -228,7 +232,8 @@ const LoginForm = (props) => {
     const response = await login(username, password, (response) => {
       const localStorageService = LocalStorageService.getService();
       // //console.log("response ", response);
-
+      setLoad(false);
+      setBackdrop(false)
       if (response.data.result.status === 409) {
         setSessionFound(true);
         setErrMsg(response.data.result.errMsg);
@@ -252,6 +257,11 @@ const LoginForm = (props) => {
     });
   };
 
+
+  const handleLoading=()=>{
+    setBackdrop(true)
+  }
+
   const clearSession = async () => {
     const response = await api
       .post(SESSION_CLEAR, JSON.stringify({ username }), {
@@ -259,11 +269,11 @@ const LoginForm = (props) => {
         "Access-Control-Allow-Credentials": true,
       })
       .then((response) => {
-         if(response.data.result.status === 401){
+        if (response.data.result.status === 401) {
           swal("Error!", "No active session found", "error");
-        } else if(response.data.result.status === 404){
+        } else if (response.data.result.status === 404) {
           swal("Error!", "No user found", "error");
-        } else if(response.data.result.status === 500){
+        } else if (response.data.result.status === 500) {
           swal("Oh no!", "Server error, please try again later", "error");
         } else {
           setSessionFound(false);
@@ -271,10 +281,10 @@ const LoginForm = (props) => {
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
           // setTimeout(function () {
-            swal("Sessions cleared!", "You are logged out from other devices", "info");
-           setErrMsg(null) 
+          swal("Sessions cleared!", "You are logged out from other devices", "info");
+          setErrMsg(null)
           // }, 2000);
-          
+
         }
       });
   };
@@ -282,7 +292,7 @@ const LoginForm = (props) => {
 
   // // for testing
   // useEffect(async()=>{
-    
+
   //   //console.log("JSON.stringify({ userrrrname })", ({ username }))
   //   const response = await api
   //     .post("/api/userdetails", JSON.stringify({ username }), {
@@ -296,114 +306,114 @@ const LoginForm = (props) => {
   // },[])
   return (
     // <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{ mb: 35 }}>
-        {/* <CssBaseline /> */}
-        <Box
+    <Container component="main" maxWidth="xs" sx={{ mb: 35 }}>
+      {/* <CssBaseline /> */}
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 2, bgcolor: "primary.main", p: 3 }}>
+          <LoginIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          {t("login")}
+        </Typography>
+        <Grid
+          container
+          className="SocialContainer"
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 2, bgcolor: "primary.main", p: 3 }}>
-            <LoginIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {t("login")}
-          </Typography>
-          <Grid
-            container
-            className="SocialContainer"
+          <Button
+            fullWidth
+            variant="contained"
+            // sx={{ mt: 1, mb: 1, display: "flex", flexDirection: "row" }}
             sx={{
+              mt: 1,
+              mb: 1,
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              flexDirection: "row",
+              bgcolor: "primary.main",
             }}
+            onClick={googleAuth}
           >
-            <Button
-              fullWidth
-              variant="contained"
-              // sx={{ mt: 1, mb: 1, display: "flex", flexDirection: "row" }}
-              sx={{
-                mt: 1,
-                mb: 1,
-                display: "flex",
-                flexDirection: "row",
-                bgcolor: "primary.main",
-              }}
-              onClick={googleAuth}
-            >
             <GoogleIcon
-                // className="Icons"
-                sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
-              />
-              <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
-                {t("login_with_gmail")}
-              </Typography>
-             
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 1, mb: 1 }}
-              onClick={facebookAuth}
-            >
-              <FacebookIcon
-                // className="Icons"
-                sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
-              />
-              <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
-                {t("login_with_facebook")}
-              </Typography>
-            </Button>
-            <Typography component="p" variant="p" sx={{ textAlign: "center" }}>
-              {t("or")} <br />
-              {t("login_with_email")}
+              // className="Icons"
+              sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
+            />
+            <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
+              {t("login_with_gmail")}
             </Typography>
-          </Grid>
-          {errMsg ? (
-            <Stack sx={{ width: "100%" }} spacing={2}>
-              <Alert
-                severity="error"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    {/* <CloseIcon fontSize="inherit" /> */}
-                  </IconButton>
-                }
-              >
-                <AlertTitle>Error</AlertTitle>
-                <Typography>{errMsg}</Typography>
-                {sessionFound ? (
-                  <>
-                    <Typography>
-                      Do you want to logout from all other devices?
-                    </Typography>
-                    <Button onClick={clearSession}>Clear</Button>
-                  </>
-                ) : (
-                  ""
-                )}
-              </Alert>
-            </Stack>
-          ) : (
-            ""
-          )}
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 1, mb: 1 }}
+            onClick={facebookAuth}
           >
-             {/* <MuiTelInput 
+            <FacebookIcon
+              // className="Icons"
+              sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
+            />
+            <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
+              {t("login_with_facebook")}
+            </Typography>
+          </Button>
+          <Typography component="p" variant="p" sx={{ textAlign: "center" }}>
+            {t("or")} <br />
+            {t("login_with_email")}
+          </Typography>
+        </Grid>
+        {errMsg ? (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  {/* <CloseIcon fontSize="inherit" /> */}
+                </IconButton>
+              }
+            >
+              <AlertTitle>Error</AlertTitle>
+              <Typography>{errMsg}</Typography>
+              {sessionFound ? (
+                <>
+                  <Typography>
+                    Do you want to logout from all other devices?
+                  </Typography>
+                  <Button onClick={clearSession}>Clear</Button>
+                </>
+              ) : (
+                ""
+              )}
+            </Alert>
+          </Stack>
+        ) : (
+          ""
+        )}
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          {/* <MuiTelInput 
             sx={{width:"100%", marginY:"1rem", color:"blue"}} 
             label="Phone Number"
             defaultCountry="BD" 
@@ -422,84 +432,100 @@ const LoginForm = (props) => {
               : false
             }
             /> */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label={t("email")}
-              name="username"
-              error={errMsg}
-              autoComplete="username"
-              InputProps={{
-                disableUnderline: true,
-              }}
-              inputProps={{
-                maxLength: 320,
-              }}
-              autoFocus
-              onChange={(e) => {setUsername(e.target.value);
-                props.setMail=username;
-              }}
-               
-              
-            />
-            
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label={t("password")}
-              error={errMsg}
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                // <-- This is where the toggle button is added.
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? (
-                        <VisibilityIcon />
-                      ) : (
-                        <VisibilityOffIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              //
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label={t("email")}
+            name="username"
+            error={errMsg}
+            autoComplete="username"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            inputProps={{
+              maxLength: 320,
+            }}
+            autoFocus
+            onChange={(e) => {
+              setUsername(e.target.value);
+              props.setMail = username;
+            }}
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
-            >
-              {t("login")}
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/forgotpassword" variant="body2">
-                  {t("forgot_password")}
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/registration" variant="body2">
-                  {t("no_account")}
-                </Link>
-              </Grid>
+
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label={t("password")}
+            error={errMsg}
+            type={showPassword ? "text" : "password"}
+            InputProps={{
+              // <-- This is where the toggle button is added.
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? (
+                      <VisibilityIcon />
+                    ) : (
+                      <VisibilityOffIcon />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            //
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {/* {load ? (
+            <CircularProgress sx={{
+              color:"primary.main"
+            }} />
+          ) : ( */}
+
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}
+           
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+          <Button
+            type="submit"
+            fullWidth
+            onClick={handleLoading}
+            variant="contained"
+            sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
+          >
+            {t("login")}
+          </Button>
+
+          {/* )}  */}
+          <Grid container>
+            <Grid item xs>
+              <Link href="/forgotpassword" variant="body2">
+                {t("forgot_password")}
+              </Link>
             </Grid>
-          </Box>
+            <Grid item>
+              <Link href="/registration" variant="body2">
+                {t("no_account")}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-      </Container>
+      </Box>
+    </Container>
     // </ThemeProvider>
   );
 };

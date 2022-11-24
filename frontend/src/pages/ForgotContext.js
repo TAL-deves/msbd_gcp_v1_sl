@@ -106,6 +106,7 @@ const userRef = useRef();
   const [phone, setPhone] =useState('');
   const [validPhone, setValidPhone] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
+  const [backdrop, setBackdrop] = useState(false);
 
 
 
@@ -170,6 +171,7 @@ const handleSubmitMailForget = async (e) => {
         ).then((res)=>{
           //console.log("the response is ----- ", res);
           let statusCode = res.data.result.status
+          setBackdrop(false)
           if (statusCode === 404) {
             swal("Error!", `${res.data.result.errMsg}`, "error")
           } else if (statusCode === 202) {
@@ -192,27 +194,7 @@ const handleSubmitMailForget = async (e) => {
   //otp
 	const [otp, setOTP] = useState('')
     const handleSubmitForgetOTP =async (event) => {
-        // event.preventDefault();
-      //   const response = await api.post(REQUESTPASS_URL,
-      //     JSON.stringify({ email , otp}),
-      //     {
-      //         headers: { 'Content-Type': 'application/json' },
-      //         'Access-Control-Allow-Credentials': true,             
-      //     }               
-      // ).then(response => {
-      //   let data = response.data.result.isError
-      //   //console.log(response.data.result.isError);
-      //   // setForgetApiresponse(response) 
-      //   if(data === true){
-      //     // alert("wrong OTP")
-      //     //console.log("wrong otp")
-      //     setErrMsg("Wrong OTP")
-      //     // window.location.reload();
-      //   }
-      // else{
-      //   //console.log('first')
-      //   navigate("/ForgotResetPassword")   
-      // }})
+    
 
       const response = await api
       .post(REQUESTPASS_URL, JSON.stringify({ phoneNumber, otp }), {
@@ -222,6 +204,7 @@ const handleSubmitMailForget = async (e) => {
       .then((response) => {
         let data = response.data.result.status;
         let dataMsg = response.data.data.data;
+        setBackdrop(false);
         if (data === 406) {
           setErrMsg("Invalid OTP");
           swal("Invalid OTP", `Please check again`, "error");
@@ -261,6 +244,7 @@ const handleSubmitNewPassword = async (e) => {
       ).then((response)=>{
         swal("Password changed!", `Redirecting to login page`, "success", {timer: 1000});
         setSuccess(true);
+        setBackdrop(false)
         navigate("/login")
       })   
   //     //console.log(response)     
@@ -306,6 +290,7 @@ const response = await api
       .then((response) => {
         //console.log(response.data.data);
         let data = response.data.result.status
+        setBackdrop(false)
         if(data === 302){
           swal("OTP sent!", `Please verify to continue, ${response.data.data} try left`, "warning")
         } else if(data === 406){
@@ -327,7 +312,7 @@ const response = await api
     
     return (
         <div>
-            <multiForgotContext.Provider value={{setPhone,setPhoneFocus,phone, phoneFocus,validPhone,phoneNumber,responseprop, Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
+            <multiForgotContext.Provider value={{backdrop,setBackdrop,setPhone,setPhoneFocus,phone, phoneFocus,validPhone,phoneNumber,responseprop, Copyright, renderer,otp, setOTP,handleSubmitForgetOTP,
                 emailRef,errRef, validName, setValidName,
                userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,

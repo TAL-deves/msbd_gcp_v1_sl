@@ -74,6 +74,9 @@ const axios = require("axios");
 const coursesData = require("./data/courses");
 const allCourses = require("./data/allCourses");
 const allInstructors = require("./data/instructors");
+const logData = require("./Database/models/logData");
+const loginData = require("./Database/models/loginData");
+const purchaseData = require("./Database/models/purchaseData");
 
 // const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
 
@@ -915,23 +918,7 @@ app.post("/api/signup", async (req, res, next) => {
           );
 
           res.send(responseToSend);
-          // res.send({
-          //   data: {
-          //     message: "User registered!",
-          //     // fullname: data.fullname,
-          //     // username: data.username,
-          //     // email: data.email,
-          //     // otp: data.otp, //temporary visible
-          //     // createdOn: data.creation_date,
-          //   },
-          //   result: {
-          //     isError: false,
-          //     status: 202,
-          //     errorMsg: "",
-          //   },
-          // });
-          // })
-          // .catch((error) => {
+          
         } else {
           let setSendResponseData = new sendResponseData(
             null,
@@ -967,7 +954,7 @@ app.post("/api/verify", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    console.log("req.body --- ", req.body);
+    // console.log("req.body --- ", req.body);
     const { email, otp } = req.body;
     const user = await validateUserSignUp(email, otp);
     // let setSendResponseData = new sendResponseData(
@@ -1584,6 +1571,7 @@ app.post("/api/forget-password", async (req, res) => {
 
     const user = await signUpTemplateCopy.findOne({
       email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
       locked: false,
     });
 
@@ -1629,7 +1617,7 @@ app.post("/api/forget-password", async (req, res) => {
         }); // Sending OTP to email address
 
         sendSms({
-          reciever: user.email,
+          reciever: user.phoneNumber,
           OTP: otpGenerated,
         });
 
@@ -1707,7 +1695,7 @@ app.post("/api/request-password", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const { email, otp } = req.body; //getting data from request
+    const { phoneNumber, email, otp } = req.body; //getting data from request
     const user = await validateUserSignUp(email, otp); //validating user with OTP
     // res.json(user); //Sending response
     let setSendResponseData = new sendResponseData(user, 200, null);
@@ -2094,7 +2082,7 @@ app.post("/api/instructor", (req, res) => {
 
 //! ********** Token portoion ***********/
 
-const validateUserSignUp = async (email, otp) => {
+const validateUserSignUp = async (phoneNumber, email, otp) => {
   const user = await signUpTemplateCopy.findOne({
     email,
   });
@@ -2273,7 +2261,7 @@ app.post("/api/buy", async (req, res) => {
   const name = req.body.user;
   const phone = "01234567891";
   const email = "test@test.com";
-  const courseList = ["C001", "C002"];
+  const courseList = ["C001"];
   const total = 10;
 
   // console.log("data - ", req.body);
@@ -2438,7 +2426,7 @@ app.post("/api/ssl-payment-success", async (req, res) => {
   //       setSendResponseData
   //     )}`
   // );
-  res.redirect(process.env.CLIENT_URL_DEVELOPMENT + `courses?payment=success`);
+  res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
 
   //  setTimeout(()=>{
   //   res.redirect(`localhost:3000/
@@ -2461,7 +2449,7 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
   //   message: "Payment failed",
   // });
 
-  res.redirect(process.env.CLIENT_URL_DEVELOPMENT + `courses?payment=failed`);
+  res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
 });
 
 app.post("/api/ssl-payment-cancel", async (req, res) => {
@@ -2631,6 +2619,24 @@ app.post("/api/atestingpoint", async (req, res) => {
     res.send(`Failed with status code ` + smssent.status_code);
   }
 });
+
+app.get("/api/checklogdata", async (req, res) => {
+  let totalusers = await signUpTemplateCopy.count();
+  let totalViews = await logData.count();
+  let totalLogins = await loginData.count();
+  let totalPurchases = await purchaseData.count();
+  let totalLoggedinUsers = await tokenModel.count();
+
+  let data = {
+    totalUsers : totalusers,
+    totalViews : totalViews,
+    totalLogins : totalLogins,
+    totalPurchases : totalPurchases,
+    totalLoggedinUsers : totalLoggedinUsers,
+  }
+
+  res.json(data)
+})
 
 
 let port = process.env.PORT;

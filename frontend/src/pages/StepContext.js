@@ -113,6 +113,8 @@ const userRef = useRef();
 
   const [resendbtn, setResendbtn] = useState(true);
 
+  const [backdrop, setBackdrop] = useState(false);
+
 
 const phoneNumber = phone.replace(/\s/g, '');
 
@@ -210,7 +212,7 @@ const handleSubmitRegistration = async (e) => {
                 
             }
         );   
-     
+        setBackdrop(false)
         //console.log("registration response  ---- ", response.data.result.status)
         let errResponse = response.data.result.status
        //console.log(errResponse)
@@ -225,7 +227,7 @@ const handleSubmitRegistration = async (e) => {
         } else {
           swal("Error!",`${response.data.result.errMsg}`, "error")
         }
-    
+        
      //return response
    
     } catch (err) {
@@ -272,7 +274,7 @@ const handleSubmitRegistration = async (e) => {
     ).then(response => {
       let data = response.result.isError
       //console.log(data);
-      
+      setBackdrop(false)
     if(data[0] === 'Invalid OTP'){
       setErrMsg("Wrong OTP")
       //console.log("wrong otp")
@@ -297,7 +299,7 @@ const handleSubmitRegistration = async (e) => {
 
     return (
         <div>
-            <multiStepContext.Provider value={{resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
+            <multiStepContext.Provider value={{backdrop, setBackdrop,resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
                 emailRef,errRef, validName, setValidName,
                 userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,

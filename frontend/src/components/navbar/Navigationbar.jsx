@@ -177,37 +177,37 @@ const Navigationbar = (props) => {
       {/* <Paper> */}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-          <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}>
-            {/* <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt:1 }}>
-              {localStorage.getItem("theme")==="theme"?
-              <img src={logonill} alt="logo" width="50" />
-              :
-              <img src={Ms_logo} alt="logo" width="50" />}
-              
-              {/* <img src={logonill} alt="logo" width="50" /> */}
-              
-            </Box>
-          </Link>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "none", lg: "flex" },
-              // fontFamily: "monospace",
-              fontWeight: 700,
-              // letterSpacing: ".3rem",
-              color: "other.white",
-              textDecoration: "none",
-            }}
-          >
-            {/* Mind School */}
-            {t("brand")}
-          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}>
+              {/* <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+              <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
+                {localStorage.getItem("theme") === "theme" ?
+                  <img src={logonill} alt="logo" width="50" />
+                  :
+                  <img src={Ms_logo} alt="logo" width="50" />}
+
+                {/* <img src={logonill} alt="logo" width="50" /> */}
+
+              </Box>
+            </Link>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "none", lg: "flex" },
+                // fontFamily: "monospace",
+                fontWeight: 700,
+                // letterSpacing: ".3rem",
+                color: "other.white",
+                textDecoration: "none",
+              }}
+            >
+              {/* Mind School */}
+              {t("brand")}
+            </Typography>
           </Box>
           {/* <h1>{t("welcome")}</h1> */}
 
@@ -240,19 +240,86 @@ const Navigationbar = (props) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => ( */}
+              <>
                 <Link
-                  key={page.title}
-                  to={page.href}
+                  key={t("home")}
+                  to={"/"}
                   style={{ textDecoration: "none", color: "#000" }}
                 >
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography sx={{ color: "primary.main" }}>
-                      {page.title}
+                      {t("home")}
                     </Typography>
                   </MenuItem>
                 </Link>
-              ))}
+                <Link
+                  key={t("course")}
+                  to={"/courses"}
+                  style={{ textDecoration: "none", color: "#000" }}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography sx={{ color: "primary.main" }}>
+                      {t("course")}
+                    </Typography>
+                  </MenuItem>
+                </Link>
+                <Link
+                  key={t("about")}
+                  to={"/about"}
+                  style={{ textDecoration: "none", color: "#000" }}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography sx={{ color: "primary.main" }}>
+                      {t("about")}
+                    </Typography>
+                  </MenuItem>
+                </Link>
+                <Link
+                  key={t("contact")}
+                  to={"/contact"}
+                  style={{ textDecoration: "none", color: "#000" }}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography sx={{ color: "primary.main" }}>
+                      {t("contact")}
+                    </Typography>
+                  </MenuItem>
+                </Link>
+              {/* for mobile  */}
+                <FormControl
+                  sx={{
+                    minWidth: 90,
+                    marginRight: "5px",
+                    marginLeft: "5px",
+                    // display: { xs: "none", md: "block" },
+                  }}
+                >
+                  <Select
+                    defaultValue={"en"}
+                    variant="outlined"
+                    displayEmpty
+                    name="language"
+                    notched={false}
+                    size="small"
+                    onChange={onChange}
+                    sx={{
+                      color: "secondary.main",
+                      border: "2px",
+                      "&:hover": {
+                        border: "2px",
+                      },
+                    }}
+                  >
+                    <MenuItem value="en">English</MenuItem>
+                    <MenuItem value="bn">বাংলা</MenuItem>
+                  </Select>
+                </FormControl>
+
+              </>
+
+
+              {/* ))} */}
             </Menu>
           </Box>
           {/* <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}>
@@ -276,7 +343,12 @@ const Navigationbar = (props) => {
             }}
           >
             {/* <img src={logo2} alt="logo" width="30" /> */}
-            <img src={Ms_logo} alt="logo" width="30" />
+
+            {localStorage.getItem("theme") === "theme" ?
+              <img src={logonill} alt="logo" width="30" />
+              :
+              <img src={Ms_logo} alt="logo" width="30" />}
+
             {t("brand")}
           </Typography>
           {/* </Box>
@@ -307,35 +379,37 @@ const Navigationbar = (props) => {
             }}
           >
             {pages.map((page) => (
-            
-                <Link
-                
-                  to={page.href}
-                  style={{ textDecoration: "none", color: "#fff" }}
-                >
-                    <Button
-                className="NavMenus"
-                key={page.title}
-                onClick={handleCloseNavMenu}
-                textAlign="center"
-                sx={{
-                  // py: 2,
-                  color: "secondary.main",
-                  display: "block",
-                  padding: "0 55px",
-                  fontSize:"1rem"
-                }}
+
+              <Link
+
+                to={page.href}
+                style={{ textDecoration: "none", color: "#fff" }}
               >
+                <Button
+                  className="NavMenus"
+                  key={page.title}
+                  onClick={handleCloseNavMenu}
+                  textAlign="center"
+                  sx={{
+                    // py: 2,
+                    color: "secondary.main",
+                    display: "block",
+                    padding: "0 55px",
+                    fontSize: "1rem"
+                  }}
+                >
                   {page.title}
-                  </Button>
-                </Link>
+                </Button>
+              </Link>
             ))}
           </Box>
+
+          {/* for big screen  */}
           <FormControl
             sx={{
               minWidth: 90,
               marginRight: "5px",
-              // display: { xs: "none", md: "block" },
+              display: { xs: "none", md: "block" },
             }}
           >
             <Select
@@ -362,7 +436,7 @@ const Navigationbar = (props) => {
             // localstoragedata
             <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              
+
                 <Button
                   variant="outlined"
                   onClick={handleOpenUserMenu}
@@ -373,11 +447,11 @@ const Navigationbar = (props) => {
                     marginRight: "15px",
                   }}
                 >
-                 {/* <Link to="/userprofile" style={{ textDecoration: "none", color:"white"}}> */}
+                  {/* <Link to="/userprofile" style={{ textDecoration: "none", color:"white"}}> */}
                   {t("myAccount")}
                   {/* </Link> */}
                 </Button>
-                
+
                 <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"
@@ -393,7 +467,7 @@ const Navigationbar = (props) => {
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
-                  // onMouseLeave={()=>handleCloseUserMenu}
+                // onMouseLeave={()=>handleCloseUserMenu}
                 >
                   <Link to="/userprofile" style={textstyle}>
                     <MenuItem
@@ -429,8 +503,8 @@ const Navigationbar = (props) => {
                   className="Login"
                   variant="contained"
                   sx={{
-                  color: "other.white",
-                  backgroundColor: "secondary.main",
+                    color: "other.white",
+                    backgroundColor: "secondary.main",
                     "&:hover": {
                       color: "other.white",
                       backgroundColor: "secondary.main",
@@ -470,15 +544,15 @@ const Navigationbar = (props) => {
                         }
                       })
                       .catch((err) => {
-                        swal("Opps!", "There is a server error", "error", {className:"swal-button"});
+                        swal("Opps!", "There is a server error", "error", { className: "swal-button" });
                         // window.location.href = "/login";
                       });
                   }}
                 >
                   {t("logout")}
                 </Button>
-               
-              
+
+
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <AccountCircleIcon

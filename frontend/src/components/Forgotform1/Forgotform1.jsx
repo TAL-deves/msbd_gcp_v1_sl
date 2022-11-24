@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Collapse, CssBaseline, IconButton, Stack } from '@mui/material';
+import { Alert, AlertTitle, Backdrop, CircularProgress, Collapse, CssBaseline, IconButton, Stack } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {React,useState} from 'react';
 import { useContext } from 'react';
@@ -24,7 +24,7 @@ import { MuiTelInput } from 'mui-tel-input';
 
 const Forgotform1 = () => {
   const [open, setOpen] = useState(true);
-    const {userRef, 
+    const {backdrop,setBackdrop, userRef, 
         emailRef,errRef, validName, setValidName,
        userFocus, setUserFocus,validEmail, setValidEmail,
          email, setEmail,emailFocus, setEmailFocus,
@@ -37,6 +37,11 @@ const Forgotform1 = () => {
         const handleChange = (newPhone) => {
           setPhone(newPhone);
           // //console.log(phone)
+        }
+
+        const handleLoading=()=>{
+          setBackdrop(true)
+          handleSubmitMailForget()
         }
         return (
         <Box >
@@ -145,11 +150,17 @@ const Forgotform1 = () => {
           
      
         </Box>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}           
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         <Button
             variant="contained"
             color="primary"
             disabled={password !== matchPwd}
-            onClick={handleSubmitMailForget}
+            onClick={handleLoading}
             sx={{ mt: "6rem",mb: "30%" }}
           >
             Submit
