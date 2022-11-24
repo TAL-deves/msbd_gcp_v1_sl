@@ -2082,10 +2082,11 @@ app.post("/api/instructor", (req, res) => {
 
 //! ********** Token portoion ***********/
 
-const validateUserSignUp = async (phoneNumber, email, otp) => {
+const validateUserSignUp = async (email, otp) => {
   const user = await signUpTemplateCopy.findOne({
     email,
   });
+  console.log("validateUserSignUp ----- ", user);
   if (!user) {
     let msg = {
       data: null,
