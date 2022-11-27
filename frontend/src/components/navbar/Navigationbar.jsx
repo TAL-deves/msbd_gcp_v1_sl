@@ -406,7 +406,7 @@ const Navigationbar = (props) => {
           </Box>
 
           {/* for big screen  */}
-          {/* <FormControl
+          <FormControl
             sx={{
               minWidth: 90,
               marginRight: "5px",
@@ -432,7 +432,7 @@ const Navigationbar = (props) => {
               <MenuItem value="en">English</MenuItem>
               <MenuItem value="bn">বাংলা</MenuItem>
             </Select>
-          </FormControl> */}
+          </FormControl>
 
           {/* new button for en bn  */}
          
