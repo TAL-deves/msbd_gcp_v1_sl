@@ -153,14 +153,14 @@ const Courses = (props) => {
                 {/* for ssl  */}
                 <Box sx={{ width: {xs:"100%", sm:"47%", md:"45%", lg:"40%", xl:"40%"}, mb: "1rem",mr:{xs:"0rem", sm:"1rem", md:"1rem", lg:"1rem", xl:"1rem"} }}>
                 <SSLCourseCard
-                          title={courses[0].title}
-                          id={courses[0].courseID}
-                          img={courses[0].thumbnail}
-                          instructor={courses[0].instructor.name}
-                          price={courses[0].price}
-                          hour={courses[0].courseLength}
-                          lecture={courses[0].totalLecture}
-                          fullObject={{ ...courses[0] }}
+                          title={courses[2].title}
+                          id={courses[2].courseID}
+                          img={courses[2].thumbnail}
+                          instructor={courses[2].instructor.name}
+                          price={courses[2].price}
+                          hour={courses[2].courseLength}
+                          lecture={courses[2].totalLecture}
+                          fullObject={{ ...courses[2] }}
                           updateCourse={updateCourse}
                           
                         />

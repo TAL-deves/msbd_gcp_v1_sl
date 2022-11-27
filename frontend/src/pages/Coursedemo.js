@@ -70,14 +70,14 @@ const Coursedemo = () => {
   const [coursesVdoList, setCoursesVdoList] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
   const [vdotitle, setVdotitle] = React.useState();
-  
+
 
   let location = useLocation();
 
   let courseData = location.state.courseId;
   let courseID = courseData.courseID;
 
-  
+
   const textstyle = {
     textDecoration: "none",
   };
@@ -89,18 +89,18 @@ const Coursedemo = () => {
   };
 
 
-//  review submit 
+  //  review submit 
   let handleSubmitReview = async () => {
     const response = await api
       .post(COURSE_URL, JSON.stringify({ username, courseID, review }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
-      .then((data)=>{
-          //console.log(data.status)
-          if(data.status===200){
-            swal("Review Submitted","","success")
-          }
+      .then((data) => {
+        //console.log(data.status)
+        if (data.status === 200) {
+          swal("Review Submitted", "", "success")
+        }
       });
 
     //console.log("response", response);
@@ -114,14 +114,13 @@ const Coursedemo = () => {
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        data.data.data.lessons.map((lesson)=>
-        {lesson["isVdoSet"]=false})
+        data.data.data.lessons.map((lesson) => { lesson["isVdoSet"] = false })
         setCoursesVdoList(data.data.data.lessons);
         setVideoID(data.data.data.lessons[0].videoID)
         //console.log("vdo list");
       });
   };
-  
+
   let fetchVdoCipher = useCallback(async () => {
     await api
       .post(VIDEOCIPHER_URL, JSON.stringify({ videoID }), {
@@ -143,7 +142,7 @@ const Coursedemo = () => {
   const container = useRef();
   const [isVideoAdded, setIsVideoAdded] = useState(false);
   const loadVideo = useCallback(
-    ({ otp, playbackInfo, container, configuration,courseVdo }) => {
+    ({ otp, playbackInfo, container, configuration, courseVdo }) => {
       const params = new URLSearchParams("");
       const parametersToAdd = { otp, playbackInfo, ...configuration };
       for (const item in parametersToAdd) {
@@ -156,7 +155,7 @@ const Coursedemo = () => {
       iframe.style = "height: 100%; width: 100%;overflow: auto;";
       iframe.src = "https://player.vdocipher.com/v2.0/?" + params;
       container.append(iframe);
-      courseVdo["isVdoSet"]=true;
+      courseVdo["isVdoSet"] = true;
     },
     []
   );
@@ -169,7 +168,7 @@ const Coursedemo = () => {
 
       if (!container.current) return;
       if (courseVdo["isVdoSet"]) {
-        courseVdo["isVdoSet"]=false;
+        courseVdo["isVdoSet"] = false;
         // return (container.current.innerHTML = "Click Add Video button");
       }
       container.current.innerHTML = "";
@@ -177,7 +176,6 @@ const Coursedemo = () => {
       //console.log("otp b4 load", otp);
       //console.log("playbackInfo b4 load", playbackInfo);
       loadVideo({
-        // ...otpplayback,
         otp: otp,
         playbackInfo: playbackInfo,
         // otp: "",
@@ -193,7 +191,7 @@ const Coursedemo = () => {
 
   return (
     <>
-      
+
       <Container sx={{ marginTop: "5%", marginBottom: "10%" }}>
         <Box
           container
@@ -212,11 +210,11 @@ const Coursedemo = () => {
         >
           <Box item xs={6} sx={{ marginRight: "2%" }}>
             {coursesVdoList.map((courseVdo) => {
-              courseVdo["isVdoAdded"]=false
+              courseVdo["isVdoAdded"] = false
               return (
-                <Accordion sx={{width:"20rem"}} expanded={expanded === `${courseVdo.title}`} onChange={handleChange(`${courseVdo.title}`)
-              }>
-                                   
+                <Accordion sx={{ width: "20rem" }} expanded={expanded === `${courseVdo.title}`} onChange={handleChange(`${courseVdo.title}`)
+                }>
+
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -225,33 +223,33 @@ const Coursedemo = () => {
                     <Typography>{courseVdo.title}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography sx={{cursor: "pointer"}} onClick={()=>{
+                    <Typography sx={{ cursor: "pointer" }} onClick={() => {
                       api
-                      .post(
-                        VIDEOCIPHER_URL,
-                        JSON.stringify({ videoID: courseVdo.videoID }),
-                        {
-                          headers: { "Content-Type": "application/json" },
-                          "Access-Control-Allow-Credentials": true,
-                        }
-                      )
-                      .then((data) => {
-                        setOtp(data.data.data.otp);
-                        setPlaybackInfo(data.data.data.playbackInfo);
-                        handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
-                        setVdotitle(`${courseVdo.title}`)
-                       
-                      });
+                        .post(
+                          VIDEOCIPHER_URL,
+                          JSON.stringify({ videoID: courseVdo.videoID }),
+                          {
+                            headers: { "Content-Type": "application/json" },
+                            "Access-Control-Allow-Credentials": true,
+                          }
+                        )
+                        .then((data) => {
+                          setOtp(data.data.data.otp);
+                          setPlaybackInfo(data.data.data.playbackInfo);
+                          handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
+                          setVdotitle(`${courseVdo.title}`)
+
+                        });
                     }}>
                       {/* {courseData.description[0]}<br/> */}
                       {/* {courseVdo.videoID} */}
                       Click here to play the Video
                       <br />
-                     
+
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
-                
+
               );
             })}
 
@@ -279,9 +277,14 @@ const Coursedemo = () => {
           >
                     <Typography>{vdotitle}</Typography>
             Click Add Video button
+
           </Box>
-          
-          </Box>
+
+ 
+          {/* <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "80%", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </Box> */}
+        </Box>
         {/* </Box> */}
       </Container>
       <Container sx={{ display: "flex", flexDirection: "column" }}>

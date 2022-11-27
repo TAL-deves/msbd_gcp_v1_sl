@@ -23,6 +23,7 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   InputLabel,
   NativeSelect,
   Paper,
@@ -118,7 +119,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navigationbar = (props) => {
   const { userobj } = useContext(multiStepContext);
 
-  const { t, onChange } = useContext(globalContext);
+  const { t, onChange, count } = useContext(globalContext);
 
   const userId = localStorage.getItem("access_token");
   // //console.log("user local:",userId)
@@ -405,7 +406,7 @@ const Navigationbar = (props) => {
           </Box>
 
           {/* for big screen  */}
-          <FormControl
+          {/* <FormControl
             sx={{
               minWidth: 90,
               marginRight: "5px",
@@ -431,7 +432,12 @@ const Navigationbar = (props) => {
               <MenuItem value="en">English</MenuItem>
               <MenuItem value="bn">বাংলা</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
+
+          {/* new button for en bn  */}
+         
+           
+
           {userId ? (
             // localstoragedata
             <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>

@@ -27,12 +27,13 @@ const GlobalContext = (props) => {
   const onChange = (event) => {
     i18n.changeLanguage(event.target.value);
     setCount((previousCount) => previousCount + 1);
+    console.log("count",count)
   };
 
  
     return (
         <div>
-            <globalContext.Provider value={{t,onChange}}>
+            <globalContext.Provider value={{t,onChange, count}}>
                     
                     {props.children}
                  

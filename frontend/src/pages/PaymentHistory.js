@@ -79,8 +79,8 @@ const PaymentHistory = () => {
 
     {/* data show */}
 
-    <TableContainer component={Paper} sx={{marginTop:"4rem"}}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{marginTop:"6rem"}}>
+      <Table sx={{ minWidth: 650}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Course Name</TableCell>

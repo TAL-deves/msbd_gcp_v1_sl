@@ -121,6 +121,7 @@ const SideCart = (props) => {
     swal("Error!", "payment is not successfull", "error",).then(()=>{
       
       // window.close();
+      navigate("/courses")
     })
   }
   

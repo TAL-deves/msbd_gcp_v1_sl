@@ -57,7 +57,10 @@ const InstructorInCourseDetails = (props) => {
         {title}
         </Typography>
         <Typography variant="h7" color="black">
-        {instructor}
+          {/* uncomment after ssl  */}
+        {/* {instructor} */}
+
+        Instructor
         </Typography>
         </Box>
     </Box>

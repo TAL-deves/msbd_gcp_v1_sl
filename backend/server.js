@@ -954,7 +954,7 @@ app.post("/api/verify", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    console.log("req.body --- ", req.body);
+    // console.log("req.body --- ", req.body);
     const { email, otp } = req.body;
     const user = await validateUserSignUp(email, otp);
     // let setSendResponseData = new sendResponseData(
@@ -2082,11 +2082,10 @@ app.post("/api/instructor", (req, res) => {
 
 //! ********** Token portoion ***********/
 
-const validateUserSignUp = async (email, otp) => {
+const validateUserSignUp = async (phoneNumber, email, otp) => {
   const user = await signUpTemplateCopy.findOne({
     email,
   });
-  console.log("validateUserSignUp ----- ", user);
   if (!user) {
     let msg = {
       data: null,
@@ -2271,10 +2270,10 @@ app.post("/api/buy", async (req, res) => {
     total_amount: parseFloat(total),
     currency: "BDT",
     tran_id: "REF123",
-    success_url: `${process.env.SERVER_URL}/api/ssl-payment-success`,
-    fail_url: `${process.env.SERVER_URL}/api/ssl-payment-fail`,
-    cancel_url: `${process.env.SERVER_URL}/api/ssl-payment-cancel`,
-    ipn_url: `${process.env.SERVER_URL}/api/ssl-payment-notification`,
+    success_url: `${process.env.ROOT}/api/ssl-payment-success`,
+    fail_url: `${process.env.ROOT}/api/ssl-payment-fail`,
+    cancel_url: `${process.env.ROOT}/api/ssl-payment-cancel`,
+    ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
     shipping_method: "No",
     product_name: JSON.stringify(courseList),
     product_category: "Courses",

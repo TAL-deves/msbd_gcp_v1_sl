@@ -45,8 +45,8 @@ const Banner = () => {
           {/* <Grid xs={4}> */}
             <Grid
               xs={12}
-              md={10}
-              lg={7}
+              md={5}
+              lg={6}
               xl={5}
               sx={{
                 // height: "30vh",
@@ -76,8 +76,9 @@ const Banner = () => {
           <Grid
           
             xs={12}
-            md={10}
-            lg={4}
+            sm={8}
+            md={6}
+            lg={6}
             xl={6}
             sx={{
               // backgroundImage: `url(${bannerimage})`,

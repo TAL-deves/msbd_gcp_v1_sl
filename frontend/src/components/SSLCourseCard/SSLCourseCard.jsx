@@ -126,10 +126,10 @@ const SSLCourseCard = (props) => {
             fontWeight:"500"
           }}
         >
-          {title ? <>{title}</> : <>Course title</>}
+          {title ? <>Demo</> : <>Course title</>}
         </Typography>
         <Typography variant="body2" noWrap color="text.secondary">
-          {instructor ? <>{instructor}</> : <>Course instructor</>}
+          {instructor ? <>D. Almasur Rahman</> : <>Course instructor</>}
         </Typography>
         <Typography variant="h6">
           {price ? <>&#x9F3;10</> : <>&#x9F3;Course price</>}
