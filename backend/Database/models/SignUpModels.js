@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const signUpTemplate = new mongoose.Schema({
   fullname: {
@@ -35,6 +35,9 @@ const signUpTemplate = new mongoose.Schema({
   profilephoto: {
     type: String,
   },
+  googleprofilephoto: {
+    type: String,
+  },
   otp: {
     type: String,
   },
@@ -68,28 +71,38 @@ const signUpTemplate = new mongoose.Schema({
   },
   purchasedCourses: {
     type: Array,
-    default: []
+    default: [],
   },
   loggedinID: {
     type: String,
-    default: null
+    default: null,
   },
   creation_date: {
     type: Date,
     default: Date.now,
   },
+  gender: {
+    type: String,
+  },
+  streetAddress: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  postCode: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
 });
 
-signUpTemplate.pre('save', async function (next) {
-  if(this.isModified('password')){
+signUpTemplate.pre("save", async function (next) {
+  if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 12);
   }
   next();
-})
-
-
+});
 
 module.exports = mongoose.model("userData", signUpTemplate);
-
-
-

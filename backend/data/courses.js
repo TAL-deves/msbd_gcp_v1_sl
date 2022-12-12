@@ -4,7 +4,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -24,7 +24,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -44,7 +44,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -64,7 +64,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -84,7 +84,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -104,7 +104,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {
@@ -124,7 +124,7 @@ let coursesData = [
     lessons: [
       {
         title: "Mind school introduction",
-        videoID: "33f6ddc02929416c9dfe31d22d194309",
+        videoID: "2e9a5ded35a46db6f14188fcee0d9167",
         length: "01:25",
       },
       {

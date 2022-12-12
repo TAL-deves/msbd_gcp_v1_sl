@@ -1,12 +1,34 @@
-import { Typography } from '@mui/material'
+import { Button, TextField, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
-import React from 'react';
+import React, { useState } from 'react';
 import Divider from '@mui/material/Divider';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import api from "../../api/Axios";
+import swal from "sweetalert";
+
+const LEAVE_MESSAGE_URL = "/api/leave-a-message";
 
 const Contact = () => {
+  const [leaveMessage, setLeaveMessage]= useState("")
   AOS.init({duration:2000});
+
+  //  message submit 
+  let handleLeaveMessage = async () => {
+    const response = await api
+      .post(LEAVE_MESSAGE_URL, JSON.stringify({ leaveMessage }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((data) => {
+        //console.log(data.status)
+        if (data.status === 200) {
+          swal("Review Submitted", "", "success")
+        }
+      });
+
+    //console.log("response", response);
+  };
   return (
 
     <Container sx={{height:"60vh"}}>
@@ -21,6 +43,30 @@ const Contact = () => {
       <Typography sx={{fontSize:"1.2rem", fontWeight:"bold",marginTop:"1rem", color:"primary.main"}} >Contact</Typography>
       <Typography sx={{color:"primary.main"}} >+880248811161</Typography>
       <Typography sx={{color:"primary.main"}} >+880248811162</Typography>
+    
+
+      <Container sx={{ display: "flex",alignItems:"center", flexDirection: "column", mt:"4rem" }}>
+      <Typography sx={{fontSize:"2rem", fontWeight:"bolder", border:"1px solid #f8b100",borderRadius:"10px", backgroundColor:"secondary.main", padding:"1rem", marginTop:".5rem", color:"primary.main"}} >Leave a Message</Typography>
+        <TextField
+          sx={{ margin: "2%" , width:"50%"}}
+          id="outlined-basic"
+          
+          multiline
+          rows={2}
+          label="Message"
+          variant="outlined"
+          onChange={(e) => setLeaveMessage(e.target.value)}
+        />
+        <Button
+          sx={{ margin: "2%" }}
+          variant="contained"
+          onClick={handleLeaveMessage}
+        >
+          Send
+        </Button>
+      </Container>
+    
+    
     </Box>
     
     </Container>

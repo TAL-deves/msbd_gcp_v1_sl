@@ -36,7 +36,8 @@ const REGISTRATION_URL = '/api/signup';
 const USER_REGEX = /^[A-z" "]{3,50}$/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // const PWD_REGEX = /^[0-9]{6,20}/;
-const PHONE_REGEX = /^[0-9+]{14,15}/;
+
+const PHONE_REGEX = /^([+]8801){1}[3456789]{1}(\d){8}$/;
 const PWD_REGEX = /^[A-z0-9!@#$%^&*+-:;<>?/)(_~-]{8,23}$/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const theme = createTheme();
@@ -204,8 +205,9 @@ const handleSubmitRegistration = async (e) => {
   // }
     try {
         // //console.log(user, pwd, email)
+        let fullname= username;
         const response = await api.post(REGISTRATION_URL,
-            JSON.stringify({ phoneNumber ,username, password , email, matchPwd}),
+            JSON.stringify({ phoneNumber ,fullname, password , email, matchPwd}),
             {
                 headers: { 'Content-Type': 'application/json' },
                 'Access-Control-Allow-Credentials': true,
@@ -256,7 +258,7 @@ const handleSubmitRegistration = async (e) => {
 	const [otp, setOTP] = useState('')
     
 
-      //
+      // 
 
        //resend verify
 
@@ -299,7 +301,7 @@ const handleSubmitRegistration = async (e) => {
 
     return (
         <div>
-            <multiStepContext.Provider value={{backdrop, setBackdrop,resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
+            <multiStepContext.Provider value={{phoneNumber,backdrop, setBackdrop,resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
                 emailRef,errRef, validName, setValidName,
                 userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,

@@ -53,6 +53,8 @@ import RefundPolicy from "./pages/RefundPolicy";
 import swal from "sweetalert";
 import { WindowSharp } from "@mui/icons-material";
 import Contact from "./components/Contact/Contact";
+import Payment from "./pages/Payment";
+import ProfileTabs from "./pages/ProfileTabs";
 
 const PROFILE_URL=`api/profile`
 
@@ -283,7 +285,7 @@ function App() {
               path="ForgotRequestpassword"
               element={
                 <ForgotContext>
-                  <Forgot_Requestpassword />
+                  <Forgot_Requestpassword/>
                 </ForgotContext>
               }
             />
@@ -303,6 +305,7 @@ function App() {
             } />
             <Route path="cart" element={<Cart />} />
             <Route path="course-details" element={<CoursesDetails />} />
+            <Route path="payment-info" element={<Payment />} />
 
             {/* //! Underconstruction */}
 
@@ -321,7 +324,8 @@ function App() {
               path="course"
               element={user ? <Course /> : <Navigate to="/login" />}
             />
-            <Route path="userprofile" element={<UserProfile />} />
+            {/* <Route path="userprofile" element={<UserProfile />} /> */}
+            <Route path="userprofile" element={<ProfileTabs />} />
             <Route path="mycourses" element={<MyCourses />} />
             <Route path="paymenthistory" element={<PaymentHistory />} />
             <Route path="myfeedback" element={<MyFeedbacks />} />
@@ -335,14 +339,18 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPolicy />} />
             <Route path="terms-and-conditions" element={<TermsCondition />} />
-          </Routes>         
+          </Routes> 
+
           {/* <Footer /> */}
           <Wavefooter/>
+          {/* <ProfileTabs/> */}
           <ScrollToTop smooth color="primary.main" />
+          
       
         </Paper>
         </StepContext>
         </GlobalContext>
+        
       </ThemeProvider>
     {/* </Scrollbars> */}
     </BrowserRouter>

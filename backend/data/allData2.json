@@ -1,0 +1,852 @@
+{
+  "_id": {
+    "$oid": "638c7b543510413d197d4933"
+  },
+  "coursesData": {
+    "en": [
+      {
+        "courseID": "C001",
+        "title": "Fearless Belive",
+        "introduction": "Practical mindfulness meditation course showing the method how to increase concentration and reduce stress",
+        "description": [
+          "By the end of this programme you will have experienced and practiced all of the key mindfulness meditations. You will have learned how to",
+          "Develop your mental capacity, concentration, capability and focus",
+          "Calm yourself in moments of anger, high stress and anxiety",
+          "Develop ongoing resilience to stress and anxiety",
+          "Deal calmly with stressful communications"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "courseLength": "07",
+        "totalLecture": "15",
+        "price": "1000",
+        "instructor": {
+          "_id": 10001,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Director of Training and founder of inMindSight",
+          "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
+          "courses": ["C001"]
+        }
+      },
+      {
+        "courseID": "C007",
+        "title": "Welcome To Meditation (update)",
+        "introduction": "Sample course data is passed!",
+        "description": [
+          "Sound-crafting a complete BLISSbowls™ Sound Healing Session with just one bowl!",
+          "How to integrate a metal or quartz crystal singing bowl into any Energy or Bodywork Healing modality.",
+          "Providing new sound healing ideas for practitioners of all kinds, including energy workers, massage therapists, and bodyworkers.",
+          "Develop health, inner wisdom, mindfulness and true happiness",
+          "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
+        "courseLength": "2.5",
+        "totalLecture": "6",
+        "price": "2000",
+        "instructor": {
+          "_id": 10007,
+          "name": "Nazish Shameem Qazi",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+          "designation": "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
+          "description": "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
+          "courses": ["C007"]
+        }
+      },
+      {
+        "courseID": "C005",
+        "title": "Power of Positive Thinking (updated)",
+        "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
+        "description": [
+          "Relax and relieve stress using a simple relaxation and meditation technique",
+          "You will learn what mindfulness meditation is all about and how to practice it.",
+          "Practice self-observation and meditation with compassion and clarity"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power.webp",
+        "courseLength": "2.5",
+        "totalLecture": "10",
+        "price": "3000",
+        "instructor": {
+          "_id": 10005,
+          "name": "D. Almasur Rahman",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "The Brain Lady",
+          "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
+          "courses": ["C005"]
+        }
+      },
+      {
+        "courseID": "C003",
+        "title": "Creative Meditation",
+        "introduction": "yoga for life",
+        "description": [
+          "learn theory and practice of meditation and start benefiting from practice of mediation. And also teach others on how to mediatiate"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "courseLength": "07",
+        "totalLecture": "11",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10003,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Health & Fitness Coach | Best Selling Instructor",
+          "description": "Im a certified coach and author",
+          "courses": ["C003"]
+        }
+      },
+      {
+        "courseID": "C004",
+        "title": "Self Healing in a Naural Way",
+        "introduction": "A simple, heart-centered relaxation and meditation you can do every day",
+        "description": [
+          "Relax and relieve stress using a simple relaxation and meditation technique",
+          "Connect mind and heart, naturally and gently",
+          "Practice self-observation and meditation with compassion and clarity"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "courseLength": "05",
+        "totalLecture": "05",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10004,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Heartfulness Meditation Trainer",
+          "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
+          "courses": ["C004"]
+        }
+      },
+      {
+        "courseID": "C006",
+        "title": "Anger and Stress Management",
+        "introduction": "Learn the art of meditation and mastery of the mind. Bring inner peace, focus and mindfulness into your life.",
+        "description": [
+          "Learn to calm the mind and enter into a state of deep meditation and relaxation",
+          "Several powerful mindfulness breathing techniques for meditation to cleanse and harmonize mind and body",
+          "Recover and/ or prevent burn-out and stress through mindfulness meditation",
+          "Meditations to realize that you create for a great part your own reality and how you can influence that",
+          "Develop health, inner wisdom, mindfulness and true happiness",
+          "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger.webp",
+        "courseLength": "3",
+        "totalLecture": "10",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10006,
+          "name": "D. Almasur Rahman",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "Founder & CEO, Meditation Magazine",
+          "description": "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
+          "courses": ["C006"]
+        }
+      },
+      {
+        "courseID": "C002",
+        "title": "Money Mind Mastery",
+        "introduction": "Teach a group how to meditate in your workplace or community",
+        "description": [
+          "আপনার জীবনকে পুনরায় গড়ে তুলুন সাইকোলজি এবং স্পিরিচুয়ালিটির মাধ্যমে",
+          "Join a community of other meditation leaders around the world"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "courseLength": "07",
+        "totalLecture": "14",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10002,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Psychologist",
+          "description": "Dr. Abul Kalam is a Psychologist.",
+          "courses": ["C002"]
+        }
+      }
+    ],
+    "bn": [
+      {
+        "courseID": "C001",
+        "title": "নির্ভীক বেলিভ",
+        "introduction": "Practical mindfulness meditation course showing the method how to increase concentration and reduce stress",
+        "description": [
+          "By the end of this programme you will have experienced and practiced all of the key mindfulness meditations. You will have learned how to",
+          "Develop your mental capacity, concentration, capability and focus",
+          "Calm yourself in moments of anger, high stress and anxiety",
+          "Develop ongoing resilience to stress and anxiety",
+          "Deal calmly with stressful communications"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "courseLength": "০৭",
+        "totalLecture": "১৫",
+        "price": "১০০০",
+        "instructor": {
+          "_id": 10001,
+          "name": "Dr. আবুল কালাম",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Director of Training and founder of inMindSight",
+          "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
+          "courses": ["C001"]
+        }
+      },
+      {
+        "courseID": "C007",
+        "title": "ধ্যানে স্বাগতম",
+        "introduction": "Sample course data is passed!",
+        "description": [
+          "Sound-crafting a complete BLISSbowls™ Sound Healing Session with just one bowl!",
+          "How to integrate a metal or quartz crystal singing bowl into any Energy or Bodywork Healing modality.",
+          "Providing new sound healing ideas for practitioners of all kinds, including energy workers, massage therapists, and bodyworkers.",
+          "Develop health, inner wisdom, mindfulness and true happiness",
+          "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
+        "courseLength": "2.5",
+        "totalLecture": "6",
+        "price": "2000",
+        "instructor": {
+          "_id": 10007,
+          "name": "Nazish Shameem Qazi",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+          "designation": "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
+          "description": "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
+          "courses": ["C007"]
+        }
+      },
+      {
+        "courseID": "C005",
+        "title": "ইতিবাচক চিন্তার শক্তি ",
+        "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
+        "description": [
+          "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
+          "আপনি মাইন্ডফুলনেস মেডিটেশন কী এবং কীভাবে এটি অনুশীলন করবেন তা শিখবেন।",
+          "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power.webp",
+        "courseLength": "২.৫",
+        "totalLecture": "১০",
+        "price": "৩০০০",
+        "instructor": {
+          "_id": 10005,
+          "name": "ড. আলমাসুর রহমান",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "The Brain Lady",
+          "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
+          "courses": ["C005"]
+        }
+      },
+      {
+        "courseID": "C003",
+        "title": "সৃজনশীল ধ্যান",
+        "introduction": "yoga for life",
+        "description": [
+          "learn theory and practice of meditation and start benefiting from practice of mediation. And also teach others on how to mediatiate"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "courseLength": "07",
+        "totalLecture": "11",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10003,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Health & Fitness Coach | Best Selling Instructor",
+          "description": "Im a certified coach and author",
+          "courses": ["C003"]
+        }
+      },
+      {
+        "courseID": "C004",
+        "title": "একটি প্রাকৃতিক উপায়ে স্ব নিরাময়",
+        "introduction": "A simple, heart-centered relaxation and meditation you can do every day",
+        "description": [
+          "Relax and relieve stress using a simple relaxation and meditation technique",
+          "Connect mind and heart, naturally and gently",
+          "Practice self-observation and meditation with compassion and clarity"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "courseLength": "05",
+        "totalLecture": "05",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10004,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Heartfulness Meditation Trainer",
+          "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
+          "courses": ["C004"]
+        }
+      },
+      {
+        "courseID": "C006",
+        "title": "রাগ এবং স্ট্রেস ব্যবস্থাপনা",
+        "introduction": "Learn the art of meditation and mastery of the mind. Bring inner peace, focus and mindfulness into your life.",
+        "description": [
+          "Learn to calm the mind and enter into a state of deep meditation and relaxation",
+          "Several powerful mindfulness breathing techniques for meditation to cleanse and harmonize mind and body",
+          "Recover and/ or prevent burn-out and stress through mindfulness meditation",
+          "Meditations to realize that you create for a great part your own reality and how you can influence that",
+          "Develop health, inner wisdom, mindfulness and true happiness",
+          "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger.webp",
+        "courseLength": "3",
+        "totalLecture": "10",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10006,
+          "name": "ড. আলমাসুর রহমান",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "Founder & CEO, Meditation Magazine",
+          "description": "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
+          "courses": ["C006"]
+        }
+      },
+      {
+        "courseID": "C002",
+        "title": "মানি মাইন্ড মাস্টারি",
+        "introduction": "Teach a group how to meditate in your workplace or community",
+        "description": [
+          "আপনার জীবনকে পুনরায় গড়ে তুলুন সাইকোলজি এবং স্পিরিচুয়ালিটির মাধ্যমে",
+          "Join a community of other meditation leaders around the world"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "courseLength": "07",
+        "totalLecture": "14",
+        "price": "To be released",
+        "instructor": {
+          "_id": 10002,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Psychologist",
+          "description": "Dr. Abul Kalam is a Psychologist.",
+          "courses": ["C002"]
+        }
+      }
+    ]
+  },
+  "instructorData": {
+    "en": [
+      {
+        "_id": 10001,
+        "name": "Dr. Abul Kalam",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+        "designation": "Director of Training and founder of inMindSight",
+        "description": "hello",
+        "courses": ["C001", "C002", "C003", "C004"]
+      },
+      {
+        "_id": 10002,
+        "name": "D. Almasur Rahman",
+        "designation": "Meditation Teacher and Life Coach",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+        "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
+        "courses": ["C005", "C006"]
+      },
+      {
+        "_id": 10003,
+        "name": "Md. Mostafizur Rahman",
+        "designation": "Health & Fitness Coach",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
+        "description": "hello",
+        "courses": []
+      },
+      {
+        "_id": 10004,
+        "name": "Nazish Shameem Qazi",
+        "designation": "Heartfulness Meditation Trainer",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+        "description": "hello",
+        "courses": ["C007"]
+      }
+    ],
+    "bn": [
+      {
+        "_id": 10001,
+        "name": "ডাঃ আবুল কালাম",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+        "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
+        "description": "hello",
+        "courses": ["C001", "C002", "C003", "C004"]
+      },
+      {
+        "_id": 10002,
+        "name": "ড. আলমাসুর রহমান",
+        "designation": "Meditation Teacher and Life Coach",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+        "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
+        "courses": ["C005", "C006"]
+      },
+      {
+        "_id": 10003,
+        "name": "মোঃ মোস্তাফিজুর রহমান",
+        "designation": "স্বাস্থ্য ও ফিটনেস কোচ",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
+        "description": "hello",
+        "courses": []
+      },
+      {
+        "_id": 10004,
+        "name": "নাজিশ শামীম কাজী",
+        "designation": "হার্টফুলনেস মেডিটেশন প্রশিক্ষক",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+        "description": "hello",
+        "courses": ["C007"]
+      }
+    ]
+  },
+  "courseData": [
+    {
+      "courseID": "C001",
+      "title": "Fearless Belive",
+      "lessons": [
+        {
+          "title": "Course no 1 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 1 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 12",
+          "episode": 12,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 13",
+          "episode": 13,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 14",
+          "episode": 14,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 15",
+          "episode": 15,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C002",
+      "title": "Money Mind Mastery",
+      "lessons": [
+        {
+          "title": "Course no 2 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 2 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 2 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 2 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 2 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 12",
+          "episode": 12,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 13",
+          "episode": 13,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 14",
+          "episode": 14,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C003",
+      "title": "Creative Meditation",
+      "lessons": [
+        {
+          "title": "Course no 3 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 3 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 3 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 3 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 3 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C004",
+      "title": "Self Healing in a Naural Way",
+      "lessons": [
+        {
+          "title": "Course no 4 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 4 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 4 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 4 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 4 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 4 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C005",
+      "title": "Power of Positive Thinking",
+      "lessons": [
+        {
+          "title": "Course no 5 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 5 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 5 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 5 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 5 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C006",
+      "title": "Anger and Stress Management",
+      "lessons": [
+        {
+          "title": "Mind school introduction",
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "A beautiful view",
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "River view",
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    },
+    {
+      "courseID": "C007",
+      "title": "Welcome To Meditation",
+      "lessons": [
+        {
+          "title": "Course no 1 Episode no 1",
+          "episode": 1,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:14"
+        },
+        {
+          "title": "Course no 1 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 12",
+          "episode": 12,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 13",
+          "episode": 13,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 14",
+          "episode": 14,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 15",
+          "episode": 15,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        }
+      ]
+    }
+  ]
+}

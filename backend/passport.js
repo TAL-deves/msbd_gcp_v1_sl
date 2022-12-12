@@ -40,22 +40,24 @@ passport.use(
             username: profile.id,
             password: profile.id,
             profilename: profile.displayName,
-            email: profile.email,
+            email: profile._json.email,
+            fullname: profile._json.name,
+            googleprofilephoto: profile._json.picture,
             active: true,
           });
           newUser.save();
 
           printStatement = () => {
-			      return callback(null, newUser);
+            return callback(null, newUser);
           };
           setTimeout(printStatement, 2000);
 
-        //   const myTimeout = setTimeout(myGreeting, 5000);
+          //   const myTimeout = setTimeout(myGreeting, 5000);
 
-        //   function myStopFunction() {
-        //     clearTimeout(myTimeout);
-        //     return callback(null, newUser);
-        //   }
+          //   function myStopFunction() {
+          //     clearTimeout(myTimeout);
+          //     return callback(null, newUser);
+          //   }
         } else {
           // if we find an user just return return user
           return callback(null, user);
@@ -74,7 +76,7 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, callback) {
       // return done(null, profile);
-      // console.log(profile.id)
+   
       User.findOne({ facebookId: profile.id }, (err, user) => {
         if (err) return callback(err, null);
 
@@ -85,17 +87,16 @@ passport.use(
             username: profile.id,
             password: profile.id,
             profilename: profile.displayName,
+            fullname: profile.displayName,
             active: true,
           });
           newUser.save();
           // return callback(null, newUser);
 
           printStatement = () => {
-			      return callback(null, newUser);
+            return callback(null, newUser);
           };
           setTimeout(printStatement, 2000);
-
-
         } else {
           // if we find an user just return return user
           return callback(null, user);

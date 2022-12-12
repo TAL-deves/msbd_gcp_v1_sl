@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState, Component, useContext } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import coursesData from "../data/coursesData";
@@ -26,9 +26,11 @@ import { withRouter } from "../components/routing/withRouter";
 import { Image } from "@mui/icons-material";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { globalContext } from "./GlobalContext";
 
 const VIDEOLOG_URL = "/videologdata";
 const SINGLE_COURSE_URL = "/api/instructorcourses";
+const INSTRUCTOR_DETAILS_URL = "/api/instructor";
 
 const VideoGridWrapper = styled(Grid)(({ theme }) => ({
   marginTop: "30%",
@@ -83,6 +85,7 @@ const CardMediaStyle = styled(CardMedia)(({ theme }) => ({
 }));
 
 const InstructorDetails = () => {
+  const { language } = useContext(globalContext);
   AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
   const [courses, setCourses] = useState([]);
@@ -91,21 +94,49 @@ const InstructorDetails = () => {
   let location = useLocation();
 
   let state = location.state.instructorId;
+  console.log(state)
+  let instructorID= state._id
 
   useEffect(() => {
-    state.courses.map(async (singleCourse) => {
-      var courseID = singleCourse;
-      await api
-        .post(SINGLE_COURSE_URL, JSON.stringify({ courseID }), {
-          headers: { "Content-Type": "application/json" },
-          "Access-Control-Allow-Credentials": true,
-        })
-        .then((data) => {
-          //console.log("single course id", data.data.data);
-          courses.push(data.data.data);
-        });
-    });
-  }, []);
+    // if(language==="en"){
+      // setCourses([])
+      state.courses.map(async (singleCourse) => {
+        var courseID = instructorID;
+        await api
+          .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language}), {
+            headers: { "Content-Type": "application/json" },
+            "Access-Control-Allow-Credentials": true,
+          })
+          .then((data) => {
+            console.log("ins dta",data.data.data);
+            setCourses(data.data.data)           
+          });
+  
+      });
+      console.log("single course id", courses);
+    // }
+    // else
+    // {
+    //   // setCourses([])
+    //   state.courses.map(async (singleCourse) => {
+    //     var courseID = singleCourse;
+    //     await api
+    //       .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language}), {
+    //         headers: { "Content-Type": "application/json" },
+    //         "Access-Control-Allow-Credentials": true,
+    //       })
+    //       .then((data) => {
+    //         courses.push(data.data.data);
+            
+    //       });
+  
+    //   });
+    //   console.log("single course id", courses);
+    // }
+    console.log(" useeffect", courses)
+  }, [language]);
+
+  
 
   return (
     <Box>

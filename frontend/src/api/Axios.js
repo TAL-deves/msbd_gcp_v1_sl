@@ -88,7 +88,7 @@ const caxios = axios.create({
           request: encrypt(data),
           passphase: IV.toString(),
         };
-        // //console.log("This is the send request: ------  "+sendReq);
+        // console.log("This is the send request: ------  "+sendReq);
         return sendReq;
 
       // }
@@ -109,9 +109,9 @@ const caxios = axios.create({
     );
   
     let recievedData = JSON.parse(decryptedFromText.toString(CryptoJS.enc.Utf8))
-    // //console.log(
+    // console.log(
     //   "decryptedFromText:---------   ",
-    //   typeof recievedData, recievedData
+    //     recievedData
     // );
   
     if(  typeof recievedData === "string"){
@@ -233,11 +233,11 @@ function getBasicToken() {
   return token;
 }
 
-export function login(userId, password, callback, loginfrom) {
-  let reqData = `grant_type=password&username=${userId}&password=${password}&client_id=${client_id}`;
+export function login(userId,email, password,phoneNumber , callback, loginfrom) {
+  let reqData = `grant_type=password&username=${phoneNumber}&email=${email}&password=${password}&client_id=${client_id}&phoneNumber=${phoneNumber}`;
   if(loginfrom!== undefined && userId===password){
     
-    reqData = `grant_type=password&username=${userId}&password=${password}&client_id=${client_id}&loginMethod=${loginfrom}`;
+    reqData = `grant_type=password&username=${userId}&email=${email}&password=${password}&client_id=${client_id}&loginMethod=${loginfrom}`;
   }
   let token = getBasicToken();
   let config = {

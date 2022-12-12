@@ -53,7 +53,7 @@ const RegisterForm = () => {
     setEmail,
     emailFocus,
     setEmailFocus,
-    password,
+    password,phoneNumber,
     setPwd,
     validPwd,
     setValidPwd,
@@ -108,7 +108,7 @@ const RegisterForm = () => {
   const handleNext = async () => {
     // setActiveStep(activeStep + 1);
     const response = await api.post(USERCHECK_URL,
-      JSON.stringify({ email}),
+      JSON.stringify({ email, username, phoneNumber}),
       {
           headers: { 'Content-Type': 'application/json' },
           'Access-Control-Allow-Credentials': true,

@@ -23,17 +23,22 @@ i18n
 const GlobalContext = (props) => {
  const { t } = useTranslation();
   const [count, setCount] = useState(0);
+  const [language, setLanguage]= useState("bn")
 
+  // const onChange = (event) => {
+  //   i18n.changeLanguage(event.target.value);
+  //   setCount((previousCount) => previousCount + 1);
+  //   console.log("count",count)
+  // };
   const onChange = (event) => {
-    i18n.changeLanguage(event.target.value);
-    setCount((previousCount) => previousCount + 1);
-    console.log("count",count)
+    i18n.changeLanguage(event);
+    
   };
 
  
     return (
         <div>
-            <globalContext.Provider value={{t,onChange, count}}>
+            <globalContext.Provider value={{t,onChange, count, language, setLanguage}}>
                     
                     {props.children}
                  

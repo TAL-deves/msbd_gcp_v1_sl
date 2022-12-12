@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState, Component, useContext } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import coursesData from "../data/coursesData";
@@ -15,6 +15,7 @@ import {
   Route,
   
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Button from "@mui/material/Button";
@@ -35,9 +36,12 @@ import { instructorData } from "../data/instructorData";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
+import { globalContext } from "./GlobalContext";
+
 
 
 const VIDEOLOG_URL = "/videologdata";
+const COURSE_DETAILS_URL= "/api/coursedetails"
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -109,16 +113,39 @@ Item.propTypes = {
 };
 
 const CoursesDetails = () => {
+  const navigate = useNavigate();
+  const { language } = useContext(globalContext);
   AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
+  const [state, setState] = useState({});
   const [instructorState, setInstructorState] = useState(instructorData);
   const loggedin= localStorage.getItem("access_token")
   let location = useLocation();
   
 
-  let state = location.state.courseId;
+  let fullobject = location.state.courseId;
+  let courseID= fullobject.courseID
+
+  let fetchCourseDetails= async()=>{
+    await api
+    .post(COURSE_DETAILS_URL, JSON.stringify({ courseID, language }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+       console.log("single course id", data);
+       setState(data.data.data)
+       
+    });
+
+};
   
-  console.log("state",state)
+  useEffect(() => {
+  
+    fetchCourseDetails()
+  }, [language]);
+  
+   console.log("state",state)
   return (
    
     <Box >
@@ -130,14 +157,14 @@ const CoursesDetails = () => {
         <Grid item xs={12} lg={6} data-aos="fade-right">
           <Typography variant="h4" sx={{color:"primary.main"}}>
             {/* uncomment after ssl  */}
-            {/* {state?.title} */}
-            Demo
+            {state?.title}
+            {/* Demo */}
             </Typography>
           <Typography variant="h6"
            sx={{marginTop:"2rem", marginBottom:"2rem"}}>
             {/* uncomment after ssl  */}
-            {/* {state?.description} */}
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+            {state?.description}
+           
             </Typography>
             
          {loggedin?
@@ -161,6 +188,18 @@ const CoursesDetails = () => {
                </Typography>
              </Button>
            </Routerlink>}
+   {/* buy now button  */}
+           <Button sx={{marginLeft:"2rem"}}
+                //  onClick={response}
+                onClick={() => {
+                  
+                  navigate("/payment-info", { state: { state: state } }
+                  )
+                }}
+                // disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false }
+                // disabled
+                variant="contained">Buy Now
+              </Button>
         </Grid>
         <Grid item xs={12} lg={6} data-aos="fade-left">
           <Item>

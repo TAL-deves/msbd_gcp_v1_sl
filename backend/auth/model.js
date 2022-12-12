@@ -212,11 +212,14 @@ var saveToken = async function (token, client, user, callback) {
  */
 
 var getUser = function (username, password, callback) {
-  // let encPassword = bcrypt.hash(password, 12);
+  // let encPassword = await bcrypt.hash(password, 12);
+
+  // console.log("username: ",username," Password: ", password);
+
   loggedInUserModel
     .findOne({
       username: username,
-      // password: password,
+      // password: encPassword,
     })
     .lean()
     .exec(

@@ -1,0 +1,19 @@
+.api-controls {
+    margin-top: 1rem;
+    background: white;
+    border-radius: 4px;
+    padding: 5px;
+    border-bottom: none !important;
+    align-items: center;
+  }
+  
+  .api-controls .btn {
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .api-controls .btn:hover {
+    cursor: pointer;
+  }
+  

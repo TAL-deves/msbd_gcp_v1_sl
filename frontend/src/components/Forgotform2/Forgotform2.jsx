@@ -39,8 +39,7 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
         emailRef,errRef, validName, setValidName,
        userFocus, setUserFocus,validEmail, setValidEmail,
          email, setEmail,emailFocus, setEmailFocus,
-        password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus,
-         validMatch, setValidMatch,matchFocus, setMatchFocus,
+        password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus, validMatch, setValidMatch,matchFocus, setMatchFocus,
         errMsg, setErrMsg, success, setSuccess,handleSubmit,theme,
         username, setUser,matchPwd, setMatchPwd, handleSubmitNewPassword}= useContext(multiForgotContext)
   //  //console.log(password, "this is pass")
@@ -62,7 +61,9 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
             Enter New Password
           </Typography>
          
-          <Box component="form"  onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form"  
+          // onSubmit={handleSubmit} 
+          noValidate sx={{ mt: 1 }}>
           
           <label htmlFor="username">
 
@@ -72,6 +73,49 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
                    
             </label>
             <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password1"
+              label="Password"
+              // type="password"
+              
+              autoComplete="current-password"
+              //
+              type={showPassword ? "text" : "password"}
+              id="password1"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+
+                )
+              }}
+              inputProps={{maxLength: 20}}
+              //
+              onChange={(e) => setPwd(e.target.value)}
+               
+              value={password}
+              onFocus={() => setPwdFocus(true)}
+              // onBlur={() => setPwdFocus(false)}
+              error={
+                pwdFocus && !validPwd ? 
+                true : 
+                false
+              }
+              helperText={pwdFocus && !validPwd?
+                "Enter password between 8 to 20 characters"
+                : false
+              }
+            />
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -103,14 +147,58 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
              
             />
              <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
+                           
                             Enter any number between 0 to 9 and at least 6 to 20 characters<br />
                         </p>
             <label htmlFor="confirm_pwd">
-                            {/* <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} /> */}
-            </label>
-            <TextField
+            </label> */}
+
+          <TextField
+            // autoFocus
+              margin="normal"
+              required
+              fullWidth
+              name="password2"
+              label="Confirm Password"
+               //
+              type={showPassword2 ? "text" : "password"}
+              
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword2}
+                      onMouseDown={handleMouseDownPassword2}
+                    >
+                      {showPassword2 ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+
+                )
+              }}
+              inputProps={{maxLength: 20} && {minLength:8}}
+              //
+            
+              autoComplete="confirm-password"
+              onChange={(e) => setMatchPwd(e.target.value)}
+              value={matchPwd}
+            
+              aria-describedby="confirmnote"
+              onFocus={() => setMatchFocus(true)}
+              // onBlur={() => setMatchFocus(false)}
+              error={
+                matchFocus && !validMatch ? 
+                true : 
+                false
+              }
+              helperText={
+                matchFocus && !validMatch ? 
+                "Must match the first password input field." : 
+                false                
+              }
+            />
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -143,7 +231,7 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
             />
              <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
                             Must match the first password input field.
-                        </p>
+                        </p> */}
   
           </Box>
           <Box>
@@ -151,7 +239,8 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
             variant="contained"
             color="primary"
             disabled={password==='' || password !== matchPwd}
-            onClick={handleSubmitNewPassword}
+            onClick={()=>handleSubmitNewPassword()}
+            // onClick={()=>alert("jhs")}
             sx={{  mt: "6rem",mb: "30%" }}
           >
             Submit

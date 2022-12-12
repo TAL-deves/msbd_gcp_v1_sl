@@ -24,7 +24,8 @@ import swal from 'sweetalert';
 
 //forget password 
 const FORGOTPASSWORD_URL = '/api/forget-password';
-const REQUESTPASS_URL= '/api/verify';
+// const REQUESTPASS_URL= '/api/verify';
+const REQUESTPASS_URL= '/api/request-password';
 const RESETPASS_URL= '/api/reset-password';
 const RESEND_VERIFY_URL = '/api/resend-otp-forgotpassword';
 
@@ -33,7 +34,7 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 // const PHONE_REGEX = /^[0-9+]{14,15}/;
 const PHONE_REGEX = /^[0-9+]{14,15}/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const PWD_REGEX = /^[0-9]{6,20}/;
+const PWD_REGEX = /^[A-z0-9!@#$%^&*+-:;<>?/)(_~-]{8,23}$/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const theme = createTheme();
 //
@@ -203,7 +204,7 @@ const handleSubmitMailForget = async (e) => {
       })
       .then((response) => {
         let data = response.data.result.status;
-        let dataMsg = response.data.data.data;
+        let dataMsg = response.data.data;
         setBackdrop(false);
         if (data === 406) {
           setErrMsg("Invalid OTP");
@@ -225,13 +226,13 @@ const handleSubmitMailForget = async (e) => {
 
 const handleSubmitNewPassword = async (e) => {
 
-  const v1 = USER_REGEX.test(username);
-  const v2 = PWD_REGEX.test(password);
-  const v3 = EMAIL_REGEX.test(email);
-  if (!v3) {
-      setErrMsg("Invalid Entry");
-      return;
-  }
+  // const v1 = USER_REGEX.test(username);
+  // const v2 = PWD_REGEX.test(password);
+  // const v3 = EMAIL_REGEX.test(email);
+  // if (!v3) {
+  //     setErrMsg("Invalid Entry");
+  //     return;
+  // }
   try {
       // //console.log(user, pwd, email)
       const response = await api.post(RESETPASS_URL,
