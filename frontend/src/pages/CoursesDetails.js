@@ -41,7 +41,8 @@ import { globalContext } from "./GlobalContext";
 
 
 const VIDEOLOG_URL = "/videologdata";
-const COURSE_DETAILS_URL= "/api/coursedetails"
+const COURSE_DETAILS_URL= "/api/coursedetails";
+let USER_COURSES_URL = "/api/usercourses"
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -112,6 +113,8 @@ Item.propTypes = {
   ]),
 };
 
+
+
 const CoursesDetails = () => {
   const navigate = useNavigate();
   const { language } = useContext(globalContext);
@@ -119,6 +122,8 @@ const CoursesDetails = () => {
   const [played, setPlayed] = useState(0);
   const [state, setState] = useState({});
   const [instructorState, setInstructorState] = useState(instructorData);
+  const [courses, setCourses] = useState([]);
+  const [load, setLoad] = useState(true);
   const loggedin= localStorage.getItem("access_token")
   let location = useLocation();
   
@@ -139,13 +144,40 @@ const CoursesDetails = () => {
     });
 
 };
+
+useEffect(() => { 
+  fetchCourseDetails()
+}, [language]);
+
+let fetchData = async () => {
+  let username = localStorage.getItem("user")
+  await api
+    .post(USER_COURSES_URL, JSON.stringify({ username }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+      console.log("ins dta", data);
+      if (data.data.result.status === 404) {
+        // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
+        setCourses([])
+      }
+      else {
+        setCourses(data.data.data)
+      }
+      console.log("state",courses)
+      
+      setLoad(false);
+    });
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
   
-  useEffect(() => {
-  
-    fetchCourseDetails()
-  }, [language]);
-  
-   console.log("state",state)
+
+ let existingCourse=courses.find(c=>c.courseID===state?.courseID)
+   console.log("existingCourse",existingCourse)
   return (
    
     <Box >
@@ -166,8 +198,13 @@ const CoursesDetails = () => {
             {state?.description}
            
             </Typography>
+
             
+           <>
          {loggedin?
+         <>
+         
+         {existingCourse?
           <Routerlink to="/coursedemo" state={{ courseId: state}}
           style={{textDecoration:'none'}}
           >
@@ -178,28 +215,41 @@ const CoursesDetails = () => {
               </Typography>
             </Button>
           </Routerlink>:
+         <Button sx={{marginLeft:"0rem"}}
+             //  onClick={response}
+             onClick={() => {
+               
+               navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
+               )
+             }}
+             variant="contained">Buy Now
+           </Button>
+          }</>:
            <Routerlink to="/login" 
            style={{textDecoration:'none'}}
            >
              <Button variant="contained" color="primary">
                <Typography variant="p" color="other.dark" 
                >
-                 Start now
+                 Buy now
                </Typography>
              </Button>
            </Routerlink>}
-   {/* buy now button  */}
-           <Button sx={{marginLeft:"2rem"}}
+           </>
+           
+          
+           {/* <Button sx={{marginLeft:"2rem"}}
                 //  onClick={response}
                 onClick={() => {
                   
-                  navigate("/payment-info", { state: { state: state } }
+                  navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
                   )
                 }}
                 // disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false }
                 // disabled
                 variant="contained">Buy Now
-              </Button>
+              </Button> */}
+              
         </Grid>
         <Grid item xs={12} lg={6} data-aos="fade-left">
           <Item>

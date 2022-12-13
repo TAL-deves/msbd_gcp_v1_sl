@@ -36,9 +36,72 @@ const userPurchasedCourses = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    expirationDate: {
+    card_brand: {
       type: String,
     },
+    card_issuer: {
+      type: String,
+    },
+    card_issuer_country: {
+      type: String,
+    },
+    card_no: {
+      type: String,
+    },
+    card_sub_brand: {
+      type: String,
+    },
+    card_type: {
+      type: String,
+    },
+    currency: {
+      type: String,
+    },
+    currency_amount: {
+      type: String,
+    },
+    currency_rate: {
+      type: String,
+    },
+    currency_type: {
+      type: String,
+    },
+    error: {
+      type: String,
+    },
+    risk_level: {
+      type: String,
+    },
+    store_amount: {
+      type: String,
+    },
+    store_id: {
+      type: String,
+    },
+    value_a: {
+      type: String,
+    },
+    value_b: {
+      type: String,
+    },
+    value_c: {
+      type: String,
+    },
+    value_d: {
+      type: String,
+    },
+    verify_sign: {
+      type: String,
+    },
+    verify_sign_sha2: {
+      type: String,
+    },
+    verify_key: {
+      type: String,
+    },
+    expirationDate: {
+      type: String,
+    }
   }
   //  { collection : 'logData' }
 );

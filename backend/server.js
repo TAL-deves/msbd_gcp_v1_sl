@@ -114,12 +114,12 @@ mongoose.connect(process.env.DATABASE_CONNECT, function (err, res) {
 app.use(express.json());
 app.use(
   cors({
-    origin: "*", //Testing
+    // origin: "*", //Testing
     // origin: true,
-    // origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
+    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-    // exposedHeaders: ['x-auth-token']
+    exposedHeaders: ['x-auth-token']
   })
 );
 app.use(
@@ -2064,7 +2064,7 @@ app.post("/api/updateuserprofile", async (req, res) => {
             fullname: fullname,
             age: age,
             gender: gender,
-            phoneNumber: username,
+            phoneNumber: phonenumber,
             profession: profession,
             email: email,
             streetAddress: staddress,
@@ -2839,364 +2839,142 @@ app.post("/api/instructordetails", async (req, res) => {
 //* <---  Instructor API ---> 
 
 //! ********** Purchase A course ***********/ (Encryption done)
-
-// app.post("/api/buy", async (req, res) => {
-
-//   let tokenstatus = await tokenChecking(req,res);
-
-//   console.log("token status: ---- ", tokenstatus);
-
-//   if(tokenstatus){
-//     let recievedResponseData = decryptionOfData(req, res);
-//     req.body = JSON.parse(JSON.parse(recievedResponseData));
-
-//     // const { email, courseList } = req.body; //getting data from request
-//     const email = req.body.email;
-//     const courseList = req.body.courseList;
-
-//     console.log("data - ", req.body);
-
-//     let currentDate = new Date();
-//     let currentDateMiliseconds = currentDate.getTime();
-
-//     let courseExpiresMiliseconds =
-//       currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
-//     let courseExpires = new Date(courseExpiresMiliseconds);
-
-//     await signUpTemplateCopy
-//       .findOneAndUpdate(
-//         {
-//           email: email,
-//         },
-//         {
-//           $push: {
-//             purchasedCourses: {
-//               courseid: courseList,
-//               purchaseDate: currentDate,
-//               expireAt: courseExpires,
-//             },
-//           },
-//         }
-//       )
-//       .then(() => {
-//         // res.send("inserted");
-//         let setSendResponseData = new sendResponseData("Inserted", 200, null);
-//         let responseToSend = encryptionOfData(
-//           setSendResponseData.successWithMessage()
-//         );
-//         res.send(responseToSend);
-//       })
-//       .catch((err) => {
-//         // res.send("error", err);
-//         let setSendResponseData = new sendResponseData(null, 500, err.message);
-//         let responseToSend = encryptionOfData(
-//           setSendResponseData.error()
-//         );
-//         res.send(responseToSend);
-//       });
-//   } else {
-//     let setSendResponseData = new sendResponseData(null, 401, "Unauthorized");
-//     let responseToSend = encryptionOfData(
-//       setSendResponseData.error()
-//     );
-//     res.send(responseToSend);
-//   }
-
-// });
-
-//* <---  Token portoion  ---> 
-//! ********** Token portoion ***********/
-const validateUserSignUp = async (arg) => {
-  const { email, phoneNumber, otp } = arg;
-
-  const user = await signUpTemplateCopy.findOne({
-    phoneNumber: phoneNumber,
-  });
-
-  if (!user) {
-    let msg = {
-      data: null,
-      result: {
-        isError: true,
-        status: 404,
-        errorMsg: "User not found",
-      },
-    };
-    return msg;
-  } else if (user && user.otp !== otp) {
-    let msg = {
-      data: null,
-      result: {
-        isError: true,
-        status: 406,
-        errorMsg: "Invalid OTP | Not Acceptable",
-      },
-    };
-    return msg;
-  } else {
-    const updatedUser = await signUpTemplateCopy.findByIdAndUpdate(user._id, {
-      $set: {
-        active: true,
-      },
-    });
-    let msg = {
-      data: `${updatedUser.phoneNumber} is verified!`,
-      result: {
-        isError: false,
-        status: 202,
-        errorMsg: "",
-      },
-    };
-    return msg;
-  }
-};
-
-async function tokenChecking(req, res) {
-  var request = new Request(req);
-  const fromClient = request.headers.authorization;
-
-  console.log("fromClient ---- ", fromClient);
-
-  if (fromClient) {
-    var tokenArray = fromClient.split(" ");
-    var token = tokenArray[1];
-    let tokenObj = await tokenModel.findOne({
-      accessToken: token,
-    });
-    if (tokenObj) {
-      let currentDate = new Date().getTime();
-      let tokenExpires = new Date(tokenObj.accessTokenExpiresAt).getTime();
-      let expiry = (tokenExpires - currentDate) / 1000;
-
-      if (expiry < 0) {
-        let tokenExpiryStatus = {
-          data: null,
-          result: {
-            isError: true,
-            status: 400,
-            errMsg: "token is expired",
-          },
-        };
-        console.log("Token expired");
-        return tokenExpiryStatus;
-        // return false;
-      } else {
-        let tokenExpiryStatus = {
-          data: tokenObj,
-          result: {
-            isError: false,
-            status: 200,
-            errMsg: "Token is still active",
-          },
-        };
-        console.log("Token is still active");
-        return tokenExpiryStatus;
-        // return true;
-      }
-    } else {
-      let tokenExpiryStatus = {
-        data: null,
-        result: {
-          isError: false,
-          status: 401,
-          errMsg: "No token in DB",
-        },
-      };
-      console.log("No token in DB");
-      return tokenExpiryStatus;
-      // return false;
-    }
-  } else {
-    let tokenExpiryStatus = {
-      data: null,
-      result: {
-        isError: false,
-        status: 404,
-        errMsg: "Token is required",
-      },
-    };
-    console.log("No token!");
-    return tokenExpiryStatus;
-    // return false;
-  }
-}
-
-app.oauth = new OAuth2Server({
-  model: require("./auth/model"),
-  accessTokenLifetime: process.env.ACCESS_TOKEN_LIFETIME,
-  allowBearerTokensInQueryString: true,
-});
-
-function obtainToken(req, res, callback) {
-  var request = new Request(req);
-  var response = new Response(res);
-
-  return app.oauth
-    .token(request, response)
-    .then(function (token) {
-      let tokenDetails = {
-        access_token: token.accessToken,
-        accessTokenExpiresAt: token.accessTokenExpiresAt,
-        refresh_token: token.refreshToken,
-        refreshTokenExpiresAt: token.refreshTokenExpiresAt,
-        user: token.user.username,
-        expiryTime: token.expiryTime,
-      };
-
-      let sendResponse = {
-        data: tokenDetails,
-        result: {
-          isError: false,
-          status: 200,
-          errorMsg: "",
-        },
-      };
-      // console.log("Send response ---- ", sendResponse, "Re --", request.body);
-      if (request.body.loginMethod === "google") {
-        // console.log("Inside google method", sendResponse);
-        return sendResponse;
-      } else if (request.body.loginMethod === "facebook") {
-        // console.log("sent from fb" + sendResponse);
-        return sendResponse;
-      } else {
-        callback(sendResponse);
-      }
-    })
-    .catch(function (err) {
-      console.log("this is inside token catch!", err.message);
-
-      let setSendResponseData = new sendResponseData(null, 404, err.message);
-      let responseToSend = encryptionOfData(setSendResponseData.error());
-
-      return responseToSend;
-      // res.send(responseToSend);
-    });
-}
-//* <---  Token portoion  ---> 
-
 //! Payment API's SSLcommerz
 
 app.post("/api/buy", async (req, res) => {
-  // let tokenstatus = await tokenChecking(req, res);
-
-  // console.log("token status: ---- ", tokenstatus);
-
-  // if (tokenstatus) {
+try {
+ 
   let recievedResponseData = decryptionOfData(req, res);
   req.body = recievedResponseData;
 
-  const {
-    fullname,
-    username,
-    phonenumber,
-    email,
-    courseList,
-    staddress,
-    city,
-    postcode,
-    country,
-    price,
-    discountedPrice,
-  } = req.body; //getting data from request
 
-  console.log("Initiating payment - ", req.body);
-  // console.log("JSON.stringify(courseList) - ", JSON.stringify(courseList).replaceAll('"',".")
-  // );
+  let userSessionStatus = await tokenChecking(req);
+   
+    if (userSessionStatus.data != null) {
+    
+      const {
+        fullname,
+        username,
+        phonenumber,
+        email,
+        courses,
+        staddress,
+        city,
+        postcode,
+        country,
+        price,
+        discountedPrice,
+      } = req.body; //getting data from request
+    
+      console.log("req buy---- ", req.body);
+      const newId = uuidv4().replaceAll("-", "");
+    
+      const data = {
+        total_amount: parseFloat(price),
+        // currency: "BDT",
+        tran_id: newId,
+        success_url: `${process.env.SSL_URL}/api/ssl-payment-success`,
+        fail_url: `${process.env.SSL_URL}/api/ssl-payment-fail`,
+        cancel_url: `${process.env.SSL_URL}/api/ssl-payment-cancel`,
+        ipn_url: `${process.env.SSL_URL}/api/ssl-payment-notification`,
+        // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
+        shipping_method: "No",
+        product_name: JSON.stringify(courses).replaceAll('"', "."),
+        product_category: "Courses",
+        product_profile: "general",
+        cus_name: fullname,
+        cus_email: email,
+        cus_add1: staddress,
+        cus_add2: "Dhaka",
+        cus_city: city,
+        cus_state: city,
+        cus_postcode: postcode,
+        cus_country: "Bangladesh",
+        cus_phone: phonenumber,
+        // cus_fax: "01711111111",
+        // multi_card_name: "master",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        // value_d: "ref004_D",
+      };
+    
+    
+      //? Saving this to database as payment pending status.
+      let currentDate = new Date();
+    
+      let userPurchasedCourses = new usersPurchasedCourses({
+        "amount": `${parseFloat(price)}`,
+        "bank_tran_id": "",
+        "base_fair": "0.00",
+        "card_brand": "",
+        "card_issuer": "",
+        "card_issuer_country": "",
+        "card_issuer_country_code": "",
+        "card_no": "",
+        "card_sub_brand": "",
+        "card_type": "",
+        "currency": "",
+        "currency_amount": "",
+        "currency_rate": "",
+        "currency_type": "",
+        "error": "",
+        "risk_level": "",
+        "risk_title": "",
+        "status": "PENDING",
+        "store_amount": "",
+        "store_id": process.env.STORE_ID, 
+        "tran_date": currentDate,
+        "tran_id": `${newId}`,
+        "val_id": "",
+        "value_a": username,
+        "value_b": phonenumber,
+        "value_c": JSON.stringify(courses).replaceAll('"', "."),
+        "value_d": "",
+        "verify_sign": "",
+        "verify_sign_sha2": "",
+        "verify_key": ""
+     
+      });
+    
+      await userPurchasedCourses.save();
+    
+    
+      const sslcommerz = new SSLCommerzPayment(
+        process.env.STORE_ID,
+        process.env.STORE_PASSWORD,
+        false
+      ); //true for live default false for sandbox
+      sslcommerz.init(data).then((data) => {
+        //process the response that got from sslcommerz
+        //https://developer.sslcommerz.com/doc/v4/#returned-parameters
+    
+        if (data?.GatewayPageURL) {
+          let setSendResponseData = new sendResponseData(data, 202, null);
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          return res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            400,
+            "Payment session was not successful"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          return res.send(responseToSend);
+        }
+      });
+      
+   } else {
+     let responseToSend = encryptionOfData(userSessionStatus);
+     res.send(responseToSend);
+   }
 
-  // let courseslist = { "course":courseList}
-  // console.log("courseslist - ", JSON.stringify(courseslist).replaceAll('"', ""));
-
-  const newId = uuidv4().replaceAll("-", "");
-
-  const data = {
-    total_amount: parseFloat(price),
-    // currency: "BDT",
-    tran_id: newId,
-    success_url: `${process.env.SERVER_URL}/api/ssl-payment-success`,
-    fail_url: `${process.env.SERVER_URL}/api/ssl-payment-fail`,
-    cancel_url: `${process.env.SERVER_URL}/api/ssl-payment-cancel`,
-    ipn_url: `${process.env.SERVER_URL}/api/ssl-payment-notification`,
-    // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
-    shipping_method: "No",
-    product_name: JSON.stringify(courseList).replaceAll('"', "."),
-    product_category: "Courses",
-    product_profile: "general",
-    cus_name: fullname,
-    cus_email: email,
-    cus_add1: staddress,
-    cus_add2: "Dhaka",
-    cus_city: city,
-    cus_state: city,
-    cus_postcode: postcode,
-    cus_country: "Bangladesh",
-    cus_phone: phonenumber,
-    // cus_fax: "01711111111",
-    // multi_card_name: "master",
-    value_a: username,
-    value_b: phonenumber,
-    value_c: JSON.stringify(courseList).replaceAll('"', "."),
-    // value_d: "ref004_D",
-  };
-
-  const sslcommerz = new SSLCommerzPayment(
-    process.env.STORE_ID,
-    process.env.STORE_PASSWORD,
-    true
-  ); //true for live default false for sandbox
-  sslcommerz.init(data).then((data) => {
-    //process the response that got from sslcommerz
-    //https://developer.sslcommerz.com/doc/v4/#returned-parameters
-
-    // console.log("ssl data", data);
-
-    if (data?.GatewayPageURL) {
   
-
-      let setSendResponseData = new sendResponseData(data, 202, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      return res.send(responseToSend);
-
-      // return res.send(data?.GatewayPageURL)
-    } else {
-      // return res.status(400).json({
-      //   message: "Session was not successful",
-      // });
-      let setSendResponseData = new sendResponseData(
-        null,
-        400,
-        "Session was not successful"
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.error());
-      return res.send(responseToSend);
-    }
-  });
-
-  // let currentDate = new Date();
-  // let currentDateMiliseconds = currentDate.getTime();
-
-  // let courseExpiresMiliseconds =
-  //   currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
-  // let courseExpires = new Date(courseExpiresMiliseconds);
-
-  // let updatedUserData = await signUpTemplateCopy.findOneAndUpdate(
-  //   {
-  //     email: email,
-  //   },
-  //   {
-  //     $push: {
-  //       purchasedCourses: {
-  //         courseid: courseList,
-  //         purchaseDate: currentDate,
-  //         expireAt: courseExpires,
-  //       },
-  //     },
-  //   }
-  // );
-  // } else {
-  //   let setSendResponseData = new sendResponseData(null, 401, "Unauthorized");
-  //   let responseToSend = encryptionOfData(setSendResponseData.error());
-  //   res.send(responseToSend);
-  // }
+} catch (error) {
+  let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+}
 });
 
 app.post("/api/ssl-payment-notification", async (req, res) => {
@@ -3255,17 +3033,58 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
+  // let userPurchasedCourses = new usersPurchasedCourses({
+  //   username: value_a,
+  //   phoneNumber: value_b,
+  //   coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+  //   tran_id: tran_id,
+  //   val_id: val_id,
+  //   amount: amount,
+  //   status: status,
+  //   bank_tran_id: bank_tran_id,
+  //   tran_date: tran_date,
+  //   expirationDate: courseExpires,
+  // });
+
+  // await userPurchasedCourses.save();
+
+
+
   let userPurchasedCourses = new usersPurchasedCourses({
-    username: value_a,
-    phoneNumber: value_b,
-    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
-    tran_id: tran_id,
-    val_id: val_id,
-    amount: amount,
-    status: status,
-    bank_tran_id: bank_tran_id,
-    tran_date: tran_date,
-    expirationDate: courseExpires,
+    "username": `${value_a}`,
+    "phoneNumber": `${value_b}`,
+    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
+    "expirationDate": `${courseExpires}`,
+    "amount": `${amount}`,
+    "bank_tran_id": bank_tran_id,
+    "base_fair": "0.00",
+    "card_brand": "",
+    "card_issuer": "",
+    "card_issuer_country": "",
+    "card_issuer_country_code": "",
+    "card_no": "",
+    "card_sub_brand": "",
+    "card_type": "",
+    "currency": "",
+    "currency_amount": "",
+    "currency_rate": "",
+    "currency_type": "",
+    "error": "",
+    "risk_level": "",
+    "risk_title": "",
+    "status": status,
+    "store_amount": "",
+    "store_id": process.env.STORE_ID, 
+    "tran_date": tran_date,
+    "tran_id": `${tran_id}`,
+    "val_id": val_id,
+    "value_a": value_a,
+    "value_b": value_b,
+    "value_c": value_c,
+    "value_d": "",
+    "verify_sign": "",
+    "verify_sign_sha2": "",
+    "verify_key": ""
   });
 
   await userPurchasedCourses.save();
@@ -3276,12 +3095,7 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
 });
 
 app.post("/api/ssl-payment-success", async (req, res) => {
-  /**
-   * If payment successful
-   */
 
-  // let recievedResponseData = decryptionOfData(req, res);
-  //  req.body = recievedResponseData;
   console.log("ssl-payment-success", req.body);
 
   const {
@@ -3305,48 +3119,51 @@ app.post("/api/ssl-payment-success", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    username: value_a,
-    phoneNumber: value_b,
-    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
-    tran_id: tran_id,
-    val_id: val_id,
-    amount: amount,
-    status: status,
-    bank_tran_id: bank_tran_id,
-    tran_date: tran_date,
-    expirationDate: courseExpires,
+    "username": `${value_a}`,
+    "phoneNumber": `${value_b}`,
+    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
+    "expirationDate": `${courseExpires}`,
+    "amount": `${amount}`,
+    "bank_tran_id": bank_tran_id,
+    "base_fair": "0.00",
+    "card_brand": "",
+    "card_issuer": "",
+    "card_issuer_country": "",
+    "card_issuer_country_code": "",
+    "card_no": "",
+    "card_sub_brand": "",
+    "card_type": "",
+    "currency": "",
+    "currency_amount": "",
+    "currency_rate": "",
+    "currency_type": "",
+    "error": "",
+    "risk_level": "",
+    "risk_title": "",
+    "status": status,
+    "store_amount": "",
+    "store_id": process.env.STORE_ID, 
+    "tran_date": tran_date,
+    "tran_id": `${tran_id}`,
+    "val_id": val_id,
+    "value_a": value_a,
+    "value_b": value_b,
+    "value_c": value_c,
+    "value_d": "",
+    "verify_sign": "",
+    "verify_sign_sha2": "",
+    "verify_key": ""
   });
-
   await userPurchasedCourses.save();
-
-  // console.log(userPurchasedCourses);
 
   let setSendResponseData = new sendResponseData(req.body, 200, null);
   let responseToSend = encryptionOfData(setSendResponseData.success());
-  // return res.send(req.body);
 
-  // res.redirect(`localhost:3000/course
-  //    +
-  //     ${JSON.stringify(
-  //       setSendResponseData
-  //     )}`
-  // );
   res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
-
-  //  setTimeout(()=>{
-  //   res.redirect(`localhost:3000/
-  //      +
-  //       ${JSON.stringify(
-  //         setSendResponseData
-  //       )}`
-  //   );
-  //  }, 1000)
 });
 
 app.post("/api/ssl-payment-fail", async (req, res) => {
-  /**
-   * If payment failed
-   */
+
   const {
     tran_id,
     val_id,
@@ -3359,13 +3176,6 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
     value_c,
   } = req.body;
 
-  console.log("api/ssl-payment-fail   ----- ", req.body);
-
-  // return res.status(200).json({
-  //   data: req.body,
-  //   message: "Payment failed",
-  // });
-
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
 
@@ -3374,31 +3184,51 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    username: value_a,
-    phoneNumber: value_b,
-    coursesList: value_c,
-    tran_id: tran_id,
-    val_id: val_id,
-    amount: amount,
-    status: status,
-    bank_tran_id: bank_tran_id,
-    tran_date: tran_date,
-    expirationDate: courseExpires,
+    "username": `${value_a}`,
+    "phoneNumber": `${value_b}`,
+    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
+    "expirationDate": `${courseExpires}`,
+    "amount": `${amount}`,
+    "bank_tran_id": bank_tran_id,
+    "base_fair": "0.00",
+    "card_brand": "",
+    "card_issuer": "",
+    "card_issuer_country": "",
+    "card_issuer_country_code": "",
+    "card_no": "",
+    "card_sub_brand": "",
+    "card_type": "",
+    "currency": "",
+    "currency_amount": "",
+    "currency_rate": "",
+    "currency_type": "",
+    "error": "",
+    "risk_level": "",
+    "risk_title": "",
+    "status": status,
+    "store_amount": "",
+    "store_id": process.env.STORE_ID, 
+    "tran_date": tran_date,
+    "tran_id": `${tran_id}`,
+    "val_id": val_id,
+    "value_a": value_a,
+    "value_b": value_b,
+    "value_c": value_c,
+    "value_d": "",
+    "verify_sign": "",
+    "verify_sign_sha2": "",
+    "verify_key": ""
   });
 
   await userPurchasedCourses.save();
 
-  console.log(userPurchasedCourses);
+  console.log("ssl-payment-fail ----- ",userPurchasedCourses);
 
   res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
 });
 
 app.post("/api/ssl-payment-cancel", async (req, res) => {
-  /**
-   * If payment cancelled
-   */
-  // let recievedResponseData = decryptionOfData(req, res);
-  // req.body = recievedResponseData;
+ 
   const {
     tran_id,
     val_id,
@@ -3411,13 +3241,6 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
     value_c,
   } = req.body;
 
-  // return res.status(200).json({
-  //   data: req.body,
-  //   message: "Payment cancelled",
-  // });
-
-  console.log("api/ssl-payment-cancel   ----- ", req.body);
-
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
 
@@ -3426,21 +3249,42 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    username: value_a,
-    phoneNumber: value_b,
-    coursesList: value_c,
-    tran_id: tran_id,
-    val_id: val_id,
-    amount: amount,
-    status: status,
-    bank_tran_id: bank_tran_id,
-    tran_date: tran_date,
-    expirationDate: courseExpires,
+    "username": `${value_a}`,
+    "phoneNumber": `${value_b}`,
+    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
+    "expirationDate": `${courseExpires}`,
+    "amount": `${amount}`,
+    "bank_tran_id": bank_tran_id,
+    "base_fair": "0.00",
+    "card_brand": "",
+    "card_issuer": "",
+    "card_issuer_country": "",
+    "card_issuer_country_code": "",
+    "card_no": "",
+    "card_sub_brand": "",
+    "card_type": "",
+    "currency": "",
+    "currency_amount": "",
+    "currency_rate": "",
+    "currency_type": "",
+    "error": "",
+    "risk_level": "",
+    "risk_title": "",
+    "status": status,
+    "store_amount": "",
+    "store_id": process.env.STORE_ID, 
+    "tran_date": tran_date,
+    "tran_id": `${tran_id}`,
+    "val_id": val_id,
+    "value_a": value_a,
+    "value_b": value_b,
+    "value_c": value_c,
+    "value_d": "",
+    "verify_sign": "",
+    "verify_sign_sha2": "",
+    "verify_key": ""
   });
-
   await userPurchasedCourses.save();
-
-  console.log("userPurchasedCourses -----", userPurchasedCourses);
 
   res.redirect(process.env.CLIENT_URL + `courses?payment=cancel`);
 });
@@ -4066,6 +3910,178 @@ app.get("/api/checklogdata", async (req, res) => {
 
   res.json(data);
 });
+
+
+//* <---  Token portoion  ---> 
+//! ********** Token portoion ***********/
+const validateUserSignUp = async (arg) => {
+  const { email, phoneNumber, otp } = arg;
+
+  const user = await signUpTemplateCopy.findOne({
+    phoneNumber: phoneNumber,
+  });
+
+  if (!user) {
+    let msg = {
+      data: null,
+      result: {
+        isError: true,
+        status: 404,
+        errorMsg: "User not found",
+      },
+    };
+    return msg;
+  } else if (user && user.otp !== otp) {
+    let msg = {
+      data: null,
+      result: {
+        isError: true,
+        status: 406,
+        errorMsg: "Invalid OTP | Not Acceptable",
+      },
+    };
+    return msg;
+  } else {
+    const updatedUser = await signUpTemplateCopy.findByIdAndUpdate(user._id, {
+      $set: {
+        active: true,
+      },
+    });
+    let msg = {
+      data: `${updatedUser.phoneNumber} is verified!`,
+      result: {
+        isError: false,
+        status: 202,
+        errorMsg: "",
+      },
+    };
+    return msg;
+  }
+};
+
+async function tokenChecking(req, res) {
+  var request = new Request(req);
+  const fromClient = request.headers.authorization;
+
+  console.log("fromClient ---- ", fromClient);
+
+  if (fromClient) {
+    var tokenArray = fromClient.split(" ");
+    var token = tokenArray[1];
+    let tokenObj = await tokenModel.findOne({
+      accessToken: token,
+    });
+    if (tokenObj) {
+      let currentDate = new Date().getTime();
+      let tokenExpires = new Date(tokenObj.accessTokenExpiresAt).getTime();
+      let expiry = (tokenExpires - currentDate) / 1000;
+
+      if (expiry < 0) {
+        let tokenExpiryStatus = {
+          data: null,
+          result: {
+            isError: true,
+            status: 400,
+            errMsg: "token is expired",
+          },
+        };
+        console.log("Token expired");
+        return tokenExpiryStatus;
+        // return false;
+      } else {
+        let tokenExpiryStatus = {
+          data: tokenObj,
+          result: {
+            isError: false,
+            status: 200,
+            errMsg: "Token is still active",
+          },
+        };
+        console.log("Token is still active");
+        return tokenExpiryStatus;
+        // return true;
+      }
+    } else {
+      let tokenExpiryStatus = {
+        data: null,
+        result: {
+          isError: false,
+          status: 401,
+          errMsg: "No token in DB",
+        },
+      };
+      console.log("No token in DB");
+      return tokenExpiryStatus;
+      // return false;
+    }
+  } else {
+    let tokenExpiryStatus = {
+      data: null,
+      result: {
+        isError: false,
+        status: 404,
+        errMsg: "Token is required",
+      },
+    };
+    console.log("No token!");
+    return tokenExpiryStatus;
+    // return false;
+  }
+}
+
+app.oauth = new OAuth2Server({
+  model: require("./auth/model"),
+  accessTokenLifetime: process.env.ACCESS_TOKEN_LIFETIME,
+  allowBearerTokensInQueryString: true,
+});
+
+function obtainToken(req, res, callback) {
+  var request = new Request(req);
+  var response = new Response(res);
+
+  return app.oauth
+    .token(request, response)
+    .then(function (token) {
+      let tokenDetails = {
+        access_token: token.accessToken,
+        accessTokenExpiresAt: token.accessTokenExpiresAt,
+        refresh_token: token.refreshToken,
+        refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+        user: token.user.username,
+        expiryTime: token.expiryTime,
+      };
+
+      let sendResponse = {
+        data: tokenDetails,
+        result: {
+          isError: false,
+          status: 200,
+          errorMsg: "",
+        },
+      };
+      // console.log("Send response ---- ", sendResponse, "Re --", request.body);
+      if (request.body.loginMethod === "google") {
+        // console.log("Inside google method", sendResponse);
+        return sendResponse;
+      } else if (request.body.loginMethod === "facebook") {
+        // console.log("sent from fb" + sendResponse);
+        return sendResponse;
+      } else {
+        callback(sendResponse);
+      }
+    })
+    .catch(function (err) {
+      console.log("this is inside token catch!", err.message);
+
+      let setSendResponseData = new sendResponseData(null, 404, err.message);
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+
+      return responseToSend;
+      // res.send(responseToSend);
+    });
+}
+//* <---  Token portoion  ---> 
+
 
 let port = process.env.PORT;
 app.listen(port, () => {

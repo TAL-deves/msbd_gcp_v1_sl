@@ -50,6 +50,7 @@ const Payment = () => {
   const webcamRef = React.useRef(null);
   const location = useLocation();
   const total= location.state.total;
+  const singleCourse= [location.state.singleCourse];
   // console.log(discountedPrice,"discountedPrice")
   const [userprofileimage, setUserprofileimage] = useState("")
   const [image, setImage] = useState("")
@@ -94,24 +95,25 @@ const Payment = () => {
     // console.log(response.data.data.email, "userinfo")
   }
 
-
-
+  
   useEffect(() => {
     handleGetUser();
-
+    
   }, [email])
-
-
+  
+  
   //payment api
-
+  
   const courses = useSelector(state => state.cart)
-
+  
   //  course list for api 
   let courseList = [];
   for (let i = 0; i < courses.length; i++) {
     courseList.push(courses[i].id);
   }
-
+  
+  console.log("console log data --------",fullname, username, phonenumber, email, courseList, staddress, city, postcode, country, total, singleCourse
+    )
   // let price = 0;
   // for (let i = 0; i < courses.length; i++) {
   //   price = price + parseInt(courses[i].price);
@@ -123,12 +125,15 @@ const Payment = () => {
   // let newEmail=(userInfo.email);
   //  setFullname(userInfo.fullname)
   let payment = async () => {
+    let courses
+    {!singleCourse?
+       (courses= courseList):(courses= singleCourse)}
     let phonenumber = userInfo.username;
     let price= total
     await api
       .post(
         `${process.env.REACT_APP_API_URL}/api/buy`,
-        JSON.stringify({ fullname, username, phonenumber, email, courseList, staddress, city, postcode, country, price
+        JSON.stringify({ fullname, username, phonenumber, email, courses, staddress, city, postcode, country, price
          }),
         {
           headers: { "Content-Type": "application/json" },

@@ -47,6 +47,7 @@ const COURSE_URL = "/api/give-a-review";
 const VIDEOCIPHER_URL = "/api/playthevideo";
 const COURSE_VDO_URL = "/api/course";
 
+
 const VideoGridWrapper = styled(Grid)(({ theme }) => ({
   marginTop: "30%",
 }));
