@@ -13,11 +13,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import './Navigationbar.css';
 import { styled } from "@mui/material/styles";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 import api, { baseURL } from "../../api/Axios";
+import GTranslateIcon from '@mui/icons-material/GTranslate';
 import {
   createTheme,
   FormControl,
@@ -52,6 +53,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { globalContext } from "../../pages/GlobalContext";
 import swal from "sweetalert";
 import { multiStepContext } from "../../pages/StepContext";
+import { useNavigate } from "react-router-dom";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   // margin:0,
@@ -118,8 +120,10 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navigationbar = (props) => {
   const { userobj } = useContext(multiStepContext);
+  const navigate = useNavigate();
+  const [lang, setLang]= useState("bn");
 
-  const { t, onChange, count } = useContext(globalContext);
+  const { t, onChange, count, language, setLanguage } = useContext(globalContext);
 
   const userId = localStorage.getItem("access_token");
   // //console.log("user local:",userId)
@@ -132,6 +136,7 @@ const Navigationbar = (props) => {
 
   const logout = () => {
     window.open(`${process.env.REACT_APP_API_URL}/api/logout`, "_self");
+    
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -155,6 +160,11 @@ const Navigationbar = (props) => {
   const textstyle = {
     textDecoration: "none",
   };
+  // lang 
+  useEffect(()=>{
+    localStorage.setItem("language",lang)
+  // console.log(lang)
+  },[lang])
 
   const pages = [
     { title: `${t("home")}`, href: "/" },
@@ -406,7 +416,7 @@ const Navigationbar = (props) => {
           </Box>
 
           {/* for big screen  */}
-          <FormControl
+          {/* <FormControl
             sx={{
               minWidth: 90,
               marginRight: "5px",
@@ -432,10 +442,35 @@ const Navigationbar = (props) => {
               <MenuItem value="en">English</MenuItem>
               <MenuItem value="bn">বাংলা</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
 
           {/* new button for en bn  */}
-         
+         <Box sx={{
+              minWidth: 90,
+              marginRight: "5px",
+              display: { xs: "none", md: "block" },
+              cursor:"pointer",
+              
+            }}>
+          {lang==="en"?
+          <Button sx={{color:"secondary.main"}} variant="text" onClick={()=>{onChange("en")
+          setLang("bn")
+          setLanguage("bn")
+          }}>
+           <GTranslateIcon/> <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>ENGLISH </Typography>
+          </Button>:
+          <Button sx={{color:"secondary.main"}} variant="text" onClick={()=>{onChange("bn") 
+          setLang("en")
+          setLanguage("en")
+          localStorage.setItem("language","bn")
+          }
+          }>
+           <GTranslateIcon/> 
+           <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>বাংলা </Typography>
+          </Button>}
+          
+
+         </Box>
            
 
           {userId ? (
@@ -445,7 +480,7 @@ const Navigationbar = (props) => {
 
                 <Button
                   variant="outlined"
-                  onClick={handleOpenUserMenu}
+                  onClick={()=>{navigate("/userprofile")}}
                   // onMouseOver={handleOpenUserMenu}
                   sx={{
                     borderColor: "other.white",
@@ -458,7 +493,7 @@ const Navigationbar = (props) => {
                   {/* </Link> */}
                 </Button>
 
-                <Menu
+                {/* <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
@@ -498,12 +533,8 @@ const Navigationbar = (props) => {
                       {t("myFeedbacks")}
                     </MenuItem>
                   </Link>
-                  {/* <Link to="/dectivateaccount" style={textstyle}>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      {t("deactivateAccount")}
-                    </MenuItem>
-                  </Link> */}
-                </Menu>
+                  
+                </Menu> */}
 
                 <Button
                   className="Login"
@@ -534,6 +565,7 @@ const Navigationbar = (props) => {
                           );
                           setTimeout(function () {
                             window.location.href = "/login";
+                            // navigate("/login")
                           }, 1000);
                         } else if (res.data.result.status === 404) {
                           localStorage.removeItem("access_token");
@@ -793,6 +825,14 @@ const Navigationbar = (props) => {
       </Container>
     </AppBar>
   );
+
+    <globalContext.Provider value={{lang}}>
+                        
+      {props.children}
+
+    </globalContext.Provider>
 };
+
+
 
 export default Navigationbar;

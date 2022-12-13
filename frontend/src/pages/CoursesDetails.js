@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState, Component, useContext } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import coursesData from "../data/coursesData";
@@ -15,6 +15,7 @@ import {
   Route,
   
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Button from "@mui/material/Button";
@@ -35,9 +36,13 @@ import { instructorData } from "../data/instructorData";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
+import { globalContext } from "./GlobalContext";
+
 
 
 const VIDEOLOG_URL = "/videologdata";
+const COURSE_DETAILS_URL= "/api/coursedetails";
+let USER_COURSES_URL = "/api/usercourses"
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -108,17 +113,71 @@ Item.propTypes = {
   ]),
 };
 
+
+
 const CoursesDetails = () => {
+  const navigate = useNavigate();
+  const { language } = useContext(globalContext);
   AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
+  const [state, setState] = useState({});
   const [instructorState, setInstructorState] = useState(instructorData);
+  const [courses, setCourses] = useState([]);
+  const [load, setLoad] = useState(true);
   const loggedin= localStorage.getItem("access_token")
   let location = useLocation();
   
 
-  let state = location.state.courseId;
+  let fullobject = location.state.courseId;
+  let courseID= fullobject.courseID
+
+  let fetchCourseDetails= async()=>{
+    await api
+    .post(COURSE_DETAILS_URL, JSON.stringify({ courseID, language }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+       console.log("single course id", data);
+       setState(data.data.data)
+       
+    });
+
+};
+
+useEffect(() => { 
+  fetchCourseDetails()
+}, [language]);
+
+let fetchData = async () => {
+  let username = localStorage.getItem("user")
+  await api
+    .post(USER_COURSES_URL, JSON.stringify({ username }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+      console.log("ins dta", data);
+      if (data.data.result.status === 404) {
+        // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
+        setCourses([])
+      }
+      else {
+        setCourses(data.data.data)
+      }
+      console.log("state",courses)
+      
+      setLoad(false);
+    });
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
   
-  console.log("state",state)
+
+ let existingCourse=courses.find(c=>c.courseID===state?.courseID)
+   console.log("existingCourse",existingCourse)
   return (
    
     <Box >
@@ -130,17 +189,22 @@ const CoursesDetails = () => {
         <Grid item xs={12} lg={6} data-aos="fade-right">
           <Typography variant="h4" sx={{color:"primary.main"}}>
             {/* uncomment after ssl  */}
-            {/* {state?.title} */}
-            Demo
+            {state?.title}
+            {/* Demo */}
             </Typography>
           <Typography variant="h6"
            sx={{marginTop:"2rem", marginBottom:"2rem"}}>
             {/* uncomment after ssl  */}
-            {/* {state?.description} */}
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+            {state?.description}
+           
             </Typography>
+
             
+           <>
          {loggedin?
+         <>
+         
+         {existingCourse?
           <Routerlink to="/coursedemo" state={{ courseId: state}}
           style={{textDecoration:'none'}}
           >
@@ -151,16 +215,41 @@ const CoursesDetails = () => {
               </Typography>
             </Button>
           </Routerlink>:
+         <Button sx={{marginLeft:"0rem"}}
+             //  onClick={response}
+             onClick={() => {
+               
+               navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
+               )
+             }}
+             variant="contained">Buy Now
+           </Button>
+          }</>:
            <Routerlink to="/login" 
            style={{textDecoration:'none'}}
            >
              <Button variant="contained" color="primary">
                <Typography variant="p" color="other.dark" 
                >
-                 Start now
+                 Buy now
                </Typography>
              </Button>
            </Routerlink>}
+           </>
+           
+          
+           {/* <Button sx={{marginLeft:"2rem"}}
+                //  onClick={response}
+                onClick={() => {
+                  
+                  navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
+                  )
+                }}
+                // disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false }
+                // disabled
+                variant="contained">Buy Now
+              </Button> */}
+              
         </Grid>
         <Grid item xs={12} lg={6} data-aos="fade-left">
           <Item>

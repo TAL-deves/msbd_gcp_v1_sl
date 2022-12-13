@@ -20,6 +20,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import Lottie from "lottie-react";
 import swal from 'sweetalert';
+import {Link as Routerlink} from "react-router-dom";
+import { Router } from '@mui/icons-material';
 
 
 
@@ -30,7 +32,7 @@ export default function Wavefooter() {
     width: 50,
     borderRadius: "50px",
     margin:"5px",
-
+   
   };
 
   return (
@@ -39,6 +41,7 @@ export default function Wavefooter() {
       width: '100%',
 
       bottom: 0,
+      position:"static"
 
     }} component="footer" >
       
@@ -103,47 +106,49 @@ export default function Wavefooter() {
             }}>
               <Box sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800",marginBottom:".5rem"}} >Pages</Box>
               <Box>
-                <Link href="/login" sx={{ textDecoration: "none" }} color="inherit">
-                  Login
-                </Link>
+                <Routerlink style={{textDecoration:"none"}} to="/login"  >
+                  <Typography sx={{color:"other.white"}} display="inline">Login</Typography>
+                  
+                </Routerlink>
               </Box>
               <Box>
-                <Link href="/registration" sx={{ textDecoration: "none" }} color="inherit">
-                  Signup
-                </Link>
+                <Routerlink to="/registration" style={{ textDecoration: "none" }} >
+                <Typography sx={{color:"other.white"}} display="inline">Signup</Typography>
+                </Routerlink>
               </Box>
               <Box>
-                <Link href="/courses" sx={{ textDecoration: "none" }} color="inherit">
-                  Courses
-                </Link>
+                <Routerlink to="/courses" style={{ textDecoration: "none" }} >
+                <Typography sx={{color:"other.white"}} display="inline">Courses</Typography>
+                </Routerlink>
               </Box>
-              <Box>
-                <Link href="/store" sx={{ textDecoration: "none" }} color="inherit">
-                  Store
-                </Link>
-              </Box>
+              {/* <Box>
+                <Routerlink to="/store" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">Store</Typography>
+                </Routerlink>
+              </Box> */}
             </Grid>
-            <Grid  sx={{ textDecoration: "none" }} >
+            <Grid sx={{ textDecoration: "none" }} >
               <Box  sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800", marginBottom:".5rem"}}>Mind School BD</Box>
               <Box>
-                <Link href="/about" sx={{ textDecoration: "none" }} color="inherit">
-                  About Us
-                </Link>
+                <Routerlink to="/about" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">
+                  About Us</Typography>
+                </Routerlink>
               </Box>
               <Box>
-                <Link href="/privacy-policy" sx={{ textDecoration: "none" }} color="inherit">
-                  Privacy Policy
-                </Link>
+                <Routerlink to="/privacy-policy" style={{ textDecoration: "none" }} >
+                <Typography sx={{color:"other.white"}} display="inline">Privacy Policy</Typography>
+                </Routerlink>
               </Box>
               <Box>
-                <Link href="/refund-policy" sx={{ textDecoration: "none" }} color="inherit">
-                  Refund Policy
-                </Link>
+                <Routerlink to="/refund-policy" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">Refund Policy</Typography>
+                </Routerlink>
               </Box>
               <Box>
-                <Link href="/terms-and-conditions" sx={{ textDecoration: "none" }} color="inherit">
-                  Terms & Conditions
-                </Link>
+                <Routerlink to="/terms-and-conditions" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">Terms & Conditions</Typography>
+                </Routerlink>
               </Box>
             </Grid>
             {/* </Grid> */}

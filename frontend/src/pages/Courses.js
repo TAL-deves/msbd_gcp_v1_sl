@@ -16,6 +16,7 @@ import StepContext, { multiStepContext } from "./StepContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import SSLCourseCard from "../components/SSLCourseCard/SSLCourseCard";
+import { globalContext } from "./GlobalContext";
 
 
 const Courses = (props) => {
@@ -57,6 +58,8 @@ const Courses = (props) => {
     setMatchPwd,
     registerapiresponse,
   } = useContext(multiStepContext);
+
+  const { language } = useContext(globalContext);
   let mail = props.mail;
 
   //console.log("registration_er_user", userobj)
@@ -66,6 +69,7 @@ const Courses = (props) => {
 
   const [courses, setCourses] = useState([]);
   const [load, setLoad] = useState(true);
+  let newlang= localStorage.getItem("language")
 
   let fetchData = async () => {
 
@@ -73,7 +77,16 @@ const Courses = (props) => {
       // .then((res) => res.json())
       .then((data) => {
         // //console.log(" THis is the data -----  "+data.data.data.coursesData);
-        let listOfCourse = data.data.data.coursesData;
+        let listOfCourse;
+        if(localStorage.getItem("language")==="bn"){
+           listOfCourse = data.data.data.coursesData.en;
+           console.log("coursesbn",listOfCourse)
+
+        }
+        else{
+          listOfCourse = data.data.data.coursesData.bn;
+          console.log("coursesen",listOfCourse)
+        }
         let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         //console.log(localCourseList);
         listOfCourse.map((course) => {
@@ -89,7 +102,7 @@ const Courses = (props) => {
         })
         setCourses(listOfCourse)
         setLoad(false);
-        // console.log("courses",courses)
+         
       });
   };
 
@@ -111,7 +124,7 @@ const Courses = (props) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [language]);
 
   const navigate = useNavigate();
 
@@ -150,7 +163,7 @@ const Courses = (props) => {
                 // <Skeleton variant="rectangular" width={210} height={118} /> 
               ) : (
                 <>
-                {/* for ssl  */}
+                {/* for ssl 
                 <Box sx={{ width: {xs:"100%", sm:"47%", md:"45%", lg:"40%", xl:"40%"}, mb: "1rem",mr:{xs:"0rem", sm:"1rem", md:"1rem", lg:"1rem", xl:"1rem"} }}>
                 <SSLCourseCard
                           title={courses[2].title}
@@ -165,7 +178,7 @@ const Courses = (props) => {
                           
                         />
 
-                </Box>
+                </Box> */}
                   {courses.map((course) => {
                     return (
                       <Box key={course.courseID}

@@ -1,0 +1,41 @@
+.hello {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+  }
+  .message {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .vdo-container {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 600px;
+    background: red;
+    height: 400px;
+    padding: 1rem;
+    border-radius: 8px;
+    background: white;
+    position: relative;
+    box-shadow: 0 2px 20px 7px rgb(0 0 0 / 5%);
+  }
+  
+  .vdo-container:before {
+    position: absolute;
+    font-weight: 900;
+    color: #444555;
+    font-size: 18px;
+    content: "Click Button to Load Video"; 
+    display: flex;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+  }
+  
+  .vdo-container.haveVideo:before {
+    content: none;
+  }
+  

@@ -37,9 +37,11 @@ const AboutUs = () => {
        <Box>
         {/* <Container> */}
           <Box >
-            <Container sx={{display:"flex",justifyContent:"flex-start",flexDirection:{xs:"column", sm:"column",md:"row", lg:"row", xl:"row"},align:"center", p:"2rem", alignItems:"center"}}>
-            {/* <Grid> */}
-            <Box data-aos="fade-right" sx={{display:"flex",justifyContent:"flex-start",width:{xs:"100%", sm:"100%", md:"100%", lg:"60%", xl:"60%"}, flexDirection:"column", alignItems:"center"}}>
+            {/* <Container >
+              <Grid sx={{display:"flex",justifyContent:"flex-start",flexDirection:{xs:"column", sm:"column",md:"row", lg:"row", xl:"row"},align:"center", p:"2rem", alignItems:"center"}}>
+            <Grid xs="6"
+             data-aos="fade-right"
+             sx={{display:"flex",justifyContent:"flex-start",width:{xs:"100%", sm:"100%", md:"100%", lg:"60%", xl:"60%"}, flexDirection:"column", alignItems:"center"}}>
                 <Typography sx={{fontSize:"2rem", fontWeight:"800", color:"primary.main"}}>
                 Mind <span style={{color:"#f8b100"}}>School</span>
                 </Typography>
@@ -48,8 +50,10 @@ const AboutUs = () => {
                 A <span style={{color:"#f8b100", fontWeight:"800"}}>powerful </span><span style={{ fontWeight:"800"}}>platform</span> where you learn how to live a satisfying, miraculous and blissful life
                 </Typography>              
             </Box>               
-            </Box>
-            <Box data-aos="fade-left">        
+            </Grid>
+            <Grid xs="6"
+              data-aos="fade-left"
+             >        
             <img onClick={handleOpen} overflow="hidden" width="100%" height="200" src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/thumbnail/introThumbnail.webp" alt='' />
             <Modal
                 open={open}
@@ -62,15 +66,98 @@ const AboutUs = () => {
                 <iframe width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </Box>
             </Modal>
+            </Grid>
+            </Grid>
+            </Container> */}
+
+
+
+
+<Container>
+        
+        <Grid sx={{p:"2rem", alignItems:"center"}} container spacing={2}>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Box
+              data-aos="fade-right"
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                // width: {
+                //   xs: "100vw",
+                //   sm: "100vw",
+                //   md: "100vw",
+                //   lg: "60vw",
+                //   xl: "60vw",
+                // },
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "2rem",
+                  fontWeight: "800",
+                  color: "primary.main",
+                }}
+              >
+                Mind <span style={{ color: "#f8b100" }}>School</span>
+              </Typography>
+              <Box sx={{ width: "70%" }}>
+                <Typography
+                  sx={{
+                    fontSize: "1.3rem",
+                    fontWeight: "500",
+                    color: "primary.main",
+                  }}
+                >
+                  A{" "}
+                  <span style={{ color: "#f8b100", fontWeight: "800" }}>
+                    powerful{" "}
+                  </span>
+                  <span style={{ fontWeight: "800" }}>platform</span> where you
+                  learn how to live a satisfying, miraculous and blissful life
+                </Typography>
+              </Box>
             </Box>
-            {/* </Grid> */}
-            </Container>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Box data-aos="fade-left">
+              <img
+                onClick={handleOpen}
+                overflow="hidden"
+                width="100%"
+                
+                src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/thumbnail/introThumbnail.webp"
+                alt=""
+              />
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/XP6BvzptxR8"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </Box>
+              </Modal>
+            </Box>
+          </Grid>
+        </Grid>
+        </Container>
           </Box>
 
           <Box>
           <Container>
             <Box sx={{ m: "3rem", textAlign:"justify" }}>
-            <Typography data-aos="fade-right" sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>
+            <Typography 
+            data-aos="fade-right"
+             sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>
             About Us
             </Typography>
             <Typography data-aos="fade-left">

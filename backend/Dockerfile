@@ -2,7 +2,7 @@
 FROM node:alpine
 
 # create the directory inside the container
-WORKDIR ./Backend
+WORKDIR ./backend
 
 # copy the package.json files from local machine to the workdir in container
 COPY package*.json ./

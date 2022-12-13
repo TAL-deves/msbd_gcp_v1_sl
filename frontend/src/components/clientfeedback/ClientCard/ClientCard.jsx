@@ -13,7 +13,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const ClientCard = (props) => {
-  AOS.init({duration:2000});
+  AOS.init({duration:2000,once: true});
     let name=props.name;
     // let date=props.date;
     let img=props.img;
@@ -24,7 +24,7 @@ const ClientCard = (props) => {
       <Box sx={{margin:"1.5rem"}}>
     <Card sx={{ maxWidth: 345,
       "&:hover":{boxShadow:"5"} }} 
-      data-aos="zoom-in-up"
+      // data-aos="flip-left"
       >
       <CardHeader
         avatar={

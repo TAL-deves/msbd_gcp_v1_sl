@@ -23,6 +23,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 const HomeCourses = () => {
+  const { language } = useContext(globalContext);
   AOS.init({duration:2000});
   const {t}= useContext(globalContext)
   const sliderRef = useRef(null);
@@ -103,9 +104,22 @@ const HomeCourses = () => {
       // .then((res) => res.json())
       .then((data) => {
         // //console.log(" THis is the data -----  "+data.data.data.coursesData);
-        let listOfCourse = data.data.data.coursesData;
-        let localCourseList = JSON.parse(localStorage.getItem("courselist"));
+        // let listOfCourse = data.data.data.coursesData;
+        // let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         //console.log(localCourseList);
+
+        let listOfCourse;
+        if(localStorage.getItem("language")==="bn"){
+           listOfCourse = data.data.data.coursesData.en;
+           console.log("coursesbn",listOfCourse)
+
+        }
+        else{
+          listOfCourse = data.data.data.coursesData.bn;
+          console.log("coursesen",listOfCourse)
+        }
+        let localCourseList = JSON.parse(localStorage.getItem("courselist"));
+        
         listOfCourse.map((course) => {
           if (localCourseList !== null) {
             let localCourse = localCourseList.find(obj => obj.courseID === course.courseID)
@@ -125,7 +139,7 @@ const HomeCourses = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [language]);
   const navigate = useNavigate();
 
   let updateCourse = (course, isSelected) => {

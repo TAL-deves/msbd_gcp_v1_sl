@@ -3,9 +3,16 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Container,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
   Modal,
+  Select,
+  Tab,
+  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
@@ -17,12 +24,15 @@ import axios from "axios";
 import Webcam from "react-webcam";
 import swal from "sweetalert";
 import { useForceUpdate } from "framer-motion";
+import { Navigate, useNavigate } from "react-router";
 
 
+const AGE_REGEX = /^[0-9]*$/;
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const style = {
   position: 'absolute',
   top: '50%',
-  
+
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: { md: "50%", xs: "80%", sm: "80%" },
@@ -44,6 +54,22 @@ const USER_URL = "/api/userprofile"
 const UPDATE_USER_URL = "/api/updateuserprofile"
 const USER_IMAGE_URL = "/api/getuserimage"
 
+const genders = [
+  {
+    value: 'male',
+    label: 'Male',
+  },
+  {
+    value: 'female',
+    label: 'Female',
+  },
+  {
+    value: 'others',
+    label: 'Others',
+  }
+];
+
+
 const UserProfile = () => {
   const webcamRef = React.useRef(null);
 
@@ -52,19 +78,38 @@ const UserProfile = () => {
   const [webimage, setWebImage] = useState('')
   const [username, setUsername] = useState(localStorage.getItem('user'))
   const [userInfo, setUserInfo] = useState({})
-  const [profession, setProfession] = useState(userInfo.profession)
-  const [age, setAge] = useState()
+  const [fullname, setFullname] = useState()
+  const [email, setEmail] = useState()
+  const [profession, setProfession] = useState("")
+  const [gender, setGender] = useState("")
+  const [googleId, setGoogleId] = useState("")
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const [phonenumber, setPhonenumber] = useState();
+  const [age, setAge] = useState();
+  const [validAge, setValidAge] = useState(false);
+  const [ageFocus, setAgeFocus] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
+
+  useEffect(() => {
+    setValidAge(AGE_REGEX.test(age));
+    // console.log(validAge)
+  }, [age])
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+    // console.log(validEmail)
+  }, [email])
 
   const capture = React.useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot();
       setWebImage(imageSrc)
-      // //console.log(webimage.toString())
-
+     
     },
 
 
@@ -92,9 +137,35 @@ const UserProfile = () => {
         headers: { 'Content-Type': 'application/json' },
         'Access-Control-Allow-Credentials': true
       }
-    );
-    setUserInfo(response.data.data)
+    )
 
+    //   .then((res)=>{console.log(" response of user", res)
+    //   if(res.data.data.result.status===401){
+    //     navigate("/login")
+    //   }
+    // });
+    console.log("response data", response.data.result.status)
+
+    if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      swal("You are logged out", "Your session ended, Please login again", "info")
+      // navigate("/login")
+      window.location.href = "/login";
+      console.log("removed sesssion")
+    }
+    else {
+      setUserInfo(response.data.data)
+      setEmail(response.data.data.email)
+      setGender(response.data.data.gender ? response.data.data.gender : "male")
+      setProfession(response.data.data.profession)
+      setFullname(response.data.data.fullname)
+      setAge(response.data.data.age)
+      setPhonenumber(response.data.data.phoneNumber)
+      console.log(response.data.data, "user prof response")
+    }
     // return response.data.data
 
   }
@@ -108,17 +179,29 @@ const UserProfile = () => {
       }
     );
     setUserprofileimage(response.data.data)
-    //console.log('setUserprofileimage', response);
+    console.log('setUserprofileimage', response.data);
+    if (response.data.result.status === 200) {
+      setLoad(false)
+    }
 
+    else if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      swal("You are logged out", "Your session ended, Please login again", "info")
+      // navigate("/login")
+      window.location.href = "/login";
+      // console.log("removed sesssion")
+    }
     // return response.data.data
-
   }
 
   useEffect(() => {
     handleGetUser();
-    handleGetUserImage();
+    // handleGetUserImage();
 
-  }, [userprofileimage])
+  }, [])
 
 
 
@@ -126,7 +209,7 @@ const UserProfile = () => {
 
   let handleUpdateUserProfile = async () => {
     const response = await api.post(UPDATE_USER_URL,
-      JSON.stringify({ username, profession, age }),
+      JSON.stringify({ username, fullname, email, phonenumber, profession, age, gender }),
       {
         headers: { 'Content-Type': 'application/json' },
         'Access-Control-Allow-Credentials': true
@@ -137,7 +220,18 @@ const UserProfile = () => {
     });
     setUserInfo(response.data.data)
     setProfession(userInfo.profession)
-    //console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
+    if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      swal("You are logged out", "Your session ended, Please login again", "info")
+      // navigate("/login")
+      window.location.href = "/login";
+      console.log("removed sesssion")
+    }
+    // setGender(userInfo.gender)
+    // console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
     // return response.data.data
 
   }
@@ -152,7 +246,6 @@ const UserProfile = () => {
     setWebImage(base64);
     // setImage(base64);
   }
-
   // const handleApi = () => {
   //   //call the api
   //   const url = `${process.env.REACT_APP_API_URL}/api/uploadimage`
@@ -196,7 +289,7 @@ const UserProfile = () => {
           headers: { 'Content-Type': 'application/json' },
           'Access-Control-Allow-Credentials': true,
         }).then((e) => {
-          // //console.log(e.data.data.result.status)
+          console.log(e, 'photo up')
           swal("Profile Photo Uploaded!", "", "success")
           handleGetUserImage();
 
@@ -210,7 +303,8 @@ const UserProfile = () => {
 
 
   return (
-    <Container>
+
+    <Box>
       <Typography
         variant="h4"
         sx={{
@@ -238,7 +332,7 @@ const UserProfile = () => {
         }}
       >
         <Grid item xs={6} md={8}>
-          <Container>
+          <Box>
             <Box
               sx={{
                 marginTop: 8,
@@ -251,32 +345,78 @@ const UserProfile = () => {
                 <TextField
                   margin="normal"
                   // required
+                  focused
                   fullWidth
                   id="name"
+
                   label="Name"
-                  value={userInfo.username ? userInfo.username : ""}
+                  value={fullname}
+                  onChange={(e) => { setFullname(e.target.value) }}
                   name="name"
                   autoComplete="name"
-                  disabled
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
                   inputProps={{
                     maxLength: 320,
                   }}
-                  autoFocus
+                // autoFocus
                 />
                 <TextField
                   margin="normal"
                   // required
                   // color="success"
+                  focused
                   fullWidth
-                  disabled
                   name="email"
                   label="Email"
                   id="email"
-                  value={userInfo.email ? userInfo.email : ""}
+                  value={email}
+                  onFocus={() => setEmailFocus(true)}
+                    error={
+                      emailFocus && !validEmail ?
+                        true :
+                        false
+                    }
+                    helperText={emailFocus && !validEmail ?
+                      "Enter valid Email"
+                      : false
+                    }
+                  onChange={(e) => { setEmail(e.target.value) }}
                 />
+                {phonenumber?
+                <TextField
+                  margin="normal"
+                  focused
+                  fullWidth
+                  id="name"
+                  label="Phone Number"
+                  onChange={(e) => { setPhonenumber(e.target.value) }}
+                  value={phonenumber}
+                  name="name"
+                  autoComplete="name"
+
+                  InputProps={{
+                    disableUnderline: true,
+                    readOnly: true
+                  }}
+                  inputProps={{
+                    maxLength: 320,
+                  }}
+                  autoFocus
+                />:
+                <TextField
+                  margin="normal"
+                  focused
+                  fullWidth
+                  id="name"
+                  label="Phone Number"
+                  onChange={(e) => { setPhonenumber(e.target.value) }}
+                  value={phonenumber}
+                  name="name"
+                  autoComplete="name"
+                  inputProps={{
+                    maxLength: 320,
+                  }}
+                  autoFocus
+                />}
                 <TextField
                   margin="normal"
                   fullWidth
@@ -284,22 +424,57 @@ const UserProfile = () => {
                   label="Profession"
                   id="profession"
                   focused
-                  value={profession ? profession : userInfo.profession}
+                  value={profession}
                   // value={userInfo.profession?userInfo.profession:""}
                   // defaultValue={profession}
                   onChange={(e) => { setProfession(e.target.value) }}
                 />
-                <TextField
-                  margin="normal"
-                  name="age"
-                  label="Age"
-                  focused
-                  id="age"
-                  fullWidth
-                  value={age ? age : userInfo.age}
-                  onChange={(e) => { setAge(e.target.value) }}
-                />
+                <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" }, justifyContent: "space-between", alignItems: "center" }}>
+                  <TextField
+                    margin="normal"
+                    name="age"
+                    label="Age"
+                    focused
+                    inputProps={{
+                      maxLength: 2,
+                    }}
 
+                    id="age"
+                    // width="16rem"
+                    sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" } }}
+                    value={age}
+                    onChange={(e) => { setAge(e.target.value) }}
+                    onFocus={() => setAgeFocus(true)}
+                    error={
+                      ageFocus && !validAge ?
+                        true :
+                        false
+                    }
+                    helperText={ageFocus && !validAge ?
+                      "Enter valid Age"
+                      : false
+                    }
+                  />
+
+                  <TextField
+                    id="outlined-select-currency"
+                    select
+                    focused
+                    label="Select"
+                    value={gender}
+                    sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" }, marginTop: ".4rem" }}
+                    onChange={(e) => {
+                      // setGender(e.target.value)
+                      setGender(e.target.value)
+                    }}
+                  >
+                    {genders.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
 
                 <input
                   hidden
@@ -319,7 +494,7 @@ const UserProfile = () => {
                 </Button>
               </Box>
             </Box>
-          </Container>
+          </Box>
         </Grid>
         <Grid
           item
@@ -332,28 +507,42 @@ const UserProfile = () => {
             flexDirection: "column"
           }}
         >
+          {/* {load ? (
+            <CircularProgress sx={{
+              color:"primary.main"
+            }} />
+          ) : ( */}
+          <>
+            {userprofileimage ?
+              <>
 
-          {userprofileimage ?
-            <img src={userprofileimage} alt="user profile" width={200} height={200}
-            /> :
-            <Avatar
-              alt="ss"
-              sx={{ width: 200, height: 200, objectFit: "cover" }}
-            />
-          }
+                <img src={userprofileimage} alt="user profile" width={200} height={200}
+                />
+              </>
+              :
+              <Avatar
+                alt="ss"
+                sx={{ width: 200, height: 200, objectFit: "cover" }}
+              />
+            }
+          </>
 
 
           <Box>
 
-            {!webimage && !userInfo.profilephoto ? <Button
-              variant="outlined"
-              component="label"
-              sx={{ marginTop: "1rem" }}
-              onClick={handleOpen}
-            >
+            {!webimage && !userInfo.profilephoto ?
+              <>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  sx={{ marginTop: "1rem" }}
+                  onClick={handleOpen}
+                >
 
-              Select Photo
-            </Button> :
+                  Select Photo
+                </Button>
+              </>
+              :
               <Button
                 variant="outlined"
                 component="label"
@@ -370,7 +559,7 @@ const UserProfile = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography id="modal-modal-title" sx={{fontSize:"1.5rem", fontWeight:"800", color:"primary.main", textAlign:"center"}}>
+                <Typography id="modal-modal-title" sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
                   Please upload your image
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -380,7 +569,7 @@ const UserProfile = () => {
 
                     </Box>
 
-                    <Typography sx={{ fontSize:"1.5rem", fontWeight:"800", color:"primary.main", textAlign:"center"}}>
+                    <Typography sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
                       Or
                     </Typography>
                     <Box >
@@ -466,7 +655,10 @@ const UserProfile = () => {
           </Box>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
+
+
+
   );
 };
 

@@ -11,7 +11,7 @@ module.exports.vdochiper = (params) => {
         headers: {
           Accept: "application/json",
           Authorization:
-            "Apisecret jwTJlcEOxctO8pfGz4BCzjCprgLYoLpYc3jlWJupGowdQt0EES3eIqVwgjbIdApX",
+            "Apisecret CkSGZrtxllPYCDH3RqoR5STBSawhzy23KJFqX49eonKRCnWPbLxEyWcGerUgUujk",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

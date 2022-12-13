@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Icon from "@mui/material/Icon";
+import {Link as Routerlink} from "react-router-dom";
 import { useState, useContext } from "react";
 import api, { login } from "../../api/Axios";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
@@ -79,7 +80,7 @@ const LoginForm = (props) => {
     setMatchFocus,
     setUser,
     matchPwd,
-    setMatchPwd, addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus
+    setMatchPwd, addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus,phoneNumber
   } = useContext(multiStepContext);
 
   // mui telnet
@@ -99,6 +100,7 @@ const LoginForm = (props) => {
   const [gName, setGname] = useState("");
   const [fName, setFname] = useState("");
   const [load, setLoad] = useState(true);
+  const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
 
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
@@ -141,8 +143,10 @@ const LoginForm = (props) => {
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
         // //console.log(googleData.reslut);
-        window.opener.location.reload();
+        // window.opener.location.reload();
         window.close();
+        window.opener.document.location.href = "/courses"
+        setBackdrop(false)        
       }
     }
   } else if (fbObj) {
@@ -175,8 +179,9 @@ const LoginForm = (props) => {
         setGname(setFname);
         localStorageService.setToken(facebookData.data.data);
         // //console.log(facebookData.reslut);
-        window.opener.location.reload();
+        // window.opener.location.reload();
         window.close();
+        window.opener.document.location.href = "/courses"
       }
     }
   }
@@ -187,7 +192,7 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [open, setOpen] = useState(true);
-  const [backdrop, setBackdrop] = useState(false);
+ 
   const [sessionFound, setSessionFound] = useState(false);
   //to show pass
   const [showPassword, setShowPassword] = useState(false);
@@ -200,7 +205,7 @@ const LoginForm = (props) => {
     var h = 575;
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
-
+    
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
       "",
@@ -209,6 +214,7 @@ const LoginForm = (props) => {
       top=${top}, 
       left=${left}`
     );
+    setBackdrop(true)
   };
   const facebookAuth = () => {
     var w = 620;
@@ -229,10 +235,10 @@ const LoginForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await login(username, password, (response) => {
+    const response = await login(username, email, password,phoneNumber, (response) => {
       const localStorageService = LocalStorageService.getService();
       // //console.log("response ", response);
-      setLoad(false);
+      // setLoad(false);
       setBackdrop(false)
       if (response.data.result.status === 409) {
         setSessionFound(true);
@@ -263,8 +269,9 @@ const LoginForm = (props) => {
   }
 
   const clearSession = async () => {
+    let username=phoneNumber
     const response = await api
-      .post(SESSION_CLEAR, JSON.stringify({ username }), {
+      .post(SESSION_CLEAR, JSON.stringify({ username, phoneNumber }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
@@ -273,6 +280,7 @@ const LoginForm = (props) => {
           swal("Error!", "No active session found", "error");
         } else if (response.data.result.status === 404) {
           swal("Error!", "No user found", "error");
+          console.log("no user found", response.data.result)
         } else if (response.data.result.status === 500) {
           swal("Oh no!", "Server error, please try again later", "error");
         } else {
@@ -413,14 +421,18 @@ const LoginForm = (props) => {
           noValidate
           sx={{ mt: 1 }}
         >
-          {/* <MuiTelInput 
-            sx={{width:"100%", marginY:"1rem", color:"blue"}} 
+
+          {/* uncomment letter for login with phone  */}
+          <MuiTelInput 
+            sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
             label="Phone Number"
             defaultCountry="BD" 
-            
             value={phone} 
             onChange={handleChange} 
             required
+            inputProps={{
+              maxLength: 16,
+            }}
             onFocus={() => setPhoneFocus(true)}
             error={
               phoneFocus && !validPhone ? 
@@ -431,16 +443,18 @@ const LoginForm = (props) => {
               "Enter valid phone number"
               : false
             }
-            /> */}
-          <TextField
+            />
+
+            
+          {/* <TextField
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="email"
             label={t("email")}
-            name="username"
+            name="email"
             error={errMsg}
-            autoComplete="username"
+            autoComplete="email"
             InputProps={{
               disableUnderline: true,
             }}
@@ -449,12 +463,11 @@ const LoginForm = (props) => {
             }}
             autoFocus
             onChange={(e) => {
+              setEmail(e.target.value);
               setUsername(e.target.value);
-              props.setMail = username;
+              props.setMail = email;
             }}
-
-
-          />
+          /> */}
 
           <TextField
             margin="normal"
@@ -513,14 +526,15 @@ const LoginForm = (props) => {
           {/* )}  */}
           <Grid container>
             <Grid item xs>
-              <Link href="/forgotpassword" variant="body2">
-                {t("forgot_password")}
-              </Link>
+              <Routerlink to="/forgotpassword" style={{textDecoration:"none"}} variant="body2">
+                <Typography sx={{color:"primary.main"}}>{t("forgot_password")}</Typography>
+              </Routerlink>
             </Grid>
             <Grid item>
-              <Link href="/registration" variant="body2">
-                {t("no_account")}
-              </Link>
+              <Routerlink to="/registration" style={{textDecoration:"none"}} variant="body2">
+              <Typography sx={{color:"primary.main"}}>{t("no_account")}
+              </Typography>
+              </Routerlink>
             </Grid>
           </Grid>
         </Box>

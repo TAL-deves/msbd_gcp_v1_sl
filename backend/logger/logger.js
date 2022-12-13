@@ -148,10 +148,21 @@ const responseLogger = createLogger({
   ]
 })
 
+const videoLogger = createLogger({
+    transports: [
+        new transports.File({
+            filename: 'videoLogData.log',
+            level: 'info',
+            format: format.combine(format.timestamp(), format.json())
+        })
+    ]
+  })
+
 module.exports = {
   logger: logger,
   SMSlogger: SMSlogger,
   SSLlogger: SSLlogger,
   requestLogger: requestLogger,
-  responseLogger: responseLogger
+  responseLogger: responseLogger,
+  videoLogger: videoLogger
 }

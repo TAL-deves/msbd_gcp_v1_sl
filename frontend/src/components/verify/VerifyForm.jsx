@@ -120,7 +120,7 @@ const navigate = useNavigate();
     // send otp 
     // event.preventDefault();
     const response = await api
-      .post(VERIFY_URL, JSON.stringify({ email, otp }), {
+      .post(VERIFY_URL, JSON.stringify({ phoneNumber, otp }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
@@ -137,7 +137,7 @@ const navigate = useNavigate();
           swal("Error", `User not found!`, "error");
         } else {
           swal("Success", `${dataMsg}, You will be redirected to login`, "success", {timer: 1000});
-          const response = login(email, password, (response) => {
+          const response = login(username,email, password, phoneNumber, (response) => {
             const localStorageService = LocalStorageService.getService(); 
               setCurrentuser(response.data.data.user);
               localStorageService.setToken(response.data.data);
@@ -158,13 +158,14 @@ const navigate = useNavigate();
 
   const handleSubmitResendVerify = async (event) => {
     event.preventDefault();
+    let username= phoneNumber;
     const response = await api
-      .post(RESEND_VERIFY_URL, JSON.stringify({ phoneNumber, email, otp }), {
+      .post(RESEND_VERIFY_URL, JSON.stringify({ username,phoneNumber, email, otp }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
       .then((response) => {
-        //console.log(response.data.data);
+        console.log(response);
         let data = response.data.result.status
 
         setBackdrop(false)
@@ -173,12 +174,13 @@ const navigate = useNavigate();
         } else if(data === 406){
           swal("Hold!", `Account deleted for too many otp retry`, "error")
           .then(()=>{
-            window.location.href = "/registration"
+            // navigate("/registration")
           })
         } else {
           swal("Hold!", `Account deleted for too many otp retry`, "error")
           .then(()=>{
-            window.location.href = "/registration"
+            // window.location.href = "/registration"
+            // navigate("/registration") 
           })
         }
       });

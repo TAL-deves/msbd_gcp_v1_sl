@@ -27,6 +27,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiTelInput } from "mui-tel-input";
+import {Link as Routerlink} from "react-router-dom";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
@@ -257,15 +258,16 @@ const Regform1 = () => {
 
             {/* MUI phone added */}
             <MuiTelInput 
-            sx={{width:"100%", marginY:"1rem", color:"blue"}} 
+            sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
             label="Phone Number"
             defaultCountry="BD" 
-            // autoFocus
+            //  autoFocus
             value={phone} 
             onChange={handleChange} 
             required
             inputProps={{
               maxLength: 16,
+              // minLength:12
             }}
             onFocus={() => setPhoneFocus(true)}
             error={
@@ -274,7 +276,7 @@ const Regform1 = () => {
               false
             }
             helperText={phoneFocus && !validPhone?
-              "Enter valid phone number"
+              "Enter valid Bangladeshi phone number"
               : false
             }
             />
@@ -367,16 +369,13 @@ const Regform1 = () => {
                   : ""
               }
             />
-             
-           
-
-            
+      
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link href="/login" variant="body2">
-                  {"Already have an account? Login here"}
-                </Link>
+                <Routerlink to="/login" style={{textDecoration:"none"}} variant="body2">
+                  <Typography sx={{color:"primary.main"}}>{"Already have an account? Login here"}</Typography>
+                </Routerlink>
               </Grid>
             </Grid>
           </Box>

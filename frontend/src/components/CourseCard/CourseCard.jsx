@@ -22,7 +22,7 @@ const CourseCard = (props) => {
 
 
   let mail= props.mail;  
-  AOS.init({duration:2000});
+  AOS.init({duration:2000,once: true});
   const {t}= useContext(globalContext)
   const [flag, setFlag] = useState(true);
   
@@ -37,7 +37,7 @@ const CourseCard = (props) => {
   let fullObjectToggle = props.fullObject.toggle;
 
 
-//console.log(fullObject.id, fullObject.isSelected)
+console.log("fullObject.id", fullObject)
   const dispatch= useDispatch()
 
   // course id finder
@@ -143,7 +143,7 @@ const CourseCard = (props) => {
     justifyContent:"space-between"}}>
        
           <Box item mb={1} mr={1}>
-            <Button size="small" variant="contained" disabled 
+            <Button size="small" variant="contained"  
             sx={{backgroundColor:"secondary.main", color:"primary.main","&:hover":{backgroundColor:"primary.main",
             color:"secondary.main"}}}
              onClick={()=>handleAdd(props)
@@ -165,7 +165,7 @@ const CourseCard = (props) => {
           </Box>
           <Box item>
             {/* uncomment again  */}
-          {/* <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
+          <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
               textDecoration:"none"
             }}>
             
@@ -186,10 +186,10 @@ const CourseCard = (props) => {
                 </Typography>
                 
               </Button>
-              </Link> */}
+              </Link>
 
               {/* only for soft launch */}
-              <Button size="small" variant="contained"  
+              {/* <Button size="small" variant="contained"  
               sx={{color:"secondary.main",
             "&:hover":{backgroundColor:"secondary.main",
             color:"primary.main"}}} onClick={()=>{
@@ -207,7 +207,7 @@ const CourseCard = (props) => {
                   
                 </Typography>
                 
-              </Button>
+              </Button> */}
               
            
            

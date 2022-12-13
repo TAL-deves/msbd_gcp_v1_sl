@@ -15,7 +15,7 @@ import { Box } from "@mui/system";
 import swal from "sweetalert";
 
 const InstructorCard = (props) => {
-  AOS.init({duration:2000});
+  AOS.init({duration:2000, once: true});
   const {t}= useContext(globalContext)
   let title = props.title;
   let instructor = props.instructor;
@@ -26,7 +26,7 @@ const InstructorCard = (props) => {
     <motion.div whileHover={{scale:1.03}}>
       
     <Card 
-     data-aos="slide-up"
+    //  data-aos="slide-up"
      sx={{ margin: "0 5px", "&:hover":{boxShadow:"5", position:"top"} }}>
       <CardMedia
         component="img"
@@ -79,11 +79,11 @@ const InstructorCard = (props) => {
       <CardActions>
 
            {/* uncomment after gcp upload  */}
-      {/* <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
+      <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
               textDecoration:"none"
-            }}> */}
+            }}>
            
-        {/* <Button size="small" variant="contained" sx={{color:"secondary.main"}}>
+        <Button size="small" variant="contained" sx={{color:"secondary.main"}}>
           <Typography
             sx={{
               fontSize: "1rem",
@@ -91,11 +91,11 @@ const InstructorCard = (props) => {
           >
             {t("instructor_details")}
           </Typography>
-        </Button> */}
-{/* </Link> */}
+        </Button>
+</Link>
 
 
-        <Button onClick={()=>{
+        {/* <Button onClick={()=>{
               swal("","To Be Announced","");
             }} size="small" variant="contained" sx={{color:"secondary.main"}}>
           <Typography
@@ -105,7 +105,7 @@ const InstructorCard = (props) => {
           >
             {t("instructor_details")}
           </Typography>
-        </Button>
+        </Button> */}
         
       </CardActions>
       </Box>

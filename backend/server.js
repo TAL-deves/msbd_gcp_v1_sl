@@ -10,6 +10,7 @@ const {
   SSLlogger,
   requestLogger,
   responseLogger,
+  videoLogger,
 } = require("./logger/logger");
 
 const { loadExampleData, revokeToken } = require("./auth/model");
@@ -77,6 +78,13 @@ const allInstructors = require("./data/instructors");
 const logData = require("./Database/models/logData");
 const loginData = require("./Database/models/loginData");
 const purchaseData = require("./Database/models/purchaseData");
+const allData = require("./Database/models/allData");
+const userProfile = require("./Database/models/userProfile");
+const usersPurchasedCourses = require("./Database/models/usersPurchasedCourses");
+const lessonProgress = require("./Database/models/lessonProgress");
+const videoLogData = require("./Database/models/videoLogData");
+const test = require("./Database/models/test");
+const userMessages = require("./Database/models/userMessages");
 
 // const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
 
@@ -299,6 +307,7 @@ function encrypt(data) {
 //   };
 //   next();
 // };
+
 //! Starting of  ***** Encryption and decryption *****
 
 let decryptionOfData = (req, res) => {
@@ -382,7 +391,7 @@ let decryptionOfData = (req, res) => {
     //   obj = JSON.parse(obj);
     // }
     if (typeof obj === "string" && obj.startsWith("g")) {
-      console.log("string type obj ", obj);
+      // console.log("string type obj ", obj);
       return obj;
     }
     return JSON.parse(obj);
@@ -474,6 +483,10 @@ app.use(myLogger);
 
 // app.use(decryptionService);
 // app.use(encryptionService);
+
+//? this is req.body destructing
+const objectMap = (obj, fn) =>
+  Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
 
 // ! ******* Social Login API *******/ (Encryption done)
 app.get("/api/login/success", (req, res) => {
@@ -575,26 +588,69 @@ app.get(
       query: {},
     };
 
-    let token = await obtainToken(options);
-    let foundtoken = token;
-    // console.log(" foundtoken -----  ", foundtoken);
-    // let tokendata = JSON.stringify(token.data.accessToken);
-    // res.json("from obtain token: "+ JSON.stringify(token));
+    // let token = await obtainToken(options);
+    // let foundtoken = token;
 
-    let setSendResponseData = new sendResponseData(foundtoken);
+    // let setSendResponseData = new sendResponseData(foundtoken);
+    // let responseToSend = encryptionOfData(
+    //   setSendResponseData.successWithMessage()
+    // );
 
-    let responseToSend = encryptionOfData(
-      setSendResponseData.successWithMessage()
-    );
+    // res.redirect(
+    //   process.env.CLIENT_URL +
+    //     `login?gusername=${userid}&gobject=${JSON.stringify(
+    //       responseToSend
+    //     )}&profilename=${userinfo}`
+    // );
 
-    // res.send(responseToSend);
+    //! Cheking if user already logged in
 
-    res.redirect(
-      process.env.CLIENT_URL +
-        `login?gusername=${userid}&gobject=${JSON.stringify(
-          responseToSend
-        )}&profilename=${userinfo}`
-    );
+    let userLoginInfo = await signUpTemplateCopy.findOne({
+      username: userid,
+    });
+
+    // console.log("userLoginInfo", userLoginInfo);
+
+    if (!userLoginInfo.loggedinID) {
+      const newId = uuidv4();
+      await userLoginInfo.updateOne({
+        loggedinID: newId,
+      });
+
+      let token = await obtainToken(options);
+      let foundtoken = token;
+
+      let setSendResponseData = new sendResponseData(foundtoken);
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+
+      res.redirect(
+        process.env.CLIENT_URL +
+          `login?gusername=${userid}&gobject=${JSON.stringify(
+            responseToSend
+          )}&profilename=${userinfo}`
+      );
+    } else {
+      await tokenModel.findOneAndDelete({
+        "user.username": userid,
+      });
+
+      let token = await obtainToken(options);
+      let foundtoken = token;
+
+      let setSendResponseData = new sendResponseData(foundtoken);
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+
+      res.redirect(
+        process.env.CLIENT_URL +
+          `login?gusername=${userid}&gobject=${JSON.stringify(
+            responseToSend
+          )}&profilename=${userinfo}`
+      );
+    }
   }
 );
 app.get(
@@ -630,35 +686,82 @@ app.get(
       method: "POST",
       query: {},
     };
-    // // console.log(res);
+    // // // console.log(res);
+    // // let token = await obtainToken(options);
+    // // // obtainToken(options);
+    // // let foundtoken = token;
+    // // console.log("from fb callback: " + token);
+    // // // let tokendata = JSON.stringify(token.data.accessToken);
+    // // // res.json("from obtain token: "+ JSON.stringify(token));
+    // // res.redirect(process.env.CLIENT_URL_DEVELOPMENT + `login?fusername=${userid}`);
+
     // let token = await obtainToken(options);
-    // // obtainToken(options);
     // let foundtoken = token;
-    // console.log("from fb callback: " + token);
+    // // console.log(" foundtoken -----  ", foundtoken);
     // // let tokendata = JSON.stringify(token.data.accessToken);
     // // res.json("from obtain token: "+ JSON.stringify(token));
-    // res.redirect(process.env.CLIENT_URL_DEVELOPMENT + `login?fusername=${userid}`);
 
-    let token = await obtainToken(options);
-    let foundtoken = token;
-    // console.log(" foundtoken -----  ", foundtoken);
-    // let tokendata = JSON.stringify(token.data.accessToken);
-    // res.json("from obtain token: "+ JSON.stringify(token));
+    // let setSendResponseData = new sendResponseData(foundtoken);
 
-    let setSendResponseData = new sendResponseData(foundtoken);
+    // let responseToSend = encryptionOfData(
+    //   setSendResponseData.successWithMessage()
+    // );
 
-    let responseToSend = encryptionOfData(
-      setSendResponseData.successWithMessage()
-    );
+    // // res.send(responseToSend);
 
-    // res.send(responseToSend);
+    // res.redirect(
+    //   process.env.CLIENT_URL +
+    //     `login?fusername=${userid}&fobject=${JSON.stringify(
+    //       responseToSend
+    //     )}&fprofilename=${profilename}`
+    // );
 
-    res.redirect(
-      process.env.CLIENT_URL +
-        `login?fusername=${userid}&fobject=${JSON.stringify(
-          responseToSend
-        )}&fprofilename=${profilename}`
-    );
+    let userLoginInfo = await signUpTemplateCopy.findOne({
+      username: userid,
+    });
+
+    // console.log("userLoginInfo", userLoginInfo);
+
+    if (!userLoginInfo.loggedinID) {
+      const newId = uuidv4();
+      await userLoginInfo.updateOne({
+        loggedinID: newId,
+      });
+
+      let token = await obtainToken(options);
+      let foundtoken = token;
+
+      let setSendResponseData = new sendResponseData(foundtoken);
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+
+      res.redirect(
+        process.env.CLIENT_URL +
+          `login?fusername=${userid}&fobject=${JSON.stringify(
+            responseToSend
+          )}&fprofilename=${profilename}`
+      );
+    } else {
+      await tokenModel.findOneAndDelete({
+        "user.username": userid,
+      });
+
+      let token = await obtainToken(options);
+      let foundtoken = token;
+
+      let setSendResponseData = new sendResponseData(foundtoken);
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+
+      res.redirect(
+        process.env.CLIENT_URL +
+          `login?fusername=${userid}&fobject=${JSON.stringify(
+            responseToSend
+          )}&fprofilename=${profilename}`
+      );
+    }
   }
 );
 
@@ -675,6 +778,7 @@ app.get(
 // });
 
 // ! ******* sign up google from mobile  *******/ (Encryption done)
+
 app.post("/api/signupmobile", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -747,14 +851,300 @@ app.post("/api/signupmobile", async (req, res) => {
         query: {},
       };
 
-      let token = await obtainToken(options);
-      let foundtoken = token;
+      // let token = await obtainToken(options);
+      // let foundtoken = token;
 
-      let responseToSend = encryptionOfData(foundtoken);
+      // let responseToSend = encryptionOfData(foundtoken);
 
-      res.send(responseToSend);
+      // res.send(responseToSend);
+
+      let userLoginInfo = await signUpTemplateCopy.findOne({
+        username: req.body.googleId,
+      });
+
+      if (!userLoginInfo.loggedinID) {
+        // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+        const newId = uuidv4();
+        await userLoginInfo.updateOne({
+          loggedinID: newId,
+        });
+
+        let token = await obtainToken(options);
+        let foundtoken = token;
+
+        let responseToSend = encryptionOfData(foundtoken);
+
+        // let responseToSend = encryptionOfData(obj);
+        console.log("successfull login from mobile");
+        res.send(responseToSend);
+        // } else {
+        //   let setSendResponseData = new sendResponseData(
+        //     null,
+        //     403,
+        //     "Account is not active or locked! Please contact support."
+        //   );
+        //   let responseToSend = encryptionOfData(setSendResponseData.error());
+        //   res.send(responseToSend);
+        // }
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          "An active session found!"
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.error());
+        res.send(responseToSend);
+      }
     }
   } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, "Server error!");
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    res.send(responseToSend);
+  }
+});
+
+//? google,fb login for mobile
+app.post("/api/signupmobiletest", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    console.log("signupmobiletest    -----  ", req.body);
+
+    let userExists = await signUpTemplateCopy.findOne({
+      // googleId: req.body.googleId,
+      $and: [
+        { googleId: req.body.googleId },
+        { facebookId: req.body.facebookId },
+      ],
+    });
+
+    console.log("userExists   ----   ", userExists);
+
+    if (!userExists) {
+      if (req.body.method === "google") {
+        //! google new registration
+
+        const signUpUser = new signUpTemplateCopy({
+          fullname: req.body.fullname,
+          username: req.body.googleId,
+          email: req.body.email,
+          password: req.body.googleId,
+          googleId: req.body.googleId,
+          facebookId: req.body.facebookId,
+          active: true,
+        });
+
+        await signUpUser.save();
+        let googleOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.googleId,
+            password: req.body.googleId,
+            loginMethod: "google",
+            profileName: req.body.name,
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let token = await obtainToken(googleOptions);
+        let foundtoken = token;
+
+        let responseToSend = encryptionOfData(foundtoken);
+
+        res.send(responseToSend);
+      } else {
+        //! facebook new registration
+        const signUpUser = new signUpTemplateCopy({
+          fullname: req.body.fullname,
+          username: req.body.facebookId,
+          email: req.body.email,
+          password: req.body.facebookId,
+          googleId: req.body.googleId,
+          facebookId: req.body.facebookId,
+          active: true,
+        });
+
+        await signUpUser.save();
+
+        let facebookOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.facebookId,
+            password: req.body.facebookId,
+            loginMethod: "facebook",
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let token = await obtainToken(facebookOptions);
+        let foundtoken = token;
+
+        let responseToSend = encryptionOfData(foundtoken);
+
+        res.send(responseToSend);
+      }
+    } else {
+      if (req.body.method === "google") {
+        //! Google login
+        let googleOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.googleId,
+            password: req.body.googleId,
+            loginMethod: "google",
+            profileName: req.body.name,
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let userLoginInfo = await signUpTemplateCopy.findOne({
+          username: req.body.googleId,
+        });
+
+        if (!userLoginInfo.loggedinID) {
+          // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+          const newId = uuidv4();
+          await userLoginInfo.updateOne({
+            loggedinID: newId,
+          });
+
+          let token = await obtainToken(googleOptions);
+          let foundtoken = token;
+
+          let responseToSend = encryptionOfData(foundtoken);
+
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            409,
+            "An active session found!"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          res.send(responseToSend);
+        }
+      } else {
+        let facebookOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.facebookId,
+            password: req.body.facebookId,
+            loginMethod: "facebook",
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let userLoginInfo = await signUpTemplateCopy.findOne({
+          username: req.body.facebookId,
+        });
+
+        if (!userLoginInfo.loggedinID) {
+          // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+          const newId = uuidv4();
+          await userLoginInfo.updateOne({
+            loggedinID: newId,
+          });
+
+          let token = await obtainToken(facebookOptions);
+          let foundtoken = token;
+
+          let responseToSend = encryptionOfData(foundtoken);
+
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            409,
+            "An active session found!"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          res.send(responseToSend);
+        }
+      }
+      // let userLoginInfo = await signUpTemplateCopy.findOne({
+      //   username: req.body.googleId,
+      // });
+
+      // if (!userLoginInfo.loggedinID) {
+      //   // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+      //   const newId = uuidv4();
+      //   await userLoginInfo.updateOne({
+      //     loggedinID: newId,
+      //   });
+
+      //   if (req.body.method === "google") {
+      //     let token = await obtainToken(googleOptions);
+      //     let foundtoken = token;
+
+      //     let responseToSend = encryptionOfData(foundtoken);
+
+      //     res.send(responseToSend);
+      //   } else {
+      //     let token = await obtainToken(facebookOptions);
+      //     let foundtoken = token;
+
+      //     let responseToSend = encryptionOfData(foundtoken);
+
+      //     res.send(responseToSend);
+      //   }
+      // } else {
+      //   let setSendResponseData = new sendResponseData(
+      //     null,
+      //     409,
+      //     "An active session found!"
+      //   );
+      //   let responseToSend = encryptionOfData(setSendResponseData.error());
+      //   res.send(responseToSend);
+      // }
+    }
+  } catch (error) {
+    console.log(error);
     let setSendResponseData = new sendResponseData(null, 500, "Server error!");
     let responseToSend = encryptionOfData(setSendResponseData.error());
 
@@ -765,20 +1155,27 @@ app.post("/api/signupmobile", async (req, res) => {
 // ! ******* login google from mobile *******/ (Encryption done)
 
 // ! ******* Clearing previous token data *******/ (Encryption done)
+//* updated with phone number, username and also email
 app.post("/api/clearalltoken", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const { username, email } = req.body;
+    const { username, email, phoneNumber } = req.body;
 
-    let user = await signUpTemplateCopy.findOne({
-      email: req.body.username,
+    //? Checking phonenumber or username (Both must be same in client end)
+    const user = await signUpTemplateCopy.findOne({
+      $and: [
+        // { phoneNumber: phoneNumber },
+        { username: username },
+      ],
     });
+
     if (user) {
       let sessionAvailable = await tokenModel.findOneAndDelete({
         "user.username": username,
       });
+
       if (sessionAvailable) {
         await signUpTemplateCopy.findOneAndUpdate(
           {
@@ -828,27 +1225,50 @@ app.post("/api/clearalltoken", async (req, res) => {
 });
 
 // ! ******* Email checking API *******/ (Encryption done)
+//* updated with phone number, username and also email
 app.post("/api/checkuser", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
     const user = await signUpTemplateCopy.findOne({
-      email: req.body.email,
-    });
+      $or: [{ phoneNumber: req.body.phoneNumber }, { email: req.body.email }],
+    }); //? This checks both phone number and email
 
     if (user) {
-      let setSendResponseData = new sendResponseData(
-        null,
-        409,
-        "Email exists in database"
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
-      res.send(responseToSend);
+      if (user.phoneNumber == req.body.phoneNumber) {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `${user.phoneNumber} exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      } else if (user.email == req.body.email) {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `${user.email} exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `User exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
     } else {
-      let setSendResponseData = new sendResponseData("Email address", 200, null);
+      let setSendResponseData = new sendResponseData("Phone number", 200, null);
       let responseToSend = encryptionOfData(
         setSendResponseData.successWithMessage()
       );
@@ -862,41 +1282,69 @@ app.post("/api/checkuser", async (req, res) => {
 });
 
 // ! ******* Sign up API *******/ (Encryption done)
+//* updated with phone number, username and also email
 app.post("/api/signup", async (req, res, next) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
+    // const user = await signUpTemplateCopy.findOne({
+    //   phoneNumber: req.body.phoneNumber,
+    //   email: req.body.email,
+    // });
+
+    // console.log(user);
     const user = await signUpTemplateCopy.findOne({
-      email: req.body.email,
+      $or: [{ phoneNumber: req.body.phoneNumber }, { email: req.body.email }],
     });
 
     if (user) {
-      let setSendResponseData = new sendResponseData(
-        null,
-        409,
-        "Email exists in database"
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
-
-      res.send(responseToSend);
+      if (user.phoneNumber == req.body.phoneNumber) {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `${user.phoneNumber} exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      } else if (user.email == req.body.email) {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `${user.email} exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          409,
+          `User exists in database`
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
     } else {
       const otpGenerated = generateOTP();
       const signUpUser = new signUpTemplateCopy({
         fullname: req.body.fullname,
-        username: req.body.email,
+        username: req.body.phoneNumber,
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         password: req.body.password,
         otp: otpGenerated,
       });
 
-      sendMail({
-        to: signUpUser.email,
-        OTP: otpGenerated,
-      });
+      // sendMail({
+      //   to: signUpUser.email,
+      //   OTP: otpGenerated,
+      // });
 
       // console.log(req.body);
       let smssent = JSON.parse(
@@ -905,7 +1353,10 @@ app.post("/api/signup", async (req, res, next) => {
           OTP: otpGenerated,
         })
       );
-      if (smssent.status_code === 200) {
+
+      if (process.env.DEVELOPMENT_ENV) {
+        //? This is Development phase!! SMS Wont be sent
+
         signUpUser.save();
         if (signUpUser) {
           let setSendResponseData = new sendResponseData(
@@ -918,7 +1369,6 @@ app.post("/api/signup", async (req, res, next) => {
           );
 
           res.send(responseToSend);
-          
         } else {
           let setSendResponseData = new sendResponseData(
             null,
@@ -930,14 +1380,41 @@ app.post("/api/signup", async (req, res, next) => {
           res.send(responseToSend);
         }
       } else {
-        let setSendResponseData = new sendResponseData(
-          null,
-          smssent.status_code,
-          "OTP service down! Please try again later."
-        );
-        let responseToSend = encryptionOfData(setSendResponseData.error());
+        //? This is Development phase!! SMS Wont be sent
 
-        res.send(responseToSend);
+        if (smssent.status_code === 200) {
+          signUpUser.save();
+          if (signUpUser) {
+            let setSendResponseData = new sendResponseData(
+              "User registered!",
+              202,
+              null
+            );
+            let responseToSend = encryptionOfData(
+              setSendResponseData.successWithMessage()
+            );
+
+            res.send(responseToSend);
+          } else {
+            let setSendResponseData = new sendResponseData(
+              null,
+              500,
+              "Server error"
+            );
+            let responseToSend = encryptionOfData(setSendResponseData.error());
+
+            res.send(responseToSend);
+          }
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            smssent.status_code,
+            "OTP service down! Please try again later."
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+
+          res.send(responseToSend);
+        }
       }
     }
   } catch (error) {
@@ -949,22 +1426,16 @@ app.post("/api/signup", async (req, res, next) => {
 });
 
 // ! ******* verification API *******/ (Encryption done)
+//* updated with phone number, username and also email
 app.post("/api/verify", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
+    console.log(req.body);
 
-    // console.log("req.body --- ", req.body);
-    const { email, otp } = req.body;
-    const user = await validateUserSignUp(email, otp);
-    // let setSendResponseData = new sendResponseData(
-    //   user,
-    //   200,
-    //   user.result.errorMsg
-    // );
-    let responseToSend = encryptionOfData(
-      user
-    );
+    const user = await validateUserSignUp(req.body);
+
+    let responseToSend = encryptionOfData(user);
     res.send(responseToSend);
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
@@ -975,25 +1446,52 @@ app.post("/api/verify", async (req, res) => {
 });
 
 //! ******* Resend OTP API *******/ (encryption done)
+//* updated with phone number, username and also email
 app.post("/api/resend-otp", async (req, res) => {
   try {
-    // send email adderss to DB and generate an otp then send to that email
+    //? send email adderss to DB and generate an otp then send to that email
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    console.log("req.body resend ---- ",req.body);
+    console.log("resend-otp resend ---- ", req.body);
 
     const user = await signUpTemplateCopy.findOne({
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      active: false,
+      $and: [{ phoneNumber: req.body.phoneNumber }, { active: false }],
     });
+
+    console.log("resend-otp user ---- ", user);
 
     if (!user) {
       let setSendResponseData = new sendResponseData(null, 401, "Unauthorized");
       let responseToSend = encryptionOfData(setSendResponseData.error());
       res.send(responseToSend);
     } else {
+      // let smssent = JSON.parse(
+      //   await sendSms({
+      //     reciever: req.body.phoneNumber,
+      //     OTP: otpGenerated,
+      //   })
+      // );
+
+      // if (!process.env.DEVELOPMENT_ENV) {
+      //   //? This is Development phase!! SMS Wont be sent
+      // } else {
+
+      //   if (smssent.status_code === 200) {
+      //     console.log("hello");
+      //   } else {
+      //     let setSendResponseData = new sendResponseData(
+      //       null,
+      //       smssent.status_code,
+      //       "OTP service down! Please try again later."
+      //     );
+      //     let responseToSend = encryptionOfData(setSendResponseData.error());
+
+      //     res.send(responseToSend);
+      //   }
+
+      // }
+
       // Checking OPT try left in user DB
       let otpretrycount = user.otpretrycount;
 
@@ -1006,6 +1504,7 @@ app.post("/api/resend-otp", async (req, res) => {
 
         let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
           {
+            username: req.body.username,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             locked: false,
@@ -1020,15 +1519,22 @@ app.post("/api/resend-otp", async (req, res) => {
           }
         ); // Updating user profile DB with new OTP and changing lock status to false
 
-        sendMail({
-          to: user.email,
-          OTP: otpGenerated,
-        }); // Sending OTP to email address
+        // sendMail({
+        //   to: user.email,
+        //   OTP: otpGenerated,
+        // }); // Sending OTP to email address
 
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
         });
+
+        // let smssent = JSON.parse(
+        //   await sendSms({
+        //     reciever: req.body.phoneNumber,
+        //     OTP: otpGenerated,
+        //   })
+        // );
 
         if (signUpUser) {
           let setSendResponseData = new sendResponseData(
@@ -1055,7 +1561,9 @@ app.post("/api/resend-otp", async (req, res) => {
 
         await signUpTemplateCopy
           .findOneAndDelete({
-            email: req.body.email,
+            // username:req.body.username,
+            // email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
           })
           .then(() => {
             let setSendResponseData = new sendResponseData(
@@ -1079,6 +1587,7 @@ app.post("/api/resend-otp", async (req, res) => {
 });
 
 //! ******* users API *******/ (encryption done)
+//? Not in use <--- START --->
 app.post("/api/user", async (req, res, next) => {
   try {
     let datas = await signUpTemplateCopy.find();
@@ -1097,13 +1606,13 @@ app.post("/api/user", async (req, res, next) => {
 app.post("/api/userdetails", async (req, res, next) => {
   let recievedResponseData = decryptionOfData(req, res);
   req.body = recievedResponseData;
-  console.log(req.body.username);
+  // console.log(req.body.username);
   let datas = await tokenChecking(req);
 
-  console.log("token checking status ----- ", datas);
+  // console.log("token checking status ----- ", datas);
   // try {
   let setSendResponseData = new sendResponseData(datas, 200, null);
-  let responseToSend = encryptionOfData(setSendResponseData.success());
+  let responseToSend = encryptionOfData(datas);
 
   res.send(responseToSend);
   // } catch (error) {
@@ -1113,12 +1622,7 @@ app.post("/api/userdetails", async (req, res, next) => {
   //   res.send(responseToSend);
   // }
 });
-
-//! ******* videologdata API *******/
-app.post("/api/videologdata", async (req, res) => {
-  // console.log("triggered video log");
-  // console.log(req);
-});
+//? Not in use <--- END --->
 
 //! ******* certificate API *******/
 app.post("/api/certificate", (req, res) => {
@@ -1173,18 +1677,22 @@ app.post("/api/certificate", (req, res) => {
   // console.log(data);
   // fs.writeFileSync("./userCertificates/hello", data)
 
+
+
   let setSendResponseData = new sendResponseData(data, 200, null);
   let responseToSend = encryptionOfData(setSendResponseData.success());
   res.send(responseToSend);
 });
 
+//* <---  obtainToken/LOGIN API, logout API --->
 //! ******* obtainToken/LOGIN API *******/
+//? Both username, phonenumber is same and email is also taken but optional
 app.post("/api/oauth/token", async (req, res, next) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    console.log("req.bod inside login y ---- ", req.body);
+    console.log("req.body inside login ---- ", req.body);
 
     req.headers["Content-type"] = "application/x-www-form-urlencoded";
 
@@ -1200,6 +1708,8 @@ app.post("/api/oauth/token", async (req, res, next) => {
     }
 
     req.body = jsonData;
+
+    console.log("req.body after json ---- ", req.body);
 
     await signUpTemplateCopy
       .findOne({
@@ -1302,196 +1812,6 @@ app.post("/api/oauth/token", async (req, res, next) => {
     res.send(responseToSend);
   }
 });
-
-//! ******* User Profile API *******/
-app.post("/api/userprofile", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    let userSessionStatus = await tokenChecking(req);
-    if (userSessionStatus.data != null) {
-      console.log("User is allowed");
-      let userProfileData = await signUpTemplateCopy.findOne({
-        username: req.body.username,
-      });
-
-      if (userProfileData) {
-        let setSendResponseData = new sendResponseData(
-          userProfileData,
-          200,
-          null
-        );
-        let responseToSend = encryptionOfData(setSendResponseData.success());
-        res.send(responseToSend);
-      } else {
-        let setSendResponseData = new sendResponseData(
-          null,
-          404,
-          "user not found!"
-        );
-        let responseToSend = encryptionOfData(
-          setSendResponseData.successWithMessage()
-        );
-        res.send(responseToSend);
-      }
-    } else {
-      console.log("Not allowed");
-      let responseToSend = encryptionOfData(userSessionStatus);
-      res.send(responseToSend);
-    }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-app.post("/api/uploadimage", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    const url = req.protocol + "://" + req.get("host");
-    const profileImg = url + /userProfilepictures/ + req.body.username;
-
-    let userProfileUpdate = await signUpTemplateCopy.findOneAndUpdate(
-      {
-        username: req.body.username,
-      },
-      {
-        $set: {
-          profilephoto: profileImg,
-        },
-      }
-    );
-
-    let base64String = req.body.webimage;
-    let base64Image = base64String.split(";base64,").pop();
-
-    let writeBuffer = new Buffer.from(base64Image, "base64");
-    fs.writeFileSync(`./userProfilepictures/${req.body.username}`, writeBuffer);
-
-    let setSendResponseData = new sendResponseData(userProfileUpdate, 200, "");
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(responseToSend);
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-app.post("/api/getuserimage", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-    let userProfileData = await signUpTemplateCopy.findOne({
-      username: req.body.username,
-    });
-
-    let readBuffer = "";
-
-    readBuffer = fs.readFileSync(`./userProfilepictures/${req.body.username}`);
-
-    let base64data = readBuffer.toString("base64");
-    let base64Image = base64data.split("base64").pop();
-    if (base64Image.startsWith("/9")) {
-      base64Image = "data:image/jpeg;base64," + base64Image;
-    } else {
-      base64Image = base64Image.replace("A=", "I");
-      base64Image = "data:image/png;base64," + base64Image;
-    }
-    if (userProfileData) {
-      let setSendResponseData = new sendResponseData(base64Image, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "user not found!"
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
-      res.send(responseToSend);
-    }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-app.post("/api/updateuserprofile", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    // console.log("User data updates", req.body);
-    let userProfileData = await signUpTemplateCopy.findOneAndUpdate(
-      {
-        username: req.body.username,
-      },
-      {
-        $set: {
-          profession: req.body.profession,
-          age: req.body.age,
-        },
-      }
-    );
-
-    if (userProfileData) {
-      let setSendResponseData = new sendResponseData(
-        userProfileData,
-        200,
-        null
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "user not found!"
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
-      res.send(responseToSend);
-    }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-// app.post("/api/usercourses", async (req, res) => {
-//   let recievedResponseData = decryptionOfData(req, res);
-//   req.body = recievedResponseData;
-
-//   let userProfileData = await signUpTemplateCopy.findOne({
-//     username: req.body.username,
-//   });
-
-//   const getInstructor = (id) => {
-//     const found = instructorData.find((instructor) => instructor._id == id);
-//     if (!found) return "Instructor not found!";
-//     found.courses = found.courses.map((course) =>
-//       coursesData.find((courseData) => courseData._id === course)
-//     );
-//     return found;
-//   };
-
-//   console.log(getInstructor(1));
-//   console.log(getInstructor(2));
-//   console.log(getInstructor(3));
-
-//   // console.log(JSON.parse(userProfileData.purchasedCourses[0]));
-//   res.send(userProfileData.purchasedCourses);
-// });
-
 //! ******* logout API *******/ (encryption done)
 app.post("/api/logout", async (req, res) => {
   // let recievedResponseData = decryptionOfData(req, res);
@@ -1558,28 +1878,271 @@ app.post("/api/logout", async (req, res) => {
     res.send(responseToSend);
   }
 });
+//* <---  obtainToken/LOGIN API, logout API --->
 
+//* <---  User Profile related API --->
+//! ******* User Profile API *******/
+app.post("/api/userprofile", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+
+    if (userSessionStatus.data != null) {
+      // console.log("User is allowed");
+      let userProfileData = await signUpTemplateCopy.findOne({
+        username: req.body.username,
+      });
+
+      if (userProfileData) {
+        let setSendResponseData = new sendResponseData(
+          userProfileData,
+          200,
+          null
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "user not found!"
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
+    } else {
+      console.log("Not allowed", userSessionStatus);
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/uploadimage", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      const url = req.protocol + "s://" + req.get("host");
+      const profileImg = url + /userProfilepictures/ + req.body.username;
+
+      let userProfileUpdate = await signUpTemplateCopy.findOneAndUpdate(
+        {
+          username: req.body.username,
+        },
+        {
+          $set: {
+            profilephoto: profileImg,
+          },
+        }
+      );
+
+      let base64String = req.body.webimage;
+      let base64Image = base64String.split(";base64,").pop();
+
+      let writeBuffer = new Buffer.from(base64Image, "base64");
+      fs.writeFileSync(
+        `./userProfilepictures/${req.body.username}`,
+        writeBuffer
+      );
+
+      let setSendResponseData = new sendResponseData(
+        userProfileUpdate,
+        200,
+        ""
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/getuserimage", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      let userProfileData = await signUpTemplateCopy.findOne({
+        username: req.body.username,
+      });
+
+      let readBuffer = "";
+
+      readBuffer = fs.readFileSync(
+        `./userProfilepictures/${req.body.username}`
+      );
+
+      let base64data = readBuffer.toString("base64");
+      let base64Image = base64data.split("base64").pop();
+      if (base64Image.startsWith("/9")) {
+        base64Image = "data:image/jpeg;base64," + base64Image;
+      } else {
+        base64Image = base64Image.replace("A=", "I");
+        base64Image = "data:image/png;base64," + base64Image;
+      }
+      if (userProfileData) {
+        let setSendResponseData = new sendResponseData(base64Image, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "user not found!"
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//* Some works remaining <--- token check, phoneNumber --->
+app.post("/api/updateuserprofile", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    // console.log("User data updates", req.body);
+
+    const {
+      fullname,
+      username,
+      phonenumber,
+      email,
+      staddress,
+      city,
+      postcode,
+      country,
+      gender,
+      profession,
+      age,
+    } = req.body;
+
+    // console.log("req.body ---- ", req.body);
+
+    let userProfileData = await signUpTemplateCopy.findOneAndUpdate({
+      username: req.body.username,
+    });
+
+    // console.log("userProfileData old ---- ", userProfileData);
+
+    if (userProfileData) {
+      let updateduserProfileData = await signUpTemplateCopy.findOneAndUpdate(
+        {
+          username: req.body.username,
+        },
+        {
+          $set: {
+            fullname: fullname,
+            age: age,
+            gender: gender,
+            phoneNumber: phonenumber,
+            profession: profession,
+            email: email,
+            streetAddress: staddress,
+            city: city,
+            postCode: postcode,
+            country: country,
+          },
+        }
+      );
+
+      let updated = await signUpTemplateCopy.findOne({
+        username: req.body.username,
+      });
+
+      // console.log("userProfileData updated ---- ", updateduserProfileData);
+
+      let setSendResponseData = new sendResponseData(updated, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(
+        null,
+        404,
+        "user not found!"
+      );
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+//* <---  User Profile related API --->
+
+//* <---  Forget password, request password, resend OTP, reset password --->
 //! ******* Forget password API *******/
+//? updated with phonenumber, username, email
 app.post("/api/forget-password", async (req, res) => {
   // console.log("send email adderss to DB and generate an otp then send to that email");
 
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-   
-    console.log("req.body    ----   ", req.body)
+
+    // console.log("req.body    ----   ", req.body);
 
     const user = await signUpTemplateCopy.findOne({
-      email: req.body.email,
+      // email: req.body.email,
       phoneNumber: req.body.phoneNumber,
-      locked: false,
+      // locked: false,
     });
 
-    if (!user) {
+    // console.log("user   ----   ", user);
+
+    if (user === null) {
       let setSendResponseData = new sendResponseData(
         null,
         404,
-        "Account not found or is locked"
+        "No user found!"
+      );
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
+      res.send(responseToSend);
+    } else if (user.locked) {
+      let setSendResponseData = new sendResponseData(
+        null,
+        404,
+        "Account is locked. Please contact support"
       );
       let responseToSend = encryptionOfData(
         setSendResponseData.successWithMessage()
@@ -1594,11 +2157,12 @@ app.post("/api/forget-password", async (req, res) => {
         let OTPtryleft = resetOtpCount;
         const otpGenerated = generateOTP(); // Gerenrating a otp
 
-        console.log(otpGenerated + "  " + resetOtpCount); // Debugging console view
+        // console.log(otpGenerated + "  " + resetOtpCount); // Debugging console view
 
         let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
           {
-            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            // email: req.body.email,
             locked: false,
           },
           {
@@ -1611,10 +2175,10 @@ app.post("/api/forget-password", async (req, res) => {
           }
         ); // Updating user profile DB with new OTP and changing lock status to false
 
-        sendMail({
-          to: user.email,
-          OTP: otpGenerated,
-        }); // Sending OTP to email address
+        // sendMail({
+        //   to: user.email,
+        //   OTP: otpGenerated,
+        // }); // Sending OTP to email address
 
         sendSms({
           reciever: user.phoneNumber,
@@ -1644,7 +2208,8 @@ app.post("/api/forget-password", async (req, res) => {
       } else {
         let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
           {
-            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            // email: req.body.email,
             locked: false,
           },
           {
@@ -1682,6 +2247,114 @@ app.post("/api/forget-password", async (req, res) => {
         } // Sending error as response
       }
     }
+
+    // if (!user) {
+    //   let setSendResponseData = new sendResponseData(
+    //     null,
+    //     404,
+    //     "Account not found or is locked"
+    //   );
+    //   let responseToSend = encryptionOfData(
+    //     setSendResponseData.successWithMessage()
+    //   );
+    //   res.send(responseToSend);
+    // } else {
+    //   // Checking OPT try left in user DB
+    //   let resetOtpCount = user.resetotpcount;
+
+    //   if (resetOtpCount > 0 && resetOtpCount <= 3) {
+    //     resetOtpCount--; // Decrementing by 1 for each try
+    //     let OTPtryleft = resetOtpCount;
+    //     const otpGenerated = generateOTP(); // Gerenrating a otp
+
+    //     console.log(otpGenerated + "  " + resetOtpCount); // Debugging console view
+
+    //     let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
+    //       {
+    //         email: req.body.email,
+    //         locked: false,
+    //       },
+    //       {
+    //         $set: {
+    //           otp: otpGenerated,
+    //           resetotpcount: resetOtpCount,
+    //           active: false,
+    //           locked: false,
+    //         },
+    //       }
+    //     ); // Updating user profile DB with new OTP and changing lock status to false
+
+    //     // sendMail({
+    //     //   to: user.email,
+    //     //   OTP: otpGenerated,
+    //     // }); // Sending OTP to email address
+
+    //     sendSms({
+    //       reciever: user.phoneNumber,
+    //       OTP: otpGenerated,
+    //     });
+
+    //     if (signUpUser) {
+    //       let setSendResponseData = new sendResponseData(
+    //         "OTP sent!",
+    //         202,
+    //         null
+    //       );
+    //       let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    //       res.send(responseToSend);
+    //     } // Sending user information as response
+    //     else {
+    //       let setSendResponseData = new sendResponseData(
+    //         null,
+    //         500,
+    //         serverErrMsg
+    //       );
+    //       let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    //       res.send(responseToSend);
+    //     } // Sending Error as response
+    //   } else {
+    //     let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
+    //       {
+    //         email: req.body.email,
+    //         locked: false,
+    //       },
+    //       {
+    //         $set: {
+    //           resetotpcount: 3,
+    //           active: false,
+    //           locked: true,
+    //         },
+    //       }
+    //     ); // Updating User Info in DB (Account Locked as max try done)
+
+    //     if (signUpUser) {
+    //       let setSendResponseData = new sendResponseData(
+    //         "Account locked! You have used max OTP request",
+    //         403,
+    //         null
+    //       );
+    //       let responseToSend = encryptionOfData(
+    //         setSendResponseData.successWithMessage()
+    //       );
+
+    //       res.send(responseToSend);
+    //     } // Sending Max OTP try messge as response
+    //     else {
+    //       let setSendResponseData = new sendResponseData(
+    //         null,
+    //         401,
+    //         "Unauthorized"
+    //       );
+    //       let responseToSend = encryptionOfData(
+    //         setSendResponseData.successWithMessage()
+    //       );
+
+    //       res.send(responseToSend);
+    //     } // Sending error as response
+    //   }
+    // }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -1690,16 +2363,19 @@ app.post("/api/forget-password", async (req, res) => {
   }
 });
 
+//! ******* request password API *******/
+//? updated with phonenumber, username, email
 app.post("/api/request-password", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const { phoneNumber, email, otp } = req.body; //getting data from request
-    const user = await validateUserSignUp(email, otp); //validating user with OTP
+    // console.log(req.body);
+    // const { phoneNumber, email, otp } = req.body; //getting data from request
+    const user = await validateUserSignUp(req.body); //validating user with OTP
     // res.json(user); //Sending response
     let setSendResponseData = new sendResponseData(user, 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
+    let responseToSend = encryptionOfData(user);
 
     res.send(responseToSend);
   } catch (error) {
@@ -1709,7 +2385,9 @@ app.post("/api/request-password", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
 //! ******* Resend OTP API *******/ (encryption done)
+//? updated with phone number, email and username
 app.post("/api/resend-otp-forgotpassword", async (req, res) => {
   try {
     // send email adderss to DB and generate an otp then send to that email
@@ -1717,23 +2395,21 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
+    // console.log(req.body);
+
     const user = await signUpTemplateCopy.findOne({
-      email: req.body.email,
-      active: false,
+      phoneNumber: req.body.phoneNumber,
+      // active: false,
     });
 
     if (!user) {
-      res.send({
-        data: {
-          message: "Account not found!",
-          otp: null,
-        },
-        result: {
-          isError: false,
-          status: 401,
-          errorMsg: "Unauthorized",
-        },
-      });
+      let setSendResponseData = new sendResponseData(
+        "Account not found!",
+        401,
+        "Unauthorized"
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
     } else {
       // Checking OPT try left in user DB
       let otpretrycount = user.otpretrycount;
@@ -1747,7 +2423,7 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
 
         let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
           {
-            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
             locked: false,
           },
           {
@@ -1760,10 +2436,15 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
           }
         ); // Updating user profile DB with new OTP and changing lock status to false
 
-        sendMail({
-          to: user.email,
+        // sendMail({
+        //   to: user.email,
+        //   OTP: otpGenerated,
+        // }); // Sending OTP to email address
+
+        sendSms({
+          reciever: user.phoneNumber,
           OTP: otpGenerated,
-        }); // Sending OTP to email address
+        });
 
         if (signUpUser) {
           let setSendResponseData = new sendResponseData(
@@ -1791,7 +2472,7 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
         await signUpTemplateCopy
           .findOneAndUpdate(
             {
-              email: req.body.email,
+              phoneNumber: req.body.phoneNumber,
             },
             {
               $set: {
@@ -1801,7 +2482,7 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
           )
           .then(() => {
             let setSendResponseData = new sendResponseData(
-              "User account deleted!",
+              "User account locked!",
               406,
               "Not Acceptable"
             );
@@ -1820,23 +2501,32 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
+//! ******* Reset password OTP API *******/ (encryption done)
+//? updated with phone number, email and username
 app.post("/api/reset-password", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const { email, otp } = req.body;
+    const { email, otp, phoneNumber } = req.body;
 
     let newPassword = await bcrypt.hash(req.body.password, 12);
     const user = await signUpTemplateCopy.findOneAndUpdate(
       {
-        email: email,
+        phoneNumber: phoneNumber,
+        // email: email,
         otp: otp,
       },
       {
-        password: newPassword,
+        $set: {
+          password: newPassword,
+          otpretrycount: 3,
+          resetotpcount: 3,
+        },
       }
     );
+
     if (!user) {
       let setSendResponseData = new sendResponseData(
         null,
@@ -1857,21 +2547,30 @@ app.post("/api/reset-password", async (req, res) => {
       res.send(responseToSend);
     }
   } catch (error) {
-    let setSendResponseData = new sendResponseData(user, 500, serverErrMsg);
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
     res.send(responseToSend);
   }
 });
-/**************/
+//* <---  Forget password, request password, resend OTP, reset password --->
 
-//! ******** Course VIDEO API ******** (encryption done)
-app.post("/api/allcourses", (req, res, next) => {
+//* <---  Start course video, details --->
+//! ******** Course VIDEO API ******** (encryption done) [No token check required!]
+app.post("/api/allcourses", async (req, res, next) => {
   try {
-    let setSendResponseData = new sendResponseData(allCourses, 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
+    let data = await allData.find();
+    // console.log(data[0].coursesData);
 
-    res.send(responseToSend);
+    if (data) {
+      let setSendResponseData = new sendResponseData(data[0], 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(allCourses, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
 
@@ -1880,6 +2579,49 @@ app.post("/api/allcourses", (req, res, next) => {
     res.send(responseToSend);
   }
 });
+
+app.post("/api/coursedetails", async (req, res, next) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { courseID, language } = req.body;
+
+    // console.log(courseID, language);
+
+    let data = await allData.find();
+    let coursedetailsData;
+
+    //? if language is en then send bn data
+
+    if (language === "bn") {
+      coursedetailsData = data[0].coursesData.en;
+    } else {
+      coursedetailsData = data[0].coursesData.bn;
+    }
+
+    let result = coursedetailsData.find((item) => item.courseID == courseID);
+
+    // console.log("result",result);
+
+    if (data) {
+      let setSendResponseData = new sendResponseData(result, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(allCourses, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    res.send(responseToSend);
+  }
+});
+
 app.post("/api/courseavailed", async (req, res, next) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -1923,12 +2665,32 @@ app.post("/api/course", async (req, res) => {
 
     let courseid = req.body.courseID;
 
-    let result = coursesData.coursesData.find(
-      (item) => item.courseID === courseid
-    );
+    // let result2 = coursesData.coursesData.find(
+    //   (item) => item.courseID === courseid
+    // );
+    console.log("/api/course   ------- ", req.body);
+
+    let data = await allData.find();
+    let coursesdata = data[0].courseData;
+
+    let result = coursesdata.find((item) => item.courseID === courseid);
+
+    let completedLessons = await lessonProgress.find({
+      username: req.body.username,
+      courseID: req.body.username,
+      lessonNumber: req.body.username,
+      complete: true,
+    }).count() //!Need to work with this one
 
     if (result) {
-      let setSendResponseData = new sendResponseData(result, 200, null);
+      let dataJSON = {
+        courseID: result.courseID,
+        title: result.title,
+        lessons: result.lessons,
+        lessonsCompleted: [1, 2, 3, 4, 5, 6],
+      };
+      // console.log("result ----", dataJSON);
+      let setSendResponseData = new sendResponseData(dataJSON, 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
     } else {
@@ -1946,18 +2708,56 @@ app.post("/api/course", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
 app.post("/api/instructorcourses", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let courseid = req.body.courseID;
-    let result = allCourses.coursesData.find(
-      (item) => item.courseID === courseid
-    );
+    //! here instructorID is actually courseID
 
-    if (result) {
-      let setSendResponseData = new sendResponseData(result, 200, null);
+    const { courseID, language } = req.body;
+
+    let data = await allData.find();
+
+    let allcoursesdata;
+
+    let instructor;
+    let instructorCoursesArray;
+    let instructorCourses = [];
+
+    //? if language is en then send bn data
+
+    if (language === "bn") {
+      allcoursesdata = data[0].coursesData.en;
+      instructordata = data[0].instructorData.en;
+      instructor = instructordata.find((item) => item._id == courseID);
+
+      instructorCoursesArray = instructor.courses;
+
+      instructorCoursesArray = instructorCoursesArray.filter((e1) =>
+        allcoursesdata.some((e2) => e2.courseID === e1)
+      );
+      allcoursesdata = allcoursesdata.filter((e1) =>
+        instructorCoursesArray.some((e2) => e2 === e1.courseID)
+      );
+    } else {
+      allcoursesdata = data[0].coursesData.bn;
+      instructordata = data[0].instructorData.bn;
+      instructor = instructordata.find((item) => item._id == courseID);
+
+      instructorCoursesArray = instructor.courses;
+
+      instructorCoursesArray = instructorCoursesArray.filter((e1) =>
+        allcoursesdata.some((e2) => e2.courseID === e1)
+      );
+      allcoursesdata = allcoursesdata.filter((e1) =>
+        instructorCoursesArray.some((e2) => e2 === e1.courseID)
+      );
+    }
+
+    if (allcoursesdata) {
+      let setSendResponseData = new sendResponseData(allcoursesdata, 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
     } else {
@@ -1975,14 +2775,29 @@ app.post("/api/instructorcourses", async (req, res) => {
     res.send(responseToSend);
   }
 });
+//* <---  End course video, details --->
 
+//* <---  Instructor API --->
 //! ********** Instructor part ***********/
-
-app.post("/api/allinstructors", (req, res) => {
+app.post("/api/allinstructors", async (req, res) => {
   try {
-    let setSendResponseData = new sendResponseData(allInstructors, 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(responseToSend);
+    let data = await allData.find();
+
+    // console.log(data[0].instructorData);
+
+    if (data) {
+      let setSendResponseData = new sendResponseData(data[0], 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(allInstructors, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    }
+
+    // let setSendResponseData = new sendResponseData(data[0], 200, null);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+    // res.send(responseToSend);
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -1990,14 +2805,28 @@ app.post("/api/allinstructors", (req, res) => {
   }
 });
 
-app.post("/api/instructor", (req, res) => {
+app.post("/api/instructordetails", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-    let instructorID = req.body.instructorID;
-    let result = allInstructors.instructorData.find(
-      (item) => item._id === instructorID
-    );
+
+    const { instructorID, language } = req.body;
+
+    // let result = allInstructors.instructorData.find(
+    //   (item) => item._id === instructorID
+    // );
+
+    let data = await allData.find();
+    let instructorData;
+
+    if (language === "bn") {
+      instructorData = data[0].instructorData.bn;
+    } else {
+      instructorData = data[0].instructorData.en;
+    }
+
+    let result = instructorData.find((item) => item._id == instructorID);
+
     if (result) {
       let setSendResponseData = new sendResponseData(result, 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2008,84 +2837,1208 @@ app.post("/api/instructor", (req, res) => {
       res.send(responseToSend);
     }
   } catch (error) {
+    console.log("inside catch");
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+//* <---  Instructor API --->
+
+//! ********** Purchase A course ***********/ (Encryption done)
+//! Payment API's SSLcommerz
+
+app.post("/api/mobilepaymentdata", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      const {
+        fullname,
+        username,
+        phonenumber,
+        email,
+        courses,
+        staddress,
+        city,
+        postcode,
+        country,
+        price,
+        amount,
+        bank_tran_id,
+        base_fair,
+        card_brand,
+        card_issuer,
+        card_issuer_country,
+        card_issuer_country_code,
+        card_no,
+        card_sub_brand,
+        card_type,
+        currency,
+        currency_amount,
+        currency_rate,
+        currency_type,
+        error,
+        risk_level,
+        risk_title,
+        status,
+        store_amount,
+        store_id,
+        tran_date,
+        tran_id,
+        val_id,
+        value_a,
+        value_b,
+        value_c,
+        value_d,
+        verify_sign,
+        verify_sign_sha2,
+        verify_key,
+      } = req.body;
+
+      //? Saving this to database as payment pending status.
+      let currentDate = new Date();
+
+      let userPurchasedCourses = new usersPurchasedCourses({
+        amount: `${parseFloat(price)}`,
+        bank_tran_id: "",
+        base_fair: "0.00",
+        card_brand: "",
+        card_issuer: "",
+        card_issuer_country: "",
+        card_issuer_country_code: "",
+        card_no: "",
+        card_sub_brand: "",
+        card_type: "",
+        currency: "",
+        currency_amount: "",
+        currency_rate: "",
+        currency_type: "",
+        error: "",
+        risk_level: "",
+        risk_title: "",
+        status: "PENDING",
+        store_amount: "",
+        store_id: process.env.STORE_ID,
+        tran_date: currentDate,
+        tran_id: `${tran_id}`,
+        val_id: "",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        value_d: "",
+        verify_sign: "",
+        verify_sign_sha2: "",
+        verify_key: "",
+      });
+
+      await userPurchasedCourses.save();
+
+      let setSendResponseData = new sendResponseData(
+        "Payment initiated",
+        200,
+        null
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      return res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+app.post("/api/buy", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      const {
+        fullname,
+        username,
+        phonenumber,
+        email,
+        courses,
+        staddress,
+        city,
+        postcode,
+        country,
+        price,
+        discountedPrice,
+      } = req.body; //getting data from request
+
+      console.log("req buy---- ", req.body);
+      const newId = uuidv4().replaceAll("-", "");
+
+      const data = {
+        total_amount: parseFloat(price),
+        // currency: "BDT",
+        tran_id: newId,
+        success_url: `${process.env.SSL_URL}api/ssl-payment-success`,
+        fail_url: `${process.env.SSL_URL}api/ssl-payment-fail`,
+        cancel_url: `${process.env.SSL_URL}api/ssl-payment-cancel`,
+        ipn_url: `${process.env.SSL_URL}api/ssl-payment-notification`,
+        // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
+        shipping_method: "No",
+        product_name: JSON.stringify(courses).replaceAll('"', "."),
+        product_category: "Courses",
+        product_profile: "general",
+        cus_name: fullname,
+        cus_email: email,
+        cus_add1: staddress,
+        cus_add2: "Dhaka",
+        cus_city: city,
+        cus_state: city,
+        cus_postcode: postcode,
+        cus_country: "Bangladesh",
+        cus_phone: phonenumber,
+        // cus_fax: "01711111111",
+        // multi_card_name: "master",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        // value_d: "ref004_D",
+      };
+
+      //? Saving this to database as payment pending status.
+      let currentDate = new Date();
+
+      let userPurchasedCourses = new usersPurchasedCourses({
+        amount: `${parseFloat(price)}`,
+        bank_tran_id: "",
+        base_fair: "0.00",
+        card_brand: "",
+        card_issuer: "",
+        card_issuer_country: "",
+        card_issuer_country_code: "",
+        card_no: "",
+        card_sub_brand: "",
+        card_type: "",
+        currency: "",
+        currency_amount: "",
+        currency_rate: "",
+        currency_type: "",
+        error: "",
+        risk_level: "",
+        risk_title: "",
+        status: "PENDING",
+        store_amount: "",
+        store_id: process.env.STORE_ID,
+        tran_date: currentDate,
+        tran_id: `${newId}`,
+        val_id: "",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        value_d: "",
+        verify_sign: "",
+        verify_sign_sha2: "",
+        verify_key: "",
+      });
+
+      await userPurchasedCourses.save();
+
+      const sslcommerz = new SSLCommerzPayment(
+        process.env.STORE_ID,
+        process.env.STORE_PASSWORD,
+        true
+      ); //true for live default false for sandbox
+      sslcommerz.init(data).then((data) => {
+        //process the response that got from sslcommerz
+        //https://developer.sslcommerz.com/doc/v4/#returned-parameters
+
+        if (data?.GatewayPageURL) {
+          let setSendResponseData = new sendResponseData(data, 202, null);
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          return res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            400,
+            "Payment session was not successful"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          return res.send(responseToSend);
+        }
+      });
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
     res.send(responseToSend);
   }
 });
 
-//! ********** Purchase A course ***********/ (Encryption done)
+app.post("/api/ssl-payment-notification", async (req, res) => {
+  // console.log("ssl-payment-notification", req.body);
 
-// app.post("/api/buy", async (req, res) => {
+  // let lessonProgressNew = new test({
+  //   testdata1: req.body,
+  //   testdata2: JSON.stringify(req.body),
+  // });
 
-//   let tokenstatus = await tokenChecking(req,res);
+  // await lessonProgressNew.save();
 
-//   console.log("token status: ---- ", tokenstatus);
+  const {
+    amount,
+    bank_tran_id,
+    base_fair,
+    card_brand,
+    card_issuer,
+    card_issuer_country,
+    card_issuer_country_code,
+    card_no,
+    card_sub_brand,
+    card_type,
+    currency,
+    currency_amount,
+    currency_rate,
+    currency_type,
+    error,
+    risk_level,
+    risk_title,
+    status,
+    store_amount,
+    store_id,
+    tran_date,
+    tran_id,
+    val_id,
+    value_a,
+    value_b,
+    value_c,
+    value_d,
+    verify_sign,
+    verify_sign_sha2,
+    verify_key,
+  } = req.body;
 
-//   if(tokenstatus){
-//     let recievedResponseData = decryptionOfData(req, res);
-//     req.body = JSON.parse(JSON.parse(recievedResponseData));
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
 
-//     // const { email, courseList } = req.body; //getting data from request
-//     const email = req.body.email;
-//     const courseList = req.body.courseList;
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
 
-//     console.log("data - ", req.body);
-
-//     let currentDate = new Date();
-//     let currentDateMiliseconds = currentDate.getTime();
-
-//     let courseExpiresMiliseconds =
-//       currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
-//     let courseExpires = new Date(courseExpiresMiliseconds);
-
-//     await signUpTemplateCopy
-//       .findOneAndUpdate(
-//         {
-//           email: email,
-//         },
-//         {
-//           $push: {
-//             purchasedCourses: {
-//               courseid: courseList,
-//               purchaseDate: currentDate,
-//               expireAt: courseExpires,
-//             },
-//           },
-//         }
-//       )
-//       .then(() => {
-//         // res.send("inserted");
-//         let setSendResponseData = new sendResponseData("Inserted", 200, null);
-//         let responseToSend = encryptionOfData(
-//           setSendResponseData.successWithMessage()
-//         );
-//         res.send(responseToSend);
-//       })
-//       .catch((err) => {
-//         // res.send("error", err);
-//         let setSendResponseData = new sendResponseData(null, 500, err.message);
-//         let responseToSend = encryptionOfData(
-//           setSendResponseData.error()
-//         );
-//         res.send(responseToSend);
-//       });
-//   } else {
-//     let setSendResponseData = new sendResponseData(null, 401, "Unauthorized");
-//     let responseToSend = encryptionOfData(
-//       setSendResponseData.error()
-//     );
-//     res.send(responseToSend);
-//   }
-
-// });
-
-//! ********** Token portoion ***********/
-
-const validateUserSignUp = async (email, otp) => {
-  const user = await signUpTemplateCopy.findOne({
-    email,
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
   });
+
+  await userPurchasedCourses.save();
+
+  res.send(lessonProgressNew);
+});
+
+app.post("/api/ssl-payment-success", async (req, res) => {
+  console.log("ssl-payment-success", req.body);
+
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
+  });
+  await userPurchasedCourses.save();
+
+  let setSendResponseData = new sendResponseData(req.body, 200, null);
+  let responseToSend = encryptionOfData(setSendResponseData.success());
+
+  res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
+});
+
+app.post("/api/ssl-payment-fail", async (req, res) => {
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
+  });
+
+  await userPurchasedCourses.save();
+
+  console.log("ssl-payment-fail ----- ", userPurchasedCourses);
+
+  res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
+});
+
+app.post("/api/ssl-payment-cancel", async (req, res) => {
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
+  });
+  await userPurchasedCourses.save();
+
+  res.redirect(process.env.CLIENT_URL + `courses?payment=cancel`);
+});
+
+//! ********** User courses and payment history part ***********/
+app.post("/api/usercourses", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    //! This is for token checking Start
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      // console.log("/api/usercourses ----- ", req.body);
+      let data = await allData.find();
+      // data = data[0].coursesData.en;
+      // let array2 = data.coursesData.en
+
+      let userCourses = await usersPurchasedCourses.find({
+        $and: [{ username: req.body.username }, { status: "VALID" }],
+      });
+
+      let userallcourses = [];
+      // console.log("userallcourses ----- ", userallcourses);
+      userCourses.map((item) => {
+        // console.log("item --- ", item.coursesList);
+        item.coursesList.map((item2) => {
+          // console.log("item2 --- ", item2);
+          userallcourses.push(item2);
+        });
+      });
+      // console.log("userallcourses ----- ", userallcourses);
+
+      // if(userallcourses[0]){
+
+      // }
+
+      if (userCourses[0]) {
+        let array1 = userallcourses;
+        let array2 = data[0].coursesData.en;
+        let array3 = [];
+        let array31 = [];
+
+        // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
+        // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
+        // array3 = [...array2];
+        // console.log("userallcourses array3 ----- ", array3);
+        // console.log("userallcourses list ----- ", array2);
+
+        array1.map((e) => {
+          let objects = array2.find((e2) => e2.courseID == e);
+          // console.log("e --- ", e, "objects ---", objects);
+
+          let courses = {
+            courseID: objects.courseID,
+            title: objects.title,
+            thumbnail: objects.thumbnail,
+            courseLength: objects.courseLength,
+            totalLecture: objects.totalLecture,
+            instructor: objects.instructor.name,
+            complete: false,
+            status: 50,
+          };
+
+          array31.push({ ...courses });
+          array3.push({ ...objects });
+        });
+
+        // console.log("array31",array31);
+
+        // let data = {
+        //   "userCourses":array3,
+        //   "completed":
+        // }
+
+        let setSendResponseData = new sendResponseData(array31, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        // console.log("userCourses else ----- ", userCourses[0]);
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "No purchase done yet"
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.error());
+        res.send(responseToSend);
+      }
+    } else {
+      console.log("Not allowed", userSessionStatus);
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+    //! This is for token checking END
+
+    // res.send(userCourses)
+    // if (reviewData) {
+    //   let setSendResponseData = new sendResponseData(
+    //     "review submitted",
+    //     200,
+    //     ""
+    //   );
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // } else {
+    //   let setSendResponseData = new sendResponseData(
+    //     "review submission failed",
+    //     400,
+    //     ""
+    //   );
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+//! payment history (encrypiton, token check)
+app.post("/api/paymenthistory", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+
+    if (userSessionStatus.data != null) {
+      console.log("User is allowed");
+      let userpaymenthistory = await usersPurchasedCourses.find({
+        username: req.body.username,
+      });
+
+      // let setSendResponseData = new sendResponseData(userpaymenthistory, 200, null);
+      // let responseToSend = encryptionOfData(setSendResponseData.success());
+      // res.send(setSendResponseData);
+
+      if (userpaymenthistory) {
+        let setSendResponseData = new sendResponseData(
+          userpaymenthistory,
+          200,
+          null
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "No payment history"
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
+    } else {
+      console.log("Not allowed", userSessionStatus);
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+//! ********** Review part ***********/
+app.post("/api/give-a-review", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+
+    if (userSessionStatus.data != null) {
+      console.log("User is allowed");
+      let userpaymenthistory = await usersPurchasedCourses.find({
+        username: req.body.username,
+      });
+
+      if (userpaymenthistory) {
+        let reviewData = new reviews({
+          courseID: req.body.courseID,
+          username: req.body.username,
+          review: req.body.review,
+        });
+
+        reviewData.save();
+
+        if (reviewData) {
+          let setSendResponseData = new sendResponseData(
+            "review submitted",
+            200,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            "review submission failed",
+            400,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        }
+      } else {
+        console.log("Not allowed", userSessionStatus);
+        let responseToSend = encryptionOfData(userSessionStatus);
+        res.send(responseToSend);
+      }
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//! ********** get a users all reviews part ***********/
+
+app.post("/api/user-reviews", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+
+    if (userSessionStatus.data != null) {
+      console.log("User is allowed");
+      let userpaymenthistory = await usersPurchasedCourses.find({
+        username: req.body.username,
+      });
+
+      if (userpaymenthistory) {
+        let reviewData = await reviews.find({
+          username: req.body.username,
+        });
+
+        if (reviewData) {
+          let setSendResponseData = new sendResponseData(reviewData, 200, "");
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            "review submission failed",
+            400,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        }
+      } else {
+        console.log("Not allowed", userSessionStatus);
+        let responseToSend = encryptionOfData(userSessionStatus);
+        res.send(responseToSend);
+      }
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//! video Playing throuh VDOchipher
+app.post("/api/playthevideo", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let vdo = JSON.parse(
+      await vdochiper({
+        videoID: req.body.videoID,
+      })
+    );
+
+    let setSendResponseData = new sendResponseData(vdo, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+//! User session check
+app.post("/api/sessioncheck", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    console.log("token check: ---- ", userSessionStatus);
+
+    let responseToSend = encryptionOfData(userSessionStatus);
+    res.send(responseToSend);
+    // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+    // res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//? applypromocode related API
+app.post("/api/applypromocode", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+    console.log(req.body);
+
+    let userSessionStatus = await tokenChecking(req);
+
+    console.log("token check applypromocode ---- ", userSessionStatus);
+    if (userSessionStatus) {
+      let promocode = {
+        code: "ABC123",
+        discount: "50%",
+        amount: 0.5,
+      };
+
+      let setSendResponseData = new sendResponseData(promocode, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(
+        null,
+        404,
+        "Promo code is not valid!"
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//? Log related API
+//! ******* videologdata API *******/
+app.post("/api/videologdata", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const {
+      courseID,
+      videoID,
+      username,
+      status,
+      actionTime,
+      totalTimeCovered,
+      totalTimePlayed,
+      totalVdoDuration,
+      videoTitle,
+      lessonTitle,
+      episode,
+      currentProgress,
+    } = req.body;
+
+    // let bodyData = objectMap(req.body, v=> v) //? mapping object
+
+    console.log("req---- ", req.body);
+
+    let logVideData = new videoLogData({
+      username: username,
+      courseID: courseID,
+      videoID: videoID,
+      status: status,
+      actionTime: actionTime,
+      totalTimeCovered: totalTimeCovered,
+      totalTimePlayed: totalTimePlayed,
+      totalVdoDuration: totalVdoDuration,
+      courseName: videoTitle,
+      lessonName: lessonTitle,
+      lessonNumber: episode,
+      currentProgress: currentProgress,
+    });
+
+    await logVideData.save();
+
+    if (
+      req.body.status === "ended" &&
+      req.body.totalTimeCovered === req.body.totalVdoDuration
+    ) {
+      console.log("Video fully watched");
+
+      let lessonProgressData = await lessonProgress.find({
+        $and: [
+          { username: username },
+          { courseID: courseID },
+          { lessonNumber: episode },
+          { complete: true },
+        ],
+      });
+
+      // console.log("lessonProgressData  ", lessonProgressData);
+
+      if (!lessonProgressData[0]) {
+        let lessonProgressNew = new lessonProgress({
+          username: username,
+          courseName: videoTitle,
+          courseID: courseID,
+          videoID: videoID,
+          lessonNumber: episode,
+          complete: true,
+        });
+
+        await lessonProgressNew.save();
+
+        // console.log("Lesson progress updated");
+
+        // let setSendResponseData = new sendResponseData("Saved new", 200, null);
+        // let responseToSend = encryptionOfData(setSendResponseData);
+
+        // res.send(responseToSend);
+      } else {
+        // console.log("Already watched  ");
+        // let setSendResponseData = new sendResponseData("Updated", 200, null);
+        // let responseToSend = encryptionOfData(setSendResponseData);
+
+        // res.send(responseToSend);
+      }
+    }
+
+    videoLogger.log("info", `${JSON.stringify(req.body)}`);
+
+    let setSendResponseData = new sendResponseData("sent", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData);
+
+    res.send(responseToSend);
+  } catch (error) {
+    console.log("serverErrMsg", serverErrMsg);
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+//! ******* videologdata API for mobile *******/
+app.post("/api/mobilelogdata", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const {
+      status,
+      courseID,
+      videoID,
+      username,
+      actionTime,
+      totalTimeCovered,
+      totalTimePlayed,
+    } = req.body;
+
+    console.log("req.body ----- ", req.body);
+
+    let setSendResponseData = new sendResponseData("sent", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData);
+
+    res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 404, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+//! ******* videologdata API for test *******/
+app.post("/api/videologdatatest", async (req, res) => {
+  try {
+    // let recievedResponseData = decryptionOfData(req, res);
+    // req.body = recievedResponseData;
+
+    const {
+      status,
+      courseID,
+      videoID,
+      username,
+      actionTime,
+      totalTimeCovered,
+      totalTimePlayed,
+    } = req.body;
+
+    // let bodyData = objectMap(req.body, v=> v) //? mapping object
+
+    console.log("videologdatatest   ---- ", req.body);
+
+    // let lessonData = await lessonProgress.findOne({
+    //   $and:[
+    //     {username:username},
+    //     {courseID:courseID},
+    //     {videoID:videoID}
+    //   ]
+    // })
+
+    // if(!lessonData){
+    //   let newLessonData = new lessonProgress({
+    //     username: username,
+    //     phoneNumber: phoneNumber,
+    //     courseID: courseID,
+    //     videoID: videoID,
+    //     courseName: courseName,
+    //     lessonNumber: lessonNumber,
+    //     totalPlayed: lessonNumber,
+    //     totalCovered: lessonNumber,
+    //     currentProgress: lessonNumber,
+    //     complete: lessonNumber,
+    //   })
+    // } else {
+    //   console.log("console.log(lessonData);",lessonData);
+    // }
+
+    // if(req.body.status === "play"){
+
+    // } else if(req.body.status === "pause"){
+
+    // } else if(req.body.status === "ended"){
+
+    // } else {
+
+    // }
+
+    // if(action === 'ended' && )
+
+    let videoLogData = new videoLogData({
+      username: username,
+      phoneNumber: phoneNumber,
+      courseID: courseID,
+      videoID: videoID,
+      courseName: "courseName",
+      lessonNumber: "lessonNumber",
+      totalPlayed: totalTimePlayed,
+      totalCovered: totalTimeCovered,
+      currentProgress: totalTimeCovered,
+      complete: false,
+      action: status,
+      actionTime: actionTime,
+    });
+
+    let setSendResponseData = new sendResponseData("sent", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData);
+
+    res.send(setSendResponseData);
+  } catch (error) {
+    console.log("in catch", error);
+    let setSendResponseData = new sendResponseData(null, 404, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(error);
+  }
+});
+
+//* User message API
+app.post("/api/leaveamessage", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const {phonenumber, fullname, email, leaveMessage} = req.body;
+
+    let saveUserMessage = await new userMessages({
+      phonenumber: phonenumber,
+      fullname: fullname,
+      email: email,
+      leaveMessage: leaveMessage
+    }) 
+
+    saveUserMessage.save()
+
+    if (saveUserMessage) {
+
+    let setSendResponseData = new sendResponseData("Message Sent!", 200, senullrverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+      
+    } else {
+      let setSendResponseData = new sendResponseData(null, 500, "Server busy! Please try again later");
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+    
+
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+
+
+//! Testing point
+
+app.post("/api/keepalive", async (req, res) => {
+  /**
+    
+   let userSessionStatus = await tokenChecking(req);
+   
+   if (userSessionStatus.data != null) {
+     
+     
+     
+  } else {
+    let responseToSend = encryptionOfData(userSessionStatus);
+    res.send(responseToSend);
+  }
+  
+  */
+});
+
+app.post("/api/atestingpoint", async (req, res) => {
+  const id = crypto.randomBytes(10).toString("hex");
+
+  let smssent = JSON.parse(
+    await sendSms({
+      reciever: "8801515212628",
+      OTP: id,
+    })
+  );
+  // console.log((smssent).status_code);
+  if (smssent.status_code === 200) {
+    res.send("sms is sent");
+  } else {
+    res.send(`Failed with status code ` + smssent.status_code);
+  }
+});
+
+app.post("/api/letscheckdata", async (req, res) => {
+  let arrayOfCourses = [];
+  array31.map((e) => {
+    arrayOfCourses.push(e.course);
+  });
+  console.log(arrayOfCourses);
+});
+
+app.get("/api/checklogdata", async (req, res) => {
+  let totalusers = await signUpTemplateCopy.count();
+  let totalViews = await logData.count();
+  let totalLogins = await loginData.count();
+  let totalPurchases = await purchaseData.count();
+  let totalLoggedinUsers = await tokenModel.count();
+
+  let data = {
+    totalUsers: totalusers,
+    totalViews: totalViews,
+    totalLogins: totalLogins,
+    totalPurchases: totalPurchases,
+    totalLoggedinUsers: totalLoggedinUsers,
+  };
+
+  res.json(data);
+});
+
+//* <---  Token portoion  --->
+//! ********** Token portoion ***********/
+const validateUserSignUp = async (arg) => {
+  const { email, phoneNumber, otp } = arg;
+
+  const user = await signUpTemplateCopy.findOne({
+    phoneNumber: phoneNumber,
+  });
+
   if (!user) {
     let msg = {
       data: null,
@@ -2113,7 +4066,7 @@ const validateUserSignUp = async (email, otp) => {
       },
     });
     let msg = {
-      data: `${updatedUser.email} is now active!`,
+      data: `${updatedUser.phoneNumber} is verified!`,
       result: {
         isError: false,
         status: 202,
@@ -2245,399 +4198,7 @@ function obtainToken(req, res, callback) {
       // res.send(responseToSend);
     });
 }
-
-//! Payment API's SSLcommerz
-
-app.post("/api/buy", async (req, res) => {
-  // let tokenstatus = await tokenChecking(req, res);
-
-  // console.log("token status: ---- ", tokenstatus);
-
-  // if (tokenstatus) {
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
-
-  // const { email, courseList } = req.body; //getting data from request
-  const name = req.body.user;
-  const phone = "01234567891";
-  const email = "test@test.com";
-  const courseList = ["C001"];
-  const total = 10;
-
-  // console.log("data - ", req.body);
-
-  const data = {
-    total_amount: parseFloat(total),
-    currency: "BDT",
-    tran_id: "REF123",
-    success_url: `${process.env.ROOT}/api/ssl-payment-success`,
-    fail_url: `${process.env.ROOT}/api/ssl-payment-fail`,
-    cancel_url: `${process.env.ROOT}/api/ssl-payment-cancel`,
-    ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
-    shipping_method: "No",
-    product_name: JSON.stringify(courseList),
-    product_category: "Courses",
-    product_profile: "general",
-    cus_name: name,
-    cus_email: email,
-    cus_add1: "Dhaka",
-    cus_add2: "Dhaka",
-    cus_city: "Dhaka",
-    cus_state: "Dhaka",
-    cus_postcode: "1000",
-    cus_country: "Bangladesh",
-    cus_phone: phone,
-    cus_fax: "01711111111",
-    multi_card_name: "mastercard",
-    value_a: "ref001_A",
-    value_b: "ref002_B",
-    value_c: "ref003_C",
-    value_d: "ref004_D",
-  };
-
-  const sslcommerz = new SSLCommerzPayment(
-    process.env.STORE_ID,
-    process.env.STORE_PASSWORD,
-    false
-  ); //true for live default false for sandbox
-  sslcommerz.init(data).then((data) => {
-    //process the response that got from sslcommerz
-    //https://developer.sslcommerz.com/doc/v4/#returned-parameters
-
-    // console.log("ssl data", data);
-
-    if (data?.GatewayPageURL) {
-      //     let currentDate = new Date();
-      // let currentDateMiliseconds = currentDate.getTime();
-
-      // let courseExpiresMiliseconds =
-      //   currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
-      // let courseExpires = new Date(courseExpiresMiliseconds);
-
-      // let updatedUserData = signUpTemplateCopy.findOneAndUpdate(
-      //   {
-      //     email: email,
-      //   },
-      //   {
-      //     $set: {
-      //       purchasedCourses:  courseList,
-      //         // purchaseDate: currentDate,
-      //         // expireAt: courseExpires,
-      //       // },
-      //     },
-      //   }
-      // );
-      // console.log(" Not inside ");
-      // console.log(data?.GatewayPageURL);
-
-      let setSendResponseData = new sendResponseData(data, 202, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      return res.send(responseToSend);
-
-      // return res.send(data?.GatewayPageURL)
-    } else {
-      return res.status(400).json({
-        message: "Session was not successful",
-      });
-    }
-  });
-
-  // let currentDate = new Date();
-  // let currentDateMiliseconds = currentDate.getTime();
-
-  // let courseExpiresMiliseconds =
-  //   currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
-  // let courseExpires = new Date(courseExpiresMiliseconds);
-
-  // let updatedUserData = await signUpTemplateCopy.findOneAndUpdate(
-  //   {
-  //     email: email,
-  //   },
-  //   {
-  //     $push: {
-  //       purchasedCourses: {
-  //         courseid: courseList,
-  //         purchaseDate: currentDate,
-  //         expireAt: courseExpires,
-  //       },
-  //     },
-  //   }
-  // );
-  // } else {
-  //   let setSendResponseData = new sendResponseData(null, 401, "Unauthorized");
-  //   let responseToSend = encryptionOfData(setSendResponseData.error());
-  //   res.send(responseToSend);
-  // }
-});
-
-app.post("/api/ssl-payment-notification", async (req, res) => {
-  /**
-   * If payment notification
-   */
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
-  console.log("ssl-payment-notification", req.body);
-
-  // return res.status(200).json({
-  //   data: req.body,
-  //   message: "Payment notification",
-  // });
-
-  let setSendResponseData = new sendResponseData(req.body.data, 200, null);
-  let responseToSend = encryptionOfData(
-    setSendResponseData.successWithMessage()
-  );
-  return res.send(responseToSend);
-});
-
-app.post("/api/ssl-payment-success", async (req, res) => {
-  /**
-   * If payment successful
-   */
-
-  // let recievedResponseData = decryptionOfData(req, res);
-  //  req.body = recievedResponseData;
-  // console.log("ssl-payment-success", req.body);
-
-  // console.log("I am here");
-
-  // console.log(req.body)
-
-  let user = await signUpTemplateCopy.findOneAndUpdate(
-    {
-      username: "manas@manas.com",
-    },
-    {
-      $push: {
-        purchasedCourses: "C002",
-      },
-    }
-  );
-
-  console.log(user);
-
-  let setSendResponseData = new sendResponseData(req.body, 200, null);
-  let responseToSend = encryptionOfData(setSendResponseData.success());
-  // return res.send(req.body);
-
-  // res.redirect(`localhost:3000/course
-  //    +
-  //     ${JSON.stringify(
-  //       setSendResponseData
-  //     )}`
-  // );
-  res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
-
-  //  setTimeout(()=>{
-  //   res.redirect(`localhost:3000/
-  //      +
-  //       ${JSON.stringify(
-  //         setSendResponseData
-  //       )}`
-  //   );
-  //  }, 1000)
-});
-
-app.post("/api/ssl-payment-fail", async (req, res) => {
-  /**
-   * If payment failed
-   */
-  //  console.log("payment fail response : ", req.body);
-
-  // return res.status(200).json({
-  //   data: req.body,
-  //   message: "Payment failed",
-  // });
-
-  res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
-});
-
-app.post("/api/ssl-payment-cancel", async (req, res) => {
-  /**
-   * If payment cancelled
-   */
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
-  console.log("ssl-payment-cancel", req.body);
-
-  return res.status(200).json({
-    data: req.body,
-    message: "Payment cancelled",
-  });
-});
-
-//! ********** Review part ***********/
-app.post("/api/give-a-review", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    let reviewData = new reviews({
-      courseID: req.body.courseID,
-      username: req.body.username,
-      review: req.body.review,
-    });
-
-    reviewData.save();
-
-    if (reviewData) {
-      let setSendResponseData = new sendResponseData(
-        "review submitted",
-        200,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        "review submission failed",
-        400,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-//! ********** get a users all reviews part ***********/
-
-app.post("/api/user-reviews", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    let reviewData = await reviews.find({
-      username: req.body.username,
-    });
-
-    if (reviewData) {
-      let setSendResponseData = new sendResponseData(reviewData, 200, "");
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        "review submission failed",
-        400,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-//! video Playing throuh VDOchipher
-app.post("/api/playthevideo", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    let vdo = JSON.parse(
-      await vdochiper({
-        videoID: req.body.videoID,
-      })
-    );
-
-    let setSendResponseData = new sendResponseData(vdo, 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(responseToSend);
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-//! User session check
-app.post("/api/sessioncheck", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
-
-    let userSessionStatus = await tokenChecking(req);
-
-    console.log("token check: ---- ", userSessionStatus);
-
-    let responseToSend = encryptionOfData(userSessionStatus);
-    res.send(responseToSend);
-    // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
-    // let responseToSend = encryptionOfData(setSendResponseData.success());
-    // res.send(responseToSend);
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
-
-//! Testing point
-
-app.post("/api/keepalive", async (req, res) => {
-  var configurationForFileUpdates = {
-    method: "get",
-    url: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js",
-    headers: {},
-  };
-
-  await axios(config)
-    .then(function (response) {
-      fs.writeFile("./data/dummydata.js", response.data, (err) => {
-        if (err) console.log(err);
-        else {
-          console.log("File written successfully\n");
-        }
-      });
-
-      res.send("okay");
-    })
-    .catch(function (error) {
-      res.send("Error");
-    });
-});
-
-app.post("/api/atestingpoint", async (req, res) => {
-  const id = crypto.randomBytes(10).toString("hex");
-
-  let smssent = JSON.parse(
-    await sendSms({
-      reciever: "8801515212628",
-      OTP: id,
-    })
-  );
-  // console.log((smssent).status_code);
-  if (smssent.status_code === 200) {
-    res.send("sms is sent");
-  } else {
-    res.send(`Failed with status code ` + smssent.status_code);
-  }
-});
-
-app.get("/api/checklogdata", async (req, res) => {
-  let totalusers = await signUpTemplateCopy.count();
-  let totalViews = await logData.count();
-  let totalLogins = await loginData.count();
-  let totalPurchases = await purchaseData.count();
-  let totalLoggedinUsers = await tokenModel.count();
-
-  let data = {
-    totalUsers : totalusers,
-    totalViews : totalViews,
-    totalLogins : totalLogins,
-    totalPurchases : totalPurchases,
-    totalLoggedinUsers : totalLoggedinUsers,
-  }
-
-  res.json(data)
-})
-
+//* <---  Token portoion  --->
 
 let port = process.env.PORT;
 app.listen(port, () => {

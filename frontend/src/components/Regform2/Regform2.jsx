@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {Link as Routerlink} from "react-router-dom";
 
 const Regform2 = () => {
   const [open, setOpen] = React.useState(true);
@@ -201,9 +202,10 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
               <Grid item xs>                
               </Grid>
               <Grid item>
-                <Link href="/login" variant="body2">
-                  {"Already have an account? Login here"}
-                </Link>    
+                <Routerlink to="/login" style={{textDecoration:"none"}} >
+                  <Typography sx={{color:"primary.main"}}>{"Already have an account? Login here"}
+                  </Typography>
+                </Routerlink>    
               </Grid>
             </Grid>
           </Box>
