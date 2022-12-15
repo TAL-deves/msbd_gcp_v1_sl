@@ -1,21 +1,18 @@
 import React, { useContext } from 'react'
 import Banner from '../components/banner/Banner'
-import VideoPlayer from '../components/videoPlayer/VideoPlayer'
-import PopWindow from '../components/popWindow/PopWindow'
+
 import HomeCourses from '../components/homeCourses/HomeCourses'
 import Instructor from '../components/Instructor/Instructor'
 import DownloadApp from '../components/downloadApp/DownloadApp'
 import Portfolio from '../components/portfolio/Portfolio'
 import ClientFeedback from '../components/clientfeedback/ClientFeedback'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import CourseSlider from '../components/CourseSlider/CourseSlider'
 import StepContext, { multiStepContext } from './StepContext'
-import GlobalContext, { globalContext } from './GlobalContext'
 
 const Home = () => {
   const playerProps = { playing: true };
 //   const { abc}= useContext(globalContext)
-//  //console.log(abc)
+//  //// console.log(abc)
 const {
   userRef,
   emailRef,

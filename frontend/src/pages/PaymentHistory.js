@@ -62,7 +62,7 @@ const PaymentHistory = () => {
         "Access-Control-Allow-Credentials": true,
       }
     );
-    // console.log("response data", response.data.result.status)
+    // // console.log("response data", response.data.result.status)
 
     if (
       response.data.result.status === 401 ||
@@ -80,7 +80,7 @@ const PaymentHistory = () => {
       );
       // navigate("/login")
       window.location.href = "/login";
-      console.log("removed sesssion");
+      // console.log("removed sesssion");
     } else {
       // setUserInfo(response.data.data)
       // setEmail(response.data.data.email)
@@ -89,7 +89,7 @@ const PaymentHistory = () => {
       // setFullname(response.data.data.fullname)
       // setAge(response.data.data.age)
       // setPhonenumber(response.data.data.phoneNumber)\
-      console.log("payment data ---", response.data.data);
+      // console.log("payment data ---", response.data.data);
       setData(response.data.data);
     }
     // return response.data.data
@@ -99,7 +99,7 @@ const PaymentHistory = () => {
     handleGetUser();
   }, []);
 
-  //console.log("first date", date)
+  //// console.log("first date", date)
   return (
     <>
       <Box
@@ -160,11 +160,12 @@ const PaymentHistory = () => {
                 <TableCell component="th" scope="row">
                   {row.coursesList}
                 </TableCell>
-                <TableCell align="right">{new Date(row.dateOfPurchase).toJSON().slice(0,10)}</TableCell>
-                <TableCell align="right">{new Date(row.expirationDate).toJSON().slice(0,10)}</TableCell>
+                {/* <TableCell align="right">{new Date(row.dateOfPurchase).toJSON().slice(0,10)}</TableCell> */}
+                <TableCell align="right">{row.dateOfPurchase}</TableCell>
+                <TableCell align="right">{row.expirationDate}</TableCell>
                 <TableCell align="right">{row.amount}</TableCell>
                 <TableCell align="right">{row.tran_id}</TableCell>
-                <TableCell align="right">{row.status==="VALID"? "Success":"Failed"}</TableCell>
+                <TableCell align="right">{row.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>

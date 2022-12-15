@@ -114,7 +114,7 @@ const VerifyForm = () => {
   } = useContext(multiStepContext);
   const [otp, setOTP] = useState("");
 
-//console.log(email)
+//// console.log(email)
 const navigate = useNavigate();
   const handleSubmitVerify = async (event) => {
     // send otp 
@@ -165,7 +165,7 @@ const navigate = useNavigate();
         "Access-Control-Allow-Credentials": true,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let data = response.data.result.status
 
         setBackdrop(false)

@@ -149,7 +149,7 @@ const navigate = useNavigate();
 
 //mail
 const handleSubmitMailForget = async (e) => {
-    // //console.log(username, email, password)
+    // //// console.log(username, email, password)
     
     // e.preventDefault();
     // if button enabled with JS hack
@@ -161,7 +161,7 @@ const handleSubmitMailForget = async (e) => {
     //     return;
     // }
     try {
-        // //console.log(user, pwd, email)
+        // //// console.log(user, pwd, email)
         const response = await api.post(FORGOTPASSWORD_URL,
             JSON.stringify({ phoneNumber}),
             {
@@ -170,7 +170,7 @@ const handleSubmitMailForget = async (e) => {
                 
             }
         ).then((res)=>{
-          //console.log("the response is ----- ", res);
+          //// console.log("the response is ----- ", res);
           let statusCode = res.data.result.status
           setBackdrop(false)
           if (statusCode === 404) {
@@ -234,7 +234,7 @@ const handleSubmitNewPassword = async (e) => {
   //     return;
   // }
   try {
-      // //console.log(user, pwd, email)
+      // //// console.log(user, pwd, email)
       const response = await api.post(RESETPASS_URL,
           JSON.stringify({ phoneNumber, otp, password}),
           {
@@ -248,7 +248,7 @@ const handleSubmitNewPassword = async (e) => {
         setBackdrop(false)
         navigate("/login")
       })   
-  //     //console.log(response)     
+  //     //// console.log(response)     
     
   //     setSuccess(true);
   //     //clear state and controlled inputs
@@ -266,10 +266,10 @@ const handleSubmitNewPassword = async (e) => {
       } else if (err.response?.status === 409) {
           setErrMsg('Mail Taken');
           // setErrMsg();
-          //console.log("Username Taken");
+          //// console.log("Username Taken");
       } else{
           setErrMsg('Signup Failed');
-          //console.log("Signup Failed");
+          //// console.log("Signup Failed");
       }
       errRef.current.focus();
   }
@@ -289,7 +289,7 @@ const response = await api
         "Access-Control-Allow-Credentials": true,
       })
       .then((response) => {
-        //console.log(response.data.data);
+        //// console.log(response.data.data);
         let data = response.data.result.status
         setBackdrop(false)
         if(data === 302){

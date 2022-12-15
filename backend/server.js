@@ -79,11 +79,12 @@ const logData = require("./Database/models/logData");
 const loginData = require("./Database/models/loginData");
 const purchaseData = require("./Database/models/purchaseData");
 const allData = require("./Database/models/allData");
-const userProfile = require("./Database/models/userProfile");
 const usersPurchasedCourses = require("./Database/models/usersPurchasedCourses");
 const lessonProgress = require("./Database/models/lessonProgress");
 const videoLogData = require("./Database/models/videoLogData");
 const test = require("./Database/models/test");
+const userMessages = require("./Database/models/userMessages");
+const userPendingPurchase = require("./Database/models/userPendingPurchase");
 
 // const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
 
@@ -114,12 +115,12 @@ mongoose.connect(process.env.DATABASE_CONNECT, function (err, res) {
 app.use(express.json());
 app.use(
   cors({
-    // origin: "*", //Testing
+    origin: "*", //Testing
     // origin: true,
-    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
+    // origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-    exposedHeaders: ['x-auth-token']
+    // exposedHeaders: ['x-auth-token']
   })
 );
 app.use(
@@ -903,7 +904,7 @@ app.post("/api/signupmobile", async (req, res) => {
   }
 });
 
-//? google,fb login for mobile 
+//? google,fb login for mobile
 app.post("/api/signupmobiletest", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -932,7 +933,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           password: req.body.googleId,
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
-          active: true
+          active: true,
         });
 
         await signUpUser.save();
@@ -973,7 +974,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           password: req.body.facebookId,
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
-          active: true
+          active: true,
         });
 
         await signUpUser.save();
@@ -1162,21 +1163,19 @@ app.post("/api/clearalltoken", async (req, res) => {
 
     const { username, email, phoneNumber } = req.body;
 
-
     //? Checking phonenumber or username (Both must be same in client end)
     const user = await signUpTemplateCopy.findOne({
       $and: [
         // { phoneNumber: phoneNumber },
-        { username: username }
-        ],
+        { username: username },
+      ],
     });
 
-    
     if (user) {
       let sessionAvailable = await tokenModel.findOneAndDelete({
         "user.username": username,
       });
-      
+
       if (sessionAvailable) {
         await signUpTemplateCopy.findOneAndUpdate(
           {
@@ -1627,63 +1626,69 @@ app.post("/api/userdetails", async (req, res, next) => {
 
 //! ******* certificate API *******/
 app.post("/api/certificate", (req, res) => {
-  username = "First Middle Last";
-  instructorName = "Dr. Abul Kalam Faruq";
-  instructorTitle = "Instructor";
-  instructorSign = "Institute Name";
-  completeDate = "November 8th, 2022";
-  courseName = `"Purify with Yahia Amin"`;
+  try {
+    let {username, instructorName, instructorTitle, instructorSign, completeDate, courseName, fullName} = req.body;
 
-  const doc = new PDFDocument({
-    layout: "landscape",
-    size: "A4",
-  });
+    console.log(req.body);
 
-  // Draw the certificate image
-  doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+    completeDate = new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})
 
-  // Set the font to Dancing Script
-  doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
+    let certificateNumber = `ID: ${uuidv4()}`
 
-  // Draw the name
-  doc
-    .font("./fonts/DancingScript-VariableFont_wght.ttf")
-    .fontSize(45)
-    .text(username, -80, 250, {
+
+    const doc = new PDFDocument({
+      layout: "landscape",
+      size: "A4",
+    });
+
+    // Draw the certificate image
+    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+
+    // Set the font to Dancing Script
+    doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
+
+    // Draw the name
+    doc
+      .font("./fonts/DancingScript-VariableFont_wght.ttf")
+      .fontSize(45)
+      .text(fullName, -80, 250, {
+        align: "center",
+      });
+    // Draw the course name
+    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
       align: "center",
     });
-  // Draw the course name
-  doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
-    align: "center",
-  });
-  doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
+    doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
 
-  // Draw the date
-  doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
-    align: "center",
-  });
+    // Draw the date
+    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
+      align: "center",
+    });
+    // Draw the certificateNumber
+    doc.font("Times-Roman").fontSize(10).text(certificateNumber, -80, 400, {
+      align: "center",
+    });
 
-  // Pipe the PDF into an name.pdf file
+    fullName = fullName.replaceAll(" ","_")
+
+
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename=${username}.pdf`);
+  res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
+ 
 
-  // doc.pipe(res);
+    doc.pipe(res);
 
-  // Finalize the PDF and end the stream
-  doc.end();
-  doc.pipe(fs.createWriteStream(`./userCertificates/${username}.pdf`));
-
-  // doc.pipe(username);
-  data = fs.readFileSync(`./userCertificates/${username}.pdf`);
-  // console.log(data);
-  // fs.writeFileSync("./userCertificates/hello", data)
-
-  let setSendResponseData = new sendResponseData(data, 200, null);
-  let responseToSend = encryptionOfData(setSendResponseData.success());
-  res.send(responseToSend);
+    // Finalize the PDF and end the stream
+    doc.end();
+   
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
 });
 
-//* <---  obtainToken/LOGIN API, logout API ---> 
+//* <---  obtainToken/LOGIN API, logout API --->
 //! ******* obtainToken/LOGIN API *******/
 //? Both username, phonenumber is same and email is also taken but optional
 app.post("/api/oauth/token", async (req, res, next) => {
@@ -1877,10 +1882,9 @@ app.post("/api/logout", async (req, res) => {
     res.send(responseToSend);
   }
 });
-//* <---  obtainToken/LOGIN API, logout API ---> 
+//* <---  obtainToken/LOGIN API, logout API --->
 
-
-//* <---  User Profile related API ---> 
+//* <---  User Profile related API --->
 //! ******* User Profile API *******/
 app.post("/api/userprofile", async (req, res) => {
   try {
@@ -1896,6 +1900,8 @@ app.post("/api/userprofile", async (req, res) => {
       let userProfileData = await signUpTemplateCopy.findOne({
         username: req.body.username,
       });
+
+      // console.log("userProfileData --- ", userProfileData);
 
       if (userProfileData) {
         let setSendResponseData = new sendResponseData(
@@ -1933,37 +1939,43 @@ app.post("/api/uploadimage", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-
     let userSessionStatus = await tokenChecking(req);
-   
+
     if (userSessionStatus.data != null) {
       const url = req.protocol + "s://" + req.get("host");
-    const profileImg = url + /userProfilepictures/ + req.body.username;
+      const profileImg = url + /userProfilepictures/ + req.body.username;
 
-    let userProfileUpdate = await signUpTemplateCopy.findOneAndUpdate(
-      {
-        username: req.body.username,
-      },
-      {
-        $set: {
-          profilephoto: profileImg,
+      let userProfileUpdate = await signUpTemplateCopy.findOneAndUpdate(
+        {
+          username: req.body.username,
         },
-      }
-    );
+        {
+          $set: {
+            profilephoto: profileImg,
+          },
+        }
+      );
 
-    let base64String = req.body.webimage;
-    let base64Image = base64String.split(";base64,").pop();
+      let base64String = req.body.webimage;
+      let base64Image = base64String.split(";base64,").pop();
 
-    let writeBuffer = new Buffer.from(base64Image, "base64");
-    fs.writeFileSync(`./userProfilepictures/${req.body.username}`, writeBuffer);
+      let writeBuffer = new Buffer.from(base64Image, "base64");
+      fs.writeFileSync(
+        `./userProfilepictures/${req.body.username}`,
+        writeBuffer
+      );
 
-    let setSendResponseData = new sendResponseData(userProfileUpdate, 200, "");
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(responseToSend);
-   } else {
-     let responseToSend = encryptionOfData(userSessionStatus);
-     res.send(responseToSend);
-   }
+      let setSendResponseData = new sendResponseData(
+        userProfileUpdate,
+        200,
+        ""
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -1976,19 +1988,19 @@ app.post("/api/getuserimage", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-
     let userSessionStatus = await tokenChecking(req);
-   
+
     if (userSessionStatus.data != null) {
-    
       let userProfileData = await signUpTemplateCopy.findOne({
         username: req.body.username,
       });
-  
+
       let readBuffer = "";
-  
-      readBuffer = fs.readFileSync(`./userProfilepictures/${req.body.username}`);
-  
+
+      readBuffer = fs.readFileSync(
+        `./userProfilepictures/${req.body.username}`
+      );
+
       let base64data = readBuffer.toString("base64");
       let base64Image = base64data.split("base64").pop();
       if (base64Image.startsWith("/9")) {
@@ -2012,11 +2024,10 @@ app.post("/api/getuserimage", async (req, res) => {
         );
         res.send(responseToSend);
       }
-      
-   } else {
-     let responseToSend = encryptionOfData(userSessionStatus);
-     res.send(responseToSend);
-   }
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
   } catch (error) {
     let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -2029,8 +2040,6 @@ app.post("/api/updateuserprofile", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-
-    // console.log("User data updates", req.body);
 
     const {
       fullname,
@@ -2046,53 +2055,54 @@ app.post("/api/updateuserprofile", async (req, res) => {
       age,
     } = req.body;
 
-    // console.log("req.body ---- ", req.body);
+    let userSessionStatus = await tokenChecking(req);
 
-    let userProfileData = await signUpTemplateCopy.findOneAndUpdate({
-      username: req.body.username,
-    });
-
-    // console.log("userProfileData old ---- ", userProfileData);
-
-    if (userProfileData) {
-      let updateduserProfileData = await signUpTemplateCopy.findOneAndUpdate(
-        {
-          username: req.body.username,
-        },
-        {
-          $set: {
-            fullname: fullname,
-            age: age,
-            gender: gender,
-            phoneNumber: phonenumber,
-            profession: profession,
-            email: email,
-            streetAddress: staddress,
-            city: city,
-            postCode: postcode,
-            country: country,
-          },
-        }
-      );
-
-      let updated = await signUpTemplateCopy.findOne({
-        username: req.body.username,
+    if (userSessionStatus.data != null) {
+      let userProfileData = await signUpTemplateCopy.findOne({
+        username: username,
       });
 
-      // console.log("userProfileData updated ---- ", updateduserProfileData);
+      if (userProfileData) {
+        let updateduserProfileData = await signUpTemplateCopy.findOneAndUpdate(
+          {
+            username: username,
+          },
+          {
+            $set: {
+              fullname: fullname,
+              age: age,
+              gender: gender,
+              phoneNumber: phonenumber,
+              profession: profession,
+              email: email,
+              streetAddress: staddress,
+              city: city,
+              postCode: postcode,
+              country: country,
+            },
+          }
+        );
 
-      let setSendResponseData = new sendResponseData(updated, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+        let updated = await signUpTemplateCopy.findOne({
+          username: username,
+        });
+
+        let setSendResponseData = new sendResponseData(updated, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "user not found!"
+        );
+        let responseToSend = encryptionOfData(
+          setSendResponseData.successWithMessage()
+        );
+        res.send(responseToSend);
+      }
     } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "user not found!"
-      );
-      let responseToSend = encryptionOfData(
-        setSendResponseData.successWithMessage()
-      );
+      let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
   } catch (error) {
@@ -2102,7 +2112,6 @@ app.post("/api/updateuserprofile", async (req, res) => {
   }
 });
 //* <---  User Profile related API --->
-
 
 //* <---  Forget password, request password, resend OTP, reset password --->
 //! ******* Forget password API *******/
@@ -2551,7 +2560,6 @@ app.post("/api/reset-password", async (req, res) => {
 });
 //* <---  Forget password, request password, resend OTP, reset password --->
 
-
 //* <---  Start course video, details --->
 //! ******** Course VIDEO API ******** (encryption done) [No token check required!]
 app.post("/api/allcourses", async (req, res, next) => {
@@ -2559,15 +2567,15 @@ app.post("/api/allcourses", async (req, res, next) => {
     let data = await allData.find();
     // console.log(data[0].coursesData);
 
-    if (data) {
+    // if (data) {
       let setSendResponseData = new sendResponseData(data[0], 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(allCourses, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    }
+    // } else {
+    //   let setSendResponseData = new sendResponseData(allCourses, 200, null);
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
 
@@ -2601,15 +2609,15 @@ app.post("/api/coursedetails", async (req, res, next) => {
 
     // console.log("result",result);
 
-    if (data) {
+    // if (data) {
       let setSendResponseData = new sendResponseData(result, 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(allCourses, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    }
+    // } else {
+    //   let setSendResponseData = new sendResponseData(allCourses, 200, null);
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
 
@@ -2665,23 +2673,37 @@ app.post("/api/course", async (req, res) => {
     // let result2 = coursesData.coursesData.find(
     //   (item) => item.courseID === courseid
     // );
-    console.log("/api/course   ------- ", req.body);
+    // console.log("/api/course   ------- ", req.body);
 
     let data = await allData.find();
     let coursesdata = data[0].courseData;
 
     let result = coursesdata.find((item) => item.courseID === courseid);
 
-    
+    let userCompletedLessons = await lessonProgress.find({
+      $and: [
+        { username: req.body.username },
+        { courseID: req.body.courseID },
+        { complete: true },
+      ],
+    });
 
+    let userCompletedLessonsUpdated = [];
+
+    if (userCompletedLessons[0] !== null) {
+      userCompletedLessons.map((item) => {
+        // console.log("item",item.lessonNumber);
+        userCompletedLessonsUpdated.push(item.lessonNumber);
+      });
+    }
 
     if (result) {
       let dataJSON = {
         courseID: result.courseID,
         title: result.title,
         lessons: result.lessons,
-        lessonsCompleted: [1,2,3,4,5,6]
-      }
+        lessonsCompleted: userCompletedLessonsUpdated,
+      };
       // console.log("result ----", dataJSON);
       let setSendResponseData = new sendResponseData(dataJSON, 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2770,7 +2792,7 @@ app.post("/api/instructorcourses", async (req, res) => {
 });
 //* <---  End course video, details --->
 
-//* <---  Instructor API ---> 
+//* <---  Instructor API --->
 //! ********** Instructor part ***********/
 app.post("/api/allinstructors", async (req, res) => {
   try {
@@ -2778,15 +2800,15 @@ app.post("/api/allinstructors", async (req, res) => {
 
     // console.log(data[0].instructorData);
 
-    if (data) {
+    // if (data) {
       let setSendResponseData = new sendResponseData(data[0], 200, null);
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(allInstructors, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    }
+    // } else {
+    //   let setSendResponseData = new sendResponseData(allInstructors, 200, null);
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // }
 
     // let setSendResponseData = new sendResponseData(data[0], 200, null);
     // let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2836,22 +2858,126 @@ app.post("/api/instructordetails", async (req, res) => {
     res.send(responseToSend);
   }
 });
-//* <---  Instructor API ---> 
+//* <---  Instructor API --->
 
 //! ********** Purchase A course ***********/ (Encryption done)
 //! Payment API's SSLcommerz
 
-app.post("/api/buy", async (req, res) => {
-try {
- 
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
+app.post("/api/mobilepaymentdata", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
 
+    let userSessionStatus = await tokenChecking(req);
 
-  let userSessionStatus = await tokenChecking(req);
-   
     if (userSessionStatus.data != null) {
-    
+      const {
+        fullname,
+        username,
+        phonenumber,
+        email,
+        courses,
+        staddress,
+        city,
+        postcode,
+        country,
+        price,
+        amount,
+        bank_tran_id,
+        base_fair,
+        card_brand,
+        card_issuer,
+        card_issuer_country,
+        card_issuer_country_code,
+        card_no,
+        card_sub_brand,
+        card_type,
+        currency,
+        currency_amount,
+        currency_rate,
+        currency_type,
+        error,
+        risk_level,
+        risk_title,
+        status,
+        store_amount,
+        store_id,
+        tran_date,
+        tran_id,
+        val_id,
+        value_a,
+        value_b,
+        value_c,
+        value_d,
+        verify_sign,
+        verify_sign_sha2,
+        verify_key,
+      } = req.body;
+
+      //? Saving this to database as payment pending status.
+      let currentDate = new Date();
+
+      let userPurchasedCourses = new userPendingPurchase({
+        amount: `${parseFloat(price)}`,
+        bank_tran_id: "",
+        base_fair: "0.00",
+        card_brand: "",
+        card_issuer: "",
+        card_issuer_country: "",
+        card_issuer_country_code: "",
+        card_no: "",
+        card_sub_brand: "",
+        card_type: "",
+        currency: "",
+        currency_amount: "",
+        currency_rate: "",
+        currency_type: "",
+        error: "",
+        risk_level: "",
+        risk_title: "",
+        status: "PENDING",
+        store_amount: "",
+        store_id: process.env.STORE_ID,
+        tran_date: currentDate,
+        tran_id: tran_id,
+        val_id: "",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        value_d: "",
+        verify_sign: "",
+        verify_sign_sha2: "",
+        verify_key: "",
+      });
+
+      await userPurchasedCourses.save();
+
+      let setSendResponseData = new sendResponseData(
+        "Payment initiated",
+        200,
+        null
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      return res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/sandboxbuy", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
       const {
         fullname,
         username,
@@ -2865,18 +2991,18 @@ try {
         price,
         discountedPrice,
       } = req.body; //getting data from request
-    
+
       console.log("req buy---- ", req.body);
       const newId = uuidv4().replaceAll("-", "");
-    
+
       const data = {
         total_amount: parseFloat(price),
         // currency: "BDT",
         tran_id: newId,
-        success_url: `${process.env.SSL_URL}/api/ssl-payment-success`,
-        fail_url: `${process.env.SSL_URL}/api/ssl-payment-fail`,
-        cancel_url: `${process.env.SSL_URL}/api/ssl-payment-cancel`,
-        ipn_url: `${process.env.SSL_URL}/api/ssl-payment-notification`,
+        success_url: `${process.env.SSL_URL}api/ssl-payment-success`,
+        fail_url: `${process.env.SSL_URL}api/ssl-payment-fail`,
+        cancel_url: `${process.env.SSL_URL}api/ssl-payment-cancel`,
+        // ipn_url: `${process.env.SSL_URL}api/ssl-payment-notification`,
         // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
         shipping_method: "No",
         product_name: JSON.stringify(courses).replaceAll('"', "."),
@@ -2898,57 +3024,54 @@ try {
         value_c: JSON.stringify(courses).replaceAll('"', "."),
         // value_d: "ref004_D",
       };
-    
-    
+
       //? Saving this to database as payment pending status.
       let currentDate = new Date();
-    
-      let userPurchasedCourses = new usersPurchasedCourses({
-        "amount": `${parseFloat(price)}`,
-        "bank_tran_id": "",
-        "base_fair": "0.00",
-        "card_brand": "",
-        "card_issuer": "",
-        "card_issuer_country": "",
-        "card_issuer_country_code": "",
-        "card_no": "",
-        "card_sub_brand": "",
-        "card_type": "",
-        "currency": "",
-        "currency_amount": "",
-        "currency_rate": "",
-        "currency_type": "",
-        "error": "",
-        "risk_level": "",
-        "risk_title": "",
-        "status": "PENDING",
-        "store_amount": "",
-        "store_id": process.env.STORE_ID, 
-        "tran_date": currentDate,
-        "tran_id": `${newId}`,
-        "val_id": "",
-        "value_a": username,
-        "value_b": phonenumber,
-        "value_c": JSON.stringify(courses).replaceAll('"', "."),
-        "value_d": "",
-        "verify_sign": "",
-        "verify_sign_sha2": "",
-        "verify_key": ""
-     
+
+      let userPurchasedCourses = new userPendingPurchase({
+        amount: `${parseFloat(price)}`,
+        bank_tran_id: "",
+        base_fair: "0.00",
+        card_brand: "",
+        card_issuer: "",
+        card_issuer_country: "",
+        card_issuer_country_code: "",
+        card_no: "",
+        card_sub_brand: "",
+        card_type: "",
+        currency: "",
+        currency_amount: "",
+        currency_rate: "",
+        currency_type: "",
+        error: "",
+        risk_level: "",
+        risk_title: "",
+        status: "PENDING",
+        store_amount: "",
+        store_id: process.env.STORE_ID,
+        tran_date: currentDate,
+        tran_id: newId,
+        val_id: "",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        value_d: "",
+        verify_sign: "",
+        verify_sign_sha2: "",
+        verify_key: "",
       });
-    
+
       await userPurchasedCourses.save();
-    
-    
+
       const sslcommerz = new SSLCommerzPayment(
-        process.env.STORE_ID,
-        process.env.STORE_PASSWORD,
+        process.env.STORE_ID_SANDBOX,
+        process.env.STORE_PASSWORD_SANDBOX,
         false
       ); //true for live default false for sandbox
       sslcommerz.init(data).then((data) => {
         //process the response that got from sslcommerz
         //https://developer.sslcommerz.com/doc/v4/#returned-parameters
-    
+
         if (data?.GatewayPageURL) {
           let setSendResponseData = new sendResponseData(data, 202, null);
           let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2963,34 +3086,154 @@ try {
           return res.send(responseToSend);
         }
       });
-      
-   } else {
-     let responseToSend = encryptionOfData(userSessionStatus);
-     res.send(responseToSend);
-   }
-
-  
-} catch (error) {
-  let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
     res.send(responseToSend);
-}
+  }
+});
+
+app.post("/api/buy", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+      const {
+        fullname,
+        username,
+        phonenumber,
+        email,
+        courses,
+        staddress,
+        city,
+        postcode,
+        country,
+        price,
+        discountedPrice,
+      } = req.body; //getting data from request
+
+      const newId = uuidv4().replaceAll("-", "");
+
+      const data = {
+        total_amount: parseFloat(price),
+        // currency: "BDT",
+        tran_id: newId,
+        success_url: `${process.env.SSL_URL}api/ssl-payment-success`,
+        fail_url: `${process.env.SSL_URL}api/ssl-payment-fail`,
+        cancel_url: `${process.env.SSL_URL}api/ssl-payment-cancel`,
+        // ipn_url: `${process.env.SSL_URL}api/ssl-payment-notification`,
+        // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
+        shipping_method: "No",
+        product_name: JSON.stringify(courses).replaceAll('"', "."),
+        product_category: "Courses",
+        product_profile: "general",
+        cus_name: fullname,
+        cus_email: email,
+        cus_add1: staddress,
+        cus_add2: "Dhaka",
+        cus_city: city,
+        cus_state: city,
+        cus_postcode: postcode,
+        cus_country: "Bangladesh",
+        cus_phone: phonenumber,
+        // cus_fax: "01711111111",
+        // multi_card_name: "master",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        // value_d: "ref004_D",
+      };
+
+      //? Saving this to database as payment pending status.
+      let currentDate = new Date();
+
+      let userPurchasedCourses = new userPendingPurchase({
+        amount: `${parseFloat(price)}`,
+        bank_tran_id: "",
+        base_fair: "0.00",
+        card_brand: "",
+        card_issuer: "",
+        card_issuer_country: "",
+        card_issuer_country_code: "",
+        card_no: "",
+        card_sub_brand: "",
+        card_type: "",
+        currency: "",
+        currency_amount: "",
+        currency_rate: "",
+        currency_type: "",
+        error: "",
+        risk_level: "",
+        risk_title: "",
+        status: "PENDING",
+        store_amount: "",
+        store_id: process.env.STORE_ID,
+        tran_date: currentDate,
+        tran_id: newId,
+        val_id: "",
+        value_a: username,
+        value_b: phonenumber,
+        value_c: JSON.stringify(courses).replaceAll('"', "."),
+        value_d: "",
+        verify_sign: "",
+        verify_sign_sha2: "",
+        verify_key: "",
+      });
+
+      await userPurchasedCourses.save();
+
+      const sslcommerz = new SSLCommerzPayment(
+        process.env.STORE_ID,
+        process.env.STORE_PASSWORD,
+        true
+      ); //true for live default false for sandbox
+      sslcommerz.init(data).then((data) => {
+        //process the response that got from sslcommerz
+        //https://developer.sslcommerz.com/doc/v4/#returned-parameters
+
+        if (data?.GatewayPageURL) {
+          let setSendResponseData = new sendResponseData(data, 202, null);
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          return res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            400,
+            "Payment session was not successful"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          return res.send(responseToSend);
+        }
+      });
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
 });
 
 app.post("/api/ssl-payment-notification", async (req, res) => {
- 
-  console.log("ssl-payment-notification", req.body);
+  // console.log("ssl-payment-notification", req.body);
 
+  // let lessonProgressNew = new test({
+  //   testdata1: req.body,
+  //   testdata2: JSON.stringify(req.body),
+  // });
 
-  let lessonProgressNew =  new test({
-    testdata1: req.body,
-    testdata2: JSON.stringify(req.body)
-  })
-  
-  await lessonProgressNew.save();
+  // await lessonProgressNew.save();
 
-
-   const  {
+  const {
     amount,
     bank_tran_id,
     base_fair,
@@ -3020,11 +3263,8 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     value_d,
     verify_sign,
     verify_sign_sha2,
-    verify_key
+    verify_key,
   } = req.body;
-
-
-
 
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
@@ -3033,69 +3273,49 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
-  // let userPurchasedCourses = new usersPurchasedCourses({
-  //   username: value_a,
-  //   phoneNumber: value_b,
-  //   coursesList: JSON.parse(value_c.replaceAll(".", '"')),
-  //   tran_id: tran_id,
-  //   val_id: val_id,
-  //   amount: amount,
-  //   status: status,
-  //   bank_tran_id: bank_tran_id,
-  //   tran_date: tran_date,
-  //   expirationDate: courseExpires,
-  // });
-
-  // await userPurchasedCourses.save();
-
-
-
   let userPurchasedCourses = new usersPurchasedCourses({
-    "username": `${value_a}`,
-    "phoneNumber": `${value_b}`,
-    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
-    "expirationDate": `${courseExpires}`,
-    "amount": `${amount}`,
-    "bank_tran_id": bank_tran_id,
-    "base_fair": "0.00",
-    "card_brand": "",
-    "card_issuer": "",
-    "card_issuer_country": "",
-    "card_issuer_country_code": "",
-    "card_no": "",
-    "card_sub_brand": "",
-    "card_type": "",
-    "currency": "",
-    "currency_amount": "",
-    "currency_rate": "",
-    "currency_type": "",
-    "error": "",
-    "risk_level": "",
-    "risk_title": "",
-    "status": status,
-    "store_amount": "",
-    "store_id": process.env.STORE_ID, 
-    "tran_date": tran_date,
-    "tran_id": `${tran_id}`,
-    "val_id": val_id,
-    "value_a": value_a,
-    "value_b": value_b,
-    "value_c": value_c,
-    "value_d": "",
-    "verify_sign": "",
-    "verify_sign_sha2": "",
-    "verify_key": ""
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
   });
 
   await userPurchasedCourses.save();
-
-
 
   res.send(lessonProgressNew);
 });
 
 app.post("/api/ssl-payment-success", async (req, res) => {
-
   console.log("ssl-payment-success", req.body);
 
   const {
@@ -3110,7 +3330,6 @@ app.post("/api/ssl-payment-success", async (req, res) => {
     value_c,
   } = req.body;
 
-
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
 
@@ -3119,40 +3338,40 @@ app.post("/api/ssl-payment-success", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    "username": `${value_a}`,
-    "phoneNumber": `${value_b}`,
-    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
-    "expirationDate": `${courseExpires}`,
-    "amount": `${amount}`,
-    "bank_tran_id": bank_tran_id,
-    "base_fair": "0.00",
-    "card_brand": "",
-    "card_issuer": "",
-    "card_issuer_country": "",
-    "card_issuer_country_code": "",
-    "card_no": "",
-    "card_sub_brand": "",
-    "card_type": "",
-    "currency": "",
-    "currency_amount": "",
-    "currency_rate": "",
-    "currency_type": "",
-    "error": "",
-    "risk_level": "",
-    "risk_title": "",
-    "status": status,
-    "store_amount": "",
-    "store_id": process.env.STORE_ID, 
-    "tran_date": tran_date,
-    "tran_id": `${tran_id}`,
-    "val_id": val_id,
-    "value_a": value_a,
-    "value_b": value_b,
-    "value_c": value_c,
-    "value_d": "",
-    "verify_sign": "",
-    "verify_sign_sha2": "",
-    "verify_key": ""
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
   });
   await userPurchasedCourses.save();
 
@@ -3163,7 +3382,6 @@ app.post("/api/ssl-payment-success", async (req, res) => {
 });
 
 app.post("/api/ssl-payment-fail", async (req, res) => {
-
   const {
     tran_id,
     val_id,
@@ -3184,51 +3402,50 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    "username": `${value_a}`,
-    "phoneNumber": `${value_b}`,
-    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
-    "expirationDate": `${courseExpires}`,
-    "amount": `${amount}`,
-    "bank_tran_id": bank_tran_id,
-    "base_fair": "0.00",
-    "card_brand": "",
-    "card_issuer": "",
-    "card_issuer_country": "",
-    "card_issuer_country_code": "",
-    "card_no": "",
-    "card_sub_brand": "",
-    "card_type": "",
-    "currency": "",
-    "currency_amount": "",
-    "currency_rate": "",
-    "currency_type": "",
-    "error": "",
-    "risk_level": "",
-    "risk_title": "",
-    "status": status,
-    "store_amount": "",
-    "store_id": process.env.STORE_ID, 
-    "tran_date": tran_date,
-    "tran_id": `${tran_id}`,
-    "val_id": val_id,
-    "value_a": value_a,
-    "value_b": value_b,
-    "value_c": value_c,
-    "value_d": "",
-    "verify_sign": "",
-    "verify_sign_sha2": "",
-    "verify_key": ""
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
   });
 
   await userPurchasedCourses.save();
 
-  console.log("ssl-payment-fail ----- ",userPurchasedCourses);
+  console.log("ssl-payment-fail ----- ", userPurchasedCourses);
 
   res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
 });
 
 app.post("/api/ssl-payment-cancel", async (req, res) => {
- 
   const {
     tran_id,
     val_id,
@@ -3249,40 +3466,40 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
-    "username": `${value_a}`,
-    "phoneNumber": `${value_b}`,
-    "coursesList": JSON.parse(value_c.replaceAll(".", '"')),
-    "expirationDate": `${courseExpires}`,
-    "amount": `${amount}`,
-    "bank_tran_id": bank_tran_id,
-    "base_fair": "0.00",
-    "card_brand": "",
-    "card_issuer": "",
-    "card_issuer_country": "",
-    "card_issuer_country_code": "",
-    "card_no": "",
-    "card_sub_brand": "",
-    "card_type": "",
-    "currency": "",
-    "currency_amount": "",
-    "currency_rate": "",
-    "currency_type": "",
-    "error": "",
-    "risk_level": "",
-    "risk_title": "",
-    "status": status,
-    "store_amount": "",
-    "store_id": process.env.STORE_ID, 
-    "tran_date": tran_date,
-    "tran_id": `${tran_id}`,
-    "val_id": val_id,
-    "value_a": value_a,
-    "value_b": value_b,
-    "value_c": value_c,
-    "value_d": "",
-    "verify_sign": "",
-    "verify_sign_sha2": "",
-    "verify_key": ""
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: "",
   });
   await userPurchasedCourses.save();
 
@@ -3295,94 +3512,130 @@ app.post("/api/usercourses", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-
-
     //! This is for token checking Start
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
+      // console.log("/api/usercourses ----- ", req.body);
+      let data = await allData.find();
+      // data = data[0].coursesData.en;
+      // let array2 = data.coursesData.en
 
-      
-     // console.log("/api/usercourses ----- ", req.body);
-     let data = await allData.find();
-     // data = data[0].coursesData.en;
-     // let array2 = data.coursesData.en
- 
-     let userCourses = await usersPurchasedCourses.find({
-       $and: [{ username: req.body.username }, { status: "VALID" }],
-     });
- 
-     let userallcourses = [];
-     // console.log("userallcourses ----- ", userallcourses);
-     userCourses.map((item) => {
-       // console.log("item --- ", item.coursesList);
-       item.coursesList.map((item2) => {
-         // console.log("item2 --- ", item2);
-         userallcourses.push(item2);
-       });
-     });
-     // console.log("userallcourses ----- ", userallcourses);
- 
-     // if(userallcourses[0]){
- 
-     // }
- 
-     if (userCourses[0]) {
-       let array1 = userallcourses;
-       let array2 = data[0].coursesData.en;
-       let array3 = [];
-       let array31 = [];
- 
-       // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
-       // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
-       // array3 = [...array2];
-       // console.log("userallcourses array3 ----- ", array3);
-       // console.log("userallcourses list ----- ", array2);
- 
-       array1.map((e)=>{
-         let objects = array2.find((e2)=> e2.courseID == e);
-         // console.log("e --- ", e, "objects ---", objects);
- 
- 
-         let courses = {
-           "courseID":objects.courseID,
-           "title":objects.title,
-           "thumbnail":objects.thumbnail,
-           "courseLength":objects.courseLength,
-           "totalLecture":objects.totalLecture,
-           "instructor":objects.instructor.name,
-           "complete":false,
-           "status":32
-         }
- 
- 
- 
-         array31.push({...courses})
-         array3.push({...objects})
-       })
- 
-       // console.log("array31",array31);
- 
-       // let data = {
-       //   "array3":array3,
-       //   "":
-       // }
- 
- 
-       let setSendResponseData = new sendResponseData(array31, 200, null);
-       let responseToSend = encryptionOfData(setSendResponseData.success());
-       res.send(responseToSend);
-     } else {
-       // console.log("userCourses else ----- ", userCourses[0]);
-       let setSendResponseData = new sendResponseData(
-         null,
-         404,
-         "No purchase done yet"
-       );
-       let responseToSend = encryptionOfData(setSendResponseData.error());
-       res.send(responseToSend);
-     }
+      let userCourses = await usersPurchasedCourses.find({
+        $and: [{ username: req.body.username }, { status: "VALID" }],
+      });
 
+      let userallcourses = [];
+      // console.log("userallcourses ----- ", userallcourses);
+      userCourses.map((item) => {
+        // console.log("item --- ", item.coursesList);
+        item.coursesList.map((item2) => {
+          // console.log("item2 --- ", item2);
+          userallcourses.push(item2);
+        });
+      });
+      // console.log("userallcourses ----- ", userallcourses);
+
+      // if(userallcourses[0]){
+
+      // }
+
+      if (userCourses[0]) {
+        let array1 = userallcourses;
+        let array2 = data[0].coursesData.en;
+        let array3 = [];
+        let array31 = [];
+
+        // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
+        // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
+        // array3 = [...array2];
+        // console.log("userallcourses array3 ----- ", array3);
+        // console.log("userallcourses list ----- ", array2);
+
+        array1.map((e) => {
+          let objects = array2.find((e2) => e2.courseID == e);
+          // console.log("e --- ", e, "objects ---", objects);
+
+          let courses = {
+            courseID: objects.courseID,
+            title: objects.title,
+            thumbnail: objects.thumbnail,
+            courseLength: objects.courseLength,
+            totalLecture: objects.totalLecture,
+            instructor: objects.instructor.name,
+            complete: false,
+            status: 0,
+          };
+
+          array31.push({ ...courses });
+          array3.push({ ...objects });
+          return true;
+        });
+
+        // console.log("array31",array31);
+
+        //! with progress
+
+        await Promise.all(
+          array31.map(async (item, index) => {
+
+            let userCompletedLessons = await lessonProgress.find({
+              $and: [
+                { username: req.body.username },
+                { courseID: item.courseID },
+                { complete: true },
+              ],
+            });
+
+            let userCompletedLessonsUpdated = [];
+
+           
+
+            if (userCompletedLessons[0] !== null) {
+              userCompletedLessons.map((item) => {
+                // console.log("item",item.lessonNumber);
+                userCompletedLessonsUpdated.push(item.lessonNumber);
+              });
+            }
+
+            //? if language is en then send bn data
+
+            coursedetailsData = data[0].coursesData.en;
+
+            let result = coursedetailsData.find(
+              (item) => item.courseID == item.courseID
+            );
+
+            let total_course = userCompletedLessonsUpdated.length;
+            let total_completed = parseInt(result.totalLecture);
+
+            let progress = (total_course / total_completed) * 100;
+
+            console.log(" progress ", Math.ceil(progress));
+              if(Math.ceil(progress)>100){
+                progress = 100
+              }
+            item.status = Math.ceil(progress);
+          })
+        );
+
+        console.log("array updated ---- ", array31);
+
+        //! With progress end
+
+        let setSendResponseData = new sendResponseData(array31, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        // console.log("userCourses else ----- ", userCourses[0]);
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "No purchase done yet"
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.error());
+        res.send(responseToSend);
+      }
     } else {
       console.log("Not allowed", userSessionStatus);
       let responseToSend = encryptionOfData(userSessionStatus);
@@ -3420,7 +3673,6 @@ app.post("/api/paymenthistory", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-
     let userSessionStatus = await tokenChecking(req);
 
     // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
@@ -3430,7 +3682,7 @@ app.post("/api/paymenthistory", async (req, res) => {
       let userpaymenthistory = await usersPurchasedCourses.find({
         username: req.body.username,
       });
-      
+
       // let setSendResponseData = new sendResponseData(userpaymenthistory, 200, null);
       // let responseToSend = encryptionOfData(setSendResponseData.success());
       // res.send(setSendResponseData);
@@ -3471,30 +3723,47 @@ app.post("/api/give-a-review", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let reviewData = new reviews({
-      courseID: req.body.courseID,
-      username: req.body.username,
-      review: req.body.review,
-    });
+    let userSessionStatus = await tokenChecking(req);
 
-    reviewData.save();
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
 
-    if (reviewData) {
-      let setSendResponseData = new sendResponseData(
-        "review submitted",
-        200,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        "review submission failed",
-        400,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+    if (userSessionStatus.data != null) {
+      console.log("User is allowed");
+      let userpaymenthistory = await usersPurchasedCourses.find({
+        username: req.body.username,
+      });
+
+      if (userpaymenthistory) {
+        let reviewData = new reviews({
+          courseID: req.body.courseID,
+          username: req.body.username,
+          review: req.body.review,
+        });
+
+        reviewData.save();
+
+        if (reviewData) {
+          let setSendResponseData = new sendResponseData(
+            "review submitted",
+            200,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            "review submission failed",
+            400,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        }
+      } else {
+        console.log("Not allowed", userSessionStatus);
+        let responseToSend = encryptionOfData(userSessionStatus);
+        res.send(responseToSend);
+      }
     }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
@@ -3510,22 +3779,39 @@ app.post("/api/user-reviews", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let reviewData = await reviews.find({
-      username: req.body.username,
-    });
+    let userSessionStatus = await tokenChecking(req);
 
-    if (reviewData) {
-      let setSendResponseData = new sendResponseData(reviewData, 200, "");
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        "review submission failed",
-        400,
-        ""
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+
+    if (userSessionStatus.data != null) {
+      console.log("User is allowed");
+      let userpaymenthistory = await usersPurchasedCourses.find({
+        username: req.body.username,
+      });
+
+      if (userpaymenthistory) {
+        let reviewData = await reviews.find({
+          username: req.body.username,
+        });
+
+        if (reviewData) {
+          let setSendResponseData = new sendResponseData(reviewData, 200, "");
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            "review submission failed",
+            400,
+            ""
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        }
+      } else {
+        console.log("Not allowed", userSessionStatus);
+        let responseToSend = encryptionOfData(userSessionStatus);
+        res.send(responseToSend);
+      }
     }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
@@ -3577,7 +3863,7 @@ app.post("/api/sessioncheck", async (req, res) => {
   }
 });
 
-//? Log related API
+//? applypromocode related API
 app.post("/api/applypromocode", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -3614,7 +3900,6 @@ app.post("/api/applypromocode", async (req, res) => {
 });
 
 //? Log related API
-
 //! ******* videologdata API *******/
 app.post("/api/videologdata", async (req, res) => {
   try {
@@ -3633,79 +3918,72 @@ app.post("/api/videologdata", async (req, res) => {
       videoTitle,
       lessonTitle,
       episode,
-      currentProgress
+      currentProgress,
     } = req.body;
-
 
     // let bodyData = objectMap(req.body, v=> v) //? mapping object
 
     console.log("req---- ", req.body);
 
-
-
-
-
-
     let logVideData = new videoLogData({
-      username:username,
-      courseID:courseID,
-      videoID:videoID,
-      status:status,
-      actionTime:actionTime,
-      totalTimeCovered:totalTimeCovered,
-      totalTimePlayed:totalTimePlayed,
-      totalVdoDuration:totalVdoDuration,
-      courseName:videoTitle,
-      lessonName:lessonTitle,
-      lessonNumber:episode,
-      currentProgress:currentProgress,
-    })
+      username: username,
+      courseID: courseID,
+      videoID: videoID,
+      status: status,
+      actionTime: actionTime,
+      totalTimeCovered: totalTimeCovered,
+      totalTimePlayed: totalTimePlayed,
+      totalVdoDuration: totalVdoDuration,
+      courseName: videoTitle,
+      lessonName: lessonTitle,
+      lessonNumber: episode,
+      currentProgress: currentProgress,
+    });
 
     await logVideData.save();
 
+    if (
+      req.body.status === "ended" &&
+      req.body.totalTimeCovered === req.body.totalVdoDuration
+    ) {
+      console.log("Video fully watched");
 
-  if(req.body.status === "ended" && req.body.totalTimeCovered === req.body.totalVdoDuration){
+      let lessonProgressData = await lessonProgress.find({
+        $and: [
+          { username: username },
+          { courseID: courseID },
+          { lessonNumber: episode },
+          { complete: true },
+        ],
+      });
 
-    console.log("Video fully watched");
-    
-    let lessonProgressData = await lessonProgress.find({
-      $and:[
-        {username: username},
-        {courseID: courseID},
-        {lessonNumber:episode},
-        {complete: true}
-      ]
-    })
+      console.log("lessonProgressData  ", lessonProgressData);
 
-    console.log("lessonProgressData  ", lessonProgressData);
-    
-      if(!lessonProgressData[0]){
-        let lessonProgressNew =  new lessonProgress({
+      if (!lessonProgressData[0]) {
+        let lessonProgressNew = new lessonProgress({
           username: username,
           courseName: videoTitle,
           courseID: courseID,
           videoID: videoID,
           lessonNumber: episode,
-          complete: true
-        })
-        
+          complete: true,
+        });
+
         await lessonProgressNew.save();
-        
-        console.log("Lesson progress updated");
 
-          let setSendResponseData = new sendResponseData("Saved new", 200, null);
-          let responseToSend = encryptionOfData(setSendResponseData);
-      
-          res.send(responseToSend);
+        // console.log("Lesson progress updated");
 
+        // let setSendResponseData = new sendResponseData("Saved new", 200, null);
+        // let responseToSend = encryptionOfData(setSendResponseData);
+
+        // res.send(responseToSend);
       } else {
-        console.log("Already watched  ");
-        let setSendResponseData = new sendResponseData("Updated", 200, null);
-        let responseToSend = encryptionOfData(setSendResponseData);
-    
-        res.send(responseToSend);
+        // console.log("Already watched  ");
+        // let setSendResponseData = new sendResponseData("Updated", 200, null);
+        // let responseToSend = encryptionOfData(setSendResponseData);
+        // res.send(responseToSend);
       }
-    } 
+    }
 
     videoLogger.log("info", `${JSON.stringify(req.body)}`);
 
@@ -3722,7 +4000,7 @@ app.post("/api/videologdata", async (req, res) => {
   }
 });
 
-//! ******* videologdata API *******/
+//! ******* videologdata API for mobile *******/
 app.post("/api/mobilelogdata", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -3752,6 +4030,7 @@ app.post("/api/mobilelogdata", async (req, res) => {
   }
 });
 
+//! ******* videologdata API for test *******/
 app.post("/api/videologdatatest", async (req, res) => {
   try {
     // let recievedResponseData = decryptionOfData(req, res);
@@ -3770,9 +4049,6 @@ app.post("/api/videologdatatest", async (req, res) => {
     // let bodyData = objectMap(req.body, v=> v) //? mapping object
 
     console.log("videologdatatest   ---- ", req.body);
-
-
-   
 
     // let lessonData = await lessonProgress.findOne({
     //   $and:[
@@ -3798,39 +4074,33 @@ app.post("/api/videologdatatest", async (req, res) => {
     // } else {
     //   console.log("console.log(lessonData);",lessonData);
     // }
-    
-
 
     // if(req.body.status === "play"){
 
-      
     // } else if(req.body.status === "pause"){
 
-      
     // } else if(req.body.status === "ended"){
 
-      
     // } else {
-      
+
     // }
 
     // if(action === 'ended' && )
 
     let videoLogData = new videoLogData({
-        username: username,
-        phoneNumber: phoneNumber,
-        courseID: courseID,
-        videoID: videoID,
-        courseName: 'courseName',
-        lessonNumber: 'lessonNumber',
-        totalPlayed: totalTimePlayed,
-        totalCovered: totalTimeCovered,
-        currentProgress: totalTimeCovered,
-        complete: false,
-        action: status,
-        actionTime: actionTime,
-    })
-
+      username: username,
+      phoneNumber: phoneNumber,
+      courseID: courseID,
+      videoID: videoID,
+      courseName: "courseName",
+      lessonNumber: "lessonNumber",
+      totalPlayed: totalTimePlayed,
+      totalCovered: totalTimeCovered,
+      currentProgress: totalTimeCovered,
+      complete: false,
+      action: status,
+      actionTime: actionTime,
+    });
 
     let setSendResponseData = new sendResponseData("sent", 200, null);
     let responseToSend = encryptionOfData(setSendResponseData);
@@ -3845,54 +4115,48 @@ app.post("/api/videologdatatest", async (req, res) => {
   }
 });
 
-//! Testing point
+//* User message API
+app.post("/api/leaveamessage", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
 
-app.post("/api/keepalive", async (req, res) => {
+    const { phonenumber, fullname, email, leaveMessage } = req.body;
 
-  /**
-    
-   let userSessionStatus = await tokenChecking(req);
-   
-   if (userSessionStatus.data != null) {
-     
-     
-     
-  } else {
-    let responseToSend = encryptionOfData(userSessionStatus);
+    let saveUserMessage = await new userMessages({
+      phonenumber: phonenumber,
+      fullname: fullname,
+      email: email,
+      leaveMessage: leaveMessage,
+    });
+
+    saveUserMessage.save();
+
+    if (saveUserMessage) {
+      let setSendResponseData = new sendResponseData(
+        "Message Sent!",
+        200,
+        senullrverErrMsg
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(
+        null,
+        500,
+        "Server busy! Please try again later"
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
     res.send(responseToSend);
   }
-  
-  */
-
 });
 
-app.post("/api/atestingpoint", async (req, res) => {
-  const id = crypto.randomBytes(10).toString("hex");
-
-  let smssent = JSON.parse(
-    await sendSms({
-      reciever: "8801515212628",
-      OTP: id,
-    })
-  );
-  // console.log((smssent).status_code);
-  if (smssent.status_code === 200) {
-    res.send("sms is sent");
-  } else {
-    res.send(`Failed with status code ` + smssent.status_code);
-  }
-});
-
-app.post("/api/letscheckdata", async (req, res) => {
-  
-  
-  let arrayOfCourses = []
-  array31.map((e)=>{
-    arrayOfCourses.push(e.course)
-  })
-  console.log(arrayOfCourses);
-});
-
+//! Getting Log Data
 app.get("/api/checklogdata", async (req, res) => {
   let totalusers = await signUpTemplateCopy.count();
   let totalViews = await logData.count();
@@ -3911,8 +4175,88 @@ app.get("/api/checklogdata", async (req, res) => {
   res.json(data);
 });
 
+//! Testing point
 
-//* <---  Token portoion  ---> 
+app.post("/api/testpostreq", async (req, res) => {
+  let data = {
+    data: req.body,
+    send: "Sent from backend",
+  };
+  res.json(data);
+});
+
+app.get("/api/testgetreq", async (req, res) => {
+  let data = {
+    data: "sample data",
+    send: "Got from backend",
+  };
+  res.json(data);
+});
+
+app.post("/api/testingpoint", async (req, res) => {
+  try {
+    let {username, instructorName, instructorTitle, instructorSign, completeDate, courseName, fullName} = req.body;
+
+    console.log(req.body);
+
+    completeDate = new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})
+
+    let certificateNumber = `ID: ${uuidv4()}`
+
+
+    const doc = new PDFDocument({
+      layout: "landscape",
+      size: "A4",
+    });
+
+    // Draw the certificate image
+    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+
+    // Set the font to Dancing Script
+    doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
+
+    // Draw the name
+    doc
+      .font("./fonts/DancingScript-VariableFont_wght.ttf")
+      .fontSize(45)
+      .text(fullName, -80, 250, {
+        align: "center",
+      });
+    // Draw the course name
+    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
+      align: "center",
+    });
+    doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
+
+    // Draw the date
+    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
+      align: "center",
+    });
+    // Draw the certificateNumber
+    doc.font("Times-Roman").fontSize(10).text(certificateNumber, -80, 400, {
+      align: "center",
+    });
+
+    fullName = fullName.replaceAll(" ","_")
+
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
+ 
+
+    doc.pipe(res);
+
+    // Finalize the PDF and end the stream
+    doc.end();
+   
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    
+    res.send(setSendResponseData);
+  }
+});
+
+//* <---  Token portoion  --->
 //! ********** Token portoion ***********/
 const validateUserSignUp = async (arg) => {
   const { email, phoneNumber, otp } = arg;
@@ -4080,8 +4424,7 @@ function obtainToken(req, res, callback) {
       // res.send(responseToSend);
     });
 }
-//* <---  Token portoion  ---> 
-
+//* <---  Token portoion  --->
 
 let port = process.env.PORT;
 app.listen(port, () => {
@@ -4089,5 +4432,3 @@ app.listen(port, () => {
 });
 
 // module.exports = router
-
-//! Development branch up

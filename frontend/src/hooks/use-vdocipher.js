@@ -8,7 +8,7 @@ export default function () {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   useEffect(() => {
     if (isScriptLoaded) return;
-    console.log("Loading");
+    // console.log("Loading");
     const script = document.createElement("script");
     script.onload = () => setIsScriptLoaded(true);
     script.src = "https://player.vdocipher.com/v2.0/api.js";

@@ -28,7 +28,7 @@ const GlobalContext = (props) => {
   // const onChange = (event) => {
   //   i18n.changeLanguage(event.target.value);
   //   setCount((previousCount) => previousCount + 1);
-  //   console.log("count",count)
+  //   // console.log("count",count)
   // };
   const onChange = (event) => {
     i18n.changeLanguage(event);

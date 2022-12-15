@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/Axios"
-
 import { Button, Container, LinearProgress, linearProgressClasses, Table, TableCell, TableContainer, TableRow } from "@mui/material";
 import { add } from '../Store/cartSlice';
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +21,12 @@ import MyCourseCard from "../components/MyCourseCard/MyCourseCard";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import axios, { Axios } from "axios";
+var fileDownload = require('js-file-download');
 
 let USER_COURSES_URL = "/api/usercourses"
+let CERTIFICATE_URL= "/api/certificate"
+// let CERTIFICATE_URL= "/api/testingpoint"
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -42,25 +45,27 @@ const MyCourses = (props) => {
   let mail = props.mail;
   AOS.init();
 
-  //console.log(mail)
+  //// console.log(mail)
 
   const [courses, setCourses] = useState([]);
   const [load, setLoad] = useState(true);
 
+  let fullName=props.fullName
+  let username = localStorage.getItem("user")
   let fetchData = async () => {
     // cmmnt later after my courses api created
     // await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
     //   .then((data) => {
-    //     // //console.log(" THis is the data -----  "+data.data.data.coursesData);
+    //     // //// console.log(" THis is the data -----  "+data.data.data.coursesData);
     //     let listOfCourse;
     //     if(localStorage.getItem("language")==="bn"){
     //        listOfCourse = data.data.data.coursesData.en;
-    //        console.log("coursesbn",listOfCourse)
+    //        // console.log("coursesbn",listOfCourse)
 
     //     }
     //     else{
     //       listOfCourse = data.data.data.coursesData.bn;
-    //       console.log("coursesen",listOfCourse)
+    //       // console.log("coursesen",listOfCourse)
     //     }
     //     setCourses(listOfCourse)
     //     setLoad(false);
@@ -68,7 +73,7 @@ const MyCourses = (props) => {
 
 
     // uncomment 
-    let username = localStorage.getItem("user")
+    
 
     await api
       .post(USER_COURSES_URL, JSON.stringify({ username }), {
@@ -76,7 +81,7 @@ const MyCourses = (props) => {
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        console.log("ins dta", data);
+        // console.log("ins dta", data);
         if (data.data.result.status === 404) {
           // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
           setCourses([])
@@ -84,7 +89,7 @@ const MyCourses = (props) => {
         else {
           setCourses(data.data.data)
         }
-        console.log("data", data)
+        // console.log("data", data)
 
         setLoad(false);
       });
@@ -97,6 +102,12 @@ const MyCourses = (props) => {
   const navigate = useNavigate();
 
   return (
+    <>
+    {load ? (
+      <CircularProgress sx={{
+        color: "primary.main"
+      }} />
+    ) : (
     <Box
     >
       <Container>
@@ -164,7 +175,29 @@ const MyCourses = (props) => {
                                 {course.status===100?
                                 <Box sx={{margin:"1rem"}}>
                                 {/* <img height={50} src={course.thumbnail} alt="" /> */}
-                                <CardMembershipIcon/>
+                                <CardMembershipIcon sx={{cursor:"pointer"}} onClick={async()=>{
+                                  let courseID= `${course.courseID}`
+                                  let courseName= `${course.title}`
+                                  let courseInstructor= `${course.instructor}`
+                                  // console.log(course,"course --------------")
+                                  await axios
+                                  .post(`${process.env.REACT_APP_API_URL}/api/certificate`, { username, courseID, courseName, courseInstructor, fullName }, {responseType:"blob"})
+                                  .then((data) => {
+                                    // console.log("ins dta", data);
+                                    // if (data.data.result.status === 404) {
+                                    //   // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
+                                    //   setCourses([])
+                                    // }
+                                    // else {
+                                    //   setCourses(data.data.data)
+                                    // }
+                                    // // console.log("data", data)
+                            
+                                    // setLoad(false);
+
+                                    fileDownload(data.data, "Certificate.pdf")
+                                  });
+                                }}/>
                                 </Box>
                                 :""}
                                 {/* </TableCell> */}
@@ -241,7 +274,8 @@ const MyCourses = (props) => {
       </Container>
 
 
-    </Box>
+    </Box>)}
+    </>
   );
 };
 

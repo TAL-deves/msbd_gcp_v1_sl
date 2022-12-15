@@ -96,6 +96,10 @@ const signUpTemplate = new mongoose.Schema({
   country: {
     type: String,
   },
+  developer: {
+    type: Boolean,
+    default: false
+  }
 });
 
 signUpTemplate.pre("save", async function (next) {

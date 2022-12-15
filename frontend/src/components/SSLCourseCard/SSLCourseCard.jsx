@@ -37,7 +37,7 @@ const SSLCourseCard = (props) => {
   let fullObjectToggle = props.fullObject.toggle;
 
 
-//console.log(fullObject.id, fullObject.isSelected)
+//// console.log(fullObject.id, fullObject.isSelected)
   const dispatch= useDispatch()
 
   // course id finder
@@ -48,13 +48,13 @@ const SSLCourseCard = (props) => {
     
   }
   
-  // //console.log("flagagagagaaaaaaaaa", JSON.parse(localStorage.getItem("course")))
+  // //// console.log("flagagagagaaaaaaaaa", JSON.parse(localStorage.getItem("course")))
  
   
 // useEffect(()=>{
 //   let array= JSON.parse(localStorage.getItem("course"))
 //   array.map((e)=>{
-//     // //console.log("flagagagagaaaaaaaaa", e.id)
+//     // //// console.log("flagagagagaaaaaaaaa", e.id)
 //   })
   
 // })
@@ -65,22 +65,22 @@ const SSLCourseCard = (props) => {
     props.updateCourse(course.fullObject, false)
   dispatch(add({...course}));
   // course["fullObject"]["isSelected"]=false;
-  //console.log("new course list handleAdd", course.fullObject.isSelected)
+  //// console.log("new course list handleAdd", course.fullObject.isSelected)
   // setFlag(false);
   
 
   // button change 
  
-//  //console.log("flag", course.id)
+//  //// console.log("flag", course.id)
 
 //  let array= JSON.parse(localStorage.getItem("course"))
 //   array.map((e)=>{
-    // //console.log("flagagagagaaaaaaaaa", e.id)
+    // //// console.log("flagagagagaaaaaaaaa", e.id)
     // if(e.id===course.id){
-    //   //console.log("yes im in", e.id, "and ", course.id);
+    //   //// console.log("yes im in", e.id, "and ", course.id);
     //   setFlag(true);
     // } else {
-    //   //console.log("Nothing");
+    //   //// console.log("Nothing");
     //   setFlag(false);
     // }
   // })

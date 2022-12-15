@@ -138,11 +138,11 @@ const SideCart = (props) => {
   let mail = userobj.user
 
 
-  //console.log("mail",mail)
+  //// console.log("mail",mail)
   const dispatch = useDispatch();
 
   const handleRemove = (course) => {
-    //console.log("removed course id",course)
+    //// console.log("removed course id",course)
 
     dispatch(remove(course))
 
@@ -163,7 +163,7 @@ const SideCart = (props) => {
 
 
 
-  //console.log("lets see", courses)
+  //// console.log("lets see", courses)
 
   //  course list for api 
   let courseList = [];
@@ -181,7 +181,7 @@ const SideCart = (props) => {
   // }
   // let allTotal=LStotal+total;
 
-  // //console.log(JSON.stringify(email))
+  // //// console.log(JSON.stringify(email))
 
   // payment api
   //   const response =()=>{  api.post(PAYMENT_URL,
@@ -218,7 +218,7 @@ const SideCart = (props) => {
         }
       )
       .then((data) => {
-        // console.log(" Testing data ----- ", data.data.data.redirectGatewayURL);
+        // // console.log(" Testing data ----- ", data.data.data.redirectGatewayURL);
         // window.open(`${data.data.data.redirectGatewayURL}`, "_self")
         var w = 620;
         var h = 575;
@@ -269,7 +269,7 @@ const SideCart = (props) => {
 
   const handleClick = () => {
     // 👇️ get checkbox value with ref
-    //console.log("checkbox bool-----",ref.current.checked);
+    //// console.log("checkbox bool-----",ref.current.checked);
     // setCheckBoxStatus(ref.current.checked);
   };
 
@@ -284,12 +284,12 @@ const SideCart = (props) => {
   }
 
   // let discountedTotal = total;
-  // // console.log("discounted Total", discountAmount)
+  // // // console.log("discounted Total", discountAmount)
   // if (promocode === checkpromocode) {
   //   discountedTotal = (total * discountAmount)
-  //   // console.log("discounted Total", discountedTotal)
+  //   // // console.log("discounted Total", discountedTotal)
   // }
- 
+
 
 
   //  use promocode 
@@ -306,23 +306,23 @@ const SideCart = (props) => {
       )
       .then((data) => {
         setCheckPromocode(data.data.data.code)
-        console.log(data.data.data.code,promocode, "new code")
-        if(promocode === data.data.data.code) {
+        // console.log(data.data.data.code, promocode, "new code")
+        if (promocode === data.data.data.code) {
           setDiscountAmount(data.data.data.amount)
           // total= (total * data.data.data.amount)         
-          total= (total * data.data.data.amount)         
-          
+          total = (total * data.data.data.amount)
+
         }
-        else{
-           swal("Promocode didn't match", "Try Again", "error")
-          
-          
+        else {
+          swal("Promocode didn't match", "Try Again", "error")
+
+
         }
       });
   };
-  console.log("discounted total", discountAmount)
+  // console.log("discounted total", discountAmount)
 
- 
+
 
   return (
     <>
@@ -417,9 +417,9 @@ const SideCart = (props) => {
 
         }
         <Box sx={{ textAlign: "right" }}>
-          {discountAmount !==1?
-          <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main", textDecoration:"line-through" }}>{t("total")}:৳{total}</Typography>:
-          <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳{total}</Typography>}
+          {discountAmount !== 1 ?
+            <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main", textDecoration: "line-through" }}>{t("total")}:৳{total}</Typography> :
+            <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳{total}</Typography>}
 
           {user ?
             (<>
@@ -471,7 +471,7 @@ const SideCart = (props) => {
                   // value={}
                   onChange={(e) => {
                     setPromocode(e.target.value)
-                    console.log("promocode", promocode)
+                    // console.log("promocode", promocode)
                   }}
                   name="name"
                   autoComplete="name"
@@ -486,9 +486,9 @@ const SideCart = (props) => {
                 </Button>
               </Box>
               <Box >
-                {discountAmount!==1?
-                <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳
-                {total*discountAmount}</Typography>:""}
+                {discountAmount !== 1 ?
+                  <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳
+                    {total * discountAmount}</Typography> : ""}
                 {/* <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳{promocode !== checkpromocode ? total : discountedTotal}</Typography> */}
               </Box>
 
@@ -496,15 +496,16 @@ const SideCart = (props) => {
               <Button
                 //  onClick={response}
                 onClick={() => {
-                  // console.log("discounted", discountedTotal)
-                  let price= total*discountAmount
+                  // // console.log("discounted", discountedTotal)
+                  let price = total * discountAmount
                   navigate("/payment-info", { state: { total: price } }
                   )
                 }}
-                disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false }
+                disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false}
                 // disabled
                 variant="contained">Proceed to Payment
               </Button>
+
               <Box sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
                 <LockIcon sx={{ color: "primary.main", fontSize: "1.1rem" }} />
                 <Typography sx={{ fontSize: ".9rem", color: "primary.main" }}>Secured With SSL COMMERZ</Typography>
@@ -636,6 +637,8 @@ const SideCart = (props) => {
                 // disabled
                 variant="contained">Proceed to Payment
               </Button>
+
+            
 
               {/* </Link> */}
               {/* only for soft launch  */}

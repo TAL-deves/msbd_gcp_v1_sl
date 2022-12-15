@@ -92,12 +92,12 @@ const Instructor = () => {
         let listOfInstructor;
         if(localStorage.getItem("language")==="bn"){
           listOfInstructor = data.data.data.instructorData.en;
-           console.log("coursesbn",listOfInstructor)
+          // // console.log("coursesbn",listOfInstructor)
 
         }
         else{
           listOfInstructor = data.data.data.instructorData.bn;
-          console.log("coursesen",listOfInstructor)
+          //// console.log("coursesen",listOfInstructor)
         }
         // let localInstructor = JSON.parse(localStorage.getItem("courselist"));
         
@@ -105,7 +105,7 @@ const Instructor = () => {
         setLoad(false);
       });
   };
-  //console.log("instructor data",instructorState)
+  //// console.log("instructor data",instructorState)
   useEffect(() => {
     fetchData();
   }, [language]);
@@ -158,7 +158,7 @@ const Instructor = () => {
           {/* <ArrowBackIosNewIcon
               onClick={() => {
                 sliderRef.current.slickPrev();
-                //console.log(sliderRef.current);
+                //// console.log(sliderRef.current);
               }}
               sx={{
                 fontSize: "2rem",
@@ -174,7 +174,7 @@ const Instructor = () => {
               // color="#fff"
               onClick={() => {
                 sliderRef.current.slickNext();
-                // //console.log(sliderRef.current);
+                // //// console.log(sliderRef.current);
               }}
               sx={{
                 fontSize: "2rem",

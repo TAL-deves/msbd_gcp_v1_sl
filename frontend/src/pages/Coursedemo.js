@@ -18,7 +18,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 // import * as React from 'react';
@@ -42,6 +42,9 @@ import { Reviews } from "@mui/icons-material";
 import swal from "sweetalert";
 import Player from "../components/player";
 import useVdocipher from "../hooks/use-vdocipher";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const COURSE_URL = "/api/give-a-review";
 const VIDEOCIPHER_URL = "/api/playthevideo";
@@ -56,6 +59,7 @@ const VdoPlayerStyle = styled("div")(({ theme }) => ({
   width: { sm: "100%", md: "100%", xs: "100%", lg: "100%" },
   height: { sm: "100%", md: "100%", xs: "100%", lg: "100%" },
 }));
+
 
 const Coursedemo = () => {
   // 
@@ -74,12 +78,15 @@ const Coursedemo = () => {
   const [coursesVdoList, setCoursesVdoList] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
   const [vdotitle, setVdotitle] = React.useState();
+  const [count, setCount] = React.useState(true);
+  const [completedEpisode, setCompletedEpisode] = React.useState([]);
+  // let n=0;
 
   let location = useLocation();
 
   let courseData = location.state.courseId;
   let courseID = courseData.courseID;
-
+  let completedEpisodeCount= 0;
 
   const textstyle = {
     textDecoration: "none",
@@ -100,30 +107,46 @@ const Coursedemo = () => {
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        //console.log(data.status)
+        //// console.log(data.status)
         if (data.status === 200) {
           swal("Review Submitted", "", "success")
         }
       });
+      
+      if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("user");
+  
+        swal("You are logged out", "Your session ended, Please login again", "info")
+        // navigate("/login")
+        window.location.href = "/login";
+        // console.log("removed sesssion")
+      }
 
-    //console.log("response", response);
+    //// console.log("response", response);
   };
 
   // vdo list
   let courseVideo = async () => {
+    // setCount(n++)
+    // // console.log("um called", count)
     // window.location.refresh();
     const response = await api
-      .post(COURSE_VDO_URL, JSON.stringify({ courseID }), {
+      .post(COURSE_VDO_URL, JSON.stringify({ courseID, username }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
+        // // console.log(data.data.data.lessonsCompleted)
         data.data.data.lessons.map((lesson) => { lesson["isVdoSet"] = false })
         setCoursesVdoList(data.data.data.lessons);
         // setVideoID(data.data.data.lessons[0].videoID)
+        setCompletedEpisode(data.data.data.lessonsCompleted)
+        // console.log("data.data.data.lessons[0].videoID", (data.data.data.lessonsCompleted).length)
+        completedEpisodeCount=(data.data.data.lessonsCompleted).length
         
-        // console.log("data.data.data.lessons[0].videoID", data.data.data.lessons)
-      });
+      }); 
   };
 
   // let fetchVdoCipher = useCallback(async () => {
@@ -135,13 +158,11 @@ const Coursedemo = () => {
   //     .then((data) => {
   //       setOtp(data.data.data.otp);
   //       setPlaybackInfo(data.data.data.playbackInfo);
-  //       console.log("vdo list", data);
+  //       // console.log("vdo list", data);
   //     });
   // });
+ 
 
-  useEffect(() => {
-    courseVideo();
-  }, []);
 
   // vdo cipher
   const container = useRef();
@@ -149,6 +170,8 @@ const Coursedemo = () => {
   const { loadVideo, isAPIReady } = useVdocipher();
   const videoContainerRef = useRef();
   const [videoRef, setVideoRef] = useState(null);
+  
+ 
   // const loadVideo = useCallback(
   //   ({ otp, playbackInfo, container, configuration, courseVdo }) => {
   //     const params = new URLSearchParams("");
@@ -166,13 +189,30 @@ const Coursedemo = () => {
   //     courseVdo["isVdoSet"] = true;
   //   },
   //   []
-  // );
+  // ); 
+
+
+  // function changecount(count){
+  //   setCount(!count)
+  // }
+ 
+
+  useEffect(() => {
+    courseVideo();
+    const interval = setInterval(() => {
+      setCount(!count)
+          // console.log("hellooooo")
+        }, 300000)
+    // // console.log(count,"√") 
+    // alert(count)
+  }, [count]);
+
 
   const handleClick = useCallback(
     async (otp, playbackInfo, courseVdo) => {
       // let response = await fetchVdoCipher();
 
-      // //console.log("response",  {...otpplayback})
+      // //// console.log("response",  {...otpplayback})
 
       if (!container.current) return;
       if (courseVdo["isVdoSet"]) {
@@ -215,7 +255,7 @@ const Coursedemo = () => {
             {coursesVdoList.map((courseVdo) => {
               courseVdo["isVdoAdded"] = false
               return (
-                <Accordion sx={{ width: "20rem" }} expanded={expanded === `${courseVdo.episode}`} onChange={handleChange(`${courseVdo.episode}`)
+                <Accordion sx={{ width: "22rem" }} expanded={expanded === `${courseVdo.episode}`} onChange={handleChange(`${courseVdo.episode}`)
                 }>
 
                   <AccordionSummary
@@ -223,7 +263,7 @@ const Coursedemo = () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     onClick={(e) => {
-                      // console.log(e, "e")
+                      // // console.log(e, "e")
                       api
                         .post(
                           VIDEOCIPHER_URL,
@@ -239,7 +279,10 @@ const Coursedemo = () => {
                           handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
                           setVdotitle(`${courseVdo.title}`)
                           setEpisode(`${courseVdo.episode}`)
-                          
+                          setVideoID(`${courseVdo.videoID}`)
+                          // // console.log("vdo id -----------",`${courseVdo.videoID}`)
+                          // setCount(count++)
+                          // changecount()
                         });
 
                       videoRef.remove();
@@ -247,7 +290,16 @@ const Coursedemo = () => {
                       videoContainerRef.current.classList.remove("haveVideo");
                     }}
                   >
-                    <Typography>{courseVdo.title}</Typography>
+                    <Box sx={{display:"flex"}}>
+                      {completedEpisode.find(c=>c==courseVdo.episode)?
+                      <Box sx={{color:"green"}}>
+                    <CheckCircleIcon />
+                    </Box>:
+                    <CheckCircleOutlineIcon/>
+                    }
+                    <Typography>{courseVdo.title}  </Typography>
+                    
+                    </Box>
                   </AccordionSummary>
                   {videoRef===null?
                   <AccordionDetails>
@@ -263,17 +315,23 @@ const Coursedemo = () => {
                         }
                       });
                       setVideoRef(video);
-                      // console.log("videoRef",video)
+                      // // console.log("videoRef",video)
                     }}>
                       {/* {courseData.description[0]}<br/> */}
                       {/* {courseVdo.videoID} */}
-                      Click here to play the Video
+                      {/* Click here to play the Video */}
+                      <Box sx={{display:"flex"}}>
+                      <AccessTimeIcon/> 
+                      <Typography>Duration: {courseVdo.length}</Typography>
+                      </Box>
+                      <Button variant="contained"> Play</Button>
                       <br />
 
                     </Typography>
                   </AccordionDetails>:
                   <AccordionDetails>
-                  Watch Video</AccordionDetails>}
+                    <Button variant="contained" disabled> Play</Button>
+                  </AccordionDetails>}
                 </Accordion>
 
               );
@@ -304,7 +362,7 @@ const Coursedemo = () => {
           >
             {/* <Typography>{vdotitle}</Typography>*/}
             {/* Click Add Video button  */}
-            <Player otp={otp} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
+            <Player otp={otp} videoID={videoID} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
           </Box>
 
 

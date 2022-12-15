@@ -42,7 +42,7 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
         password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus, validMatch, setValidMatch,matchFocus, setMatchFocus,
         errMsg, setErrMsg, success, setSuccess,handleSubmit,theme,
         username, setUser,matchPwd, setMatchPwd, handleSubmitNewPassword}= useContext(multiForgotContext)
-  //  //console.log(password, "this is pass")
+  //  //// console.log(password, "this is pass")
     return (
         
             <Box>

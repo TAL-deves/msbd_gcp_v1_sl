@@ -101,7 +101,7 @@ const Regform1 = () => {
   // mui telnet
   const handleChange = (newPhone) => {
     setPhone(newPhone);
-    // //console.log(phone)
+    // //// console.log(phone)
   }
 
   return (

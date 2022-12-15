@@ -57,16 +57,16 @@ const ForgotPassword = () => {
 
   const handleNext = async() => {
     await handleSubmitMailForget();
-    //console.log(responseprop.data.result.status);
+    //// console.log(responseprop.data.result.status);
     if(responseprop.data.result.status === 401){
-      //console.log("Unauthorized");
+      //// console.log("Unauthorized");
     
       
     }else if(responseprop.data.result.status === 202){
-      //console.log("moved to next page! Authorized!");
+      //// console.log("moved to next page! Authorized!");
       setActiveStep(activeStep+1)
     }else{
-      //console.log("Something wrong!");
+      //// console.log("Something wrong!");
       
     }
     

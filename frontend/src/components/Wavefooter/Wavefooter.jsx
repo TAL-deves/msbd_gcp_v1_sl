@@ -2,7 +2,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, CardMedia, makeStyles, Paper, Typography } from '@mui/material';
+import { Button, CardMedia, Fab, makeStyles, Paper, Typography } from '@mui/material';
 import googlebtn from "../downloadApp/playstore.png"
 import applebtn from "../downloadApp/applestore.png";
 import facebook_yellow from "../downloadApp/facebook_yellow.json";
@@ -248,7 +248,6 @@ export default function Wavefooter() {
             </Grid>
 
           </Grid>
-
           {/* <Box sx={{height:"100px"}} >
         <img src={instructorImage} alt=''/>
         </Box> */}

@@ -18,14 +18,16 @@
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
         "courseLength": "07",
         "totalLecture": "15",
-        "price": "1000",
+        "price": "10",
         "instructor": {
           "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Director of Training and founder of inMindSight",
           "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
-          "courses": ["C001"]
+          "courses": [
+            "C001"
+          ]
         }
       },
       {
@@ -49,7 +51,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
           "description": "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
-          "courses": ["C007"]
+          "courses": [
+            "C007"
+          ]
         }
       },
       {
@@ -71,7 +75,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "The Brain Lady",
           "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
-          "courses": ["C005"]
+          "courses": [
+            "C005"
+          ]
         }
       },
       {
@@ -91,7 +97,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Health & Fitness Coach | Best Selling Instructor",
           "description": "Im a certified coach and author",
-          "courses": ["C003"]
+          "courses": [
+            "C003"
+          ]
         }
       },
       {
@@ -113,7 +121,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Heartfulness Meditation Trainer",
           "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
-          "courses": ["C004"]
+          "courses": [
+            "C004"
+          ]
         }
       },
       {
@@ -138,7 +148,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "Founder & CEO, Meditation Magazine",
           "description": "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
-          "courses": ["C006"]
+          "courses": [
+            "C006"
+          ]
         }
       },
       {
@@ -159,7 +171,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Psychologist",
           "description": "Dr. Abul Kalam is a Psychologist.",
-          "courses": ["C002"]
+          "courses": [
+            "C002"
+          ]
         }
       }
     ],
@@ -178,14 +192,16 @@
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
         "courseLength": "০৭",
         "totalLecture": "১৫",
-        "price": "১০০০",
+        "price": "10",
         "instructor": {
           "_id": 10001,
           "name": "Dr. আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Director of Training and founder of inMindSight",
           "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
-          "courses": ["C001"]
+          "courses": [
+            "C001"
+          ]
         }
       },
       {
@@ -209,7 +225,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
           "description": "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
-          "courses": ["C007"]
+          "courses": [
+            "C007"
+          ]
         }
       },
       {
@@ -231,7 +249,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "The Brain Lady",
           "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
-          "courses": ["C005"]
+          "courses": [
+            "C005"
+          ]
         }
       },
       {
@@ -251,7 +271,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Health & Fitness Coach | Best Selling Instructor",
           "description": "Im a certified coach and author",
-          "courses": ["C003"]
+          "courses": [
+            "C003"
+          ]
         }
       },
       {
@@ -273,7 +295,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Heartfulness Meditation Trainer",
           "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
-          "courses": ["C004"]
+          "courses": [
+            "C004"
+          ]
         }
       },
       {
@@ -298,7 +322,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "Founder & CEO, Meditation Magazine",
           "description": "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
-          "courses": ["C006"]
+          "courses": [
+            "C006"
+          ]
         }
       },
       {
@@ -319,7 +345,9 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Psychologist",
           "description": "Dr. Abul Kalam is a Psychologist.",
-          "courses": ["C002"]
+          "courses": [
+            "C002"
+          ]
         }
       }
     ]
@@ -332,7 +360,12 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "Director of Training and founder of inMindSight",
         "description": "hello",
-        "courses": ["C001", "C002", "C003", "C004"]
+        "courses": [
+          "C001",
+          "C002",
+          "C003",
+          "C004"
+        ]
       },
       {
         "_id": 10002,
@@ -340,7 +373,10 @@
         "designation": "Meditation Teacher and Life Coach",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
         "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
-        "courses": ["C005", "C006"]
+        "courses": [
+          "C005",
+          "C006"
+        ]
       },
       {
         "_id": 10003,
@@ -356,7 +392,9 @@
         "designation": "Heartfulness Meditation Trainer",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
         "description": "hello",
-        "courses": ["C007"]
+        "courses": [
+          "C007"
+        ]
       }
     ],
     "bn": [
@@ -366,7 +404,12 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
         "description": "hello",
-        "courses": ["C001", "C002", "C003", "C004"]
+        "courses": [
+          "C001",
+          "C002",
+          "C003",
+          "C004"
+        ]
       },
       {
         "_id": 10002,
@@ -374,7 +417,10 @@
         "designation": "Meditation Teacher and Life Coach",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
         "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
-        "courses": ["C005", "C006"]
+        "courses": [
+          "C005",
+          "C006"
+        ]
       },
       {
         "_id": 10003,
@@ -390,7 +436,9 @@
         "designation": "হার্টফুলনেস মেডিটেশন প্রশিক্ষক",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
         "description": "hello",
-        "courses": ["C007"]
+        "courses": [
+          "C007"
+        ]
       }
     ]
   },

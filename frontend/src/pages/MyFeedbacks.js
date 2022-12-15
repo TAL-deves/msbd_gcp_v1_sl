@@ -19,18 +19,19 @@ const MyFeedbacks = () => {
     });
     if (response.data.result.status === 200) {
       setReviewData(response.data.data);
+      // console.log(response.data.data, "-----------------review data")
     }
   };
 
   useEffect(() => {
     handleWatchReview();
-    //console.log("review Data == ", reviewData)
+    //// console.log("review Data == ", reviewData)
   }, []);
 
   return (
     <>
       <Container>
-        {reviewData ? (
+        {!reviewData ? (
           <>
             {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8NWVR_E168e_moO5Qco564gjDYHrB-oEkIGm0SpR1&s" alt="hello" /> */}
             <Typography sx={{fontSize:"2rem"}}>No reviews available</Typography>
@@ -38,6 +39,7 @@ const MyFeedbacks = () => {
         ) : (
           <>
             {reviewData.map((reviews) => {
+              // console.log(reviews, "mapped review")
               return (
                 <Box
                   sx={{
@@ -48,6 +50,7 @@ const MyFeedbacks = () => {
                     flexDirection: "column",
                     alignItems: "center",
                     padding: "5%",
+                    width:"100%",
                     margin: "5%",
                   }}
                 >

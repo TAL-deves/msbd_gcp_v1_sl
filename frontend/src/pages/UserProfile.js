@@ -27,7 +27,9 @@ import { useForceUpdate } from "framer-motion";
 import { Navigate, useNavigate } from "react-router";
 
 
+
 const AGE_REGEX = /^[0-9]*$/;
+const PHONE_REGEX = /^[0-9+]*$/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const style = {
   position: 'absolute',
@@ -70,7 +72,7 @@ const genders = [
 ];
 
 
-const UserProfile = () => {
+const UserProfile = (props) => {
   const webcamRef = React.useRef(null);
 
   const [userprofileimage, setUserprofileimage] = useState("")
@@ -83,26 +85,35 @@ const UserProfile = () => {
   const [profession, setProfession] = useState("")
   const [gender, setGender] = useState("")
   const [googleId, setGoogleId] = useState("")
+  const [facebookId, setFacebookId] = useState("")
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const [phonenumber, setPhonenumber] = useState();
+  const [userPhone, setUserPhone] = useState();
   const [age, setAge] = useState();
   const [validAge, setValidAge] = useState(false);
+  const [validPhone, setValidPhone] = useState(false);
   const [ageFocus, setAgeFocus] = useState(false);
+  const [phoneFocus, setPhoneFocus] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
+  
 
 
   useEffect(() => {
     setValidAge(AGE_REGEX.test(age));
-    // console.log(validAge)
+    // // console.log(validAge)
   }, [age])
   useEffect(() => {
+    setValidPhone(PHONE_REGEX.test(phonenumber));
+    // // console.log(validAge)
+  }, [phonenumber])
+  useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
-    // console.log(validEmail)
+    // // console.log(validEmail)
   }, [email])
 
   const capture = React.useCallback(
@@ -139,12 +150,12 @@ const UserProfile = () => {
       }
     )
 
-    //   .then((res)=>{console.log(" response of user", res)
+    //   .then((res)=>{// console.log(" response of user", res)
     //   if(res.data.data.result.status===401){
     //     navigate("/login")
     //   }
     // });
-    console.log("response data", response.data.result.status)
+    // // console.log("response data", response.data.result.status)
 
     if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
       localStorage.removeItem("access_token");
@@ -154,7 +165,7 @@ const UserProfile = () => {
       swal("You are logged out", "Your session ended, Please login again", "info")
       // navigate("/login")
       window.location.href = "/login";
-      console.log("removed sesssion")
+      // console.log("removed sesssion")
     }
     else {
       setUserInfo(response.data.data)
@@ -164,7 +175,12 @@ const UserProfile = () => {
       setFullname(response.data.data.fullname)
       setAge(response.data.data.age)
       setPhonenumber(response.data.data.phoneNumber)
-      console.log(response.data.data, "user prof response")
+      setGoogleId(response.data.data.googleId)
+      setFacebookId(response.data.data.facebookId)
+      setUserPhone(response.data.data.phoneNumber)
+      // console.log(response.data.data, "user prof response")
+      setLoad(false);
+      props.setFullName(response.data.data.fullname)
     }
     // return response.data.data
 
@@ -179,7 +195,7 @@ const UserProfile = () => {
       }
     );
     setUserprofileimage(response.data.data)
-    console.log('setUserprofileimage', response.data);
+    // console.log('setUserprofileimage', response.data);
     if (response.data.result.status === 200) {
       setLoad(false)
     }
@@ -192,7 +208,7 @@ const UserProfile = () => {
       swal("You are logged out", "Your session ended, Please login again", "info")
       // navigate("/login")
       window.location.href = "/login";
-      // console.log("removed sesssion")
+      // // console.log("removed sesssion")
     }
     // return response.data.data
   }
@@ -228,10 +244,10 @@ const UserProfile = () => {
       swal("You are logged out", "Your session ended, Please login again", "info")
       // navigate("/login")
       window.location.href = "/login";
-      console.log("removed sesssion")
+      // console.log("removed sesssion")
     }
     // setGender(userInfo.gender)
-    // console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
+    // // console.log("HONULULULUASDHASDHHASDHASDH",userInfo)
     // return response.data.data
 
   }
@@ -241,7 +257,7 @@ const UserProfile = () => {
     const file = e.target.files[0];
     // setImage(e.target.files[0])
     setWebImage('')
-    //console.log(image)
+    //// console.log(image)
     const base64 = await convertToBase64(file);
     setWebImage(base64);
     // setImage(base64);
@@ -252,14 +268,14 @@ const UserProfile = () => {
 
   //   const formData = new FormData()
   //   formData.append('image', image)
-  //   //console.log("form data",image)
+  //   //// console.log("form data",image)
   //   axios.post(url, formData).then(result => {
-  //     //console.log(result.data)
+  //     //// console.log(result.data)
   //     alert('success')
   //   })
   //     .catch(error => {
   //       alert('service error')
-  //       //console.log(error)
+  //       //// console.log(error)
   //     })
   //     setOpen(false)
   // }
@@ -275,7 +291,7 @@ const UserProfile = () => {
           headers: { 'Content-Type': 'application/json' },
           'Access-Control-Allow-Credentials': true,
         }).then((e) => {
-          // //console.log(e.data.data.result.status)
+          // //// console.log(e.data.data.result.status)
           swal("Profile Photo Uploaded!", "", "success")
           window.reload("/")
         })
@@ -289,7 +305,7 @@ const UserProfile = () => {
           headers: { 'Content-Type': 'application/json' },
           'Access-Control-Allow-Credentials': true,
         }).then((e) => {
-          console.log(e, 'photo up')
+          // console.log(e, 'photo up')
           swal("Profile Photo Uploaded!", "", "success")
           handleGetUserImage();
 
@@ -303,7 +319,12 @@ const UserProfile = () => {
 
 
   return (
-
+<>
+    {load ? (
+      <CircularProgress sx={{
+        color: "primary.main"
+      }} />
+    ) : (
     <Box>
       <Typography
         variant="h4"
@@ -381,7 +402,7 @@ const UserProfile = () => {
                     }
                   onChange={(e) => { setEmail(e.target.value) }}
                 />
-                {phonenumber?
+                {userPhone?
                 <TextField
                   margin="normal"
                   focused
@@ -398,8 +419,9 @@ const UserProfile = () => {
                     readOnly: true
                   }}
                   inputProps={{
-                    maxLength: 320,
+                    maxLength: 14,
                   }}
+                  
                   autoFocus
                 />:
                 <TextField
@@ -413,9 +435,19 @@ const UserProfile = () => {
                   name="name"
                   autoComplete="name"
                   inputProps={{
-                    maxLength: 320,
+                    maxLength: 14,
                   }}
                   autoFocus
+                  onFocus={() => setPhoneFocus(true)}
+                    error={
+                      phoneFocus && !validPhone ?
+                        true :
+                        false
+                    }
+                    helperText={phoneFocus && !validPhone ?
+                      "Enter valid Phone"
+                      : false
+                    }
                 />}
                 <TextField
                   margin="normal"
@@ -655,8 +687,8 @@ const UserProfile = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
-
+    </Box>)}
+</>
 
 
   );

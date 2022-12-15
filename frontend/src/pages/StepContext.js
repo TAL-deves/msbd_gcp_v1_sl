@@ -157,7 +157,7 @@ const navigate = useNavigate();
 
 
 const handleSubmitRegistration = async (e) => {
-    // //console.log(username, email, password)
+    // //// console.log(username, email, password)
     
     // e.preventDefault();
     // if button enabled with JS hack
@@ -169,14 +169,14 @@ const handleSubmitRegistration = async (e) => {
      var v4=true;
     
     
-  //  //console.log(username, password, email, matchPwd)
+  //  //// console.log(username, password, email, matchPwd)
    
     if(password !== matchPwd){
       setErrMsg("Password didn't match");
        v4=false
-      // //console.log("eta hocche v4",v4)
-      // //console.log(v4, password, matchPwd)
-      // //console.log(v1, v2, v3, v4)
+      // //// console.log("eta hocche v4",v4)
+      // //// console.log(v4, password, matchPwd)
+      // //// console.log(v1, v2, v3, v4)
       return v4;
       
     } 
@@ -204,7 +204,7 @@ const handleSubmitRegistration = async (e) => {
   //     return;
   // }
     try {
-        // //console.log(user, pwd, email)
+        // //// console.log(user, pwd, email)
         let fullname= username;
         const response = await api.post(REGISTRATION_URL,
             JSON.stringify({ phoneNumber ,fullname, password , email, matchPwd}),
@@ -215,13 +215,13 @@ const handleSubmitRegistration = async (e) => {
             }
         );   
         setBackdrop(false)
-        //console.log("registration response  ---- ", response.data.result.status)
+        //// console.log("registration response  ---- ", response.data.result.status)
         let errResponse = response.data.result.status
-       //console.log(errResponse)
+       //// console.log(errResponse)
         if(errResponse === 409){
           // navigate("/registration/verify")
           swal("Error!", `${response.data.result.errMsg}`, "error")
-          // //console.log("navigate")
+          // //// console.log("navigate")
         }
         else if(errResponse === 202){
           swal("Registered!", "Please complete verification", "success",{timer: 1000})
@@ -240,10 +240,10 @@ const handleSubmitRegistration = async (e) => {
         if (err.response?.status === 409) {
             setErrMsg('Mail Taken');
             // setErrMsg()     
-            //console.log("Username Taken");
+            //// console.log("Username Taken");
         } else{
             setErrMsg('Signup Failed');
-            //console.log("Signup Failed");
+            //// console.log("Signup Failed");
         }
         errRef.current.focus();
         //return err;
@@ -275,14 +275,14 @@ const handleSubmitRegistration = async (e) => {
         }               
     ).then(response => {
       let data = response.result.isError
-      //console.log(data);
+      //// console.log(data);
       setBackdrop(false)
     if(data[0] === 'Invalid OTP'){
       setErrMsg("Wrong OTP")
-      //console.log("wrong otp")
+      //// console.log("wrong otp")
     }
     else{
-      //console.log('first')
+      //// console.log('first')
       //  navigate("/login")   
     }})
     };

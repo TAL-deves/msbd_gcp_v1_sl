@@ -106,7 +106,7 @@ const Cart = (props) => {
   const dispatch= useDispatch();
 
   const handleRemove=(course)=>{
-    //console.log("removed course id",course)
+    //// console.log("removed course id",course)
     
     dispatch(remove(course))
 
@@ -123,7 +123,7 @@ const Cart = (props) => {
 }
 
   const courses= useSelector(state=>state.cart)
-  // //console.log(courses)
+  // //// console.log(courses)
   
    //  course list for api 
    let courseList=[];
@@ -136,7 +136,7 @@ const Cart = (props) => {
   for(const courseCost of courses){
     total= total+Number(courseCost.price)  
   }
-  // //console.log("cart er course",courses)
+  // //// console.log("cart er course",courses)
 
   // payment api
   const response =()=>{  api.post(PAYMENT_URL,

@@ -109,10 +109,10 @@ const Courses = () => {
 
     api.get('http://192.168.68.104:8084/api/courses')
     .then(data=> setCourses(data.data.data.courseData.C001))
-    //  //console.log(courses)
+    //  //// console.log(courses)
   }, []);
 
-  // //console.log(courses)
+  // //// console.log(courses)
 
   const textstyle = {
     textDecoration: "none",
@@ -120,7 +120,7 @@ const Courses = () => {
   const navigate = useNavigate();
   
 
-  // //console.log(courses.C001[0].title);
+  // //// console.log(courses.C001[0].title);
   return (
     <>
       {/* <Typography>are dada</Typography> */}
@@ -165,7 +165,7 @@ const Courses = () => {
               
             }}
             // onPlay={() => {
-            //   //console.log("play data sent");
+            //   //// console.log("play data sent");
             //   const response = api.post(VIDEOLOG_URL,
             //     JSON.stringify({ }),
             //     {
@@ -175,7 +175,7 @@ const Courses = () => {
             // );
             // }}
             // onPause={() => {
-            //   //console.log("pause data sent");
+            //   //// console.log("pause data sent");
             //   const response = api.post(VIDEOLOG_URL,
             //     JSON.stringify({ }),
             //     {
@@ -184,7 +184,7 @@ const Courses = () => {
             //     }
             // );
             // }}
-            // onProgress={//console.log("playing")}
+            // onProgress={//// console.log("playing")}
           /> 
           </div>
           </VdoPlayerStyle>

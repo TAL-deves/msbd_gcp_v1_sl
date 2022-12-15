@@ -94,7 +94,7 @@ const HomeCourses = () => {
   //   await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
   //     .then((data) => {
   //       setCourses(data.data.data.coursesData)
-  //       //console.log(data)
+  //       //// console.log(data)
   //       setLoad(false);
   //     });
   // }; 
@@ -103,27 +103,27 @@ const HomeCourses = () => {
     await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
       // .then((res) => res.json())
       .then((data) => {
-        // //console.log(" THis is the data -----  "+data.data.data.coursesData);
+        // //// console.log(" THis is the data -----  "+data.data.data.coursesData);
         // let listOfCourse = data.data.data.coursesData;
         // let localCourseList = JSON.parse(localStorage.getItem("courselist"));
-        //console.log(localCourseList);
+        //// console.log(localCourseList);
 
         let listOfCourse;
         if(localStorage.getItem("language")==="bn"){
            listOfCourse = data.data.data.coursesData.en;
-           console.log("coursesbn",listOfCourse)
+           //// console.log("coursesbn",listOfCourse)
 
         }
         else{
           listOfCourse = data.data.data.coursesData.bn;
-          console.log("coursesen",listOfCourse)
+          //// console.log("coursesen",listOfCourse)
         }
         let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         
         listOfCourse.map((course) => {
           if (localCourseList !== null) {
             let localCourse = localCourseList.find(obj => obj.courseID === course.courseID)
-            //console.log(localCourse.courseID,course.courseID)
+            //// console.log(localCourse.courseID,course.courseID)
             course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
              
           } 
@@ -133,7 +133,7 @@ const HomeCourses = () => {
         })
         setCourses(listOfCourse)
         setLoad(false);
-        //console.log((courses))
+        //// console.log((courses))
       });
   };
 
@@ -143,7 +143,7 @@ const HomeCourses = () => {
   const navigate = useNavigate();
 
   let updateCourse = (course, isSelected) => {
-    //console.log(course, isSelected)
+    //// console.log(course, isSelected)
     let update = courses;
     update.map((obj) => {
       if (obj.courseID === course.courseID) {
@@ -153,11 +153,11 @@ const HomeCourses = () => {
     })
     setCourses(update)
     localStorage.setItem("courselist", JSON.stringify(update));
-    //console.log("update", update)
+    //// console.log("update", update)
 
   }
 
-  // //console.log(courses);
+  // //// console.log(courses);
   return (
     <Box
       sx={{

@@ -36,7 +36,7 @@ const Forgotform1 = () => {
 
         const handleChange = (newPhone) => {
           setPhone(newPhone);
-          // //console.log(phone)
+          // //// console.log(phone)
         }
 
         const handleLoading=()=>{

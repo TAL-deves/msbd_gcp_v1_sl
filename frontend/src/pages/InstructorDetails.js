@@ -94,7 +94,7 @@ const InstructorDetails = () => {
   let location = useLocation();
 
   let state = location.state.instructorId;
-  console.log(state)
+  // console.log(state)
   let instructorID= state._id
 
   useEffect(() => {
@@ -108,12 +108,12 @@ const InstructorDetails = () => {
             "Access-Control-Allow-Credentials": true,
           })
           .then((data) => {
-            console.log("ins dta",data.data.data);
+            // console.log("ins dta",data.data.data);
             setCourses(data.data.data)           
           });
   
       });
-      console.log("single course id", courses);
+      // console.log("single course id", courses);
     // }
     // else
     // {
@@ -131,9 +131,9 @@ const InstructorDetails = () => {
     //       });
   
     //   });
-    //   console.log("single course id", courses);
+    //   // console.log("single course id", courses);
     // }
-    console.log(" useeffect", courses)
+    // console.log(" useeffect", courses)
   }, [language]);
 
   
@@ -219,7 +219,7 @@ const InstructorDetails = () => {
                           setPlayed(progress.playedSeconds);
                         }}
                         onPlay={() => {
-                          //console.log("play data sent");
+                          //// console.log("play data sent");
                           const response = api.post(
                             VIDEOLOG_URL,
                             JSON.stringify({}),
@@ -230,7 +230,7 @@ const InstructorDetails = () => {
                           );
                         }}
                         onPause={() => {
-                          //console.log("pause data sent");
+                          //// console.log("pause data sent");
                           const response = api.post(
                             VIDEOLOG_URL,
                             JSON.stringify({}),
@@ -240,7 +240,7 @@ const InstructorDetails = () => {
                             }
                           );
                         }}
-                        // onProgress={//console.log("playing")}
+                        // onProgress={//// console.log("playing")}
                       />
                     </Box>
                   </VdoPlayerStyle>

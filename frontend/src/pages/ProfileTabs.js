@@ -16,6 +16,7 @@ import PaymentHistory from "./PaymentHistory";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  
 
   return (
     <div
@@ -50,6 +51,7 @@ function a11yProps(index) {
 export default function ProfileTabs() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [fullName, setFullName]= React.useState("")
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -57,7 +59,7 @@ export default function ProfileTabs() {
 
   return (
     <Box>
-      <Box sx={{ bgcolor: "background.paper", display:{sm:"none",md:"none",lg:"none"} }}>
+      {/* <Box sx={{ bgcolor: "background.paper", display:{sm:"none",md:"none",lg:"none"} }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -82,7 +84,7 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
-      </Box>
+      </Box> */}
 
       <Box
         sx={{
@@ -111,10 +113,10 @@ export default function ProfileTabs() {
           <Tab label="Feedbacks" {...a11yProps(3)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <UserProfile />
+          <UserProfile setFullName={setFullName}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <MyCourses />
+          <MyCourses fullName={fullName}/>
         </TabPanel>
         <TabPanel value={value} index={2}>
           {/* <Payment /> */}

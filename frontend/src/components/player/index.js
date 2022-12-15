@@ -11,13 +11,13 @@ const COURSE_URL = "/api/give-a-review";
 const VIDEOCIPHER_URL = "/api/playthevideo";
 const COURSE_VDO_URL = "/api/course";
 
-export default function Hello({ otp, playbackInfo,episode,coursesVdoList,vdotitle, videoRef, videoContainerRef }) {
+export default function Hello({  otp,videoID, playbackInfo,episode,coursesVdoList,vdotitle, videoRef, videoContainerRef }) {
   const { loadVideo, isAPIReady } = useVdocipher();
   // const videoContainerRef = useRef();
   // const [videoRef, setVideoRef] = useState(null);
   // const [playbackInfo, setPlaybackInfo] = useState("");
   // const [otp, setOtp] = useState("");
-  const [videoID, setVideoID] = useState();
+  // const [videoID, setVideoID] = useState();
   const [lessonTitle, setLessonTitle] = useState();
   // const [episode, setEpisode] = useState();
   const [videoTitle, setVideoTitle] = useState('');
@@ -28,7 +28,7 @@ export default function Hello({ otp, playbackInfo,episode,coursesVdoList,vdotitl
   let courseData = location.state.courseId;
   let courseID = courseData.courseID;
 
-  // console.log("coursesVdoList", coursesVdoList)
+  // // console.log("coursesVdoList", coursesVdoList)
 
     // vdo list
     // let courseVideo = async () => {
@@ -60,7 +60,7 @@ export default function Hello({ otp, playbackInfo,episode,coursesVdoList,vdotitl
     //   // addVideo()
     //   courseVideo();
     // }, []);
-console.log(episode, "episode")
+// console.log(episode, "episode")
 
   // const addVideo = (async () => {
     

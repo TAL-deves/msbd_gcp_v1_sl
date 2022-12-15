@@ -86,7 +86,7 @@ const LoginForm = (props) => {
   // mui telnet
   const handleChange = (newPhone) => {
     setPhone(newPhone);
-    // //console.log(phone)
+    // //// console.log(phone)
   }
   const search = useLocation().search;
   const nameg = new URLSearchParams(search).get("gusername");
@@ -106,16 +106,16 @@ const LoginForm = (props) => {
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
   let fbObj = JSON.parse(JSON.parse(JSON.stringify(fobject)));
 
-  // //console.log("nameg Object is ------ ", nameg);
-  // //console.log("gobject Object is ------ ", gobject);
+  // //// console.log("nameg Object is ------ ", nameg);
+  // //// console.log("gobject Object is ------ ", gobject);
 
 
-  // //console.log("namef Object is ------ ", namef);
-  // //console.log("fobject Object is ------ ", fbObj);
+  // //// console.log("namef Object is ------ ", namef);
+  // //// console.log("fobject Object is ------ ", fbObj);
 
   if (obj) {
     obj.request.ct = obj.request.ct.replaceAll(" ", "+");
-    // //console.log("updated gobject Object is ------ ", obj);
+    // //// console.log("updated gobject Object is ------ ", obj);
 
     if (gobject !== null) {
       const { request, passphase } = obj;
@@ -126,23 +126,23 @@ const LoginForm = (props) => {
         { iv: IV }
       );
 
-      // //console.log("decryptedFromText   -------   ", decryptedFromText);
+      // //// console.log("decryptedFromText   -------   ", decryptedFromText);
 
       let recievedData = decryptedFromText.toString(CryptoJS.enc.Utf8);
 
-      // //console.log("recievedData   -------   ", JSON.parse(recievedData));
+      // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let googleData = JSON.parse(recievedData);
 
       const localStorageService = LocalStorageService.getService();
-      // //console.log("Google data : ", googleData.data.result.isError);
+      // //// console.log("Google data : ", googleData.data.result.isError);
 
       if (googleData.data.result.isError === false) {
-        //console.log("accesstoken  data : ", googleData.data.data.access_token);
+        //// console.log("accesstoken  data : ", googleData.data.data.access_token);
         setCurrentuser(gprofilename);
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
-        // //console.log(googleData.reslut);
+        // //// console.log(googleData.reslut);
         // window.opener.location.reload();
         window.close();
         window.opener.document.location.href = "/courses"
@@ -151,7 +151,7 @@ const LoginForm = (props) => {
     }
   } else if (fbObj) {
     fbObj.request.ct = fbObj.request.ct.replaceAll(" ", "+");
-    // //console.log("updated gobject Object is ------ ", obj);
+    // //// console.log("updated gobject Object is ------ ", obj);
 
     if (fobject !== null) {
       const { request, passphase } = fbObj;
@@ -162,23 +162,23 @@ const LoginForm = (props) => {
         { iv: IV }
       );
 
-      // //console.log("decryptedFromText   -------   ", decryptedFromText);
+      // //// console.log("decryptedFromText   -------   ", decryptedFromText);
 
       let recievedData = decryptedFromText.toString(CryptoJS.enc.Utf8);
 
-      // //console.log("recievedData   -------   ", JSON.parse(recievedData));
+      // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let facebookData = JSON.parse(recievedData);
 
       const localStorageService = LocalStorageService.getService();
-      // //console.log("facebook data : ", facebookData.data);
+      // //// console.log("facebook data : ", facebookData.data);
 
       if (facebookData.data.result.isError === false) {
-        // //console.log("accesstoken  data : ", facebookData.data.data.access_token);
+        // //// console.log("accesstoken  data : ", facebookData.data.data.access_token);
         setCurrentuser(fprofilename);
         setGname(setFname);
         localStorageService.setToken(facebookData.data.data);
-        // //console.log(facebookData.reslut);
+        // //// console.log(facebookData.reslut);
         // window.opener.location.reload();
         window.close();
         window.opener.document.location.href = "/courses"
@@ -237,7 +237,7 @@ const LoginForm = (props) => {
     event.preventDefault();
     const response = await login(username, email, password,phoneNumber, (response) => {
       const localStorageService = LocalStorageService.getService();
-      // //console.log("response ", response);
+      // //// console.log("response ", response);
       // setLoad(false);
       setBackdrop(false)
       if (response.data.result.status === 409) {
@@ -280,7 +280,7 @@ const LoginForm = (props) => {
           swal("Error!", "No active session found", "error");
         } else if (response.data.result.status === 404) {
           swal("Error!", "No user found", "error");
-          console.log("no user found", response.data.result)
+          //// console.log("no user found", response.data.result)
         } else if (response.data.result.status === 500) {
           swal("Oh no!", "Server error, please try again later", "error");
         } else {
@@ -301,14 +301,14 @@ const LoginForm = (props) => {
   // // for testing
   // useEffect(async()=>{
 
-  //   //console.log("JSON.stringify({ userrrrname })", ({ username }))
+  //   //// console.log("JSON.stringify({ userrrrname })", ({ username }))
   //   const response = await api
   //     .post("/api/userdetails", JSON.stringify({ username }), {
   //       headers: { "Content-Type": "application/json" },
   //       "Access-Control-Allow-Credentials": true,
   //     })
   //     .then((response) => {  
-  //       //console.log("texting response------",response)
+  //       //// console.log("texting response------",response)
   //     });   
 
   // },[])

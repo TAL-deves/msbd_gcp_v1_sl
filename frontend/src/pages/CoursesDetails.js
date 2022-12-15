@@ -138,7 +138,7 @@ const CoursesDetails = () => {
       "Access-Control-Allow-Credentials": true,
     })
     .then((data) => {
-       console.log("single course id", data);
+       // console.log("single course id", data);
        setState(data.data.data)
        
     });
@@ -157,7 +157,7 @@ let fetchData = async () => {
       "Access-Control-Allow-Credentials": true,
     })
     .then((data) => {
-      console.log("ins dta", data);
+      // console.log("ins dta", data);
       if (data.data.result.status === 404) {
         // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
         setCourses([])
@@ -165,7 +165,7 @@ let fetchData = async () => {
       else {
         setCourses(data.data.data)
       }
-      console.log("state",courses)
+      // console.log("state",courses)
       
       setLoad(false);
     });
@@ -177,7 +177,7 @@ useEffect(() => {
   
 
  let existingCourse=courses.find(c=>c.courseID===state?.courseID)
-   console.log("existingCourse",existingCourse)
+   // console.log("existingCourse",existingCourse)
   return (
    
     <Box >
@@ -267,7 +267,7 @@ useEffect(() => {
               setPlayed(progress.playedSeconds);             
             }}
             onPlay={() => {
-              //console.log("play data sent");
+              //// console.log("play data sent");
               const response = api.post(VIDEOLOG_URL,
                 JSON.stringify({ }),
                 {
@@ -277,7 +277,7 @@ useEffect(() => {
             );
             }}
             onPause={() => {
-              //console.log("pause data sent");
+              //// console.log("pause data sent");
               const response = api.post(VIDEOLOG_URL,
                 JSON.stringify({ }),
                 {
@@ -286,7 +286,7 @@ useEffect(() => {
                 }
             );
             }}
-            // onProgress={//console.log("playing")}
+            // onProgress={//// console.log("playing")}
           /> 
            
           </Box>
@@ -314,7 +314,7 @@ useEffect(() => {
         sx={{color:"primary.main",
         marginTop:"2rem", display:"flex",alignItems:"center"
         }}><CheckCircleOutlineIcon/>
-        Total Lecture: </Typography>{state?.introduction}
+        Total Lecture: </Typography>{state?.totalLecture}
         </Typography>
         <Typography variant="h6">
         <Typography variant="h6" sx={{color:"primary.main",

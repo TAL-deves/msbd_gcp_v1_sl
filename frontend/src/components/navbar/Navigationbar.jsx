@@ -126,12 +126,12 @@ const Navigationbar = (props) => {
   const { t, onChange, count, language, setLanguage } = useContext(globalContext);
 
   const userId = localStorage.getItem("access_token");
-  // //console.log("user local:",userId)
+  // //// console.log("user local:",userId)
 
   // const user = props.user;
   const user = userobj.user;
   // const localstoragedata = localStorage.getItem("access_token");
-  //  //console.log("user",user,"localstoragedata",localstoragedata)
+  //  //// console.log("user",user,"localstoragedata",localstoragedata)
   const fromtoken = props.fromtoken;
 
   const logout = () => {
@@ -163,7 +163,7 @@ const Navigationbar = (props) => {
   // lang 
   useEffect(()=>{
     localStorage.setItem("language",lang)
-  // console.log(lang)
+  // // console.log(lang)
   },[lang])
 
   const pages = [
@@ -553,7 +553,7 @@ const Navigationbar = (props) => {
                     api
                       .post(baseURL + "/api/logout")
                       .then((res) => {
-                        // //console.log("After logout clicked ", res.data.result);
+                        // //// console.log("After logout clicked ", res.data.result);
                         if (res.data.result.status === 200) {
                           localStorage.removeItem("access_token");
                           localStorage.removeItem("refresh_token");

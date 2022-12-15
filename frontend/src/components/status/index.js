@@ -9,8 +9,9 @@ const VIDEO_LOG_DATA_URL = "/api/videologdata";
 
 export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPIReady, videoTitle, lessonTitle, episode }) {
   // const [status, setStatus] = useState("NA");
+ 
   let username = localStorage.getItem("user")
-  // console.log(username, "username")
+  // // console.log(username, "username")
   const [player, setPlayer] = useState(null);
   const [test, setTest] = useState("")
   const [currentTime, setCurrentTime] = useState(0);
@@ -26,22 +27,23 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
   let totalVdoDuration=0;
   let actionVdoData = async (courseID, videoID, status, username) => {
      let currentProgress =actionTime
+     // console.log(videoID)
     await api
       .post(VIDEO_LOG_DATA_URL, JSON.stringify({ courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed, totalVdoDuration, videoTitle, lessonTitle, episode, currentProgress }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        // console.log("object")
+        // // console.log("object")
 
       });
   }
   useEffect(() => {
-    console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
+    // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
     if (!isAPIReady) return;
     if (!videoRef) {
       // @todo detach from the API
-      // console.log("No");
+      // // console.log("No");
       setPlayer(null);
       // window.location.refresh()
       return;
@@ -52,32 +54,30 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
     window.player = player;
     setPlayer(player);
     player.video.addEventListener("play", () => {
-      console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
+      // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
       totalVdoDuration=(Math.floor(player.video.duration))
       status = "play";
 
       actionTime = Math.floor(player.video.currentTime);
       setTest("play")
-      console.log(test)
+      // setCount(!count)
+      // console.log(test)
       actionVdoData(courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed)
 
     });
     player.video.addEventListener("pause", () => {
-      console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
+      // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
       // totalVdoDuration=(Math.floor(player.video.duration))
-      console.log(totalTimeCovered, totalTimePlayed)
+      // console.log(totalTimeCovered, totalTimePlayed)
       status = "pause";
       actionTime = Math.floor(player.video.currentTime);
-      setTest("pase")
-      console.log(" pause")
-      // console.log(actionTime)
+      
       actionVdoData(courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed)
     });
-    player.video.addEventListener("ended", () => {
-       
+    player.video.addEventListener("ended", (e) => {
+      //  e.preventDefault();
       status = "ended";
-      // alert("ended")
-      console.log("ended")
+      
       actionVdoData(courseID, videoID, status, username, currentTime)
 
     });
@@ -85,29 +85,30 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
     player.video.addEventListener("start", () => {
       // status="ended";
       // alert("ended")
-      console.log("start")
+      // console.log("start")
       //  actionVdoData(courseID,videoID,status, username,currentTime)
 
     });
     player.video.addEventListener("canplay", () => {
-      
-       console.log("can play", Math.floor(player.video.duration)) }
-
+      //setCount(count++)
+       // console.log("can play", Math.floor(player.video.duration)) 
+      }
+       
     );
     player.video.addEventListener("timeupdate", () => {
-      // console.log("time update")
+      // // console.log("time update")
 
       player.api.getTotalCovered().then((e) => {
-        // console.log("event total time",e)
+        // // console.log("event total time",e)
         // alert(e)
         totalTimeCovered = e;
-        // console.log("time covers")
+        // // console.log("time covers")
       })
       player.api.getTotalPlayed().then((e) => {
-        // console.log("event total played",e)
+        // // console.log("event total played",e)
         // alert(e)
         totalTimePlayed = e
-        // console.log("total played")
+        // // console.log("total played")
       })
       setCurrentTime(player.video.currentTime);
 
@@ -119,7 +120,7 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
     window.player = player;
 
 
-    console.log(" videoRef   ----- ", videoRef);
+    // console.log(" videoRef   ----- ", videoRef);
 
 
   }, [videoRef]);
@@ -131,7 +132,7 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
   const handleBackwards = () => {
     player.video.currentTime = player.video.currentTime - 10;
   };
-  // console.log({ player });
+  // // console.log({ player });
   return player && player.video ? (
     <div className="api-controls inline">
       {/* <div>Controls via API</div>
