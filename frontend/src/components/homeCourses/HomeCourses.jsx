@@ -8,18 +8,12 @@ import { Container } from "@mui/material";
 import CourseCard from "../CourseCard/CourseCard";
 import Slider from "react-slick";
 import api from "../../api/Axios";
-
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import { useRef } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import LeftArrow from "../downloadApp/leftarrow.svg";
-import RightArrow from "../downloadApp/rightarrow.svg";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 const HomeCourses = () => {

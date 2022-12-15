@@ -5,11 +5,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-// import Stack from '@mui/material/Stack';
-import { styled } from "@mui/material/styles";
+
 // import './Banner.css';
 import { Container, Paper, Stack } from "@mui/material";
-import bannerimage from "./bannersample.gif";
 import { multiForgotContext } from "../../pages/ForgotContext";
 import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';

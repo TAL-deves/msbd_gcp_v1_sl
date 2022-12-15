@@ -109,7 +109,7 @@ const PaymentHistory = () => {
           marginTop: "3rem",
         }}
       >
-        <Box sx={{ marginLeft: "1rem" }}>
+        {/* <Box sx={{ marginLeft: "1rem" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3}>
               <DesktopDatePicker
@@ -134,7 +134,7 @@ const PaymentHistory = () => {
               />
             </Stack>
           </LocalizationProvider>
-        </Box>
+        </Box> */}
       </Box>
 
       {/* data show */}

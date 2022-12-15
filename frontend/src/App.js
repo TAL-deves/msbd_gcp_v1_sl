@@ -433,11 +433,11 @@ function App() {
               {/* <Footer /> */}
               <Wavefooter />
               <Box sx={{position: 'fixed',
-                  top: {xs:"80%",sm:'85%', md:"85%", lg:"80%", xl:"85%"},
+                  top: {xs:"78%",sm:'85%', md:"88%", lg:"80%", xl:"85%"},
                   right:{xs:'7%', sm:"2%", md:"2%", lg:"2%"}}}>
-              <Fab onClick={() => {
+              <Fab sx={{backgroundColor:"#F8B100"}} onClick={() => {
                 handleOpen()
-              }} color="secondary" aria-label="add">
+              }}  aria-label="add">
                 <SupportAgentIcon/> 
               </Fab>
               </Box>

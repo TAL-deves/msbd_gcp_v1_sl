@@ -27,10 +27,10 @@ const AboutUs = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [teamMembers, setTeamMembers]=React.useState([
-  {name:"Alim Al Razi", position:"Managing Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/alim.png"},
-  {name:"Mostafizur Rahman", position:"Chairman",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/mostafizurRahman.png"},
-  {name:"Shafayet Jefreey Al Mehdi", position:"CEO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/mehdi.png"},
-  {name:"Moin Mostakim", position:"CTO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/moin.png"}])
+  {name:"Alim Al Razi", position:"Managing Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/alim.webp"},
+  {name:"Mostafizur Rahman", position:"Chairman",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/mostafizurRahman.webp"},
+  {name:"Shafayet Jefreey Al Mehdi", position:"CEO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/mehdi.webp"},
+  {name:"Moin Mostakim", position:"CTO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/moin.webp"}])
   
 
     return (
