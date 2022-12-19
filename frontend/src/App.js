@@ -89,72 +89,72 @@ function App() {
   const [emailFocus, setEmailFocus] = useState(false);
 
 
-    //  message submit 
-    let handleLeaveMessage = async () => {
-      const response = await api
-        .post(LEAVE_MESSAGE_URL, JSON.stringify({ phonenumber,email,fullname,leaveMessage }), {
-          headers: { "Content-Type": "application/json" },
-          "Access-Control-Allow-Credentials": true,
-        })
-        .then((data) => {
-          //// console.log(data)
-          if (data.status === 200) {
-            swal("Message Sent", "", "success")
-          }
-          else{
-            swal("Server Busy", "Please Try Again Later", "error")
-          }
-        });
-  
-      //// console.log("response", response);
-    };
-  
-  
-    let handleGetUser = async () => {
-      const response = await api.post(USER_URL,
-        JSON.stringify({ username }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          'Access-Control-Allow-Credentials': true
+  //  message submit 
+  let handleLeaveMessage = async () => {
+    const response = await api
+      .post(LEAVE_MESSAGE_URL, JSON.stringify({ phonenumber, email, fullname, leaveMessage }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((data) => {
+        //// console.log(data)
+        if (data.status === 200) {
+          swal("Message Sent", "", "success")
         }
-      )
-  
-      //   .then((res)=>{// console.log(" response of user", res)
-      //   if(res.data.data.result.status===401){
-      //     navigate("/login")
-      //   }
-      // });
-      // console.log("response data", response.data.result.status)
-  
-      // if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
-      //   localStorage.removeItem("access_token");
-      //   localStorage.removeItem("refresh_token");
-      //   localStorage.removeItem("user");
-  
-      //   swal("You are logged out", "Your session ended, Please login again", "info")
-      //   // navigate("/login")
-      //   window.location.href = "/login";
-      //   // console.log("removed sesssion")
-      // }
-      // else {
-        if(response.data.result.status === 200){
-        setUserInfo(response.data.data)
-        setEmail(response.data.data.email)
-        setGender(response.data.data.gender ? response.data.data.gender : "male")
-        setProfession(response.data.data.profession)
-        setFullname(response.data.data.fullname)
-        setAge(response.data.data.age)
-        setPhonenumber(response.data.data.phoneNumber)
+        else {
+          swal("Server Busy", "Please Try Again Later", "error")
         }
-      //   // console.log(response.data.data, "user prof response")
-      // }
-      // return response.data.data
-  
+      });
+
+    //// console.log("response", response);
+  };
+
+
+  let handleGetUser = async () => {
+    const response = await api.post(USER_URL,
+      JSON.stringify({ username }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        'Access-Control-Allow-Credentials': true
+      }
+    )
+
+    //   .then((res)=>{// console.log(" response of user", res)
+    //   if(res.data.data.result.status===401){
+    //     navigate("/login")
+    //   }
+    // });
+    // console.log("response data", response.data.result.status)
+
+    // if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+    //   localStorage.removeItem("access_token");
+    //   localStorage.removeItem("refresh_token");
+    //   localStorage.removeItem("user");
+
+    //   swal("You are logged out", "Your session ended, Please login again", "info")
+    //   // navigate("/login")
+    //   window.location.href = "/login";
+    //   // console.log("removed sesssion")
+    // }
+    // else {
+    if (response.data.result.status === 200) {
+      setUserInfo(response.data.data)
+      setEmail(response.data.data.email)
+      setGender(response.data.data.gender ? response.data.data.gender : "male")
+      setProfession(response.data.data.profession)
+      setFullname(response.data.data.fullname)
+      setAge(response.data.data.age)
+      setPhonenumber(response.data.data.phoneNumber)
     }
-  
-    useEffect(() => {
-      handleGetUser();
-    }, [])
+    //   // console.log(response.data.data, "user prof response")
+    // }
+    // return response.data.data
+
+  }
+
+  useEffect(() => {
+    handleGetUser();
+  }, [])
   // permanent dark theme
   // const darkTheme = createTheme({  
   //   palette: {
@@ -432,14 +432,16 @@ function App() {
 
               {/* <Footer /> */}
               <Wavefooter />
-              <Box sx={{position: 'fixed',
-                  top: {xs:"78%",sm:'85%', md:"88%", lg:"80%", xl:"85%"},
-                  right:{xs:'7%', sm:"2%", md:"2%", lg:"2%"}}}>
-              <Fab sx={{backgroundColor:"#F8B100"}} onClick={() => {
-                handleOpen()
-              }}  aria-label="add">
-                <SupportAgentIcon/> 
-              </Fab>
+              <Box sx={{
+                position: 'fixed',
+                top: { xs: "82%", sm: '85%', md: "88%", lg: "80%", xl: "85%" },
+                right: { xs: '7%', sm: "2%", md: "2%", lg: "2%" }
+              }}>
+                <Fab sx={{ backgroundColor: "#F8B100" }} onClick={() => {
+                  handleOpen()
+                }} aria-label="add">
+                  <SupportAgentIcon />
+                </Fab>
               </Box>
               <Modal
                 open={open}
@@ -447,97 +449,100 @@ function App() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box sx={{position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: {xs:"80%", sm:"60%", md:"80%", lg:900, xl:900},
-  height: {xs:"70%", sm:"55%", md:"60%", lg:"75%", xl:"50%"},
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,}}>
-                <Container sx={{ display: "flex", alignItems: "center", flexDirection: "column", mt: "1rem" }}>
-          <Typography sx={{ fontSize:"2rem" }} >Leave a Message</Typography>
-          
-          <Box sx={{marginLeft:"5%", marginRight:"5%"}}>
-            <TextField
-            margin="normal"
-            focused
-            fullWidth
-            required
-            id="name"
-            label="Phone Number"
-            onChange={(e) => { setPhonenumber(e.target.value) }}
-            value={phonenumber}
-            name="name"
-            autoComplete="name"
-            inputProps={{
-              maxLength: 320,
-            }}
-            autoFocus
-          />
+                <Box sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: "80%",
+                  // height: {xs:"85%", sm:"55%", md:"60%", lg:"75%", xl:"50%"},
+                  height: "auto",
+                  bgcolor: 'background.paper',
+                  border: '2px solid #000',
+                  boxShadow: 24,
+                  p: 4,
+                }}>
+                  <Container sx={{ display: "flex", alignItems: "center", flexDirection: "column", mt: "1rem" }}>
+                    <Typography sx={{ fontSize: "2rem" }} >Leave a Message</Typography>
 
-          <TextField
-            margin="normal"
-            // required
-            // color="success"
-            focused
-            fullWidth
-            name="email"
-            label="Email"
-            id="email"
-            value={email}
-            onFocus={() => setEmailFocus(true)}
-            // error={
-            //   emailFocus && !validEmail ?
-            //     true :
-            //     false
-            // }
-            // helperText={emailFocus && !validEmail ?
-            //   "Enter valid Email"
-            //   : false
-            // }
-            onChange={(e) => { setEmail(e.target.value) }}
-          />
+                    <Box sx={{ marginLeft: "5%", marginRight: "5%" }}>
+                      <TextField
+                        margin="normal"
+                        focused
+                        fullWidth
+                        required
+                        id="name"
+                        label="Phone Number"
+                        onChange={(e) => { setPhonenumber(e.target.value) }}
+                        value={phonenumber}
+                        name="name"
+                        autoComplete="name"
+                        inputProps={{
+                          maxLength: 320,
+                        }}
+                        autoFocus
+                      />
 
-          <TextField
-            margin="normal"
-            // required
-            focused
-            fullWidth
-            id="name"
+                      <TextField
+                        margin="normal"
+                        // required
+                        // color="success"
+                        focused
+                        fullWidth
+                        name="email"
+                        label="Email"
+                        id="email"
+                        value={email}
+                        onFocus={() => setEmailFocus(true)}
+                        // error={
+                        //   emailFocus && !validEmail ?
+                        //     true :
+                        //     false
+                        // }
+                        // helperText={emailFocus && !validEmail ?
+                        //   "Enter valid Email"
+                        //   : false
+                        // }
+                        onChange={(e) => { setEmail(e.target.value) }}
+                      />
 
-            label="Name"
-            value={fullname}
-            onChange={(e) => { setFullname(e.target.value) }}
-            name="name"
-            autoComplete="name"
-            inputProps={{
-              maxLength: 320,
-            }}
-          // autoFocus
-          />
-          <TextField
-            sx={{ marginTop: "1.5%", width: "100%" }}
-            id="outlined-basic"
-            focused
-            multiline
-            rows={3}
-            label="Message"
-            variant="outlined"
-            onChange={(e) => setLeaveMessage(e.target.value)}
-          />
-          </Box>
-          <Button
-            sx={{ margin: "2%" }}
-            variant="contained"
-            onClick={()=>handleLeaveMessage()} 
-            disabled={!phonenumber}
-          >
-            Send
-          </Button>
-        </Container>
+                      <TextField
+                        margin="normal"
+                        // required
+                        focused
+                        fullWidth
+                        id="name"
+
+                        label="Name"
+                        value={fullname}
+                        onChange={(e) => { setFullname(e.target.value) }}
+                        name="name"
+                        autoComplete="name"
+                        inputProps={{
+                          maxLength: 320,
+                        }}
+                      // autoFocus
+                      />
+                      <TextField
+                        sx={{ marginTop: "1.5%", width: "100%" }}
+                        id="outlined-basic"
+                        focused
+                        multiline
+                        rows={3}
+                        label="Message"
+                        variant="outlined"
+                        onChange={(e) => setLeaveMessage(e.target.value)}
+                      />
+                    </Box>
+                    <Button
+                      sx={{ margin: "2%" }}
+                      variant="contained"
+                      onClick={() => handleLeaveMessage()}
+                      disabled={!phonenumber}
+                    >
+                      Send
+                    </Button>
+                  </Container>
                 </Box>
               </Modal>
               {/* <ProfileTabs/> */}

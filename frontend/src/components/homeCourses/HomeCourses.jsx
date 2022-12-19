@@ -222,9 +222,17 @@ const HomeCourses = () => {
           </Box>
         </Box>
         {load ? (
-            <CircularProgress sx={{
-              color:"primary.main"
+            <Container sx={{
+
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop:"5rem"
+            }}>
+              <CircularProgress sx={{
+              color: "primary.main"
             }} />
+            </Container>
           ) : (
             <>
             <Container>

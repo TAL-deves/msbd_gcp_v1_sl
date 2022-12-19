@@ -188,9 +188,17 @@ const Instructor = () => {
         </Box>
       </Box>
       {load ? (
-        <CircularProgress sx={{
+        <Container sx={{
+
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop:"5rem"
+        }}>
+          <CircularProgress sx={{
           color: "primary.main"
         }} />
+        </Container>
       ) : (
         <Container>
           <Slider {...settings} ref={sliderRef}>

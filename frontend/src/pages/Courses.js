@@ -157,9 +157,17 @@ const Courses = (props) => {
               justifyContent="center"
             >
               {load ? (
-                <CircularProgress sx={{
+                <Container sx={{
+
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginTop:"5rem"
+                }}>
+                  <CircularProgress sx={{
                   color: "primary.main"
                 }} />
+                </Container>
                 // <Skeleton variant="rectangular" width={210} height={118} /> 
               ) : (
                 <>

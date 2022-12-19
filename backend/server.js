@@ -11,6 +11,7 @@ const {
   requestLogger,
   responseLogger,
   videoLogger,
+  userAuditLogger,
 } = require("./logger/logger");
 
 const { loadExampleData, revokeToken } = require("./auth/model");
@@ -23,7 +24,7 @@ const Response = OAuth2Server.Response;
 const router = express.Router();
 
 const signUpTemplateCopy = require("./Database/models/SignUpModels");
-const courseIdList = require("./Database/models/courses");
+// const courseIdList = require("./Database/models/courses");
 
 const { sendMail } = require("./services/emailService");
 const { generateOTP } = require("./services/OTP");
@@ -85,6 +86,7 @@ const videoLogData = require("./Database/models/videoLogData");
 const test = require("./Database/models/test");
 const userMessages = require("./Database/models/userMessages");
 const userPendingPurchase = require("./Database/models/userPendingPurchase");
+const certificateData = require("./Database/models/certificateData");
 
 // const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
 
@@ -109,7 +111,7 @@ mongoose.connect(process.env.DATABASE_CONNECT, function (err, res) {
     return console.error("Error connecting to DB:", err);
   }
   console.log("Connected successfully to DB");
-  // loadExampleData()
+  // loadExampleData() // TODO: NEED TO UNCOMMENT THIS
 });
 
 app.use(express.json());
@@ -165,26 +167,6 @@ var keyString = "thisIsAverySpecialSecretKey00000";
 // var Key = CryptoJS.SHA256(keyString);
 var Key = CryptoJS.enc.Utf8.parse(keyString);
 
-// const cryptkey = CryptoJS.enc.Utf8.parse('thisIsAverySpecialSecretKey00000');
-// const cryptiv = CryptoJS.enc.Utf8.parse('1583288699248111')
-
-// // Decryption
-// const crypted = CryptoJS.enc.Base64.parse("pJnfSAG/Q/nTGmnUmTwd1lXCgcK+bO5gs2VVx3Zk6fo=");
-// var decrypt = CryptoJS.AES.decrypt({ciphertext: crypted}, cryptkey, {
-//     iv: cryptiv,
-//     mode: CryptoJS.mode.CBC
-// });
-// console.log(decrypt.toString(CryptoJS.enc.Utf8));
-
-// // Encryption
-// var encrypt = CryptoJS.AES.encrypt("Sample Text", cryptkey, {
-//     iv: cryptiv,
-//     mode: CryptoJS.mode.CBC
-// });
-// console.log(encrypt.toString())
-
-// console.log("Key  ",Key);
-
 var JsonFormatter = {
   stringify: function (cipherParams) {
     // create json object with ciphertext
@@ -197,23 +179,13 @@ var JsonFormatter = {
       jsonObj.s = cipherParams.salt.toString();
     }
     // stringify json object
-    // return JSON.stringify(jsonObj);
     return jsonObj;
   },
   parse: function (jsonStr) {
-    // parse json string
-    //var jsonObj = JSON.parse(jsonStr);
-    // extract ciphertext from json object, and create cipher params object
     var cipherParams = CryptoJS.lib.CipherParams.create({
       ciphertext: jsonStr,
     });
-    // optionally extract iv or salt
-    // if (jsonObj.iv) {
-    //   cipherParams.iv = CryptoJS.enc.Hex.parse(jsonObj.iv);
-    // }
-    // if (jsonObj.s) {
-    //   cipherParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s);
-    // }
+
     return cipherParams;
   },
 };
@@ -228,86 +200,6 @@ function encrypt(data) {
   return cipherParams.toString();
 }
 
-// var encrypt = CryptoJS.AES.encrypt("test@test.com", Key, {
-//   iv: IV,
-//   mode: CryptoJS.mode.CBC
-// });
-
-// console.log("encrypt   ---   ", encrypt.toString());
-
-// let decryptionService = function (req, res, next) {
-//   console.log("This prints 1st");
-//   const { request, passphase } = req.body;
-//   const keyString = "thisIsAverySpecialSecretKey00000";
-//   const key = crypto.createHash("sha256").update(keyString).digest();
-//   try {
-//     const iv = Buffer.from(passphase, "hex");
-//     const encryptedText = Buffer.from(request, "hex");
-//     let decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-//     let decrypted = decipher.update(encryptedText);
-
-//     decrypted = Buffer.concat([decrypted, decipher.final()]);
-
-//     let obj = decrypted;
-//     // console.log("obj req ----- :"+JSON.parse(obj));
-
-//     // let recievedData = (obj)
-
-//     // console.log("This is the object -----", JSON.stringify(obj));
-//     return obj;
-
-//     // switch (req.originalUrl) {
-//     //   case "/api/signup":
-//     //   case "/api/forget-password":
-//     //     req.body = JSON.parse(JSON.parse(obj));
-//     //     break;
-//     //   case "/api/oauth/token":
-//     //     req.body = JSON.parse(obj);
-//     //     break;
-
-//     //   default:
-//     //     req.body = obj;
-//     // }
-
-//     // req.body= JSON.parse(obj);
-//     // req.body.recv= recievedData
-//     // req.body = (req.body)
-//     // console.log("Outgoing req ----- :", obj);
-//     // console.log("Outgoing req ----- :"+ typeof (req.body));
-//   } catch (err) {
-//     console.log("Error log:     " + err.message);
-//     res.send(err.message);
-//   }
-
-//   next();
-// };
-// }
-
-// let encryptionService = function (req, res, next) {
-//   console.log("This prints 3rd");
-//   let oldSend = res.send;
-
-//   console.log("This prints 3rd", oldSend);
-//   //  console.log("oldSend -------   ",res);
-//   res.send = (data) => {
-//     //  console.log("data -------   "+JSON.stringify(data));
-//     let encryptionData = encrypt(JSON.stringify(data));
-//     //  let encryptionData = encrypt((data))
-//     // console.log("encryptionData -------   "+encryptionData);
-
-//     res.send = oldSend; // set function back to avoid the 'double-send'
-//     let encryptedData = {
-//       request: encryptionData,
-//       passphase: IV.toString(),
-//     };
-//     console.log("ENCRYPTED response data: " +encryptionData);
-
-//     return res.send(encryptedData); // just call as normal with data
-
-//   };
-//   next();
-// };
-
 //! Starting of  ***** Encryption and decryption *****
 
 let decryptionOfData = (req, res) => {
@@ -316,53 +208,12 @@ let decryptionOfData = (req, res) => {
   // const key = crypto.createHash("sha256").update(keyString).digest();
   var key = CryptoJS.enc.Utf8.parse(keyString);
 
-  // console.log("key ---- ",key);
-
   try {
-    // const iv = Buffer.from(passphase, "base64");
-    // const encryptedText = Buffer.from(request, "base64");
-    // let decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-    // let decrypted = decipher.update(encryptedText);
-
-    // decrypted = Buffer.concat([decrypted, decipher.final()]);
-
-    // let obj = decrypted;
-
-    // return obj;
-
     let resp;
     resp = req.body;
-    // console.log("reqst body ---- :  ", req.body);
+
     const { request, passphase } = resp;
 
-    // console.log("request ---- :  ", request);
-
-    // let data = request;
-    // let buff = Buffer.from(data, 'base64');
-    // let text = buff.toString('ascii');
-
-    // console.log("data   -- ", request);
-    // console.log("buff   -- ", buff);
-    // console.log("text   -- ", text);
-
-    // console.log("request   -- ", CryptoJS.enc.Base64.parse(request));
-    // console.log("passphase   -- ", passphase);
-
-    // var decryptedFromText = CryptoJS.AES.decrypt(
-    //   JsonFormatter.parse(request),
-    //   Key,
-    //   { iv: IV }
-    // // );
-    // let something = [
-    //   1952999795, 1232290166,
-    //   1702000979, 1885692777,
-    //   1634489189, 1668441460,
-    //   1264941360,  808464432
-    // ]
-    //   var decryptedFromText = CryptoJS.AES.decrypt(something, Key, {
-    //     iv: IV,
-    //     mode: CryptoJS.mode.CBC
-    // });
     var decryptedFromText = CryptoJS.AES.decrypt(
       { ciphertext: CryptoJS.enc.Base64.parse(request) },
       Key,
@@ -372,51 +223,26 @@ let decryptionOfData = (req, res) => {
       }
     );
 
-    // console.log(" ------  ",decryptedFromText);
-
-    // console.log("decryptedFromText   -- ", (decryptedFromText));
-
     let bytedata = decryptedFromText.words;
 
-    // console.log("CryptoJS.enc.Utf8",CryptoJS.enc.Utf8.stringify(decryptedFromText.words))
-
     let obj = decryptedFromText.toString(CryptoJS.enc.Utf8);
-    // console.log("obj   -- ", (obj))
-    // console.log(
-    //   "decryptedFromText:---------   ",
-    //   typeof recievedData, recievedData
-    // );
 
-    // if(  typeof obj === "string"){
-    //   obj = JSON.parse(obj);
-    // }
     if (typeof obj === "string" && obj.startsWith("g")) {
-      // console.log("string type obj ", obj);
       return obj;
     }
     return JSON.parse(obj);
   } catch (err) {
     console.log("Error log:     " + err.message);
     return err.message;
-    // res.send(err.message);
   }
 };
 
 let encryptionOfData = (data) => {
-  // console.log("raw data",data);
   let encryptionData = encrypt(JSON.stringify(data));
-  //  let encryptionData = encrypt((data))
-  // console.log("encryptionData -------   "+encryptionData);
-  // console.log("encryptionData",typeof(encryptionData));
-  // res.send = oldSend; // set function back to avoid the 'double-send'
   let encryptedData = {
     request: encryptionData,
     passphase: IV.toString(),
   };
-  // console.log("ENCRYPTED response data: ",encryptedData);
-
-  // console.log("This is the encryptedData -----", JSON.stringify(encryptedData));
-
   return encryptedData;
 };
 //? Ending of ***** Encryption and decryption *****
@@ -427,7 +253,6 @@ let serverErrMsg = "Server error! Please try again later";
 class sendResponseData {
   constructor(data, status, errMsg) {
     this.data = data;
-    // this.isError = isError;
     this.status = status;
     this.errMsg = errMsg;
   }
@@ -481,43 +306,18 @@ class sendResponseData {
 
 app.use(myLogger);
 
-// app.use(decryptionService);
-// app.use(encryptionService);
-
 //? this is req.body destructing
-const objectMap = (obj, fn) =>
-  Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
+// const objectMap = (obj, fn) =>
+//   Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
 
 // ! ******* Social Login API *******/ (Encryption done)
 app.get("/api/login/success", (req, res) => {
   if (req.session) {
-    // res.status(200).json({
-    //   data: {
-    //     messege: null,
-    //   },
-    //   result: {
-    //     error: false,
-    //     message: "Successfully Loged In",
-    //     user: req.session,
-    //   },
-    // });
-
     let setSendResponseData = new sendResponseData("Success", 200, null);
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
     res.send(responseToSend);
   } else {
-    // res.status(403).json({
-    //   data: {
-    //     messege: null,
-    //   },
-    //   result: {
-    //     isError: true,
-    //     status: 403,
-    //     message: "Not Authorized",
-    //   },
-    // });
-
     let setSendResponseData = new sendResponseData(null, 403, "Not Authorized");
     let responseToSend = encryptionOfData(
       setSendResponseData.successWithMessage()
@@ -528,16 +328,6 @@ app.get("/api/login/success", (req, res) => {
 });
 
 app.get("/api/login/failed", (req, res) => {
-  // res.status(401).json({
-  //   data: {
-  //     messege: null,
-  //   },
-  //   result: {
-  //     isError: true,
-  //     message: "Log in failure",
-  //   },
-  // });
-
   let setSendResponseData = new sendResponseData(null, 401, "Log in failure");
   let responseToSend = encryptionOfData(
     setSendResponseData.successWithMessage()
@@ -560,12 +350,8 @@ app.get(
     // session: false,
   }),
   async function (req, res) {
-    // res.redirect(process.env.CLIENT_URL_DEVELOPMENT);
-    // res.redirect("/");
-    // console.log(req)
     const userid = req.session.passport.user.googleId;
     const userinfo = req.session.passport.user.profilename;
-    // console.log("userid : ", userid, userinfo);
     var options = {
       body: {
         grant_type: "password",
@@ -588,28 +374,11 @@ app.get(
       query: {},
     };
 
-    // let token = await obtainToken(options);
-    // let foundtoken = token;
-
-    // let setSendResponseData = new sendResponseData(foundtoken);
-    // let responseToSend = encryptionOfData(
-    //   setSendResponseData.successWithMessage()
-    // );
-
-    // res.redirect(
-    //   process.env.CLIENT_URL +
-    //     `login?gusername=${userid}&gobject=${JSON.stringify(
-    //       responseToSend
-    //     )}&profilename=${userinfo}`
-    // );
-
     //! Cheking if user already logged in
 
     let userLoginInfo = await signUpTemplateCopy.findOne({
       username: userid,
     });
-
-    // console.log("userLoginInfo", userLoginInfo);
 
     if (!userLoginInfo.loggedinID) {
       const newId = uuidv4();
@@ -686,35 +455,6 @@ app.get(
       method: "POST",
       query: {},
     };
-    // // // console.log(res);
-    // // let token = await obtainToken(options);
-    // // // obtainToken(options);
-    // // let foundtoken = token;
-    // // console.log("from fb callback: " + token);
-    // // // let tokendata = JSON.stringify(token.data.accessToken);
-    // // // res.json("from obtain token: "+ JSON.stringify(token));
-    // // res.redirect(process.env.CLIENT_URL_DEVELOPMENT + `login?fusername=${userid}`);
-
-    // let token = await obtainToken(options);
-    // let foundtoken = token;
-    // // console.log(" foundtoken -----  ", foundtoken);
-    // // let tokendata = JSON.stringify(token.data.accessToken);
-    // // res.json("from obtain token: "+ JSON.stringify(token));
-
-    // let setSendResponseData = new sendResponseData(foundtoken);
-
-    // let responseToSend = encryptionOfData(
-    //   setSendResponseData.successWithMessage()
-    // );
-
-    // // res.send(responseToSend);
-
-    // res.redirect(
-    //   process.env.CLIENT_URL +
-    //     `login?fusername=${userid}&fobject=${JSON.stringify(
-    //       responseToSend
-    //     )}&fprofilename=${profilename}`
-    // );
 
     let userLoginInfo = await signUpTemplateCopy.findOne({
       username: userid,
@@ -764,18 +504,6 @@ app.get(
     }
   }
 );
-
-// app.get("/api/logout", (req, res) => {
-//   // req.logout();
-//   // req.session.destroy(function (err) {
-//   // 	res.send("logged out!!");
-//   // });
-//   //   res.redirect(process.env.CLIENT_URL_DEVELOPMENT + "login");
-//   // req.session = null;
-//   // res.clearCookie();
-//   // res.end();
-//   //   res.redirect("/");
-// });
 
 // ! ******* sign up google from mobile  *******/ (Encryption done)
 
@@ -851,13 +579,6 @@ app.post("/api/signupmobile", async (req, res) => {
         query: {},
       };
 
-      // let token = await obtainToken(options);
-      // let foundtoken = token;
-
-      // let responseToSend = encryptionOfData(foundtoken);
-
-      // res.send(responseToSend);
-
       let userLoginInfo = await signUpTemplateCopy.findOne({
         username: req.body.googleId,
       });
@@ -877,15 +598,6 @@ app.post("/api/signupmobile", async (req, res) => {
         // let responseToSend = encryptionOfData(obj);
         console.log("successfull login from mobile");
         res.send(responseToSend);
-        // } else {
-        //   let setSendResponseData = new sendResponseData(
-        //     null,
-        //     403,
-        //     "Account is not active or locked! Please contact support."
-        //   );
-        //   let responseToSend = encryptionOfData(setSendResponseData.error());
-        //   res.send(responseToSend);
-        // }
       } else {
         let setSendResponseData = new sendResponseData(
           null,
@@ -910,7 +622,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    console.log("signupmobiletest    -----  ", req.body);
+    // console.log("signupmobiletest    -----  ", req.body);
 
     let userExists = await signUpTemplateCopy.findOne({
       // googleId: req.body.googleId,
@@ -920,7 +632,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
       ],
     });
 
-    console.log("userExists   ----   ", userExists);
+    // console.log("userExists   ----   ", userExists);
 
     if (!userExists) {
       if (req.body.method === "google") {
@@ -1107,41 +819,6 @@ app.post("/api/signupmobiletest", async (req, res) => {
           res.send(responseToSend);
         }
       }
-      // let userLoginInfo = await signUpTemplateCopy.findOne({
-      //   username: req.body.googleId,
-      // });
-
-      // if (!userLoginInfo.loggedinID) {
-      //   // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
-      //   const newId = uuidv4();
-      //   await userLoginInfo.updateOne({
-      //     loggedinID: newId,
-      //   });
-
-      //   if (req.body.method === "google") {
-      //     let token = await obtainToken(googleOptions);
-      //     let foundtoken = token;
-
-      //     let responseToSend = encryptionOfData(foundtoken);
-
-      //     res.send(responseToSend);
-      //   } else {
-      //     let token = await obtainToken(facebookOptions);
-      //     let foundtoken = token;
-
-      //     let responseToSend = encryptionOfData(foundtoken);
-
-      //     res.send(responseToSend);
-      //   }
-      // } else {
-      //   let setSendResponseData = new sendResponseData(
-      //     null,
-      //     409,
-      //     "An active session found!"
-      //   );
-      //   let responseToSend = encryptionOfData(setSendResponseData.error());
-      //   res.send(responseToSend);
-      // }
     }
   } catch (error) {
     console.log(error);
@@ -1160,6 +837,10 @@ app.post("/api/clearalltoken", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
+
+    // userAudtLogger.log("info", `${JSON.stringify(req.body)}`);
+
+    // console.log("log --- ", req);
 
     const { username, email, phoneNumber } = req.body;
 
@@ -1625,16 +1306,29 @@ app.post("/api/userdetails", async (req, res, next) => {
 //? Not in use <--- END --->
 
 //! ******* certificate API *******/
-app.post("/api/certificate", (req, res) => {
+app.post("/api/certificate", async (req, res) => {
   try {
-    let {username, instructorName, instructorTitle, instructorSign, completeDate, courseName, fullName} = req.body;
+    let {
+      username,
+      instructorName,
+      instructorTitle,
+      instructorSign,
+      completeDate,
+      courseName,
+      fullName,
+      courseID,
+    } = req.body;
 
-    console.log(req.body);
+    // console.log(req.body);
 
-    completeDate = new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})
+    completeDate = new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
 
-    let certificateNumber = `ID: ${uuidv4()}`
-
+    let genId = uuidv4();
+    let certificateNumber = `ID: ${genId}`;
 
     const doc = new PDFDocument({
       layout: "landscape",
@@ -1669,18 +1363,43 @@ app.post("/api/certificate", (req, res) => {
       align: "center",
     });
 
-    fullName = fullName.replaceAll(" ","_")
+    fullName = fullName.replaceAll(" ", "_");
 
+    let saveCertificateData = new certificateData({
+      username: username,
+      courseID: courseID,
+      courseName: courseName,
+      fullName: fullName.replaceAll("_", " "),
+      completeStatus: true,
+      certificate: true,
+      certificateID: genId,
+      certificateDate: completeDate,
+    });
 
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
- 
+    await saveCertificateData.save();
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
 
     doc.pipe(res);
 
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      }),
+    };
+
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
     // Finalize the PDF and end the stream
     doc.end();
-   
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -1818,11 +1537,6 @@ app.post("/api/oauth/token", async (req, res, next) => {
 });
 //! ******* logout API *******/ (encryption done)
 app.post("/api/logout", async (req, res) => {
-  // let recievedResponseData = decryptionOfData(req, res);
-  // req.body = JSON.parse(JSON.parse(recievedResponseData));
-
-  // var response = new Response(res);
-  // console.log("request.headers.authorization",request);
   try {
     var request = new Request(req);
     const fromClient = request.headers.authorization;
@@ -1840,6 +1554,21 @@ app.post("/api/logout", async (req, res) => {
 
       try {
         if (anytoken) {
+          let userAuditLoggerData = {
+            username: req.body.username,
+            url: req.originalUrl,
+            timestamp: new Date().toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              second: "numeric",
+            }),
+          };
+
+          userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
           let setSendResponseData = new sendResponseData(
             "Log out successfull",
             200,
@@ -1901,7 +1630,20 @@ app.post("/api/userprofile", async (req, res) => {
         username: req.body.username,
       });
 
-      // console.log("userProfileData --- ", userProfileData);
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
       if (userProfileData) {
         let setSendResponseData = new sendResponseData(
@@ -1941,9 +1683,14 @@ app.post("/api/uploadimage", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
+    // console.log("req.body ----- ",req.body);
     if (userSessionStatus.data != null) {
       const url = req.protocol + "s://" + req.get("host");
-      const profileImg = url + /userProfilepictures/ + req.body.username;
+
+      // console.log("url ----- ",url);
+      // const profileImg = url + /userProfilepictures/ + req.body.username;
+      const profileImg = "./userProfilepictures/" + req.body.username;
+      // console.log("profileImg ----- ",profileImg);
 
       let userProfileUpdate = await signUpTemplateCopy.findOneAndUpdate(
         {
@@ -1957,13 +1704,34 @@ app.post("/api/uploadimage", async (req, res) => {
       );
 
       let base64String = req.body.webimage;
+
+      // console.log("base64String ----- ",base64String.slice(0, 50));
+
       let base64Image = base64String.split(";base64,").pop();
+      // console.log("base64String ----- ",base64Image.slice(0, 50));
 
       let writeBuffer = new Buffer.from(base64Image, "base64");
       fs.writeFileSync(
         `./userProfilepictures/${req.body.username}`,
         writeBuffer
       );
+
+
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
 
       let setSendResponseData = new sendResponseData(
         userProfileUpdate,
@@ -1984,55 +1752,67 @@ app.post("/api/uploadimage", async (req, res) => {
 });
 
 app.post("/api/getuserimage", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
+  // try {
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
 
-    let userSessionStatus = await tokenChecking(req);
+  console.log("getuserimage ---- ", req.body);
 
-    if (userSessionStatus.data != null) {
-      let userProfileData = await signUpTemplateCopy.findOne({
-        username: req.body.username,
-      });
+  let userSessionStatus = await tokenChecking(req);
 
-      let readBuffer = "";
+  if (userSessionStatus.data != null) {
+    let userProfileData = await signUpTemplateCopy.findOne({
+      username: req.body.username,
+    });
 
+    let readBuffer = "";
+    try {
       readBuffer = fs.readFileSync(
         `./userProfilepictures/${req.body.username}`
       );
+    } catch (error) {
+      readBuffer = fs.readFileSync(`./userProfilepictures/default`);
+    }
 
-      let base64data = readBuffer.toString("base64");
-      let base64Image = base64data.split("base64").pop();
-      if (base64Image.startsWith("/9")) {
-        base64Image = "data:image/jpeg;base64," + base64Image;
-      } else {
-        base64Image = base64Image.replace("A=", "I");
-        base64Image = "data:image/png;base64," + base64Image;
-      }
-      if (userProfileData) {
-        let setSendResponseData = new sendResponseData(base64Image, 200, null);
-        let responseToSend = encryptionOfData(setSendResponseData.success());
-        res.send(responseToSend);
-      } else {
-        let setSendResponseData = new sendResponseData(
-          null,
-          404,
-          "user not found!"
-        );
-        let responseToSend = encryptionOfData(
-          setSendResponseData.successWithMessage()
-        );
-        res.send(responseToSend);
-      }
+    // console.log("readBuffer", readBuffer);
+
+    let base64data = readBuffer.toString("base64");
+    let base64Image = base64data.split("base64").pop();
+    // console.log(" base64Image ----- ",base64Image);
+    if (base64Image.startsWith("/9")) {
+      base64Image = "data:image/jpeg;base64," + base64Image;
+    } else if (base64Image.startsWith("iV")) {
+      base64Image = base64Image.replace("A=", "I");
+      base64Image = "data:image/png;base64," + base64Image;
+    } else if (base64Image.startsWith("P")) {
+      base64Image = "data:image/svg+xml;base64," + base64Image;
     } else {
-      let responseToSend = encryptionOfData(userSessionStatus);
+      base64Image = "data:image/webp;base64," + base64Image;
+    }
+    if (userProfileData) {
+      let setSendResponseData = new sendResponseData(base64Image, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(
+        null,
+        404,
+        "user not found!"
+      );
+      let responseToSend = encryptionOfData(
+        setSendResponseData.successWithMessage()
+      );
       res.send(responseToSend);
     }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
+  } else {
+    let responseToSend = encryptionOfData(userSessionStatus);
     res.send(responseToSend);
   }
+  // } catch (error) {
+  //   let setSendResponseData = new sendResponseData("", 500, serverErrMsg);
+  //   let responseToSend = encryptionOfData(setSendResponseData.error());
+  //   res.send(responseToSend);
+  // }
 });
 
 //* Some works remaining <--- token check, phoneNumber --->
@@ -2086,6 +1866,21 @@ app.post("/api/updateuserprofile", async (req, res) => {
         let updated = await signUpTemplateCopy.findOne({
           username: username,
         });
+
+        let userAuditLoggerData = {
+          username: req.body.username,
+          url: req.originalUrl,
+          timestamp: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric"
+          }),
+        };
+  
+        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
         let setSendResponseData = new sendResponseData(updated, 200, null);
         let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2180,11 +1975,6 @@ app.post("/api/forget-password", async (req, res) => {
           }
         ); // Updating user profile DB with new OTP and changing lock status to false
 
-        // sendMail({
-        //   to: user.email,
-        //   OTP: otpGenerated,
-        // }); // Sending OTP to email address
-
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
@@ -2252,114 +2042,6 @@ app.post("/api/forget-password", async (req, res) => {
         } // Sending error as response
       }
     }
-
-    // if (!user) {
-    //   let setSendResponseData = new sendResponseData(
-    //     null,
-    //     404,
-    //     "Account not found or is locked"
-    //   );
-    //   let responseToSend = encryptionOfData(
-    //     setSendResponseData.successWithMessage()
-    //   );
-    //   res.send(responseToSend);
-    // } else {
-    //   // Checking OPT try left in user DB
-    //   let resetOtpCount = user.resetotpcount;
-
-    //   if (resetOtpCount > 0 && resetOtpCount <= 3) {
-    //     resetOtpCount--; // Decrementing by 1 for each try
-    //     let OTPtryleft = resetOtpCount;
-    //     const otpGenerated = generateOTP(); // Gerenrating a otp
-
-    //     console.log(otpGenerated + "  " + resetOtpCount); // Debugging console view
-
-    //     let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
-    //       {
-    //         email: req.body.email,
-    //         locked: false,
-    //       },
-    //       {
-    //         $set: {
-    //           otp: otpGenerated,
-    //           resetotpcount: resetOtpCount,
-    //           active: false,
-    //           locked: false,
-    //         },
-    //       }
-    //     ); // Updating user profile DB with new OTP and changing lock status to false
-
-    //     // sendMail({
-    //     //   to: user.email,
-    //     //   OTP: otpGenerated,
-    //     // }); // Sending OTP to email address
-
-    //     sendSms({
-    //       reciever: user.phoneNumber,
-    //       OTP: otpGenerated,
-    //     });
-
-    //     if (signUpUser) {
-    //       let setSendResponseData = new sendResponseData(
-    //         "OTP sent!",
-    //         202,
-    //         null
-    //       );
-    //       let responseToSend = encryptionOfData(setSendResponseData.success());
-
-    //       res.send(responseToSend);
-    //     } // Sending user information as response
-    //     else {
-    //       let setSendResponseData = new sendResponseData(
-    //         null,
-    //         500,
-    //         serverErrMsg
-    //       );
-    //       let responseToSend = encryptionOfData(setSendResponseData.error());
-
-    //       res.send(responseToSend);
-    //     } // Sending Error as response
-    //   } else {
-    //     let signUpUser = await signUpTemplateCopy.findOneAndUpdate(
-    //       {
-    //         email: req.body.email,
-    //         locked: false,
-    //       },
-    //       {
-    //         $set: {
-    //           resetotpcount: 3,
-    //           active: false,
-    //           locked: true,
-    //         },
-    //       }
-    //     ); // Updating User Info in DB (Account Locked as max try done)
-
-    //     if (signUpUser) {
-    //       let setSendResponseData = new sendResponseData(
-    //         "Account locked! You have used max OTP request",
-    //         403,
-    //         null
-    //       );
-    //       let responseToSend = encryptionOfData(
-    //         setSendResponseData.successWithMessage()
-    //       );
-
-    //       res.send(responseToSend);
-    //     } // Sending Max OTP try messge as response
-    //     else {
-    //       let setSendResponseData = new sendResponseData(
-    //         null,
-    //         401,
-    //         "Unauthorized"
-    //       );
-    //       let responseToSend = encryptionOfData(
-    //         setSendResponseData.successWithMessage()
-    //       );
-
-    //       res.send(responseToSend);
-    //     } // Sending error as response
-    //   }
-    // }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -2568,9 +2250,9 @@ app.post("/api/allcourses", async (req, res, next) => {
     // console.log(data[0].coursesData);
 
     // if (data) {
-      let setSendResponseData = new sendResponseData(data[0], 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+    let setSendResponseData = new sendResponseData(data[0], 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
     // } else {
     //   let setSendResponseData = new sendResponseData(allCourses, 200, null);
     //   let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2610,9 +2292,9 @@ app.post("/api/coursedetails", async (req, res, next) => {
     // console.log("result",result);
 
     // if (data) {
-      let setSendResponseData = new sendResponseData(result, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+    let setSendResponseData = new sendResponseData(result, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
     // } else {
     //   let setSendResponseData = new sendResponseData(allCourses, 200, null);
     //   let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2640,7 +2322,6 @@ app.post("/api/courseavailed", async (req, res, next) => {
 
     let usercourses = user.purchasedCourses;
 
-    console.log(usercourses);
 
     usercourses.find((e) => {
       // console.log("Element ", e);
@@ -2668,53 +2349,55 @@ app.post("/api/course", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let courseid = req.body.courseID;
+    let userSessionStatus = await tokenChecking(req);
 
-    // let result2 = coursesData.coursesData.find(
-    //   (item) => item.courseID === courseid
-    // );
-    // console.log("/api/course   ------- ", req.body);
+    if (userSessionStatus.data != null) {
+      let courseid = req.body.courseID;
 
-    let data = await allData.find();
-    let coursesdata = data[0].courseData;
+      let data = await allData.find();
+      let coursesdata = data[0].courseData;
 
-    let result = coursesdata.find((item) => item.courseID === courseid);
+      let result = coursesdata.find((item) => item.courseID === courseid);
 
-    let userCompletedLessons = await lessonProgress.find({
-      $and: [
-        { username: req.body.username },
-        { courseID: req.body.courseID },
-        { complete: true },
-      ],
-    });
-
-    let userCompletedLessonsUpdated = [];
-
-    if (userCompletedLessons[0] !== null) {
-      userCompletedLessons.map((item) => {
-        // console.log("item",item.lessonNumber);
-        userCompletedLessonsUpdated.push(item.lessonNumber);
+      let userCompletedLessons = await lessonProgress.find({
+        $and: [
+          { username: req.body.username },
+          { courseID: req.body.courseID },
+          { complete: true },
+        ],
       });
-    }
 
-    if (result) {
-      let dataJSON = {
-        courseID: result.courseID,
-        title: result.title,
-        lessons: result.lessons,
-        lessonsCompleted: userCompletedLessonsUpdated,
-      };
-      // console.log("result ----", dataJSON);
-      let setSendResponseData = new sendResponseData(dataJSON, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+      let userCompletedLessonsUpdated = [];
+
+      if (userCompletedLessons[0] !== null) {
+        userCompletedLessons.map((item) => {
+          // console.log("item",item.lessonNumber);
+          userCompletedLessonsUpdated.push(item.lessonNumber);
+        });
+      }
+
+      if (result) {
+        let dataJSON = {
+          courseID: result.courseID,
+          title: result.title,
+          lessons: result.lessons,
+          lessonsCompleted: userCompletedLessonsUpdated,
+        };
+        // console.log("result ----", dataJSON);
+        let setSendResponseData = new sendResponseData(dataJSON, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        let setSendResponseData = new sendResponseData(
+          null,
+          404,
+          "No data found!"
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.error());
+        res.send(responseToSend);
+      }
     } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "No data found!"
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.error());
+      let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
   } catch (error) {
@@ -2801,9 +2484,9 @@ app.post("/api/allinstructors", async (req, res) => {
     // console.log(data[0].instructorData);
 
     // if (data) {
-      let setSendResponseData = new sendResponseData(data[0], 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+    let setSendResponseData = new sendResponseData(data[0], 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
     // } else {
     //   let setSendResponseData = new sendResponseData(allInstructors, 200, null);
     //   let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -2952,6 +2635,21 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
 
       await userPurchasedCourses.save();
 
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
       let setSendResponseData = new sendResponseData(
         "Payment initiated",
         200,
@@ -3062,6 +2760,21 @@ app.post("/api/sandboxbuy", async (req, res) => {
       });
 
       await userPurchasedCourses.save();
+
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
       const sslcommerz = new SSLCommerzPayment(
         process.env.STORE_ID_SANDBOX,
@@ -3189,6 +2902,21 @@ app.post("/api/buy", async (req, res) => {
 
       await userPurchasedCourses.save();
 
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
       const sslcommerz = new SSLCommerzPayment(
         process.env.STORE_ID,
         process.env.STORE_PASSWORD,
@@ -3273,51 +3001,68 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
-  let userPurchasedCourses = new usersPurchasedCourses({
-    username: `${value_a}`,
-    phoneNumber: `${value_b}`,
-    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
-    expirationDate: `${courseExpires}`,
-    amount: `${amount}`,
-    bank_tran_id: bank_tran_id,
-    base_fair: "0.00",
-    card_brand: "",
-    card_issuer: "",
-    card_issuer_country: "",
-    card_issuer_country_code: "",
-    card_no: "",
-    card_sub_brand: "",
-    card_type: "",
-    currency: "",
-    currency_amount: "",
-    currency_rate: "",
-    currency_type: "",
-    error: "",
-    risk_level: "",
-    risk_title: "",
-    status: status,
-    store_amount: "",
-    store_id: process.env.STORE_ID,
-    tran_date: tran_date,
-    tran_id: `${tran_id}`,
-    val_id: val_id,
-    value_a: value_a,
-    value_b: value_b,
-    value_c: value_c,
-    value_d: "",
-    verify_sign: "",
-    verify_sign_sha2: "",
-    verify_key: "",
-  });
+  if ((value_d = "mobile")) {
+    let userPurchasedCourses = new usersPurchasedCourses({
+      username: `${value_a}`,
+      phoneNumber: `${value_b}`,
+      coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+      expirationDate: `${courseExpires}`,
+      amount: `${amount}`,
+      bank_tran_id: bank_tran_id,
+      base_fair: "0.00",
+      card_brand: "",
+      card_issuer: "",
+      card_issuer_country: "",
+      card_issuer_country_code: "",
+      card_no: "",
+      card_sub_brand: "",
+      card_type: "",
+      currency: "",
+      currency_amount: "",
+      currency_rate: "",
+      currency_type: "",
+      error: "",
+      risk_level: "",
+      risk_title: "",
+      status: status,
+      store_amount: "",
+      store_id: process.env.STORE_ID,
+      tran_date: tran_date,
+      tran_id: `${tran_id}`,
+      val_id: val_id,
+      value_a: value_a,
+      value_b: value_b,
+      value_c: value_c,
+      value_d: "",
+      verify_sign: "",
+      verify_sign_sha2: "",
+      verify_key: "",
+    });
 
-  await userPurchasedCourses.save();
+    await userPurchasedCourses.save();
 
-  res.send(lessonProgressNew);
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      }),
+    };
+
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+    res.send(lessonProgressNew);
+  } else {
+    res.send("okay");
+  }
 });
 
 app.post("/api/ssl-payment-success", async (req, res) => {
-  console.log("ssl-payment-success", req.body);
-
   const {
     tran_id,
     val_id,
@@ -3332,7 +3077,6 @@ app.post("/api/ssl-payment-success", async (req, res) => {
 
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
-
   let courseExpiresMiliseconds =
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
@@ -3377,6 +3121,21 @@ app.post("/api/ssl-payment-success", async (req, res) => {
 
   let setSendResponseData = new sendResponseData(req.body, 200, null);
   let responseToSend = encryptionOfData(setSendResponseData.success());
+
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric"
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
   res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
 });
@@ -3440,7 +3199,20 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
 
   await userPurchasedCourses.save();
 
-  console.log("ssl-payment-fail ----- ", userPurchasedCourses);
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric"
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
   res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
 });
@@ -3503,6 +3275,21 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
   });
   await userPurchasedCourses.save();
 
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric"
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
   res.redirect(process.env.CLIENT_URL + `courses?payment=cancel`);
 });
 
@@ -3526,19 +3313,45 @@ app.post("/api/usercourses", async (req, res) => {
       });
 
       let userallcourses = [];
-      // console.log("userallcourses ----- ", userallcourses);
-      userCourses.map((item) => {
-        // console.log("item --- ", item.coursesList);
-        item.coursesList.map((item2) => {
-          // console.log("item2 --- ", item2);
-          userallcourses.push(item2);
-        });
-      });
-      // console.log("userallcourses ----- ", userallcourses);
 
-      // if(userallcourses[0]){
+      //? NO expiry checking
+      // userCourses.map((item) => {
+      //   item.coursesList.map((item2) => {
+      //     userallcourses.push(item2);
+      //   });
+      // });
+    
+      //? with expiry checking
+      // userCourses.map((item) => {
+      //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
+      //     console.log("expired");
+      //   } else {
+      //     item.coursesList.map((item2) => {
+      //       userallcourses.push(item2);
+      //     });
+      //   }
+      // });
 
-      // }
+      //? with expiry checking and status changing
+      Promise.all(userCourses.map(async(item) => {
+        if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
+  
+          await usersPurchasedCourses.findOneAndUpdate({
+            $and: [{ username: "+8801779561764" }, { status: "VALID" },
+            {coursesList:item.coursesList}
+          ],
+          }, {$set:{
+            courseExpityStatus:"VALIDITY EXPIRED"
+          }});
+        
+          // console.log("expired --- ", item);
+        } else {
+          item.coursesList.map((item2) => {
+            userallcourses.push(item2);
+          });
+        }
+      }));
+
 
       if (userCourses[0]) {
         let array1 = userallcourses;
@@ -3578,7 +3391,6 @@ app.post("/api/usercourses", async (req, res) => {
 
         await Promise.all(
           array31.map(async (item, index) => {
-
             let userCompletedLessons = await lessonProgress.find({
               $and: [
                 { username: req.body.username },
@@ -3588,8 +3400,6 @@ app.post("/api/usercourses", async (req, res) => {
             });
 
             let userCompletedLessonsUpdated = [];
-
-           
 
             if (userCompletedLessons[0] !== null) {
               userCompletedLessons.map((item) => {
@@ -3611,17 +3421,28 @@ app.post("/api/usercourses", async (req, res) => {
 
             let progress = (total_course / total_completed) * 100;
 
-            console.log(" progress ", Math.ceil(progress));
-              if(Math.ceil(progress)>100){
-                progress = 100
-              }
+            // console.log(" progress ", Math.ceil(progress));
+            if (Math.ceil(progress) > 100) {
+              progress = 100;
+            }
             item.status = Math.ceil(progress);
           })
         );
 
-        console.log("array updated ---- ", array31);
+        let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
 
-        //! With progress end
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
         let setSendResponseData = new sendResponseData(array31, 200, null);
         let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -3630,10 +3451,10 @@ app.post("/api/usercourses", async (req, res) => {
         // console.log("userCourses else ----- ", userCourses[0]);
         let setSendResponseData = new sendResponseData(
           null,
-          404,
+          200,
           "No purchase done yet"
         );
-        let responseToSend = encryptionOfData(setSendResponseData.error());
+        let responseToSend = encryptionOfData(setSendResponseData.success());
         res.send(responseToSend);
       }
     } else {
@@ -3643,24 +3464,7 @@ app.post("/api/usercourses", async (req, res) => {
     }
     //! This is for token checking END
 
-    // res.send(userCourses)
-    // if (reviewData) {
-    //   let setSendResponseData = new sendResponseData(
-    //     "review submitted",
-    //     200,
-    //     ""
-    //   );
-    //   let responseToSend = encryptionOfData(setSendResponseData.success());
-    //   res.send(responseToSend);
-    // } else {
-    //   let setSendResponseData = new sendResponseData(
-    //     "review submission failed",
-    //     400,
-    //     ""
-    //   );
-    //   let responseToSend = encryptionOfData(setSendResponseData.success());
-    //   res.send(responseToSend);
-    // }
+   
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -3678,14 +3482,24 @@ app.post("/api/paymenthistory", async (req, res) => {
     // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
 
     if (userSessionStatus.data != null) {
-      console.log("User is allowed");
       let userpaymenthistory = await usersPurchasedCourses.find({
         username: req.body.username,
       });
 
-      // let setSendResponseData = new sendResponseData(userpaymenthistory, 200, null);
-      // let responseToSend = encryptionOfData(setSendResponseData.success());
-      // res.send(setSendResponseData);
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
       if (userpaymenthistory) {
         let setSendResponseData = new sendResponseData(
@@ -3725,7 +3539,20 @@ app.post("/api/give-a-review", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+ let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (userSessionStatus.data != null) {
       console.log("User is allowed");
@@ -3781,7 +3608,20 @@ app.post("/api/user-reviews", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+ let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric"
+        }),
+      };
+
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (userSessionStatus.data != null) {
       console.log("User is allowed");
@@ -3826,15 +3666,37 @@ app.post("/api/playthevideo", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let vdo = JSON.parse(
-      await vdochiper({
-        videoID: req.body.videoID,
-      })
-    );
+    let userSessionStatus = await tokenChecking(req);
 
-    let setSendResponseData = new sendResponseData(vdo, 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(responseToSend);
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      }),
+    };
+
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+    if (userSessionStatus.data != null) {
+      let vdo = JSON.parse(
+        await vdochiper({
+          videoID: req.body.videoID,
+        })
+      );
+
+      let setSendResponseData = new sendResponseData(vdo, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -3872,7 +3734,23 @@ app.post("/api/applypromocode", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-    console.log("token check applypromocode ---- ", userSessionStatus);
+
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      }),
+    };
+
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+
     if (userSessionStatus) {
       let promocode = {
         code: "ABC123",
@@ -3923,8 +3801,6 @@ app.post("/api/videologdata", async (req, res) => {
 
     // let bodyData = objectMap(req.body, v=> v) //? mapping object
 
-    console.log("req---- ", req.body);
-
     let logVideData = new videoLogData({
       username: username,
       courseID: courseID,
@@ -3946,8 +3822,6 @@ app.post("/api/videologdata", async (req, res) => {
       req.body.status === "ended" &&
       req.body.totalTimeCovered === req.body.totalVdoDuration
     ) {
-      console.log("Video fully watched");
-
       let lessonProgressData = await lessonProgress.find({
         $and: [
           { username: username },
@@ -3956,8 +3830,6 @@ app.post("/api/videologdata", async (req, res) => {
           { complete: true },
         ],
       });
-
-      console.log("lessonProgressData  ", lessonProgressData);
 
       if (!lessonProgressData[0]) {
         let lessonProgressNew = new lessonProgress({
@@ -3971,12 +3843,6 @@ app.post("/api/videologdata", async (req, res) => {
 
         await lessonProgressNew.save();
 
-        // console.log("Lesson progress updated");
-
-        // let setSendResponseData = new sendResponseData("Saved new", 200, null);
-        // let responseToSend = encryptionOfData(setSendResponseData);
-
-        // res.send(responseToSend);
       } else {
         // console.log("Already watched  ");
         // let setSendResponseData = new sendResponseData("Updated", 200, null);
@@ -4000,7 +3866,7 @@ app.post("/api/videologdata", async (req, res) => {
   }
 });
 
-//! ******* videologdata API for mobile *******/
+//! ******* Mobile Logs *******/
 app.post("/api/mobilelogdata", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -4030,92 +3896,7 @@ app.post("/api/mobilelogdata", async (req, res) => {
   }
 });
 
-//! ******* videologdata API for test *******/
-app.post("/api/videologdatatest", async (req, res) => {
-  try {
-    // let recievedResponseData = decryptionOfData(req, res);
-    // req.body = recievedResponseData;
-
-    const {
-      status,
-      courseID,
-      videoID,
-      username,
-      actionTime,
-      totalTimeCovered,
-      totalTimePlayed,
-    } = req.body;
-
-    // let bodyData = objectMap(req.body, v=> v) //? mapping object
-
-    console.log("videologdatatest   ---- ", req.body);
-
-    // let lessonData = await lessonProgress.findOne({
-    //   $and:[
-    //     {username:username},
-    //     {courseID:courseID},
-    //     {videoID:videoID}
-    //   ]
-    // })
-
-    // if(!lessonData){
-    //   let newLessonData = new lessonProgress({
-    //     username: username,
-    //     phoneNumber: phoneNumber,
-    //     courseID: courseID,
-    //     videoID: videoID,
-    //     courseName: courseName,
-    //     lessonNumber: lessonNumber,
-    //     totalPlayed: lessonNumber,
-    //     totalCovered: lessonNumber,
-    //     currentProgress: lessonNumber,
-    //     complete: lessonNumber,
-    //   })
-    // } else {
-    //   console.log("console.log(lessonData);",lessonData);
-    // }
-
-    // if(req.body.status === "play"){
-
-    // } else if(req.body.status === "pause"){
-
-    // } else if(req.body.status === "ended"){
-
-    // } else {
-
-    // }
-
-    // if(action === 'ended' && )
-
-    let videoLogData = new videoLogData({
-      username: username,
-      phoneNumber: phoneNumber,
-      courseID: courseID,
-      videoID: videoID,
-      courseName: "courseName",
-      lessonNumber: "lessonNumber",
-      totalPlayed: totalTimePlayed,
-      totalCovered: totalTimeCovered,
-      currentProgress: totalTimeCovered,
-      complete: false,
-      action: status,
-      actionTime: actionTime,
-    });
-
-    let setSendResponseData = new sendResponseData("sent", 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData);
-
-    res.send(setSendResponseData);
-  } catch (error) {
-    console.log("in catch", error);
-    let setSendResponseData = new sendResponseData(null, 404, error.message);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
-
-    res.send(error);
-  }
-});
-
-//* User message API
+//!  User message API
 app.post("/api/leaveamessage", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -4131,6 +3912,21 @@ app.post("/api/leaveamessage", async (req, res) => {
     });
 
     saveUserMessage.save();
+
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      }),
+    };
+
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (saveUserMessage) {
       let setSendResponseData = new sendResponseData(
@@ -4149,6 +3945,27 @@ app.post("/api/leaveamessage", async (req, res) => {
       let responseToSend = encryptionOfData(setSendResponseData.error());
       res.send(responseToSend);
     }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//! Getting User message Data
+app.get("/api/getusermessages", async (req, res) => {
+  try {
+    let getAllUserMessages = await userMessages.find();
+    let getAllUserMessagesCount = await userMessages.find().count();
+
+    let data = {
+      messages: getAllUserMessages,
+      total: getAllUserMessagesCount,
+    };
+
+    let setSendResponseData = new sendResponseData(data, 200, null);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(setSendResponseData);
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4195,63 +4012,38 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   try {
-    let {username, instructorName, instructorTitle, instructorSign, completeDate, courseName, fullName} = req.body;
 
-    console.log(req.body);
+    //usercourses"
 
-    completeDate = new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})
-
-    let certificateNumber = `ID: ${uuidv4()}`
-
-
-    const doc = new PDFDocument({
-      layout: "landscape",
-      size: "A4",
+    let userCourses = await usersPurchasedCourses.find({
+      $and: [{ username: "+8801779561764" }, { status: "VALID" }],
     });
 
-    // Draw the certificate image
-    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+    let userallcourses = [];
 
-    // Set the font to Dancing Script
-    doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
+    Promise.all(userCourses.map(async(item) => {
+      if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
 
-    // Draw the name
-    doc
-      .font("./fonts/DancingScript-VariableFont_wght.ttf")
-      .fontSize(45)
-      .text(fullName, -80, 250, {
-        align: "center",
-      });
-    // Draw the course name
-    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
-      align: "center",
-    });
-    doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
-
-    // Draw the date
-    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
-      align: "center",
-    });
-    // Draw the certificateNumber
-    doc.font("Times-Roman").fontSize(10).text(certificateNumber, -80, 400, {
-      align: "center",
-    });
-
-    fullName = fullName.replaceAll(" ","_")
-
-
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
- 
-
-    doc.pipe(res);
-
-    // Finalize the PDF and end the stream
-    doc.end();
-   
+        await usersPurchasedCourses.findOneAndUpdate({
+          $and: [{ username: "+8801779561764" }, { status: "VALID" },
+          {coursesList:item.coursesList}
+        ],
+        }, {$set:{
+          courseExpityStatus:"VALIDITY EXPIRED"
+        }});
+      
+        // console.log("expired --- ", item);
+      } else {
+        item.coursesList.map((item2) => {
+          userallcourses.push(item2);
+        });
+      }
+    }));
+    console.log("userallcourses after ----- ", userallcourses);
+    res.send(userallcourses)
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    
+
     res.send(setSendResponseData);
   }
 });
@@ -4307,7 +4099,7 @@ async function tokenChecking(req, res) {
   var request = new Request(req);
   const fromClient = request.headers.authorization;
 
-  console.log("fromClient ---- ", fromClient);
+  // console.log("fromClient ---- ", fromClient);
 
   if (fromClient) {
     var tokenArray = fromClient.split(" ");
@@ -4341,7 +4133,7 @@ async function tokenChecking(req, res) {
             errMsg: "Token is still active",
           },
         };
-        console.log("Token is still active");
+        // console.log("Token is still active");
         return tokenExpiryStatus;
         // return true;
       }

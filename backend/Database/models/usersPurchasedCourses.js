@@ -101,6 +101,9 @@ const userPurchasedCourses = new mongoose.Schema(
     },
     expirationDate: {
       type: String,
+    },
+    courseExpityStatus: {
+      type: String,
     }
   }
   //  { collection : 'logData' }

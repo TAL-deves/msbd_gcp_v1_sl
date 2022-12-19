@@ -177,7 +177,7 @@ useEffect(() => {
   
 
  let existingCourse=courses.find(c=>c.courseID===state?.courseID)
-   // console.log("existingCourse",existingCourse)
+    console.log("existingCourse",state.description)
   return (
    
     <Box >
@@ -195,7 +195,12 @@ useEffect(() => {
           <Typography variant="h6"
            sx={{marginTop:"2rem", marginBottom:"2rem"}}>
             {/* uncomment after ssl  */}
-            {state?.description}
+            {state?.description.map((description)=>{
+              return(
+
+               <Typography variant="h6">{description}</Typography>
+              )
+            })}
            
             </Typography>
 

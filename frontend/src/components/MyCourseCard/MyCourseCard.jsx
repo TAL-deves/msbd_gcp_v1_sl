@@ -91,16 +91,18 @@ const MyCourseCard = (props) => {
 
 
   return (
-    <motion.div whileHover={{scale:1.03}}>
-      <Box
+    <Box>
+     {/* <motion.div whileHover={{scale:1.03}}> */}
+      {/* <Box
         // data-aos="zoom-in"
-       >
+       > */}
     <Card sx={{ margin: "0" ,width:"100%",display:"flex", alignItems:"center",
     "&:hover":{boxShadow:"5"}}}   >
+      <Box sx={{width:"50%"}}>
       <CardMedia 
         component="img"
-        height="100"
-        width="50"
+        // height="50%"
+        //  width="10%"
         image={
           img
             ? `${img}`
@@ -108,6 +110,7 @@ const MyCourseCard = (props) => {
         }
         alt="image"
       />
+      </Box>
       <CardContent sx={{display:"flex",
        flexDirection:"column",
        justifyContent:"flex-start",
@@ -143,8 +146,9 @@ const MyCourseCard = (props) => {
       
       </CardActions> */}
     </Card>
+    {/* </Box> */}
+    {/* </motion.div> */}
     </Box>
-    </motion.div>
   );
 };
 

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const courseProgress = new mongoose.Schema({
+const certificateData = new mongoose.Schema({
   username: {
     type: String,
   },
-  phoneNumber: {
+  fullName: {
     type: String,
   },
   courseID: {
@@ -25,6 +25,12 @@ const courseProgress = new mongoose.Schema({
   certificate: {
     type: Boolean,
   },
+  certificateID: {
+    type: String,
+  },
+  certificateDate: {
+    type: String
+  }
 });
 
-module.exports = mongoose.model("courseProgress", courseProgress);
+module.exports = mongoose.model("certificateData", certificateData);

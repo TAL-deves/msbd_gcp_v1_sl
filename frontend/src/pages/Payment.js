@@ -130,9 +130,9 @@ const Payment = () => {
   }
 
   // console.log("console log data --------", fullname, username, phonenumber, email, courseList, staddress, city, postcode, country, total, singleCourse
-  
+
   // console.log(typeof (singleCourse), "single course"
-  
+
   // let price = 0;
   // for (let i = 0; i < courses.length; i++) {
   //   price = price + parseInt(courses[i].price);
@@ -148,7 +148,7 @@ const Payment = () => {
 
     {
       !singleCourse ?
-      (courses = courseList) : (courses = [singleCourse])
+        (courses = courseList) : (courses = [singleCourse])
     }
     let phonenumber = userInfo.username;
     let price = total
@@ -166,6 +166,7 @@ const Payment = () => {
       .then((data) => {
         // // console.log(" Testing data ----- ", data.data.data.redirectGatewayURL);
         // window.open(`${data.data.data.redirectGatewayURL}`, "_self")
+        console.log("payment loader ---------",data)
         var w = 620;
         var h = 575;
         // console.log(typeof (total), "total type")
@@ -181,6 +182,22 @@ const Payment = () => {
           // left=${left}`
         );
 
+
+        if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user");
+    
+          swal("You are logged out", "Your session ended, Please login again", "info")
+          // navigate("/login")
+          window.location.href = "/login";
+          // console.log("removed sesssion")
+        }
+        if(data.data===null){
+          swal("Failed", "Payment Service is Down, Try Again Later", "error")
+
+        }
+        setLoad(true);
         // swal("successful!", "This is here", "success")
       });
   };
@@ -189,7 +206,7 @@ const Payment = () => {
 
     {
       !singleCourse ?
-      (courses = courseList) : (courses = [singleCourse])
+        (courses = courseList) : (courses = [singleCourse])
     }
     let phonenumber = userInfo.username;
     let price = total
@@ -247,16 +264,20 @@ const Payment = () => {
   }
 
 
-
-
-
-
   return (
     <>
       {load ? (
-        <CircularProgress sx={{
-          color: "primary.main"
-        }} />
+          <Container sx={{
+
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop:"5rem"
+          }}>
+            <CircularProgress sx={{
+            color: "primary.main"
+          }} />
+          </Container>
       ) : (
         <Container sx={{
 
@@ -488,7 +509,8 @@ const Payment = () => {
             onClick={
               () => {
                 payment();
-                handleUpdateUserProfile()
+                handleUpdateUserProfile();
+                setLoad(true);
               }}
             // disabled={!postcode || !staddress || !city || !email }
             disabled={!postcode || !staddress || !city || !email || !fullname}
@@ -507,7 +529,8 @@ const Payment = () => {
               onClick={
                 () => {
                   sanboxpayment();
-                  handleUpdateUserProfile()
+                  handleUpdateUserProfile();
+                  setLoad(true);
                 }}
               // disabled={!postcode || !staddress || !city || !email }
               disabled={!postcode || !staddress || !city || !email || !fullname}

@@ -59,8 +59,9 @@ export default function ProfileTabs() {
 
   return (
     <Box>
-      {/* <Box sx={{ bgcolor: "background.paper", display:{sm:"none",md:"none",lg:"none"} }}>
+      <Box sx={{ bgcolor: "background.paper", display:{sm:"none",md:"none",lg:"none"} }}>
         <Tabs
+        // orientation="vartical"
           value={value}
           onChange={handleChange}
           variant="scrollable"
@@ -79,18 +80,20 @@ export default function ProfileTabs() {
           <MyCourses />
         </TabPanel>
         <TabPanel value={value} index={2}>
+          {/* <Box sx={{width:"10rem"}}> */}
           <PaymentHistory/>
+          {/* </Box> */}
         </TabPanel>
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
-      </Box> */}
+      </Box>
 
       <Box
         sx={{
           bgcolor: "background.paper",
           display: {
-            xs:"none",
+             xs:"none",
             sm:"flex",
             md:"flex",
             lg:"flex",
@@ -119,7 +122,7 @@ export default function ProfileTabs() {
           <MyCourses fullName={fullName}/>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {/* <Payment /> */}
+          
           <PaymentHistory/>
         </TabPanel>
         <TabPanel value={value} index={3}>

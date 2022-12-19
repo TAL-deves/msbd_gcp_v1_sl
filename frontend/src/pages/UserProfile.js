@@ -100,7 +100,7 @@ const UserProfile = (props) => {
   const [phoneFocus, setPhoneFocus] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
-  
+
 
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const UserProfile = (props) => {
     () => {
       const imageSrc = webcamRef.current.getScreenshot();
       setWebImage(imageSrc)
-     
+
     },
 
 
@@ -215,7 +215,7 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     handleGetUser();
-    // handleGetUserImage();
+    handleGetUserImage();
 
   }, [])
 
@@ -319,376 +319,388 @@ const UserProfile = (props) => {
 
 
   return (
-<>
-    {load ? (
-      <CircularProgress sx={{
-        color: "primary.main"
-      }} />
-    ) : (
-    <Box>
-      <Typography
-        variant="h4"
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        User Profile
-      </Typography>
+    <>
+      {load ? (
+        <Box sx={{width:"100%"}}>
+        <Container sx={{
 
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          display: {
-            xs: "flex",
-            sm: "flex",
-            md: "flex",
-          },
-          flexDirection: {
-            xs: "column-reverse",
-            sm: "column-reverse",
-            md: "row",
-          },
-          alignContent: "center",
-        }}
-      >
-        <Grid item xs={6} md={8}>
-          <Box>
-            <Box
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "5rem",
+          marginLeft:"12vw"
+          
+        }}>
+          <CircularProgress sx={{
+            color: "primary.main"
+          }} />
+        </Container>
+        </Box>
+      ) : (
+        <Box>
+          <Typography
+            variant="h4"
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            User Profile
+          </Typography>
+
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              display: {
+                xs: "flex",
+                sm: "flex",
+                md: "flex",
+              },
+              flexDirection: {
+                xs: "column-reverse",
+                sm: "column-reverse",
+                md: "row",
+              },
+              alignContent: "center",
+            }}
+          >
+            <Grid item xs={6} md={8}>
+              <Box>
+                <Box
+                  sx={{
+                    marginTop: 8,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <TextField
+                      margin="normal"
+                      // required
+                      focused
+                      fullWidth
+                      id="name"
+
+                      label="Name"
+                      value={fullname}
+                      onChange={(e) => { setFullname(e.target.value) }}
+                      name="name"
+                      autoComplete="name"
+                      inputProps={{
+                        maxLength: 320,
+                      }}
+                    // autoFocus
+                    />
+                    <TextField
+                      margin="normal"
+                      // required
+                      // color="success"
+                      focused
+                      fullWidth
+                      name="email"
+                      label="Email"
+                      id="email"
+                      value={email}
+                      onFocus={() => setEmailFocus(true)}
+                      error={
+                        emailFocus && !validEmail ?
+                          true :
+                          false
+                      }
+                      helperText={emailFocus && !validEmail ?
+                        "Enter valid Email"
+                        : false
+                      }
+                      onChange={(e) => { setEmail(e.target.value) }}
+                    />
+                    {userPhone ?
+                      <TextField
+                        margin="normal"
+                        focused
+                        fullWidth
+                        id="name"
+                        label="Phone Number"
+                        onChange={(e) => { setPhonenumber(e.target.value) }}
+                        value={phonenumber}
+                        name="name"
+                        autoComplete="name"
+                        // helperText="Phone number can be added only once"
+                        InputProps={{
+                          disableUnderline: true,
+                          readOnly: true
+                        }}
+                        inputProps={{
+                          maxLength: 14,
+                        }}
+
+                        autoFocus
+                      /> :
+                      <TextField
+                        margin="normal"
+                        focused
+                        fullWidth
+                        id="name"
+                        label="Phone Number"
+                        onChange={(e) => { setPhonenumber(e.target.value) }}
+                        value={phonenumber}
+                        name="name"
+                        autoComplete="name"
+                        inputProps={{
+                          maxLength: 14,
+                        }}
+                        autoFocus
+                        onFocus={() => setPhoneFocus(true)}
+                        error={
+                          phoneFocus && !validPhone ?
+                            true :
+                            false
+                        }
+                        helperText={phoneFocus && !validPhone ?
+                          "Enter valid Phone"
+                          : "Phone number can be added only once"
+                        }
+                      />}
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      name="profession"
+                      label="Profession"
+                      id="profession"
+                      focused
+                      value={profession}
+                      // value={userInfo.profession?userInfo.profession:""}
+                      // defaultValue={profession}
+                      onChange={(e) => { setProfession(e.target.value) }}
+                    />
+                    <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" }, justifyContent: "space-between", alignItems: "center" }}>
+                      <TextField
+                        margin="normal"
+                        name="age"
+                        label="Age"
+                        focused
+                        inputProps={{
+                          maxLength: 2,
+                        }}
+
+                        id="age"
+                        // width="16rem"
+                        sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" } }}
+                        value={age}
+                        onChange={(e) => { setAge(e.target.value) }}
+                        onFocus={() => setAgeFocus(true)}
+                        error={
+                          ageFocus && !validAge ?
+                            true :
+                            false
+                        }
+                        helperText={ageFocus && !validAge ?
+                          "Enter valid Age"
+                          : false
+                        }
+                      />
+
+                      <TextField
+                        id="outlined-select-currency"
+                        select
+                        focused
+                        label="Select"
+                        value={gender}
+                        sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" }, marginTop: ".4rem" }}
+                        onChange={(e) => {
+                          // setGender(e.target.value)
+                          setGender(e.target.value)
+                        }}
+                      >
+                        {genders.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+
+                    <input
+                      hidden
+                      accept="image/*"
+                      type="file"
+                    />
+                    <>
+                    </>
+                    <Button
+                      // type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
+                      onClick={handleUpdateUserProfile}
+                    >
+                      Submit
+                    </Button>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              md={4}
               sx={{
-                marginTop: 8,
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column"
               }}
             >
-              <Box component="form" noValidate sx={{ mt: 1 }}>
-                <TextField
-                  margin="normal"
-                  // required
-                  focused
-                  fullWidth
-                  id="name"
-
-                  label="Name"
-                  value={fullname}
-                  onChange={(e) => { setFullname(e.target.value) }}
-                  name="name"
-                  autoComplete="name"
-                  inputProps={{
-                    maxLength: 320,
-                  }}
-                // autoFocus
-                />
-                <TextField
-                  margin="normal"
-                  // required
-                  // color="success"
-                  focused
-                  fullWidth
-                  name="email"
-                  label="Email"
-                  id="email"
-                  value={email}
-                  onFocus={() => setEmailFocus(true)}
-                    error={
-                      emailFocus && !validEmail ?
-                        true :
-                        false
-                    }
-                    helperText={emailFocus && !validEmail ?
-                      "Enter valid Email"
-                      : false
-                    }
-                  onChange={(e) => { setEmail(e.target.value) }}
-                />
-                {userPhone?
-                <TextField
-                  margin="normal"
-                  focused
-                  fullWidth
-                  id="name"
-                  label="Phone Number"
-                  onChange={(e) => { setPhonenumber(e.target.value) }}
-                  value={phonenumber}
-                  name="name"
-                  autoComplete="name"
-
-                  InputProps={{
-                    disableUnderline: true,
-                    readOnly: true
-                  }}
-                  inputProps={{
-                    maxLength: 14,
-                  }}
-                  
-                  autoFocus
-                />:
-                <TextField
-                  margin="normal"
-                  focused
-                  fullWidth
-                  id="name"
-                  label="Phone Number"
-                  onChange={(e) => { setPhonenumber(e.target.value) }}
-                  value={phonenumber}
-                  name="name"
-                  autoComplete="name"
-                  inputProps={{
-                    maxLength: 14,
-                  }}
-                  autoFocus
-                  onFocus={() => setPhoneFocus(true)}
-                    error={
-                      phoneFocus && !validPhone ?
-                        true :
-                        false
-                    }
-                    helperText={phoneFocus && !validPhone ?
-                      "Enter valid Phone"
-                      : false
-                    }
-                />}
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  name="profession"
-                  label="Profession"
-                  id="profession"
-                  focused
-                  value={profession}
-                  // value={userInfo.profession?userInfo.profession:""}
-                  // defaultValue={profession}
-                  onChange={(e) => { setProfession(e.target.value) }}
-                />
-                <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" }, justifyContent: "space-between", alignItems: "center" }}>
-                  <TextField
-                    margin="normal"
-                    name="age"
-                    label="Age"
-                    focused
-                    inputProps={{
-                      maxLength: 2,
-                    }}
-
-                    id="age"
-                    // width="16rem"
-                    sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" } }}
-                    value={age}
-                    onChange={(e) => { setAge(e.target.value) }}
-                    onFocus={() => setAgeFocus(true)}
-                    error={
-                      ageFocus && !validAge ?
-                        true :
-                        false
-                    }
-                    helperText={ageFocus && !validAge ?
-                      "Enter valid Age"
-                      : false
-                    }
-                  />
-
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    focused
-                    label="Select"
-                    value={gender}
-                    sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" }, marginTop: ".4rem" }}
-                    onChange={(e) => {
-                      // setGender(e.target.value)
-                      setGender(e.target.value)
-                    }}
-                  >
-                    {genders.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Box>
-
-                <input
-                  hidden
-                  accept="image/*"
-                  type="file"
-                />
-                <>
-                </>
-                <Button
-                  // type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
-                  onClick={handleUpdateUserProfile}
-                >
-                  Submit
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Grid>
-        <Grid
-          item
-          xs={6}
-          md={4}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column"
-          }}
-        >
-          {/* {load ? (
+              {/* {load ? (
             <CircularProgress sx={{
               color:"primary.main"
             }} />
           ) : ( */}
-          <>
-            {userprofileimage ?
               <>
+                {userprofileimage ?
+                  <>
 
-                <img src={userprofileimage} alt="user profile" width={200} height={200}
-                />
+                    <img src={userprofileimage} alt="user profile" width={200} height={200}
+                    />
+                  </>
+                  :
+                  <Avatar
+                    alt="ss"
+                    sx={{ width: 200, height: 200, objectFit: "cover" }}
+                  />
+                }
               </>
-              :
-              <Avatar
-                alt="ss"
-                sx={{ width: 200, height: 200, objectFit: "cover" }}
-              />
-            }
-          </>
 
 
-          <Box>
+              <Box>
 
-            {!webimage && !userInfo.profilephoto ?
-              <>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  sx={{ marginTop: "1rem" }}
-                  onClick={handleOpen}
+                {!webimage && !userInfo.profilephoto ?
+                  <>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      sx={{ marginTop: "1rem" }}
+                      onClick={handleOpen}
+                    >
+
+                      Select Photo
+                    </Button>
+                  </>
+                  :
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{ marginTop: "1rem" }}
+                    onClick={handleOpen}
+                  >
+
+                    Change Photo
+                  </Button>}
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
                 >
-
-                  Select Photo
-                </Button>
-              </>
-              :
-              <Button
-                variant="outlined"
-                component="label"
-                sx={{ marginTop: "1rem" }}
-                onClick={handleOpen}
-              >
-
-                Change Photo
-              </Button>}
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <Typography id="modal-modal-title" sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
-                  Please upload your image
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  <Box>
-                    <Box >
-                      <input name="myFile" accept="image/*" type="file" onChange={handleChange} />
-
-                    </Box>
-
-                    <Typography sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
-                      Or
+                  <Box sx={style}>
+                    <Typography id="modal-modal-title" sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
+                      Please upload your image
                     </Typography>
-                    <Box >
-                      {/* <Grid sx={{display:"flex", flexDirection:"row"}}> */}
-                      <Grid sx={{
-                        display: "flex",
-                        flexDirection: { md: "row", lg: "row", sm: "column", xs: "column" }
-                      }}>
-                        <Grid xs={4} md={4}>
-                          <Webcam
-                            audio={false}
-                            height={200}
-                            ref={webcamRef}
-                            mirrored={true}
-                            screenshotFormat="image/webp"
-                            width={220}
-                            videoConstraints={videoConstraints}
-                            sx={{ margin: "1rem" }}
-                          />
-                        </Grid>
-                        <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
-                          {webimage ? <img src={webimage} alt=""
-                            style={{
-                              //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
-                              //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
-                              height: "200px",
-                              width: "200px",
-                              objectFit: "contain"
-                            }} /> :
-                            <>{image ? <img src={(image)} alt=""
-                            // style={{maxWidth: "100%", height:"auto"
-                            //  }}
-                            /> :
-                              <Avatar
-                                alt="ss"
-                                sx={{ width: 200, height: 200, objectFit: "cover" }}
-                              />}</>
-                          }
-                        </Grid>
-                      </Grid>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      <Box>
+                        <Box >
+                          <input name="myFile" accept="image/*" type="file" onChange={handleChange} />
 
-                      <br />
-                      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                        {webimage != '' ?
+                        </Box>
 
-                          <Button onClick={(e) => {
-                            e.preventDefault();
+                        <Typography sx={{ fontSize: "1.5rem", fontWeight: "800", color: "primary.main", textAlign: "center" }}>
+                          Or
+                        </Typography>
+                        <Box >
+                          {/* <Grid sx={{display:"flex", flexDirection:"row"}}> */}
+                          <Grid sx={{
+                            display: "flex",
+                            flexDirection: { md: "row", lg: "row", sm: "column", xs: "column" }
+                          }}>
+                            <Grid xs={4} md={4}>
+                              <Webcam
+                                audio={false}
+                                height={200}
+                                ref={webcamRef}
+                                mirrored={true}
+                                screenshotFormat="image/webp"
+                                width={220}
+                                videoConstraints={videoConstraints}
+                                sx={{ margin: "1rem" }}
+                              />
+                            </Grid>
+                            <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
+                              {webimage ? <img src={webimage} alt=""
+                                style={{
+                                  //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
+                                  //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
+                                  height: "200px",
+                                  width: "200px",
+                                  objectFit: "contain"
+                                }} /> :
+                                <>{image ? <img src={(image)} alt=""
+                                // style={{maxWidth: "100%", height:"auto"
+                                //  }}
+                                /> :
+                                  <Avatar
+                                    alt="ss"
+                                    sx={{ width: 200, height: 200, objectFit: "cover" }}
+                                  />}</>
+                              }
+                            </Grid>
+                          </Grid>
 
-                            setWebImage('')
+                          <br />
+                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                            {webimage != '' ?
 
-                          }}
-                            variant="outlined"
-                            component="label"
-                          >
-                            Retake Image
-                          </Button> :
-                          <Button onClick={(e) => {
-                            e.preventDefault();
-                            capture();
-                            setImage('')
+                              <Button onClick={(e) => {
+                                e.preventDefault();
 
-                          }}
-                            variant="outlined"
-                            component="label"
-                          >
-                            Capture
-                          </Button>}
-                        <Button
-                          variant="outlined"
-                          component="label"
-                          disabled={image === '' && webimage === '' ? true : false}
-                          onClick={handleApiWeb}
+                                setWebImage('')
 
-                        >
-                          Upload
-                        </Button>
+                              }}
+                                variant="outlined"
+                                component="label"
+                              >
+                                Retake Image
+                              </Button> :
+                              <Button onClick={(e) => {
+                                e.preventDefault();
+                                capture();
+                                setImage('')
+
+                              }}
+                                variant="outlined"
+                                component="label"
+                              >
+                                Capture
+                              </Button>}
+                            <Button
+                              variant="outlined"
+                              component="label"
+                              disabled={image === '' && webimage === '' ? true : false}
+                              onClick={handleApiWeb}
+
+                            >
+                              Upload
+                            </Button>
+                          </Box>
+                        </Box>
                       </Box>
-                    </Box>
+                    </Typography>
                   </Box>
-                </Typography>
+                </Modal>
               </Box>
-            </Modal>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>)}
-</>
+            </Grid>
+          </Grid>
+        </Box>)}
+    </>
 
 
   );

@@ -77,10 +77,14 @@ passport.use(
     function (accessToken, refreshToken, profile, callback) {
       // return done(null, profile);
    
+      console.log("profile ----- ", profile);
+
       User.findOne({ facebookId: profile.id }, (err, user) => {
         if (err) return callback(err, null);
 
         // not a user; so create a new user with new google id
+
+
         if (!user) {
           let newUser = new User({
             facebookId: profile.id,

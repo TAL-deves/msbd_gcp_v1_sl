@@ -11,7 +11,7 @@ const COURSE_URL = "/api/give-a-review";
 const VIDEOCIPHER_URL = "/api/playthevideo";
 const COURSE_VDO_URL = "/api/course";
 
-export default function Hello({  otp,videoID, playbackInfo,episode,coursesVdoList,vdotitle, videoRef, videoContainerRef }) {
+export default function Hello({count, setCount, setCourseId,statusChanged, setStatusChanged,totalCoveredStatus,setTotalCoveredStatus,totalVideoDurationStatus,setVideoDurationStatus, otp,videoID, playbackInfo,episode,coursesVdoList,vdotitle, videoRef, videoContainerRef }) {
   const { loadVideo, isAPIReady } = useVdocipher();
   // const videoContainerRef = useRef();
   // const [videoRef, setVideoRef] = useState(null);
@@ -112,7 +112,7 @@ export default function Hello({  otp,videoID, playbackInfo,episode,coursesVdoLis
       //         color: "other.dark"
       //       }} 
             className="vdo-container" ref={videoContainerRef}></Box>
-      <VideoStatusUsingAPI videoID={videoID} videoTitle={vdotitle} lessonTitle={lessonTitle} courseID={courseID} videoRef={videoRef} isAPIReady={isAPIReady} episode={episode} />
+      <VideoStatusUsingAPI count={count} setCount={setCount} setCourseId={setCourseId} statusChanged={statusChanged} setStatusChanged={setStatusChanged} totalCoveredStatus={totalCoveredStatus}setTotalCoveredStatus={setTotalCoveredStatus}totalVideoDurationStatus={totalVideoDurationStatus}setVideoDurationStatus={setVideoDurationStatus} videoID={videoID} videoTitle={vdotitle} lessonTitle={lessonTitle} courseID={courseID} videoRef={videoRef} isAPIReady={isAPIReady} episode={episode} />
     </Box>
   );
 }

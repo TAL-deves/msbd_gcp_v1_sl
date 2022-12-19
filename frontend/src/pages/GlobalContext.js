@@ -32,7 +32,7 @@ const GlobalContext = (props) => {
   // };
   const onChange = (event) => {
     i18n.changeLanguage(event);
-    
+    // console.log("-------------jhdscgjhcg")
   };
 
  

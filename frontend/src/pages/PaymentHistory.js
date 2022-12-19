@@ -20,6 +20,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import api from "../api/Axios";
 import swal from "sweetalert";
+import { CircularProgress, Container } from "@mui/material";
+import { get } from "react-hook-form";
 
 let PAYMENT_HISTORY_URL = "/api/paymenthistory";
 
@@ -29,6 +31,9 @@ const PaymentHistory = () => {
   const [endvalue, setEndValue] = React.useState(dayjs(date));
   const [username, setUsername] = useState(localStorage.getItem("user"));
   const [data, setData] = useState([]);
+  const [dateFormat, setDateFormat] = useState();
+  const [load, setLoad] = useState(true);
+  const [purchaseDate, setPurchaseDate] =useState()
 
   const handleChangeStartValue = (newStartValue) => {
     setStartValue(newStartValue);
@@ -53,7 +58,7 @@ const PaymentHistory = () => {
     ),
   ];
 
-  let handleGetUser = async () => {
+  let handleGetPaymentHistory = async () => {
     const response = await api.post(
       PAYMENT_HISTORY_URL,
       JSON.stringify({ username }),
@@ -80,7 +85,8 @@ const PaymentHistory = () => {
       );
       // navigate("/login")
       window.location.href = "/login";
-      // console.log("removed sesssion");
+      setLoad(false);
+       
     } else {
       // setUserInfo(response.data.data)
       // setEmail(response.data.data.email)
@@ -89,27 +95,29 @@ const PaymentHistory = () => {
       // setFullname(response.data.data.fullname)
       // setAge(response.data.data.age)
       // setPhonenumber(response.data.data.phoneNumber)\
-      // console.log("payment data ---", response.data.data);
+      // console.log("removed sesssion", response);
       setData(response.data.data);
+      setLoad(false);
     }
     // return response.data.data
   };
 
   useEffect(() => {
-    handleGetUser();
+    handleGetPaymentHistory();
   }, []);
 
-  //// console.log("first date", date)
+
+
   return (
     <>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "space-evenly",
           marginTop: "3rem",
         }}
       >
-        {/* <Box sx={{ marginLeft: "1rem" }}>
+        <Box sx={{ marginLeft: "1rem" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3}>
               <DesktopDatePicker
@@ -134,47 +142,89 @@ const PaymentHistory = () => {
               />
             </Stack>
           </LocalizationProvider>
-        </Box> */}
-      </Box>
+        </Box>
+      </Box> */}
 
       {/* data show */}
 
-      <TableContainer component={Paper} sx={{ marginTop: "6rem" }}>
-        <Table sx={{ minWidth: {xs:"100%",sm:250,md:100, lg:650, xl:650 } }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell align="right">Purchase Date</TableCell>
-              <TableCell align="right">Expiry Date</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="right">Transaction ID</TableCell>
-              <TableCell align="right">Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow
-                key={row.courseName}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.coursesList}
-                </TableCell>
-                {/* <TableCell align="right">{new Date(row.dateOfPurchase).toJSON().slice(0,10)}</TableCell> */}
-                <TableCell align="right">{row.dateOfPurchase}</TableCell>
-                <TableCell align="right">{row.expirationDate}</TableCell>
-                <TableCell align="right">{row.amount}</TableCell>
-                <TableCell align="right">{row.tran_id}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
+      {load ? (
+        <Container sx={{
+          marginLeft: "12vw",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "5rem"
+        }}>
+          <CircularProgress sx={{
+            color: "primary.main"
+          }} />
+        </Container>
+      ) : (
+        <TableContainer component={Paper} sx={{ marginTop: "2rem", width: { xs: "100%", sm: 600, md: "100%", lg: "100%", xl: 650 } }}>
+          <Table sx={{ minWidth: { xs: "100%", sm: 250, md: 100, lg: 650, xl: 650 } }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Name</TableCell>
+                <TableCell align="right">Purchase Date</TableCell>
+                <TableCell align="right">Expiry Date</TableCell>
+                <TableCell align="right">Price</TableCell>
+                <TableCell align="right">Transaction ID</TableCell>
+                <TableCell align="right">Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {data.reverse().map((row) =>
+              // setPurchaseDate((row.dateOfPurchase).setHours((row.dateOfPurchase).getHours()+2))
+              // (console.log("purchaseDate--------",purchaseDate))
+              // console.log(new Date(row.dateOfPurchase))
+              // (`${row.dateOfPurchase}`)
+              // setDateFormat(`${row.dateOfPurchase.getDate()}-${row.dateOfPurchase.getMonth() + 1}-${row.dateOfPurchase.getFullYear()}`)
+              //  setDateFormat(new Date(row.dateOfPurchase).toLocaleDateString("en-US", {
+              //   month: "long",
+              //   day: "numeric",
+              //   year: "numeric",
+              // }))
+            
+              (
+                <TableRow
+                  key={row.courseName}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.coursesList}
+                  </TableCell>
+                  {/* <TableCell align="right">{new Date(row.dateOfPurchase).toJSON().slice(0,10)}</TableCell> */}
+                  {/* <TableCell align="right">{purchaseDate}</TableCell> */}
+                  <TableCell align="right">{
+                  (new Date(row.dateOfPurchase).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric"
+                  }))
+                  }</TableCell>
+                  <TableCell align="right">
+                    {(new Date(row.expirationDate).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+
+                  }))}
+                  </TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
+                  <TableCell align="right" sx={{ wordBreak: "break-word" }}>{row.tran_id}</TableCell>
+                  {`${row.status}` === "VALID" ?
+                    <TableCell align="right" sx={{ color: "green", fontWeight: "800" }}>{row.status}</TableCell> :
+                    <TableCell align="right" sx={{ color: "red", fontWeight: "800" }}>{row.status}</TableCell>}
+                </TableRow>
+              )
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>)}
     </>
   );
 };
 
 export default PaymentHistory;
-
-

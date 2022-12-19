@@ -7,7 +7,7 @@ import api from "../../api/Axios";
  */
 const VIDEO_LOG_DATA_URL = "/api/videologdata";
 
-export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPIReady, videoTitle, lessonTitle, episode }) {
+export default function VideoStatusUsingAPI({count, setCount, statusChanged,setCourseId, setStatusChanged, totalCoveredStatus,setTotalCoveredStatus,totalVideoDurationStatus,setVideoDurationStatus,videoID, courseID, videoRef, isAPIReady, videoTitle, lessonTitle, episode }) {
   // const [status, setStatus] = useState("NA");
  
   let username = localStorage.getItem("user")
@@ -27,7 +27,7 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
   let totalVdoDuration=0;
   let actionVdoData = async (courseID, videoID, status, username) => {
      let currentProgress =actionTime
-     // console.log(videoID)
+     console.log("episode ------",episode)
     await api
       .post(VIDEO_LOG_DATA_URL, JSON.stringify({ courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed, totalVdoDuration, videoTitle, lessonTitle, episode, currentProgress }), {
         headers: { "Content-Type": "application/json" },
@@ -35,9 +35,13 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
       })
       .then((data) => {
         // // console.log("object")
-
+         
+         
       });
   }
+
+  // console.log(courseID, "status course")
+ 
   useEffect(() => {
     // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
     if (!isAPIReady) return;
@@ -46,13 +50,16 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
       // // console.log("No");
       setPlayer(null);
       // window.location.refresh()
+      
       return;
     }
+    
     
 
     const player = new window.VdoPlayer(videoRef);
     window.player = player;
     setPlayer(player);
+    
     player.video.addEventListener("play", () => {
       // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
       totalVdoDuration=(Math.floor(player.video.duration))
@@ -60,10 +67,12 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
 
       actionTime = Math.floor(player.video.currentTime);
       setTest("play")
+      setCourseId(courseID)
       // setCount(!count)
-      // console.log(test)
+      console.log(totalVdoDuration)
+      
       actionVdoData(courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed)
-
+      setCount((count)=>!count)
     });
     player.video.addEventListener("pause", () => {
       // console.log("initial", isAPIReady, videoRef, courseID, videoID,status)
@@ -71,14 +80,26 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
       // console.log(totalTimeCovered, totalTimePlayed)
       status = "pause";
       actionTime = Math.floor(player.video.currentTime);
-      
+      setCount((count)=>!count)
       actionVdoData(courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed)
     });
     player.video.addEventListener("ended", (e) => {
       //  e.preventDefault();
       status = "ended";
+      setCount((count)=>!count)
+      if(episode===""){
+        <></>
+      }
+      else{
+        actionVdoData(courseID, videoID, status, username, currentTime)
+        if(totalTimeCovered===totalVdoDuration){
+          setStatusChanged(true)
+          setCount((count)=>!count)
+          // console.log(totalTimeCovered,
+          // totalVdoDuration, statusChanged)
+        }
+      }
       
-      actionVdoData(courseID, videoID, status, username, currentTime)
 
     });
 
@@ -87,9 +108,11 @@ export default function VideoStatusUsingAPI({ videoID, courseID, videoRef, isAPI
       // alert("ended")
       // console.log("start")
       //  actionVdoData(courseID,videoID,status, username,currentTime)
-
+      setCount((count)=>!count)
     });
     player.video.addEventListener("canplay", () => {
+
+      setCount((count)=>!count)
       //setCount(count++)
        // console.log("can play", Math.floor(player.video.duration)) 
       }

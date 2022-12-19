@@ -112,7 +112,7 @@ const SideCart = (props) => {
   if (payment === "success") {
     // window.opener.location.reload();\
 
-    swal("successful!", "payment done", "success", {
+    swal("Successful!", "Payment done", "success", {
       timer: 1000
     },
 
@@ -124,7 +124,14 @@ const SideCart = (props) => {
     })
     // localStorage.setItem("course",[[]])
   } else if (payment === "failed") {
-    swal("Error!", "payment is not successfull", "error",).then(() => {
+    swal("Error!", "Payment is not successfull", "error",).then(() => {
+
+      // window.close();
+      navigate("/courses")
+    })
+  }
+  else if(payment === "cancelled"){
+    swal("Error!", "Payment is cancelled", "error",).then(() => {
 
       // window.close();
       navigate("/courses")

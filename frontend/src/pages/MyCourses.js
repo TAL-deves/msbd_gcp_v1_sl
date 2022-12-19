@@ -82,14 +82,30 @@ const MyCourses = (props) => {
       })
       .then((data) => {
         // console.log("ins dta", data);
-        if (data.data.result.status === 404) {
-          // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
-          setCourses([])
+        // if (data.data.result.status === 404) {
+        //   // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
+        //   setCourses([])
+        // }
+       
+        // console.log("data", data)
+
+        if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user");
+        
+          swal("You are logged out", "Your session ended, Please login again", "info")
+          // navigate("/login")
+          window.location.href = "/login";
+          // console.log("removed sesssion")
         }
         else {
-          setCourses(data.data.data)
+          if(data.data.data===null){
+            setCourses([])
+          }
+          else{setCourses(data.data.data)}
+          
         }
-        // console.log("data", data)
 
         setLoad(false);
       });
@@ -104,12 +120,21 @@ const MyCourses = (props) => {
   return (
     <>
     {load ? (
-      <CircularProgress sx={{
+      <Container sx={{
+        marginLeft:"12vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop:"5rem"
+      }}>
+        <CircularProgress sx={{
         color: "primary.main"
       }} />
+      </Container>
     ) : (
     <Box
     >
+      
       <Container>
         <Typography
           sx={{
@@ -125,9 +150,17 @@ const MyCourses = (props) => {
             <Box
             >
               {load ? (
-                <CircularProgress sx={{
+                <Container sx={{
+
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginTop:"5rem"
+                }}>
+                  <CircularProgress sx={{
                   color: "primary.main"
                 }} />
+                </Container>
               ) : (
                 <>
                   <TableContainer component={Paper} sx={{ marginTop: "0rem" }}>
@@ -171,7 +204,7 @@ const MyCourses = (props) => {
                                 {/* </TableCell> */}
 
                                 {/* <TableCell> */}
-                                <Box sx={{display:"flex", flexDirection:{xs:"row"}}}>
+                                <Box sx={{display:"flex", flexDirection:{xs:"row"}, alignItems:"center"}}>
                                 {course.status===100?
                                 <Box sx={{margin:"1rem"}}>
                                 {/* <img height={50} src={course.thumbnail} alt="" /> */}

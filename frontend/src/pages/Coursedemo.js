@@ -71,6 +71,8 @@ const Coursedemo = () => {
   const [review, setReview] = useState("");
   const [username, setUser] = useState(localStorage.getItem('user'));
   const [videoID, setVideoID] = useState();
+  const [courseId, setCourseId] = useState()
+  // const [existingCourseID, setExistingCourseID] = useState()
   // const [otpplayback, setOtpPlayback] = useState("");
   const [otp, setOtp] = useState("");
   const [episode, setEpisode] = useState("");
@@ -86,7 +88,7 @@ const Coursedemo = () => {
 
   let courseData = location.state.courseId;
   let courseID = courseData.courseID;
-  let completedEpisodeCount= 0;
+  // let completedEpisodeCount = 0;
 
   const textstyle = {
     textDecoration: "none",
@@ -112,17 +114,17 @@ const Coursedemo = () => {
           swal("Review Submitted", "", "success")
         }
       });
-      
-      if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("user");
-  
-        swal("You are logged out", "Your session ended, Please login again", "info")
-        // navigate("/login")
-        window.location.href = "/login";
-        // console.log("removed sesssion")
-      }
+
+    if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      swal("You are logged out", "Your session ended, Please login again", "info")
+      // navigate("/login")
+      window.location.href = "/login";
+      // console.log("removed sesssion")
+    }
 
     //// console.log("response", response);
   };
@@ -139,14 +141,26 @@ const Coursedemo = () => {
       })
       .then((data) => {
         // // console.log(data.data.data.lessonsCompleted)
-        data.data.data.lessons.map((lesson) => { lesson["isVdoSet"] = false })
+        // data.data.data.lessons.map((lesson) => { lesson["isVdoSet"] = false })
         setCoursesVdoList(data.data.data.lessons);
         // setVideoID(data.data.data.lessons[0].videoID)
         setCompletedEpisode(data.data.data.lessonsCompleted)
-        // console.log("data.data.data.lessons[0].videoID", (data.data.data.lessonsCompleted).length)
-        completedEpisodeCount=(data.data.data.lessonsCompleted).length
-        
-      }); 
+        // console.log("data.data.data.lessons[0].videoID", (data.data.data.courseID))
+        // setExistingCourseID(data.data.data.courseID)
+        // completedEpisodeCount = (data.data.data.lessonsCompleted).length
+        setStatusChanged(false)
+
+        if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user");
+
+          swal("You are logged out", "Your session ended, Please login again", "info")
+          // navigate("/login")
+          window.location.href = "/login";
+          // console.log("removed sesssion")
+        }
+      });
   };
 
   // let fetchVdoCipher = useCallback(async () => {
@@ -161,7 +175,7 @@ const Coursedemo = () => {
   //       // console.log("vdo list", data);
   //     });
   // });
- 
+
 
 
   // vdo cipher
@@ -170,8 +184,11 @@ const Coursedemo = () => {
   const { loadVideo, isAPIReady } = useVdocipher();
   const videoContainerRef = useRef();
   const [videoRef, setVideoRef] = useState(null);
-  
- 
+  const [totalCoveredStatus, setTotalCoveredStatus] = useState(false)
+  const [totalVideoDurationStatus, setVideoDurationStatus] = useState(false)
+  const [statusChanged, setStatusChanged] = useState(false)
+
+
   // const loadVideo = useCallback(
   //   ({ otp, playbackInfo, container, configuration, courseVdo }) => {
   //     const params = new URLSearchParams("");
@@ -195,18 +212,20 @@ const Coursedemo = () => {
   // function changecount(count){
   //   setCount(!count)
   // }
- 
+
+
 
   useEffect(() => {
     courseVideo();
-    const interval = setInterval(() => {
-      setCount(!count)
-          // console.log("hellooooo")
-        }, 300000)
-    // // console.log(count,"√") 
-    // alert(count)
+
+    // const interval = setInterval(() => {
+    //   setCount(!count)
+
+    // }, 300000)
+
   }, [count]);
 
+  console.log("hellooooo", coursesVdoList.length)
 
   const handleClick = useCallback(
     async (otp, playbackInfo, courseVdo) => {
@@ -231,10 +250,9 @@ const Coursedemo = () => {
     },
     [loadVideo]
   );
-
+  //  console.log("status changed", statusChanged)
   return (
     <>
-
       <Container sx={{ marginTop: "5%", marginBottom: "10%" }}>
         <Box
           container
@@ -252,11 +270,17 @@ const Coursedemo = () => {
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <Box item xs={6} sx={{ marginRight: "2%" }}>
-            {coursesVdoList.map((courseVdo) => {
+
+            {/* {count? "true":"false"} */}
+            {coursesVdoList.map((courseVdo, index) => {
               courseVdo["isVdoAdded"] = false
+              // console.log("completedEpisode", completedEpisode.length, " index", index);
               return (
-                <Accordion sx={{ width: "22rem" }} expanded={expanded === `${courseVdo.episode}`} onChange={handleChange(`${courseVdo.episode}`)
-                }>
+                <Accordion
+
+                  disabled={completedEpisode.length >= index ? false : true}
+                  sx={{ width: "22rem" }} expanded={expanded === `${courseVdo.episode}`} onChange={handleChange(`${courseVdo.episode}`)
+                  }>
 
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -274,6 +298,18 @@ const Coursedemo = () => {
                           }
                         )
                         .then((data) => {
+                          console.log(data.data.result.status, "data---------")
+                          if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+                            localStorage.removeItem("access_token");
+                            localStorage.removeItem("refresh_token");
+                            localStorage.removeItem("user");
+
+                            swal("You are logged out", "Your session ended, Please login again", "info")
+                            // navigate("/login")
+                            window.location.href = "/login";
+                            // console.log("removed sesssion")
+                          }
+
                           setOtp(data.data.data.otp);
                           setPlaybackInfo(data.data.data.playbackInfo);
                           handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
@@ -283,6 +319,8 @@ const Coursedemo = () => {
                           // // console.log("vdo id -----------",`${courseVdo.videoID}`)
                           // setCount(count++)
                           // changecount()
+
+
                         });
 
                       videoRef.remove();
@@ -290,48 +328,49 @@ const Coursedemo = () => {
                       videoContainerRef.current.classList.remove("haveVideo");
                     }}
                   >
-                    <Box sx={{display:"flex"}}>
-                      {completedEpisode.find(c=>c==courseVdo.episode)?
-                      <Box sx={{color:"green"}}>
-                    <CheckCircleIcon />
-                    </Box>:
-                    <CheckCircleOutlineIcon/>
-                    }
-                    <Typography>{courseVdo.title}  </Typography>
-                    
+                    <Box sx={{ display: "flex" }}>
+                      {completedEpisode.find(c => c == courseVdo.episode) ?
+                        // && existingCourseID==courseId
+                        <Box sx={{ color: "green" }}>
+                          <CheckCircleIcon />
+                        </Box> :
+                        <CheckCircleOutlineIcon />
+                      }
+                      <Typography>{courseVdo.title}  </Typography>
+
                     </Box>
                   </AccordionSummary>
-                  {videoRef===null?
-                  <AccordionDetails>
-                    <Typography sx={{ cursor: "pointer" }} onClick={async () => {
-                      videoContainerRef.current.classList.add("haveVideo");
-                      // const { otp, playbackInfo } = await dummyAPICall();
-                      const video = loadVideo({
-                        otp,
-                        playbackInfo,
-                        container: videoContainerRef.current,
-                        configuration: {
-                          noClipstat: true
-                        }
-                      });
-                      setVideoRef(video);
-                      // // console.log("videoRef",video)
-                    }}>
-                      {/* {courseData.description[0]}<br/> */}
-                      {/* {courseVdo.videoID} */}
-                      {/* Click here to play the Video */}
-                      <Box sx={{display:"flex"}}>
-                      <AccessTimeIcon/> 
-                      <Typography>Duration: {courseVdo.length}</Typography>
-                      </Box>
-                      <Button variant="contained"> Play</Button>
-                      <br />
+                  {videoRef === null ?
+                    <AccordionDetails>
+                      <Typography sx={{ cursor: "pointer" }} onClick={async () => {
+                        videoContainerRef.current.classList.add("haveVideo");
+                        // const { otp, playbackInfo } = await dummyAPICall();
+                        const video = loadVideo({
+                          otp,
+                          playbackInfo,
+                          container: videoContainerRef.current,
+                          configuration: {
+                            noClipstat: true
+                          }
+                        });
+                        setVideoRef(video);
+                        console.log("new course ID", courseVdo)
+                      }}>
+                        {/* {courseData.description[0]}<br/> */}
+                        {/* {courseVdo.videoID} */}
+                        {/* Click here to play the Video */}
+                        <Box sx={{ display: "flex" }}>
+                          <AccessTimeIcon />
+                          <Typography>Duration: {courseVdo.length}</Typography>
+                        </Box>
+                        <Button variant="contained"> Play</Button>
+                        <br />
 
-                    </Typography>
-                  </AccordionDetails>:
-                  <AccordionDetails>
-                    <Button variant="contained" disabled> Play</Button>
-                  </AccordionDetails>}
+                      </Typography>
+                    </AccordionDetails> :
+                    <AccordionDetails>
+                      <Button variant="contained" disabled> Play</Button>
+                    </AccordionDetails>}
                 </Accordion>
 
               );
@@ -357,12 +396,12 @@ const Coursedemo = () => {
               alignItems: "center",
               justifyContent: "center",
               color: "other.dark",
-              marginBottom:"1rem"
+              marginBottom: "1rem"
             }}
           >
             {/* <Typography>{vdotitle}</Typography>*/}
             {/* Click Add Video button  */}
-            <Player otp={otp} videoID={videoID} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
+            <Player count={count} setCount={setCount} setCourseId={setCourseId} statusChanged={statusChanged} setStatusChanged={setStatusChanged} totalCoveredStatus={totalCoveredStatus} setTotalCoveredStatus={setTotalCoveredStatus} totalVideoDurationStatus={totalVideoDurationStatus} setVideoDurationStatus={setVideoDurationStatus} otp={otp} videoID={videoID} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
           </Box>
 
 
@@ -373,6 +412,7 @@ const Coursedemo = () => {
         </Box>
         {/* </Box> */}
       </Container>
+      {coursesVdoList.length <= completedEpisode.length?
       <Container sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="h4">Write your Feedback below</Typography>
         <TextField
@@ -392,7 +432,8 @@ const Coursedemo = () => {
         >
           Submit
         </Button>
-      </Container>
+      </Container>:
+      <></>}
       {/* <Player />s */}
     </>
   );

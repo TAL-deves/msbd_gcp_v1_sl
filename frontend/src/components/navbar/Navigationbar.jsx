@@ -298,7 +298,7 @@ const Navigationbar = (props) => {
                   </MenuItem>
                 </Link>
               {/* for mobile  */}
-                <FormControl
+                {/* <FormControl
                   sx={{
                     minWidth: 90,
                     marginRight: "5px",
@@ -325,7 +325,36 @@ const Navigationbar = (props) => {
                     <MenuItem value="en">English</MenuItem>
                     <MenuItem value="bn">বাংলা</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl> */}
+                <Box sx={{
+              minWidth: 90,
+              marginRight: "5px",
+              display: { xs: "block", md: "none" },
+              cursor:"pointer",
+              
+            }}>
+          {lang==="en"?
+          <Button sx={{color:"primary.main"}} variant="text" onClick={()=>{onChange("en")
+          setLang("bn")
+          setLanguage("bn")
+          }}>
+           {/* <GTranslateIcon/> */}
+            <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>ENGLISH </Typography>
+          </Button>:
+          <Button sx={{color:"primary.main"}} variant="text" onClick={()=>{onChange("bn") 
+          setLang("en")
+          setLanguage("en")
+          localStorage.setItem("language","bn")
+          }
+          }>
+           <GTranslateIcon/> 
+           <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>বাংলা </Typography>
+          </Button>}
+          
+
+         </Box>
+              
+               
 
               </>
 
