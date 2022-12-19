@@ -24,6 +24,8 @@ services:
         #     - app-network
         # ports:
         #     - "8082:8082"
+        volumes:
+             - ./:/userProfilepictures
     frontend:
         build:
             context: ./frontend
