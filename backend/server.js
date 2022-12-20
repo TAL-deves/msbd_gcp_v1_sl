@@ -3056,9 +3056,15 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
 
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-    res.send(lessonProgressNew);
+    res.json({
+      "data":null,
+      "message":"Okay"
+    });
   } else {
-    res.send("okay");
+    res.json({
+      "data":null,
+      "message":"Failed"
+    });
   }
 });
 
