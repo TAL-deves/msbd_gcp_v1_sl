@@ -2690,7 +2690,7 @@ app.post("/api/sandboxbuy", async (req, res) => {
         discountedPrice,
       } = req.body; //getting data from request
 
-      console.log("req buy---- ", req.body);
+      // console.log("req buy---- ", req.body);
       const newId = uuidv4().replaceAll("-", "");
 
       const data = {

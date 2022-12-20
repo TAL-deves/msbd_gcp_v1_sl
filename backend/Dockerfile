@@ -13,9 +13,6 @@ RUN npm install --force
 # copy the generated modules and all other files to the container
 COPY . .
 
-# # Add a /app volume
-# VOLUME ["/userProfilepictures"]
-
 # our app is running on port 5000 within the container, so need to expose it
 EXPOSE 8082
 

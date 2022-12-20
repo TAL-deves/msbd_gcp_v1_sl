@@ -177,7 +177,6 @@ useEffect(() => {
   
 
  let existingCourse=courses.find(c=>c.courseID===state?.courseID)
-    console.log("existingCourse",state.description)
   return (
    
     <Box >
@@ -188,19 +187,21 @@ useEffect(() => {
        sx={{marginTop:"5rem"}}>
         <Grid item xs={12} lg={6} data-aos="fade-right">
           <Typography variant="h4" sx={{color:"primary.main"}}>
-            {/* uncomment after ssl  */}
+          
             {state?.title}
             {/* Demo */}
             </Typography>
           <Typography variant="h6"
            sx={{marginTop:"2rem", marginBottom:"2rem"}}>
-            {/* uncomment after ssl  */}
-            {state?.description.map((description)=>{
-              return(
+            {state?.description}
+            
+            {/* {(state?.description).map((description)=>
+            console.log(state?.description)
+            (<Typography variant="h6">{description}</Typography>
+              
+            )
+            )} */}
 
-               <Typography variant="h6">{description}</Typography>
-              )
-            })}
            
             </Typography>
 
@@ -467,4 +468,3 @@ useEffect(() => {
 };
 
 export default CoursesDetails;
-

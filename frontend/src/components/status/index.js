@@ -27,7 +27,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
   let totalVdoDuration=0;
   let actionVdoData = async (courseID, videoID, status, username) => {
      let currentProgress =actionTime
-     console.log("episode ------",episode)
+    //  console.log("episode ------",episode)
     await api
       .post(VIDEO_LOG_DATA_URL, JSON.stringify({ courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed, totalVdoDuration, videoTitle, lessonTitle, episode, currentProgress }), {
         headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
       setTest("play")
       setCourseId(courseID)
       // setCount(!count)
-      console.log(totalVdoDuration)
+      // console.log(totalVdoDuration)
       
       actionVdoData(courseID, videoID, status, username, actionTime, totalTimeCovered, totalTimePlayed)
       setCount((count)=>!count)

@@ -225,7 +225,7 @@ const Coursedemo = () => {
 
   }, [count]);
 
-  console.log("hellooooo", coursesVdoList.length)
+  // console.log("hellooooo", coursesVdoList.length)
 
   const handleClick = useCallback(
     async (otp, playbackInfo, courseVdo) => {
@@ -298,7 +298,7 @@ const Coursedemo = () => {
                           }
                         )
                         .then((data) => {
-                          console.log(data.data.result.status, "data---------")
+                          // console.log(data.data.result.status, "data---------")
                           if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
                             localStorage.removeItem("access_token");
                             localStorage.removeItem("refresh_token");
@@ -354,7 +354,7 @@ const Coursedemo = () => {
                           }
                         });
                         setVideoRef(video);
-                        console.log("new course ID", courseVdo)
+                        // console.log("new course ID", courseVdo)
                       }}>
                         {/* {courseData.description[0]}<br/> */}
                         {/* {courseVdo.videoID} */}

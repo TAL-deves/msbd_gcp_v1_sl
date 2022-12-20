@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+// import { Link } from "@mui/material";
 import { motion } from "framer-motion";
 import { globalContext } from "../../pages/GlobalContext";
 import { add } from '../../Store/cartSlice';
@@ -14,6 +15,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
 import swal from "sweetalert";
+
 
 
 const CourseCard = (props) => {

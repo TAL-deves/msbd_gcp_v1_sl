@@ -11,7 +11,7 @@ dotenv.config();
 const logger = createLogger({
   transports: [
       new transports.File({
-          filename: 'info.log',
+          filename: './logsData/info.log',
           level: 'info',
           format: format.combine(format.timestamp(), format.json())
       })
@@ -40,7 +40,7 @@ const logger = createLogger({
 const SMSlogger = createLogger({
   transports: [
       new transports.File({
-          filename: 'SMSlogData.log',
+          filename: './logsData/SMSlogData.log',
           level: 'info',
           format: format.combine(format.timestamp(), format.json())
       })
@@ -69,7 +69,7 @@ const SMSlogger = createLogger({
 const SSLlogger = createLogger({
   transports: [
       new transports.File({
-          filename: 'SSLlogData.log',
+          filename: './logsData/SSLlogData.log',
           level: 'info',
           format: format.combine(format.timestamp(), format.json())
       })
@@ -98,7 +98,7 @@ const SSLlogger = createLogger({
 const requestLogger = createLogger({
   transports: [
       new transports.File({
-          filename: 'requestData.log',
+          filename: './logsData/requestData.log',
           level: 'info',
           format: format.combine(format.timestamp(), format.json())
       })
@@ -127,7 +127,7 @@ const requestLogger = createLogger({
 const responseLogger = createLogger({
   transports: [
       new transports.File({
-          filename: 'responseData.log',
+          filename: './logsData/responseData.log',
           level: 'info',
           format: format.combine(format.timestamp(), format.json())
       })
@@ -156,7 +156,7 @@ const responseLogger = createLogger({
 const videoLogger = createLogger({
     transports: [
         new transports.File({
-            filename: 'videoLogData.log',
+            filename: './logsData/videoLogData.log',
             level: 'info',
             format: format.combine(format.timestamp(), format.json())
         })
@@ -166,7 +166,7 @@ const videoLogger = createLogger({
   const userAuditLogger = createLogger({
     transports: [
         new transports.File({
-            filename: 'userAuditLogger.log',
+            filename: './logsData/userAuditLogger.log',
             level: 'info',
             format: format.combine(format.timestamp(), format.json())
         })
@@ -195,7 +195,7 @@ const videoLogger = createLogger({
   const mobileDataLogger = createLogger({
     transports: [
         new transports.File({
-            filename: 'mobileLogData.log',
+            filename: './logsData/mobileLogData.log',
             level: 'info',
             format: format.combine(format.timestamp(), format.json())
         })

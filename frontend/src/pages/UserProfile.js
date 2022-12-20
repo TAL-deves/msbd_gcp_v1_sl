@@ -195,7 +195,7 @@ const UserProfile = (props) => {
       }
     );
     setUserprofileimage(response.data.data)
-    // console.log('setUserprofileimage', response.data);
+    // console.log('setUserprofileimage', response);
     if (response.data.result.status === 200) {
       setLoad(false)
     }
@@ -425,7 +425,7 @@ const UserProfile = (props) => {
                         value={phonenumber}
                         name="name"
                         autoComplete="name"
-                        // helperText="Phone number can be added only once"
+                        helperText= "Phone number can be added only once"
                         InputProps={{
                           disableUnderline: true,
                           readOnly: true
@@ -449,17 +449,15 @@ const UserProfile = (props) => {
                         inputProps={{
                           maxLength: 14,
                         }}
-                        autoFocus
+                        // autoFocus
                         onFocus={() => setPhoneFocus(true)}
                         error={
                           phoneFocus && !validPhone ?
                             true :
                             false
                         }
-                        helperText={phoneFocus && !validPhone ?
-                          "Enter valid Phone"
-                          : "Phone number can be added only once"
-                        }
+                        
+                        
                       />}
                     <TextField
                       margin="normal"
