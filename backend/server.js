@@ -3001,7 +3001,7 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
-  if ((value_d = "mobile")) {
+  if ((value_d === "mobile")) {
     let userPurchasedCourses = new usersPurchasedCourses({
       username: `${value_a}`,
       phoneNumber: `${value_b}`,
