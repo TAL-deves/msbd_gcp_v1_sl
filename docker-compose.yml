@@ -12,6 +12,7 @@ services:
         #     - "8082:8082"
         volumes:
             - userProfilepictures:/backend/userProfilepictures
+            - logsData:/backend/logsData
     frontend:
         build:
             context: ./frontend
@@ -27,5 +28,7 @@ services:
 #         external: true
 volumes:
     userProfilepictures:
+        external: true
+    logsData:
         external: true
 
