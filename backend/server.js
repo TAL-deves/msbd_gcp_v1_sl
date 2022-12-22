@@ -1387,7 +1387,7 @@ app.post("/api/certificate", async (req, res) => {
     await saveCertificateData.save();
 
     QRCode.toDataURL(
-      `https://www.mindschoolbd.com/verifycertificate/?certificateIDparam=${genId}`
+      `https://www.mindschoolbd.com/verify-certificate/?certificateIDparam=${genId}`
     )
       .then((url) => {
         base64String = url;
@@ -1596,7 +1596,7 @@ app.get("/api/mobilecertificate", async (req, res) => {
     await saveCertificateData.save();
 
     QRCode.toDataURL(
-      `https://www.mindschoolbd.com/verifycertificate/?certificateIDparam=${genId}`
+      `https://www.mindschoolbd.com/verify-certificate/?certificateIDparam=${genId}`
     )
       .then((url) => {
         base64String = url;
