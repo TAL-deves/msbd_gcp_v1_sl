@@ -361,10 +361,11 @@ const UserProfile = (props) => {
                 sm: "column-reverse",
                 md: "row",
               },
-              alignContent: "center",
+              // alignContent: "center",
+              alignItems:"center"
             }}
           >
-            <Grid item xs={6} md={8}>
+            <Grid item xs={9} md={8}>
               <Box>
                 <Box
                   sx={{
@@ -381,7 +382,6 @@ const UserProfile = (props) => {
                       focused
                       fullWidth
                       id="name"
-
                       label="Name"
                       value={fullname}
                       onChange={(e) => { setFullname(e.target.value) }}

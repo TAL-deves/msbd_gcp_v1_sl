@@ -59,6 +59,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { Container } from "@mui/system";
+import VerifyCertificate from "./components/VerifyCertificate/VerifyCertificate";
 
 const PROFILE_URL = `api/profile`;
 const LEAVE_MESSAGE_URL = "/api/leaveamessage";
@@ -420,6 +421,7 @@ function App() {
                 <Route path="myfeedback" element={<MyFeedbacks />} />
                 <Route path="dectivateaccount" element={<DeactivateAccount />} />
                 <Route path="instructor-details" element={<InstructorDetails />} />
+                <Route path="verify-certificate" element={<VerifyCertificate />} />
                 {/* <Route path="coursedemo" element={<Course />} /> */}
                 {/* <Route path="coursedemo" element={loggedin ? <Coursedemo /> : <Navigate to="/login" />} /> */}
                 <Route path="coursedemo" element={<Coursedemo />} />
@@ -431,18 +433,24 @@ function App() {
               </Routes>
 
               {/* <Footer /> */}
+             
               <Wavefooter />
-              <Box sx={{
+            
+              
+              {/* <Box sx={{
                 position: 'fixed',
-                top: { xs: "82%", sm: '85%', md: "88%", lg: "80%", xl: "85%" },
-                right: { xs: '7%', sm: "2%", md: "2%", lg: "2%" }
-              }}>
-                <Fab sx={{ backgroundColor: "#F8B100" }} onClick={() => {
+                // top: { xs: "82%", sm: '85%', md: "88%", lg: "80%", xl: "85%" },
+                top:"85%",
+                // right: { xs: '7%', sm: "2%", md: "2%", lg: "2%" },
+                right:"2%"
+              }}> */}
+                <Fab sx={{ backgroundColor: "#F8B100",position: 'fixed',bottom:"6rem", right:"2rem" }} onClick={() => {
                   handleOpen()
                 }} aria-label="add">
-                  <SupportAgentIcon />
+                  {/* <SupportAgentIcon /> */}
+                  <MailOutlineIcon />
                 </Fab>
-              </Box>
+              {/* </Box> */}
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -547,7 +555,7 @@ function App() {
               </Modal>
               {/* <ProfileTabs/> */}
               <ScrollToTop smooth color="primary.main" />
-
+              
 
 
             </Paper>

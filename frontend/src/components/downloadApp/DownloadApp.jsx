@@ -3,8 +3,8 @@ import { Box, Container } from "@mui/system";
 import React, { useContext } from "react";
 import { styled, alpha } from "@mui/material/styles";
 // import "./DownloadApp.css";
-import appimage from "./Animation 2.gif";
-import appimage_dark from "./Animation Mobile App.gif";
+import appimage from "./downloadappanimation.json";
+import appimage_dark from "./downloadappanimation.json";
 import googlebtn from "./playstore.png";
 import applebtn from "./applestore.png";
 // import googlebtn from "./googlebtn.png";
@@ -20,10 +20,18 @@ import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import swal from "sweetalert";
+import Lottie from "lottie-react";
 
 const DownloadApp = () => {
   AOS.init({duration:2000});
-  const {t}= useContext(globalContext)
+  const {t}= useContext(globalContext);
+  const style = {
+    height: {xs:320},
+    width: {xs:320},
+    borderRadius: "50px",
+    margin:"5px",
+   
+  };
   return (
     <Container  
     // data-aos="fade-up"
@@ -142,18 +150,28 @@ const DownloadApp = () => {
             }}
           >
             {localStorage.getItem("theme")==="theme"?
-            <img
-              src={appimage_dark}
-              alt="app"
-              loading="lazy"
-              width="100%"
-            />:
-            <img
-              src={appimage}
-              alt="app"
-              loading="lazy"
-              width="100%"
-            />}
+            // <img
+            //   src={appimage_dark}
+            //   alt="app"
+            //   loading="lazy"
+            //   width="100%"
+            // />
+            <Lottie
+          animationData={appimage_dark}
+          style={style}          
+        />
+            :
+            <Lottie
+            animationData={appimage_dark}
+            style={style}          
+          />
+            // <img
+            //   src={appimage}
+            //   alt="app"
+            //   loading="lazy"
+            //   width="100%"
+            // />
+            }
           </Grid>
         </Grid>
       </Box>

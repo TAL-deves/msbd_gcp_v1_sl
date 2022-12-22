@@ -22,6 +22,11 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import axios, { Axios } from "axios";
+import { LinkedinShareButton } from 'react-share';
+// import { AiFillLinkedin } from 'react-icons/ai';
+
+
+
 var fileDownload = require('js-file-download');
 
 let USER_COURSES_URL = "/api/usercourses"
@@ -231,6 +236,7 @@ const MyCourses = (props) => {
                                     fileDownload(data.data, "Certificate.pdf")
                                   });
                                 }}/>
+                                
                                 </Box>
                                 :""}
                                 {/* </TableCell> */}

@@ -82,6 +82,7 @@ const Coursedemo = () => {
   const [vdotitle, setVdotitle] = React.useState();
   const [count, setCount] = React.useState(true);
   const [completedEpisode, setCompletedEpisode] = React.useState([]);
+  const [load, setLoad] = useState(true);
   // let n=0;
 
   let location = useLocation();
@@ -102,7 +103,7 @@ const Coursedemo = () => {
 
 
   //  review submit 
-  let handleSubmitReview = async () => {
+  let handleSubmitReview = async (e) => {
     const response = await api
       .post(COURSE_URL, JSON.stringify({ username, courseID, review }), {
         headers: { "Content-Type": "application/json" },
@@ -112,8 +113,10 @@ const Coursedemo = () => {
         //// console.log(data.status)
         if (data.status === 200) {
           swal("Review Submitted", "", "success")
+          // e.preventDefault();
         }
       });
+     
 
     if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
       localStorage.removeItem("access_token");
@@ -125,7 +128,7 @@ const Coursedemo = () => {
       window.location.href = "/login";
       // console.log("removed sesssion")
     }
-
+    // e.preventDefault();
     //// console.log("response", response);
   };
 
@@ -149,6 +152,7 @@ const Coursedemo = () => {
         // setExistingCourseID(data.data.data.courseID)
         // completedEpisodeCount = (data.data.data.lessonsCompleted).length
         setStatusChanged(false)
+        setLoad(false)
 
         if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
           localStorage.removeItem("access_token");
@@ -253,6 +257,24 @@ const Coursedemo = () => {
   //  console.log("status changed", statusChanged)
   return (
     <>
+     {load ? (
+        <Box sx={{width:"100%"}}>
+        <Container sx={{
+
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "5rem",
+          marginLeft:"12vw"
+          
+        }}> 
+          <CircularProgress sx={{
+            color: "primary.main"
+          }} />
+        </Container>
+        </Box>
+      ) : (
+        <>
       <Container sx={{ marginTop: "5%", marginBottom: "10%" }}>
         <Box
           container
@@ -423,18 +445,22 @@ const Coursedemo = () => {
           rows={4}
           label="My Feedback"
           variant="outlined"
+          value={review}
           onChange={(e) => setReview(e.target.value)}
         />
         <Button
           sx={{ margin: "2%" }}
           variant="contained"
-          onClick={handleSubmitReview}
+          onClick={()=>{handleSubmitReview();
+          setReview("")}}
+          disabled={review?false:true}
         >
           Submit
         </Button>
       </Container>:
       <></>}
-      {/* <Player />s */}
+      </>
+      )}
     </>
   );
 };

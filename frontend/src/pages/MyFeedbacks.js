@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, CircularProgress, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
 import api from "../api/Axios";
@@ -12,6 +12,7 @@ const MyFeedbacks = () => {
 
   const [username, setUser] = useState(localStorage.getItem("user"));
   const [reviewData, setReviewData] = useState([]);
+  const [load, setLoad] = useState(true);
 
   let handleWatchReview = async () => {
     const response = await api.post(REVIEWS_URL, JSON.stringify({ username }), {
@@ -21,6 +22,7 @@ const MyFeedbacks = () => {
     if (response.data.result.status === 200) {
       setReviewData(response.data.data);
       //  console.log(response.data.data, "-----------------review data")
+      setLoad(false)
     }
 
     if (response.data.result.status === 401 || response.data.result.status === 400 || response.data.result.status === 404) {
@@ -42,6 +44,23 @@ const MyFeedbacks = () => {
 
   return (
     <>
+     {load ? (
+        <Box sx={{width:"100%"}}>
+        <Container sx={{
+
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "5rem",
+          marginLeft:"12vw"
+          
+        }}>
+          <CircularProgress sx={{
+            color: "primary.main"
+          }} />
+        </Container>
+        </Box>
+      ) : (
       <Container>
         {!reviewData[0] ? (
           <>
@@ -66,34 +85,60 @@ const MyFeedbacks = () => {
               let dateMDY = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
             //  console.log("dateFormat",dateMDY)
               return (
-                <Box
-                  sx={{
-                    border: "1px solid white",
-                    borderRadius: "5px",
-                    boxShadow: "1px 1px 14px 1px rgba(102,102,102,0.83);",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    padding: "5%",
-                    width: "20rem",
-                    margin: "5%",
-                  }}
-                >
-                  <Typography sx={{ padding: "3%" }} variant="h5">{reviews.username}</Typography>
-                  <Typography sx={{ padding: "3%" }}>
-                    Course ID:{reviews.courseID} <br />
-                    {/* Review Date:{reviews.reviewDate}{" "} */}
-                    Review Date:{dateMDY}{" "}
-                  </Typography>
-                  <Typography sx={{ padding: "3%" }} variant="h6">
-                    "{reviews.review}"
-                  </Typography>
-                </Box>
+              
+              
+
+<Box sx={{margin:"1.5rem"}}>
+    <Card sx={{ maxWidth: 345,
+      "&:hover":{boxShadow:"5"} }} 
+      // data-aos="flip-left"
+      >
+        <Box >
+      <Typography sx={{
+            fontSize: ".8rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
+            fontWeight:"500",
+            mx:"1rem"
+          }}>Course ID:{reviews.courseID}</Typography>
+      <Typography sx={{
+            fontSize: ".8rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
+            fontWeight:"500",
+            mx:"1rem"
+          }}>Review Date:{dateMDY}{" "}</Typography>
+        </Box>
+      
+      <CardContent>
+        <Typography variant="body2" color="text.secondary" gutterBottom
+          height="auto"
+          sx={{
+            fontSize: "1.1rem",
+             overflow: "auto",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
+            fontWeight:"500",
+          }}>
+        "{reviews.review}"
+        </Typography>
+      </CardContent>
+    </Card>
+    </Box>
               );
             })}
           </>
         )}
       </Container>
+      )}
     </>
   );
 };

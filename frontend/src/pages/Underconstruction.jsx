@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import underconstruction from "../data/images/underconstruction.png";
+// import underconstruction from "../data/images/underconstruction.png";
 
 const Underconstruction = () => {
   return (
@@ -16,7 +16,7 @@ const Underconstruction = () => {
         alignItems: "center",
       }}
     >
-      <img src={underconstruction} width="50%" alt="under construction" />
+      {/* <img src={underconstruction} width="50%" alt="under construction" /> */}
       <Typography
         variant="h4"
         sx={{

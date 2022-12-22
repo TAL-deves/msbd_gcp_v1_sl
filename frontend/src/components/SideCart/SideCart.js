@@ -130,7 +130,7 @@ const SideCart = (props) => {
       navigate("/courses")
     })
   }
-  else if(payment === "cancelled"){
+  else if(payment === "cancel"){
     swal("Error!", "Payment is cancelled", "error",).then(() => {
 
       // window.close();

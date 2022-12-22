@@ -166,7 +166,7 @@ const Payment = () => {
       .then((data) => {
         // // console.log(" Testing data ----- ", data.data.data.redirectGatewayURL);
         // window.open(`${data.data.data.redirectGatewayURL}`, "_self")
-        console.log("payment loader ---------",data)
+        console.log("payment loader ---------", data)
         var w = 620;
         var h = 575;
         // console.log(typeof (total), "total type")
@@ -187,13 +187,13 @@ const Payment = () => {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
-    
+
           swal("You are logged out", "Your session ended, Please login again", "info")
           // navigate("/login")
           window.location.href = "/login";
           // console.log("removed sesssion")
         }
-        if(data.data===null){
+        if (data.data === null) {
           swal("Failed", "Payment Service is Down, Try Again Later", "error")
 
         }
@@ -267,17 +267,17 @@ const Payment = () => {
   return (
     <>
       {load ? (
-          <Container sx={{
+        <Container sx={{
 
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop:"5rem"
-          }}>
-            <CircularProgress sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "5rem"
+        }}>
+          <CircularProgress sx={{
             color: "primary.main"
           }} />
-          </Container>
+        </Container>
       ) : (
         <Container sx={{
 
@@ -500,8 +500,8 @@ const Payment = () => {
               </Box>
             </Box>
           </Container>
-
-          <Button
+          {/* uncomment after testing  */}
+          {/* <Button
             // type="submit" 
             // fullWidth
             variant="contained"
@@ -512,8 +512,22 @@ const Payment = () => {
                 handleUpdateUserProfile();
                 setLoad(true);
               }}
-            // disabled={!postcode || !staddress || !city || !email }
+            
             disabled={!postcode || !staddress || !city || !email || !fullname}
+          >
+            Checkout
+          </Button> */}
+   {/* comment this button later  */}
+          <Button
+            variant="contained"
+            sx={{ mt: 3, mb: 2, fontSize: "1rem", justifyContent: "center" }}
+            onClick={
+              () => {
+                // payment();
+                // handleUpdateUserProfile();
+                // setLoad(true);
+                swal("We will be available soon","", "info")
+              }}
           >
             Checkout
           </Button>

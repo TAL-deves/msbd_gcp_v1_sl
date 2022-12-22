@@ -39,7 +39,6 @@ export default function Wavefooter() {
     <Paper sx={{
       marginTop: '4rem',
       width: '100%',
-
       bottom: 0,
       position:"static"
 
@@ -119,6 +118,11 @@ export default function Wavefooter() {
               <Box>
                 <Routerlink to="/courses" style={{ textDecoration: "none" }} >
                 <Typography sx={{color:"other.white"}} display="inline">Courses</Typography>
+                </Routerlink>
+              </Box>
+              <Box>
+                <Routerlink to="/verify-certificate" style={{ textDecoration: "none" }} >
+                <Typography sx={{color:"other.white"}} display="inline">Verify Certificate</Typography>
                 </Routerlink>
               </Box>
               {/* <Box>
@@ -239,11 +243,11 @@ export default function Wavefooter() {
           <Grid sx={{ textAlign: "center" }}
             >
             <Grid sx={{ display: { xs: "none", md: "none", lg: "block", xl: "block"} , marginTop:"2rem" }}>
-              <img width={1200} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-03.png" alt='' />
+              <img width={1000} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-03.png" alt='' />
 
             </Grid>
             <Grid sx={{ display: { xs: "block", md: "block", lg: "none", xl: "none" }, marginTop:"0rem" }}>
-              <img width={150} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-04.png" title="SSLCommerz" alt="SSLCommerz" />
+              <img width={140} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-04.png" title="SSLCommerz" alt="SSLCommerz" />
 
             </Grid>
 

@@ -12,6 +12,7 @@ services:
         #     - "8082:8082"
         volumes:
             - userProfilepictures:/backend/userProfilepictures
+            - userCertificates:/backend/userCertificates/qrCodes
             - logsData:/backend/logsData
     frontend:
         build:
@@ -28,6 +29,8 @@ services:
 #         external: true
 volumes:
     userProfilepictures:
+        external: true
+    userCertificates:
         external: true
     logsData:
         external: true

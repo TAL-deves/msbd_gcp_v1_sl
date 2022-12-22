@@ -87,6 +87,9 @@ const test = require("./Database/models/test");
 const userMessages = require("./Database/models/userMessages");
 const userPendingPurchase = require("./Database/models/userPendingPurchase");
 const certificateData = require("./Database/models/certificateData");
+var QRCode = require("qrcode");
+
+// const apiMetrics = require('prometheus-api-metrics');
 
 // const dummyData = require("https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/config/allCourses.js");
 
@@ -305,6 +308,7 @@ class sendResponseData {
 // }
 
 app.use(myLogger);
+// app.use(apiMetrics());
 
 //? this is req.body destructing
 // const objectMap = (obj, fn) =>
@@ -1330,6 +1334,10 @@ app.post("/api/certificate", async (req, res) => {
     let genId = uuidv4();
     let certificateNumber = `ID: ${genId}`;
 
+    let base64String;
+    let base64Image;
+    let writeBuffer;
+
     const doc = new PDFDocument({
       layout: "landscape",
       size: "A4",
@@ -1352,7 +1360,7 @@ app.post("/api/certificate", async (req, res) => {
     doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
       align: "center",
     });
-    doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
+    // doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
 
     // Draw the date
     doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
@@ -1378,31 +1386,327 @@ app.post("/api/certificate", async (req, res) => {
 
     await saveCertificateData.save();
 
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
+    QRCode.toDataURL(
+      `https://www.mindschoolbd.com/verifycertificate/?certificateIDparam=${genId}`
+    )
+      .then((url) => {
+        base64String = url;
+        base64Image = base64String.split(";base64,").pop();
+        writeBuffer = new Buffer.from(base64Image, "base64");
 
-    doc.pipe(res);
+        fs.writeFile(
+          `./userCertificates/qrCodes/${genId}.png`,
+          writeBuffer,
+          function (err) {
+            if (err) throw err;
 
-    let userAuditLoggerData = {
-      username: req.body.username,
-      url: req.originalUrl,
-      timestamp: new Date().toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-      }),
-    };
+            // Draw the QR CODE
+            doc.image(`./userCertificates/qrCodes/${genId}.png`, 730, 500, {
+              width: 80,
+            });
 
-    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+            res.setHeader("Content-Type", "application/pdf");
+            res.setHeader(
+              "Content-Disposition",
+              `inline; filename=${fullName}.pdf`
+            );
 
-    // Finalize the PDF and end the stream
-    doc.end();
+            doc.pipe(res);
+
+            let userAuditLoggerData = {
+              username: req.body.username,
+              url: req.originalUrl,
+              timestamp: new Date().toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+              }),
+            };
+            userAuditLogger.log(
+              "info",
+              `${JSON.stringify(userAuditLoggerData)}`
+            );
+            // Finalize the PDF and end the stream
+            doc.end();
+          }
+        );
+      })
+      .catch((err) => {
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader(
+          "Content-Disposition",
+          `inline; filename=${fullName}.pdf`
+        );
+
+        doc.pipe(res);
+
+        let userAuditLoggerData = {
+          username: req.body.username,
+          url: req.originalUrl,
+          timestamp: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          }),
+        };
+
+        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+        // Finalize the PDF and end the stream
+        doc.end();
+      });
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+app.get("/api/mobilecertificate", async (req, res) => {
+  try {
+    var request = req.query.request.replaceAll(" ", "+");
+
+    var IV = CryptoJS.enc.Utf8.parse("1583288699248111");
+
+    var keyString = "thisIsAverySpecialSecretKey00000";
+    var Key = CryptoJS.enc.Utf8.parse(keyString);
+
+    var decryptedFromText = CryptoJS.AES.decrypt(
+      { ciphertext: CryptoJS.enc.Base64.parse(request) },
+      Key,
+      {
+        iv: IV,
+        mode: CryptoJS.mode.CBC,
+      }
+    );
+
+    let obj = decryptedFromText.toString(CryptoJS.enc.Utf8);
+
+    let {
+      username,
+      instructorName,
+      instructorTitle,
+      instructorSign,
+      completeDate,
+      courseName,
+      fullName,
+      courseID,
+    } = JSON.parse(obj);
+
+    // console.log(req.query);
+
+    completeDate = new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+
+    let genId = uuidv4();
+    let certificateNumber = `ID: ${genId}`;
+
+    const doc = new PDFDocument({
+      layout: "landscape",
+      size: "A4",
+    });
+
+    // Draw the certificate image
+    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+
+    // Set the font to Dancing Script
+    doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
+
+    // Draw the name
+    doc
+      .font("./fonts/DancingScript-VariableFont_wght.ttf")
+      .fontSize(45)
+      .text(fullName, -80, 250, {
+        align: "center",
+      });
+    // Draw the course name
+    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
+      align: "center",
+    });
+    // doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
+
+    // Draw the date
+    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
+      align: "center",
+    });
+    // Draw the certificateNumber
+    doc.font("Times-Roman").fontSize(10).text(certificateNumber, -80, 400, {
+      align: "center",
+    });
+
+    // fullName = fullName.replaceAll(" ", "_");
+
+    // let saveCertificateData = new certificateData({
+    //   username: username,
+    //   courseID: courseID,
+    //   courseName: courseName,
+    //   fullName: fullName.replaceAll("_", " "),
+    //   completeStatus: true,
+    //   certificate: true,
+    //   certificateID: genId,
+    //   certificateDate: completeDate,
+    // });
+
+    // await saveCertificateData.save();
+
+    // res.setHeader("Content-Type", "application/pdf");
+    // res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
+
+    // doc.pipe(res);
+
+    // let userAuditLoggerData = {
+    //   username: req.body.username,
+    //   url: req.originalUrl,
+    //   timestamp: new Date().toLocaleDateString("en-US", {
+    //     month: "long",
+    //     day: "numeric",
+    //     year: "numeric",
+    //     hour: "numeric",
+    //     minute: "numeric",
+    //     second: "numeric",
+    //   }),
+    // };
+
+    // userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+    // // Finalize the PDF and end the stream
+    // doc.end();
+
+    fullName = fullName.replaceAll(" ", "_");
+
+    let saveCertificateData = new certificateData({
+      username: username,
+      courseID: courseID,
+      courseName: courseName,
+      fullName: fullName.replaceAll("_", " "),
+      completeStatus: true,
+      certificate: true,
+      certificateID: genId,
+      certificateDate: completeDate,
+    });
+
+    await saveCertificateData.save();
+
+    QRCode.toDataURL(
+      `https://www.mindschoolbd.com/verifycertificate/?certificateIDparam=${genId}`
+    )
+      .then((url) => {
+        base64String = url;
+        base64Image = base64String.split(";base64,").pop();
+        writeBuffer = new Buffer.from(base64Image, "base64");
+
+        fs.writeFile(
+          `./userCertificates/qrCodes/${genId}.png`,
+          writeBuffer,
+          function (err) {
+            if (err) throw err;
+
+            // Draw the QR CODE
+            doc.image(`./userCertificates/qrCodes/${genId}.png`, 730, 500, {
+              width: 80,
+            });
+
+            res.setHeader("Content-Type", "application/pdf");
+            res.setHeader(
+              "Content-Disposition",
+              `inline; filename=${fullName}.pdf`
+            );
+
+            doc.pipe(res);
+
+            let userAuditLoggerData = {
+              username: req.body.username,
+              url: req.originalUrl,
+              timestamp: new Date().toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+              }),
+            };
+            userAuditLogger.log(
+              "info",
+              `${JSON.stringify(userAuditLoggerData)}`
+            );
+            // Finalize the PDF and end the stream
+            doc.end();
+          }
+        );
+      })
+      .catch((err) => {
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader(
+          "Content-Disposition",
+          `inline; filename=${fullName}.pdf`
+        );
+
+        doc.pipe(res);
+
+        let userAuditLoggerData = {
+          username: req.body.username,
+          url: req.originalUrl,
+          timestamp: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          }),
+        };
+
+        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+        // Finalize the PDF and end the stream
+        doc.end();
+      });
+
+  } catch (error) {
+    console.log("Inside catch");
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/verifycertificate", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { username, certificateID } = req.body;
+
+    // console.log("certificateID ---", certificateID);
+
+    let findData = await certificateData.findOne({
+      $and: [{ certificateID: certificateID }],
+    });
+
+    // console.log("findData ---", findData);
+
+    if (findData) {
+      let setSendResponseData = new sendResponseData(findData, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(null, 401, "Not vaild");
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
     res.send(responseToSend);
   }
 });
@@ -1639,7 +1943,7 @@ app.post("/api/userprofile", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
@@ -1716,7 +2020,6 @@ app.post("/api/uploadimage", async (req, res) => {
         writeBuffer
       );
 
-
       let userAuditLoggerData = {
         username: req.body.username,
         url: req.originalUrl,
@@ -1726,12 +2029,11 @@ app.post("/api/uploadimage", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
       userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
-
 
       let setSendResponseData = new sendResponseData(
         userProfileUpdate,
@@ -1876,10 +2178,10 @@ app.post("/api/updateuserprofile", async (req, res) => {
             year: "numeric",
             hour: "numeric",
             minute: "numeric",
-            second: "numeric"
+            second: "numeric",
           }),
         };
-  
+
         userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
         let setSendResponseData = new sendResponseData(updated, 200, null);
@@ -2322,7 +2624,6 @@ app.post("/api/courseavailed", async (req, res, next) => {
 
     let usercourses = user.purchasedCourses;
 
-
     usercourses.find((e) => {
       // console.log("Element ", e);
       if (e === req.body.courseID) {
@@ -2644,7 +2945,7 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
@@ -2770,7 +3071,7 @@ app.post("/api/sandboxbuy", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
@@ -2911,7 +3212,7 @@ app.post("/api/buy", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
@@ -3001,7 +3302,7 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
-  if ((value_d === "mobile")) {
+  if (value_d === "mobile") {
     let userPurchasedCourses = new usersPurchasedCourses({
       username: `${value_a}`,
       phoneNumber: `${value_b}`,
@@ -3050,21 +3351,15 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric"
+        second: "numeric",
       }),
     };
 
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-    res.json({
-      "data":null,
-      "message":"Okay"
-    });
+    res.send(lessonProgressNew);
   } else {
-    res.json({
-      "data":null,
-      "message":"Failed"
-    });
+    res.send("okay");
   }
 });
 
@@ -3137,7 +3432,7 @@ app.post("/api/ssl-payment-success", async (req, res) => {
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
-      second: "numeric"
+      second: "numeric",
     }),
   };
 
@@ -3214,7 +3509,7 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
-      second: "numeric"
+      second: "numeric",
     }),
   };
 
@@ -3290,7 +3585,7 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
-      second: "numeric"
+      second: "numeric",
     }),
   };
 
@@ -3326,7 +3621,7 @@ app.post("/api/usercourses", async (req, res) => {
       //     userallcourses.push(item2);
       //   });
       // });
-    
+
       //? with expiry checking
       // userCourses.map((item) => {
       //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
@@ -3339,25 +3634,32 @@ app.post("/api/usercourses", async (req, res) => {
       // });
 
       //? with expiry checking and status changing
-      Promise.all(userCourses.map(async(item) => {
-        if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
-  
-          await usersPurchasedCourses.findOneAndUpdate({
-            $and: [{ username: "+8801779561764" }, { status: "VALID" },
-            {coursesList:item.coursesList}
-          ],
-          }, {$set:{
-            courseExpityStatus:"VALIDITY EXPIRED"
-          }});
-        
-          // console.log("expired --- ", item);
-        } else {
-          item.coursesList.map((item2) => {
-            userallcourses.push(item2);
-          });
-        }
-      }));
+      Promise.all(
+        userCourses.map(async (item) => {
+          if (moment(new Date()).isSameOrAfter(new Date(item.expirationDate))) {
+            await usersPurchasedCourses.findOneAndUpdate(
+              {
+                $and: [
+                  { username: "+8801779561764" },
+                  { status: "VALID" },
+                  { coursesList: item.coursesList },
+                ],
+              },
+              {
+                $set: {
+                  courseExpityStatus: "VALIDITY EXPIRED",
+                },
+              }
+            );
 
+            // console.log("expired --- ", item);
+          } else {
+            item.coursesList.map((item2) => {
+              userallcourses.push(item2);
+            });
+          }
+        })
+      );
 
       if (userCourses[0]) {
         let array1 = userallcourses;
@@ -3436,19 +3738,19 @@ app.post("/api/usercourses", async (req, res) => {
         );
 
         let userAuditLoggerData = {
-        username: req.body.username,
-        url: req.originalUrl,
-        timestamp: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric"
-        }),
-      };
+          username: req.body.username,
+          url: req.originalUrl,
+          timestamp: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          }),
+        };
 
-      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
         let setSendResponseData = new sendResponseData(array31, 200, null);
         let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -3469,8 +3771,6 @@ app.post("/api/usercourses", async (req, res) => {
       res.send(responseToSend);
     }
     //! This is for token checking END
-
-   
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -3501,7 +3801,7 @@ app.post("/api/paymenthistory", async (req, res) => {
           year: "numeric",
           hour: "numeric",
           minute: "numeric",
-          second: "numeric"
+          second: "numeric",
         }),
       };
 
@@ -3545,20 +3845,20 @@ app.post("/api/give-a-review", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
- let userAuditLoggerData = {
-        username: req.body.username,
-        url: req.originalUrl,
-        timestamp: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric"
-        }),
-      };
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      }),
+    };
 
-      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (userSessionStatus.data != null) {
       console.log("User is allowed");
@@ -3614,20 +3914,20 @@ app.post("/api/user-reviews", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
- let userAuditLoggerData = {
-        username: req.body.username,
-        url: req.originalUrl,
-        timestamp: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric"
-        }),
-      };
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      }),
+    };
 
-      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (userSessionStatus.data != null) {
       console.log("User is allowed");
@@ -3683,7 +3983,7 @@ app.post("/api/playthevideo", async (req, res) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric"
+        second: "numeric",
       }),
     };
 
@@ -3740,7 +4040,6 @@ app.post("/api/applypromocode", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-
     let userAuditLoggerData = {
       username: req.body.username,
       url: req.originalUrl,
@@ -3750,12 +4049,11 @@ app.post("/api/applypromocode", async (req, res) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric"
+        second: "numeric",
       }),
     };
 
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
-
 
     if (userSessionStatus) {
       let promocode = {
@@ -3848,7 +4146,6 @@ app.post("/api/videologdata", async (req, res) => {
         });
 
         await lessonProgressNew.save();
-
       } else {
         // console.log("Already watched  ");
         // let setSendResponseData = new sendResponseData("Updated", 200, null);
@@ -3928,7 +4225,7 @@ app.post("/api/leaveamessage", async (req, res) => {
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric"
+        second: "numeric",
       }),
     };
 
@@ -4018,39 +4315,11 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   try {
-
-    //usercourses"
-
-    let userCourses = await usersPurchasedCourses.find({
-      $and: [{ username: "+8801779561764" }, { status: "VALID" }],
-    });
-
-    let userallcourses = [];
-
-    Promise.all(userCourses.map(async(item) => {
-      if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
-
-        await usersPurchasedCourses.findOneAndUpdate({
-          $and: [{ username: "+8801779561764" }, { status: "VALID" },
-          {coursesList:item.coursesList}
-        ],
-        }, {$set:{
-          courseExpityStatus:"VALIDITY EXPIRED"
-        }});
-      
-        // console.log("expired --- ", item);
-      } else {
-        item.coursesList.map((item2) => {
-          userallcourses.push(item2);
-        });
-      }
-    }));
-    console.log("userallcourses after ----- ", userallcourses);
-    res.send(userallcourses)
+    res.send("test")
   } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-
-    res.send(setSendResponseData);
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
   }
 });
 
