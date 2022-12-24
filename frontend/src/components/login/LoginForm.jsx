@@ -148,6 +148,7 @@ const LoginForm = (props) => {
         window.opener.location.reload();
         
         setTimeout(function() { 
+          alert("hello")
           setBackdrop(false) 
           window.opener.document.location.href = "/courses"
           window.close();

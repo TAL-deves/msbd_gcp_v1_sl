@@ -73,7 +73,10 @@ const client_secret = "secret";
 const caxios = axios.create({
   baseURL: baseURL,
 
-  headers: { "Access-Control-Allow-Origin": "*" },
+  headers: { 
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+},
   //   httpsAgent: new https.Agent({
   //     rejectUnauthorized: false,
   //   }),
