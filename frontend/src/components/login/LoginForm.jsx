@@ -147,7 +147,11 @@ const LoginForm = (props) => {
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
         window.close();
-        window.opener.document.location.href = "/courses"
+        
+        setTimeout(function() { 
+          setBackdrop(false) 
+          window.opener.document.location.href = "/courses"
+        }, 500);
         
         console.log("after close ---- ", datas);
         if(googleData.data.data.access_token){
