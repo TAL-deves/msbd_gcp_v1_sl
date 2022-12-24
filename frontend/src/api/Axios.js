@@ -243,6 +243,8 @@ export function login(userId,email, password,phoneNumber , callback, loginfrom) 
   let config = {
     headers: {
      // 'Content-Type': 'application/x-www-form-urlencoded',
+     "Access-Control-Allow-Origin": "*",
+     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
       Authorization: `Basic ${token}`,
     },
   };
