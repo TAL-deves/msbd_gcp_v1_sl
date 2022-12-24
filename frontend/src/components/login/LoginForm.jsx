@@ -181,8 +181,8 @@ const LoginForm = (props) => {
         localStorageService.setToken(facebookData.data.data);
         // //// console.log(facebookData.reslut);
         // window.opener.location.reload();
-        window.close();
-        window.opener.document.location.href = "/courses"
+        // window.close();
+        // window.opener.document.location.href = "/courses"
         window.location.href="/courses"
       }
     }
@@ -208,19 +208,19 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-    // window.open(
-    //   `${process.env.REACT_APP_API_URL}/api/google`,
-    //   "_self",
-      
-    // );
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
-      "",
-      `width=${w}, 
-      height=${h}, 
-      top=${top}, 
-      left=${left}`
+      "_self",
+      
     );
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/google`,
+    //   "",
+    //   `width=${w}, 
+    //   height=${h}, 
+    //   top=${top}, 
+    //   left=${left}`
+    // );
     setBackdrop(true)
   };
   const facebookAuth = () => {
@@ -230,12 +230,18 @@ const LoginForm = (props) => {
     var top = (window.screen.height - h) / 2;
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-      "",
-      `width=${w}, 
-      height=${h}, 
-      top=${top}, 
-      left=${left}`
+      "_self",
+      
     );
+
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
+    //   "",
+    //   `width=${w}, 
+    //   height=${h}, 
+    //   top=${top}, 
+    //   left=${left}`
+    // );
   };
 
 
