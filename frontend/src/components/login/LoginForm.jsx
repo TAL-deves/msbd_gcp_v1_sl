@@ -115,7 +115,7 @@ const LoginForm = (props) => {
 
   if (obj) {
     obj.request.ct = obj.request.ct.replaceAll(" ", "+");
-   console.log("updated gobject Object is ------ ", obj);
+    // //// console.log("updated gobject Object is ------ ", obj);
 
     if (gobject !== null) {
       const { request, passphase } = obj;
@@ -126,54 +126,27 @@ const LoginForm = (props) => {
         { iv: IV }
       );
 
-      console.log("decryptedFromText   -------   ", decryptedFromText);
+      // //// console.log("decryptedFromText   -------   ", decryptedFromText);
 
       let recievedData = decryptedFromText.toString(CryptoJS.enc.Utf8);
 
-    console.log("recievedData   -------   ", JSON.parse(recievedData));
+      // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let googleData = JSON.parse(recievedData);
 
       const localStorageService = LocalStorageService.getService();
-       console.log("Google data : ", googleData.data.result.isError);
+      // //// console.log("Google data : ", googleData.data.result.isError);
 
       if (googleData.data.result.isError === false) {
-        console.log("accesstoken  data : ", googleData.data.data.access_token);
+        //// console.log("accesstoken  data : ", googleData.data.data.access_token);
         setCurrentuser(gprofilename);
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
-        let datas = googleData.data.data;
-        // window.localStorage.setItem("access_token", googleData.data.data.access_token)
         // //// console.log(googleData.reslut);
-        window.opener.location.reload();
-        
-        setTimeout(function() { 
-          alert("hello")
-          setBackdrop(false) 
-          window.opener.document.location.href = "/courses"
-          window.close();
-        }, 500);
-        
-        console.log("after close ---- ", datas);
-        if(googleData.data.data.access_token){
-          console.log("inside if");
-        } else{
-          console.log("else block");
-
-        }
-
-
-        if(googleData.data.data !== null){
-          // swal("OKAY!","OKAY!","success",{
-          //   timer: 3000
-          // })
-          console.log("inside if block : ");
-          setTimeout(function() { alert("my message"); }, 3000);
-          window.close();
-          window.opener.document.location.href = "/courses";
-          setBackdrop(false)        
-        }
-        // window.location.href="/courses"
+        // window.opener.location.reload();
+        // window.close();
+        // window.opener.document.location.href = "/courses"
+        window.location.href="/courses"
         setBackdrop(false)        
       }
     }
