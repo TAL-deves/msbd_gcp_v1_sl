@@ -138,7 +138,7 @@ const LoginForm = (props) => {
        console.log("Google data : ", googleData.data.result.isError);
 
       if (googleData.data.result.isError === false) {
-        //// console.log("accesstoken  data : ", googleData.data.data.access_token);
+        console.log("accesstoken  data : ", googleData.data.data.access_token);
         setCurrentuser(gprofilename);
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
