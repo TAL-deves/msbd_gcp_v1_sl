@@ -148,9 +148,10 @@ const LoginForm = (props) => {
         window.opener.document.location.href = "/courses"
 
         if(googleData.data.data !== null){
-          swal("OKAY!","OKAY!","success",{
-            timer: 3000
-          })
+          // swal("OKAY!","OKAY!","success",{
+          //   timer: 3000
+          // })
+          setTimeout(function() { alert("my message"); }, 3000);
           window.close();
           window.opener.document.location.href = "/courses";
         }
