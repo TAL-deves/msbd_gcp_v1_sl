@@ -129,13 +129,19 @@ app.use(express.json());
 //     // exposedHeaders: ['x-auth-token']
 //   })
 // );
-app.use(
-  cors({
-    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//   })
+// );
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "mindschoolbd.com"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(
   express.urlencoded({
     extended: true,
