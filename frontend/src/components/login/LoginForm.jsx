@@ -115,7 +115,7 @@ const LoginForm = (props) => {
 
   if (obj) {
     obj.request.ct = obj.request.ct.replaceAll(" ", "+");
-    // //// console.log("updated gobject Object is ------ ", obj);
+   console.log("updated gobject Object is ------ ", obj);
 
     if (gobject !== null) {
       const { request, passphase } = obj;
@@ -126,16 +126,16 @@ const LoginForm = (props) => {
         { iv: IV }
       );
 
-      // //// console.log("decryptedFromText   -------   ", decryptedFromText);
+      console.log("decryptedFromText   -------   ", decryptedFromText);
 
       let recievedData = decryptedFromText.toString(CryptoJS.enc.Utf8);
 
-      // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
+    console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let googleData = JSON.parse(recievedData);
 
       const localStorageService = LocalStorageService.getService();
-      // //// console.log("Google data : ", googleData.data.result.isError);
+       console.log("Google data : ", googleData.data.result.isError);
 
       if (googleData.data.result.isError === false) {
         //// console.log("accesstoken  data : ", googleData.data.data.access_token);
@@ -151,9 +151,11 @@ const LoginForm = (props) => {
           // swal("OKAY!","OKAY!","success",{
           //   timer: 3000
           // })
+          console.log("inside if block : ");
           setTimeout(function() { alert("my message"); }, 3000);
           window.close();
           window.opener.document.location.href = "/courses";
+          setBackdrop(false)        
         }
         // window.location.href="/courses"
         setBackdrop(false)        
