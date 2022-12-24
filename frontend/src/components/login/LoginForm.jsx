@@ -142,12 +142,14 @@ const LoginForm = (props) => {
         setCurrentuser(gprofilename);
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
-        window.localStorage.setItem("access_token", googleData.data.data.access_token)
+        let datas = googleData.data.data;
+        // window.localStorage.setItem("access_token", googleData.data.data.access_token)
         // //// console.log(googleData.reslut);
-        window.opener.location.reload();
+        // window.opener.location.reload();
         window.close();
         window.opener.document.location.href = "/courses"
-
+        
+        console.log("after close ---- ", datas);
         if(googleData.data.data.access_token){
           console.log("inside if");
         } else{
