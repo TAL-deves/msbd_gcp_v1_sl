@@ -147,7 +147,7 @@ const LoginForm = (props) => {
         // window.close();
         window.opener.document.location.href = "/courses"
 
-        if(googleData.data.data.access_token !== null){
+        if(googleData.data.data.access_token){
           console.log("inside if");
         } else{
           console.log("else block");
