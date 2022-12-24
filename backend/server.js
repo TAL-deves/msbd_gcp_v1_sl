@@ -131,7 +131,7 @@ app.use(express.json());
 // );
 app.use(
   cors({
-    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com", "*"],
+    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
