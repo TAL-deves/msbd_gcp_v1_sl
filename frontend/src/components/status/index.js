@@ -88,7 +88,9 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
       status = "ended";
       setCount((count)=>!count)
       if(episode===""){
-        <></>
+        // window.location.reload();
+         console.log(episode)
+        // <></>
       }
       else{
         actionVdoData(courseID, videoID, status, username, currentTime)

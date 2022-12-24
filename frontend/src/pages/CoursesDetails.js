@@ -37,6 +37,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
 import { globalContext } from "./GlobalContext";
+import swal from "sweetalert";
 
 
 
@@ -419,8 +420,8 @@ useEffect(() => {
               </Box>
               </Grid>       
         </Box> */}
-           <Box sx={{display:"flex"}}>
-          <Link href="https://techanalyticaltd.com/" target="new">
+           <Box sx={{display:"flex", alignItems:"center"}}>
+          <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
                 <Box
                   sx={{
                     // backgroundColor: "other.logocolor",
@@ -437,8 +438,9 @@ useEffect(() => {
                   <img src={googlebtn} alt="google" width="96%" />
                 </Box>
               </Link>
-              <Link href="https://techanalyticaltd.com/" target="new">
+              {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
                 <Box
+                onClick={()=>{swal("IOS app is coming soon", "Thanks for your patience", "info")}}
                   sx={{
                     // backgroundColor: "other.footercolor",
                     backgroundColor: "secondary.main",
@@ -453,7 +455,7 @@ useEffect(() => {
                 >
                   <img src={applebtn} alt="google" width="80%" />
                 </Box>
-              </Link>
+              {/* </Link> */}
           </Box>
         </Box>
     </Box>

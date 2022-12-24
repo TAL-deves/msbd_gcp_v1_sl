@@ -144,8 +144,9 @@ const LoginForm = (props) => {
         localStorageService.setToken(googleData.data.data);
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
-        window.close();
-        window.opener.document.location.href = "/courses"
+        // window.close();
+        // window.opener.document.location.href = "/courses"
+        window.location.href="/courses"
         setBackdrop(false)        
       }
     }
@@ -182,6 +183,7 @@ const LoginForm = (props) => {
         // window.opener.location.reload();
         window.close();
         window.opener.document.location.href = "/courses"
+        window.location.href="/courses"
       }
     }
   }
@@ -208,12 +210,17 @@ const LoginForm = (props) => {
     
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
-      "",
-      `width=${w}, 
-      height=${h}, 
-      top=${top}, 
-      left=${left}`
+      "_self",
+      
     );
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/google`,
+    //   "",
+    //   `width=${w}, 
+    //   height=${h}, 
+    //   top=${top}, 
+    //   left=${left}`
+    // );
     setBackdrop(true)
   };
   const facebookAuth = () => {

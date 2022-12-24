@@ -19,6 +19,7 @@ const MyFeedbacks = () => {
       headers: { "Content-Type": "application/json" },
       "Access-Control-Allow-Credentials": true,
     });
+    // console.log("response",response)
     if (response.data.result.status === 200) {
       setReviewData(response.data.data);
       //  console.log(response.data.data, "-----------------review data")

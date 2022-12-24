@@ -192,9 +192,10 @@ export default function Wavefooter() {
                 Download Our Mobile App
               </Typography>
               {/* app */}
-              <Box sx={{ display: "flex" }}>
-                {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                  <Box onClick={()=>{swal("","App Coming Soon","");}}
+              <Box sx={{ display: "flex", alignItems:"center" }}>
+                <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
+                  <Box 
+                  // onClick={()=>{swal("","App Coming Soon","");}}
                     sx={{
                       // backgroundColor: "other.logocolor",
                       backgroundColor: "secondary.main",
@@ -209,9 +210,9 @@ export default function Wavefooter() {
                   >
                     <img src={googlebtn} alt="google" width="98vw" />
                   </Box>
-                {/* </Link> */}
+                </Link>
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                  <Box onClick={()=>{swal("","App Coming Soon","");}}
+                  <Box onClick={()=>{swal("IOS App Coming Soon","Thanks for your patience","");}}
                     sx={{
                       // backgroundColor: "other.footercolor",
                       backgroundColor: "secondary.main",

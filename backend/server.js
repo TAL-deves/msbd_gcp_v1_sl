@@ -12,6 +12,7 @@ const {
   responseLogger,
   videoLogger,
   userAuditLogger,
+  mobileDataLogger,
 } = require("./logger/logger");
 
 const { loadExampleData, revokeToken } = require("./auth/model");
@@ -217,6 +218,8 @@ let decryptionOfData = (req, res) => {
 
     const { request, passphase } = resp;
 
+    // console.log("request, passphase ---", request, passphase);
+
     var decryptedFromText = CryptoJS.AES.decrypt(
       { ciphertext: CryptoJS.enc.Base64.parse(request) },
       Key,
@@ -229,6 +232,8 @@ let decryptionOfData = (req, res) => {
     let bytedata = decryptedFromText.words;
 
     let obj = decryptedFromText.toString(CryptoJS.enc.Utf8);
+
+    // console.log("obj ----", obj);
 
     if (typeof obj === "string" && obj.startsWith("g")) {
       return obj;
@@ -3357,9 +3362,12 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
 
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-    res.send(lessonProgressNew);
-  } else {
     res.send("okay");
+  } else {
+    res.json({
+      data:null,
+      result: "failed"
+    });
   }
 });
 
@@ -4009,27 +4017,7 @@ app.post("/api/playthevideo", async (req, res) => {
     res.send(responseToSend);
   }
 });
-//! User session check
-app.post("/api/sessioncheck", async (req, res) => {
-  try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
 
-    let userSessionStatus = await tokenChecking(req);
-
-    console.log("token check: ---- ", userSessionStatus);
-
-    let responseToSend = encryptionOfData(userSessionStatus);
-    res.send(responseToSend);
-    // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
-    // let responseToSend = encryptionOfData(setSendResponseData.success());
-    // res.send(responseToSend);
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
-});
 
 //? applypromocode related API
 app.post("/api/applypromocode", async (req, res) => {
@@ -4105,61 +4093,73 @@ app.post("/api/videologdata", async (req, res) => {
 
     // let bodyData = objectMap(req.body, v=> v) //? mapping object
 
-    let logVideData = new videoLogData({
-      username: username,
-      courseID: courseID,
-      videoID: videoID,
-      status: status,
-      actionTime: actionTime,
-      totalTimeCovered: totalTimeCovered,
-      totalTimePlayed: totalTimePlayed,
-      totalVdoDuration: totalVdoDuration,
-      courseName: videoTitle,
-      lessonName: lessonTitle,
-      lessonNumber: episode,
-      currentProgress: currentProgress,
-    });
+    let userSessionStatus = await tokenChecking(req);
 
-    await logVideData.save();
+    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
 
-    if (
-      req.body.status === "ended" &&
-      req.body.totalTimeCovered === req.body.totalVdoDuration
-    ) {
-      let lessonProgressData = await lessonProgress.find({
-        $and: [
-          { username: username },
-          { courseID: courseID },
-          { lessonNumber: episode },
-          { complete: true },
-        ],
+    if (userSessionStatus.data != null) {
+     
+      let logVideData = new videoLogData({
+        username: username,
+        courseID: courseID,
+        videoID: videoID,
+        status: status,
+        actionTime: actionTime,
+        totalTimeCovered: totalTimeCovered,
+        totalTimePlayed: totalTimePlayed,
+        totalVdoDuration: totalVdoDuration,
+        courseName: videoTitle,
+        lessonName: lessonTitle,
+        lessonNumber: episode,
+        currentProgress: currentProgress,
       });
-
-      if (!lessonProgressData[0]) {
-        let lessonProgressNew = new lessonProgress({
-          username: username,
-          courseName: videoTitle,
-          courseID: courseID,
-          videoID: videoID,
-          lessonNumber: episode,
-          complete: true,
+  
+      await logVideData.save();
+  
+      if (
+        req.body.status === "ended" &&
+        req.body.totalTimeCovered === req.body.totalVdoDuration
+      ) {
+        let lessonProgressData = await lessonProgress.find({
+          $and: [
+            { username: username },
+            { courseID: courseID },
+            { lessonNumber: episode },
+            { complete: true },
+          ],
         });
-
-        await lessonProgressNew.save();
-      } else {
-        // console.log("Already watched  ");
-        // let setSendResponseData = new sendResponseData("Updated", 200, null);
-        // let responseToSend = encryptionOfData(setSendResponseData);
-        // res.send(responseToSend);
+  
+        if (!lessonProgressData[0]) {
+          let lessonProgressNew = new lessonProgress({
+            username: username,
+            courseName: videoTitle,
+            courseID: courseID,
+            videoID: videoID,
+            lessonNumber: episode,
+            complete: true,
+          });
+  
+          await lessonProgressNew.save();
+        } else {
+          // console.log("Already watched  ");
+          // let setSendResponseData = new sendResponseData("Updated", 200, null);
+          // let responseToSend = encryptionOfData(setSendResponseData);
+          // res.send(responseToSend);
+        }
       }
+  
+      videoLogger.log("info", `${JSON.stringify(req.body)}`);
+  
+      let setSendResponseData = new sendResponseData("sent", 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData);
+  
+      res.send(responseToSend);
+
+    } else {
+      console.log("Not allowed", userSessionStatus);
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
     }
-
-    videoLogger.log("info", `${JSON.stringify(req.body)}`);
-
-    let setSendResponseData = new sendResponseData("sent", 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData);
-
-    res.send(responseToSend);
   } catch (error) {
     console.log("serverErrMsg", serverErrMsg);
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
@@ -4175,17 +4175,7 @@ app.post("/api/mobilelogdata", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const {
-      status,
-      courseID,
-      videoID,
-      username,
-      actionTime,
-      totalTimeCovered,
-      totalTimePlayed,
-    } = req.body;
-
-    console.log("req.body ----- ", req.body);
+    mobileDataLogger.log("info", `${JSON.stringify(req.body)}`);
 
     let setSendResponseData = new sendResponseData("sent", 200, null);
     let responseToSend = encryptionOfData(setSendResponseData);
@@ -4293,6 +4283,32 @@ app.get("/api/checklogdata", async (req, res) => {
   };
 
   res.json(data);
+});
+
+
+//! User session check
+app.post("/api/sessioncheck", async (req, res) => {
+  // try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    
+    // console.log("/api/sessioncheck ", userSessionStatus);
+
+    let userSessionStatus = await tokenChecking(req);
+
+    // console.log("token check: ---- ", userSessionStatus);
+
+    let responseToSend = encryptionOfData(userSessionStatus);
+    res.send(responseToSend);
+    // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+    // res.send(responseToSend);
+  // } catch (error) {
+  //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+  //   let responseToSend = encryptionOfData(setSendResponseData.error());
+  //   res.send(responseToSend);
+  // }
 });
 
 //! Testing point

@@ -98,7 +98,7 @@ const DownloadApp = () => {
               }}
             >
               <motion.div whileHover={{scale:1.03}}>
-              {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+              <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
                 <Box onClick={()=>{swal("","App Coming Soon","");}}
                   sx={{
                     backgroundColor: "other.footercolor",
@@ -114,12 +114,13 @@ const DownloadApp = () => {
                 >
                   <img src={googlebtn} alt="google" width="72%" />
                 </Box>
-              {/* </Link> */}
+              </Link>
               </motion.div>
               &nbsp;
               <motion.div whileHover={{scale:1.03}}>
               {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                <Box onClick={()=>{swal("","App Coming Soon","");}}
+                <Box 
+                onClick={()=>{swal("IOS App Coming Soon","Thanks for your patience","");}}
                   sx={{
                     // backgroundColor: "secondary.main",
                     backgroundColor: "other.footercolor",
