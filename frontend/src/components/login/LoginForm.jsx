@@ -142,11 +142,16 @@ const LoginForm = (props) => {
         setCurrentuser(gprofilename);
         setGname(setGname);
         localStorageService.setToken(googleData.data.data);
-        // //// console.log(googleData.reslut);
-        // window.opener.location.reload();
-        // window.close();
-        // window.opener.document.location.href = "/courses"
-        window.location.href="/courses"
+
+
+        if(googleData.data.data.access_token !== null){
+          window.close();
+          window.opener.document.location.href = "/courses"
+
+          swal("Success!", `${googleData.data.data.access_token}`, "success");
+          // window.location.href = "/userprofile"
+        } 
+
         setBackdrop(false)        
       }
     }
@@ -208,19 +213,19 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-    window.open(
-      `${process.env.REACT_APP_API_URL}/api/google`,
-      "_self",
-      
-    );
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/google`,
-    //   "",
-    //   `width=${w}, 
-    //   height=${h}, 
-    //   top=${top}, 
-    //   left=${left}`
+    //   "_self",
+      
     // );
+    window.open(
+      `${process.env.REACT_APP_API_URL}/api/google`,
+      "",
+      `width=${w}, 
+      height=${h}, 
+      top=${top}, 
+      left=${left}`
+    );
     setBackdrop(true)
   };
   const facebookAuth = () => {
