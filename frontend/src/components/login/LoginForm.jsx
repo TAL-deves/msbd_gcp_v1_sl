@@ -145,8 +145,14 @@ const LoginForm = (props) => {
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
         // window.close();
-        // window.opener.document.location.href = "/courses"
-        window.location.href="/courses"
+        window.opener.document.location.href = "/courses"
+
+        if(googleData.data.data !== null){
+          window.close();
+          window.opener.document.location.href = "/courses";
+          swal("OKAY!","OKAY!","success")
+        }
+        // window.location.href="/courses"
         setBackdrop(false)        
       }
     }
@@ -208,19 +214,19 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-    window.open(
-      `${process.env.REACT_APP_API_URL}/api/google`,
-      "_self",
-      
-    );
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/google`,
-    //   "",
-    //   `width=${w}, 
-    //   height=${h}, 
-    //   top=${top}, 
-    //   left=${left}`
+    //   "_self",
+      
     // );
+    window.open(
+      `${process.env.REACT_APP_API_URL}/api/google`,
+      "",
+      `width=${w}, 
+      height=${h}, 
+      top=${top}, 
+      left=${left}`
+    );
     setBackdrop(true)
   };
   const facebookAuth = () => {
