@@ -1,6 +1,8 @@
 import {
   Alert,
   AlertTitle,
+  Backdrop,
+  CircularProgress,
   Collapse,
   CssBaseline,
   IconButton,
@@ -378,6 +380,13 @@ const Regform1 = () => {
                   : ""
               }
             />
+            <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}
+           
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
       
             <Grid container>
               <Grid item xs></Grid>
