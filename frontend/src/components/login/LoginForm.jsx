@@ -145,12 +145,12 @@ const LoginForm = (props) => {
         let datas = googleData.data.data;
         // window.localStorage.setItem("access_token", googleData.data.data.access_token)
         // //// console.log(googleData.reslut);
-        // window.opener.location.reload();
-        window.close();
+        window.opener.location.reload();
         
         setTimeout(function() { 
           setBackdrop(false) 
           window.opener.document.location.href = "/courses"
+          window.close();
         }, 500);
         
         console.log("after close ---- ", datas);
