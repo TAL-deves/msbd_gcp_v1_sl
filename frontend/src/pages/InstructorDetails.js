@@ -85,8 +85,9 @@ const CardMediaStyle = styled(CardMedia)(({ theme }) => ({
 }));
 
 const InstructorDetails = () => {
+  const videoRef = React.useRef(null);
   const { language } = useContext(globalContext);
-  AOS.init({duration:2000});
+  AOS.init({ duration: 2000 });
   const [played, setPlayed] = useState(0);
   const [courses, setCourses] = useState([]);
   const [courseID, setCourseID] = useState();
@@ -94,26 +95,28 @@ const InstructorDetails = () => {
   let location = useLocation();
 
   let state = location.state.instructorId;
-  // console.log(state)
-  let instructorID= state._id
+  localStorage.setItem("instructor",state._id);
+  // console.log("instructor",localStorage.getItem("instructor"))
+  
+  let instructorID = localStorage.getItem("instructor")
 
   useEffect(() => {
     // if(language==="en"){
-      // setCourses([])
-      state.courses.map(async (singleCourse) => {
-        var courseID = instructorID;
-        await api
-          .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language}), {
-            headers: { "Content-Type": "application/json" },
-            "Access-Control-Allow-Credentials": true,
-          })
-          .then((data) => {
-            // console.log("ins dta",data.data.data);
-            setCourses(data.data.data)           
-          });
-  
-      });
-      // console.log("single course id", courses);
+    // setCourses([])
+    state.courses.map(async (singleCourse) => {
+      var courseID = instructorID;
+      await api
+        .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language }), {
+          headers: { "Content-Type": "application/json" },
+          "Access-Control-Allow-Credentials": true,
+        })
+        .then((data) => {
+          // console.log("ins dta",data.data.data);
+          setCourses(data.data.data)
+        });
+
+    });
+    // console.log("single course id", courses);
     // }
     // else
     // {
@@ -127,16 +130,16 @@ const InstructorDetails = () => {
     //       })
     //       .then((data) => {
     //         courses.push(data.data.data);
-            
+
     //       });
-  
+
     //   });
     //   // console.log("single course id", courses);
     // }
     // console.log(" useeffect", courses)
   }, [language]);
 
-  
+
 
   return (
     <Box>
@@ -157,7 +160,7 @@ const InstructorDetails = () => {
               borderRadius: 1,
             }}
           >
-            <Grid 
+            <Grid
               container
               sx={{
                 display: "flex",
@@ -166,13 +169,14 @@ const InstructorDetails = () => {
                   md: "flex-start",
                   lg: "flex-start",
                 },
-                paddingLeft: "10%",
+                // paddingLeft: "10%",
+                marginLeft: "5%", marginRight:"5%"
               }}
             >
-              <Grid sx={{ marginLeft: "5%" }} item lg={2} md={6} sm={12}>
+              <Grid sx={{ marginLeft: "5%", marginRight:"5%" }} item lg={2} md={6} sm={12}>
                 <br />
                 <br />
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent:"center" }}>
                   <Box data-aos="fade-right">
                     {/* <Paper sx={{height:"100px", width:"100px"}}>
                 <img  src={state?.image} alt="" /></Paper> */}
@@ -188,14 +192,14 @@ const InstructorDetails = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid  data-aos="zoom-in" sx={{ marginRight: "5%" }} item lg={4} md={6} sm={12}>
+              <Grid data-aos="zoom-in" sx={{ marginRight: "2%" }} item lg={4} md={6} sm={12}>
                 <Typography
                   variant="h4"
                   sx={{ paddingLeft: "20%", marginTop: "2%" }}
                 >
                   Profile of {state?.name}
                 </Typography>
-                <Typography sx={{ paddingLeft: "20%", marginTop: "2%" }}>
+                <Typography sx={{ paddingLeft: "10%", marginTop: "2%", textAlign:"center" }}>
                   {state?.description_title1}
                 </Typography>
                 <Typography
@@ -205,10 +209,10 @@ const InstructorDetails = () => {
                   {state?.description}{" "}
                 </Typography>
               </Grid>
-              <Grid item lg={2} md={4} sm={12}>
+              <Grid item lg={4} md={6} sm={12}>
                 {/* <VideoGridWrapper> */}
                 <Grid>
-                  <VdoPlayerStyle>
+                  {/* <VdoPlayerStyle>
                     <Box data-aos="fade-left">
                       <ReactPlayer
                         url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
@@ -243,7 +247,11 @@ const InstructorDetails = () => {
                         // onProgress={//// console.log("playing")}
                       />
                     </Box>
-                  </VdoPlayerStyle>
+                  </VdoPlayerStyle> */}
+
+                  <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%",justifyContent:"center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
+                    <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </Box>
                 </Grid>
                 {/* </VideoGridWrapper> */}
               </Grid>
@@ -267,8 +275,8 @@ const InstructorDetails = () => {
             Courses List of {state?.name}
           </Typography>
           <Grid sx={{
-            display: "flex",justifyContent: "space-around",
-            flexDirection: { sm: "column-reverse", lg: "row",xl:"row",md:"row", xs: "column-reverse" }
+            display: "flex", justifyContent: "space-around",
+            flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
           }}>
             <Grid
               container

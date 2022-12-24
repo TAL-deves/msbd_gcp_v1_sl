@@ -117,6 +117,8 @@ Item.propTypes = {
 
 
 const CoursesDetails = () => {
+  const [startbutton, setStartButton]= useState(true)
+  const videoRef = React.useRef(null);
   const navigate = useNavigate();
   const { language } = useContext(globalContext);
   AOS.init({duration:2000});
@@ -132,23 +134,7 @@ const CoursesDetails = () => {
   let fullobject = location.state.courseId;
   let courseID= fullobject.courseID
 
-  let fetchCourseDetails= async()=>{
-    await api
-    .post(COURSE_DETAILS_URL, JSON.stringify({ courseID, language }), {
-      headers: { "Content-Type": "application/json" },
-      "Access-Control-Allow-Credentials": true,
-    })
-    .then((data) => {
-       // console.log("single course id", data);
-       setState(data.data.data)
-       
-    });
 
-};
-
-useEffect(() => { 
-  fetchCourseDetails()
-}, [language]);
 
 let fetchData = async () => {
   let username = localStorage.getItem("user")
@@ -158,27 +144,60 @@ let fetchData = async () => {
       "Access-Control-Allow-Credentials": true,
     })
     .then((data) => {
-      // console.log("ins dta", data);
-      if (data.data.result.status === 404) {
+      //  console.log("ins dta", data);
+      if (data.data.result.status === 404 || data.data.result.status === 401) {
         // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
         setCourses([])
       }
       else {
         setCourses(data.data.data)
+        // console.log("state",data.data.data)
       }
-      // console.log("state",courses)
       
       setLoad(false);
     });
 };
 
+
+
+let fetchCourseDetails= async()=>{
+  await api
+  .post(COURSE_DETAILS_URL, JSON.stringify({ courseID, language }), {
+    headers: { "Content-Type": "application/json" },
+    "Access-Control-Allow-Credentials": true,
+  })
+  .then((data) => {
+     // console.log("single course id", data);
+     setState(data.data.data)
+     
+  });
+
+};
+
 useEffect(() => {
   fetchData();
-}, []);
+  fetchCourseDetails()
   
+}, [language]);
 
- let existingCourse=courses.find(c=>c.courseID===state?.courseID)
-  return (
+
+let existingCourse;
+let newButton= false
+// console.log(" courses----",courses)
+if(courses!==null && courses.length !== 0){
+  // console.log("find check-----",courses.find(c=>c.courseID===state?.courseID))
+   existingCourse=courses.find(c=>c.courseID===state?.courseID)
+  //  console.log("existed courses----",existingCourse)
+  //  setStartButton(true)
+  newButton=true
+}
+
+
+
+
+
+
+return (
    
     <Box >
       <Container >
@@ -211,7 +230,18 @@ useEffect(() => {
          {loggedin?
          <>
          
-         {existingCourse?
+         {/* {Object.keys(existingCourse).length === 0 && existingCourse.constructor === Object ? */}
+         {existingCourse===undefined?
+          <Button sx={{marginLeft:"0rem"}}
+          //  onClick={response}
+          onClick={() => {
+            
+            navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
+            )
+          }}
+          variant="contained">Buy Now
+        </Button>
+        :
           <Routerlink to="/coursedemo" state={{ courseId: state}}
           style={{textDecoration:'none'}}
           >
@@ -221,16 +251,8 @@ useEffect(() => {
                 Start now
               </Typography>
             </Button>
-          </Routerlink>:
-         <Button sx={{marginLeft:"0rem"}}
-             //  onClick={response}
-             onClick={() => {
-               
-               navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
-               )
-             }}
-             variant="contained">Buy Now
-           </Button>
+          </Routerlink>
+        
           }</>:
            <Routerlink to="/login" 
            style={{textDecoration:'none'}}
@@ -263,40 +285,9 @@ useEffect(() => {
                 {/* <VideoGridWrapper> */}
             {/* <Grid > */}
         {/* <VdoPlayerStyle> */}
-          <Box sx={{display:"flex", padding:"5%",marginLeft:"10%"}}>
-            <ReactPlayer 
-            url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-            playing
-             height="100%"
-             width="100%"
-            controls={true}
-            onProgress={(progress)=>{
-              setPlayed(progress.playedSeconds);             
-            }}
-            onPlay={() => {
-              //// console.log("play data sent");
-              const response = api.post(VIDEOLOG_URL,
-                JSON.stringify({ }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    'Access-Control-Allow-Credentials': true
-                }
-            );
-            }}
-            onPause={() => {
-              //// console.log("pause data sent");
-              const response = api.post(VIDEOLOG_URL,
-                JSON.stringify({ }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    'Access-Control-Allow-Credentials': true
-                }
-            );
-            }}
-            // onProgress={//// console.log("playing")}
-          /> 
-           
-          </Box>
+        <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"80%",  paddingTop:".8rem", paddingBottom:".5rem", overflow:"hidden"}}>
+            <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </Box>
           {/* </VdoPlayerStyle> */}
     {/* </Grid> */}
     {/* </VideoGridWrapper> */}

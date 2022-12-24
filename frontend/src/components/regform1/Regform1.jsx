@@ -69,6 +69,7 @@ const Regform1 = () => {
   } = useContext(multiStepContext);
 
   const [open, setOpen] = useState(true);
+  const [backdrop, setBackdrop] = useState(false);
   
   // const googleAuth = () => {
   //   window.open(
@@ -86,16 +87,24 @@ const Regform1 = () => {
   const googleAuth = () => {
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
-      "",
-      "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
-    );
+      "_self"   );
+      setBackdrop(true) 
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/google`,
+    //   "",
+    //   "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
+    // );
   };
   const facebookAuth = () => {
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-      "",
-      "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
-    );
+      "_self" );
+      setBackdrop(true) 
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
+    //   "",
+    //   "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
+    // );
   };
 
   // mui telnet

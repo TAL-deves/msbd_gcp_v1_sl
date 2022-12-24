@@ -230,10 +230,9 @@ const LoginForm = (props) => {
     var top = (window.screen.height - h) / 2;
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-      "_self",
+      "_self"
       
     );
-
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
     //   "",
