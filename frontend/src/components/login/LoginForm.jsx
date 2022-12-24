@@ -147,6 +147,14 @@ const LoginForm = (props) => {
         // window.close();
         window.opener.document.location.href = "/courses"
 
+        if(googleData.data.data.access_token !== null){
+          console.log("inside if");
+        } else{
+          console.log("else block");
+
+        }
+
+
         if(googleData.data.data !== null){
           // swal("OKAY!","OKAY!","success",{
           //   timer: 3000
