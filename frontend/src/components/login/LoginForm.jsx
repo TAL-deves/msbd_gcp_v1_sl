@@ -223,19 +223,19 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-  window.open(
+  // window.open(
+  //     `${process.env.REACT_APP_API_URL}/api/google`,
+  //     "_self",
+      
+  //   );
+    window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
       "",
-      
+      `width=${w}, 
+      height=${h}, 
+      top=${top}, 
+      left=${left}`
     );
-    // window.open(
-    //   `${process.env.REACT_APP_API_URL}/api/google`,
-    //   "",
-    //   `width=${w}, 
-    //   height=${h}, 
-    //   top=${top}, 
-    //   left=${left}`
-    // );
     setBackdrop(true)
   };
   const facebookAuth = () => {
