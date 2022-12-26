@@ -4,11 +4,10 @@ import {
   Backdrop,
   CircularProgress,
   Collapse,
-  CssBaseline,
+  
   IconButton,
   Stack,
 } from "@mui/material";
-import MuiPhoneInput from 'material-ui-phone-number';
 import { Box, Container } from "@mui/system";
 import { React, useState } from "react";
 import { useContext } from "react";
@@ -16,58 +15,38 @@ import { multiStepContext } from "../../pages/StepContext";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-// import "./Regform1.css";
+
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiTelInput } from "mui-tel-input";
 import {Link as Routerlink} from "react-router-dom";
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+
+
 
 const Regform1 = () => {
   const {
-    userRef,
-    emailRef,
-    errRef,
+    
     validName,
-    setValidName,
     userFocus,
     setUserFocus,
     validEmail,
-    setValidEmail,
     email,
     setEmail,
     emailFocus,
     setEmailFocus,
-    password,
-    setPwd,
-    validPwd,
-    setValidPwd,
-    pwdFocus,
-    setPwdFocus,
-    validMatch,
-    setValidMatch,
-    matchFocus,
-    setMatchFocus,
+    
     errMsg,
-    setErrMsg,
-    success,
-    setSuccess,
+    
     handleSubmit,
-    theme,
+    
     username,
     setUser,
-    matchPwd,
-    setMatchPwd,phone, setPhone,validPhone, phoneFocus,setPhoneFocus
+    phone, setPhone,validPhone, phoneFocus,setPhoneFocus
   } = useContext(multiStepContext);
 
   const [open, setOpen] = useState(true);
@@ -87,26 +66,26 @@ const Regform1 = () => {
   // };
 
   const googleAuth = () => {
-    window.open(
-      `${process.env.REACT_APP_API_URL}/api/google`,
-      "_self"   );
-      setBackdrop(true) 
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/google`,
-    //   "",
-    //   "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
-    // );
+    //   "_self"   );
+    window.open(
+      `${process.env.REACT_APP_API_URL}/api/google`,
+      "",
+      "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
+      );
+      setBackdrop(true) 
   };
   const facebookAuth = () => {
-    window.open(
-      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-      "_self" );
-      setBackdrop(true) 
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-    //   "",
-    //   "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
-    // );
+    //   "_self" );
+      setBackdrop(true) 
+    window.open(
+      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
+      "",
+      "toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no,top=400, left=500, width=620,height=575"
+    );
   };
 
   // mui telnet

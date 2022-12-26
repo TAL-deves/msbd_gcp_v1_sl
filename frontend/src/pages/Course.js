@@ -26,7 +26,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Container, CssBaseline } from "@mui/material";
 import { CardActionArea } from "@mui/material";
-import ReactPlayer from "react-player";
+
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -155,37 +155,7 @@ const Courses = () => {
             <Grid >
         <VdoPlayerStyle>
           <div>
-            <ReactPlayer 
-            url= {videolink}
-            controls={false}
-            loop={true}
-            playing={true}
-            onProgress={(progress)=>{
-              setPlayed(progress.playedSeconds);
-              
-            }}
-            // onPlay={() => {
-            //   //// console.log("play data sent");
-            //   const response = api.post(VIDEOLOG_URL,
-            //     JSON.stringify({ }),
-            //     {
-            //         headers: { 'Content-Type': 'application/json' },
-            //         'Access-Control-Allow-Credentials': true
-            //     }
-            // );
-            // }}
-            // onPause={() => {
-            //   //// console.log("pause data sent");
-            //   const response = api.post(VIDEOLOG_URL,
-            //     JSON.stringify({ }),
-            //     {
-            //         headers: { 'Content-Type': 'application/json' },
-            //         'Access-Control-Allow-Credentials': true
-            //     }
-            // );
-            // }}
-            // onProgress={//// console.log("playing")}
-          /> 
+
           </div>
           </VdoPlayerStyle>
     </Grid>

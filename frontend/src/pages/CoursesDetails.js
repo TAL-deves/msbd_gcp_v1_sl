@@ -19,7 +19,7 @@ import {
 } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Button from "@mui/material/Button";
-import ReactPlayer from "react-player";
+
 import api from "../api/Axios";
 import { blue } from "@mui/material/colors";
 import { styled, alpha } from "@mui/material/styles";

@@ -1,42 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-// import Course from '../components/course/Course';
-// import coursesData from "../data/coursesData";
+import React, { useContext} from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { width } from "@mui/system";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import Slider from "react-slick";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import {motion} from "framer-motion";
 import api from "../../api/Axios";
-
-
-
-// import * as React from 'react';
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-// import Box from '@mui/material/Box';
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-// import Typography from '@mui/material/Typography';
-import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import { Container, CssBaseline, Modal, TextField } from "@mui/material";
-import { CardActionArea } from "@mui/material";
-import ReactPlayer from "react-player";
+import { Container, Modal, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import CourseCard from "../CourseCard/CourseCard";
 import { remove } from "../../Store/cartSlice";
 import { globalContext } from "../../pages/GlobalContext";
 import swal from "sweetalert";

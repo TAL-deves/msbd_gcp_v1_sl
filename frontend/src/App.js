@@ -25,7 +25,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OfflineBar from "./components/offlinebar/OfflineBar";
 import { Offline, Online } from "react-detect-offline";
-import Swal from "sweetalert2";
+
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box, Button, Fab, Modal, Paper, TextField, Typography } from "@mui/material";

@@ -32,7 +32,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Container, CssBaseline, TextField } from "@mui/material";
 import { CardActionArea } from "@mui/material";
-import ReactPlayer from "react-player";
+
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";

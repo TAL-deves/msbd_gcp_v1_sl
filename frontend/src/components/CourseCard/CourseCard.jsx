@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from "react";
+import { React, useContext, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -6,7 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-// import { Link } from "@mui/material";
 import { motion } from "framer-motion";
 import { globalContext } from "../../pages/GlobalContext";
 import { add } from '../../Store/cartSlice';
@@ -14,14 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
-import swal from "sweetalert";
 
 
 
 const CourseCard = (props) => {
 
 
-  let mail = props.mail;
   AOS.init({ duration: 2000, once: true });
   const { t } = useContext(globalContext)
 
@@ -33,7 +30,6 @@ const CourseCard = (props) => {
   let lecture = props.lecture;
   let img = props.img;
   let fullObject = props.fullObject;
-  let fullObjectToggle = props.fullObject.toggle;
 
 
   // console.log("fullObject.id", fullObject)
@@ -47,43 +43,12 @@ const CourseCard = (props) => {
 
   }
 
-  // //// console.log("flagagagagaaaaaaaaa", JSON.parse(localStorage.getItem("course")))
 
-
-  // useEffect(()=>{
-  //   let array= JSON.parse(localStorage.getItem("course"))
-  //   array.map((e)=>{
-  //     // //// console.log("flagagagagaaaaaaaaa", e.id)
-  //   })
-
-  // })
-
-  //  const [toggle, setToggle]=("x")
   const [found, setFound] = useState(false)
   const handleAdd = (course) => {
     props.updateCourse(course.fullObject, false)
     dispatch(add({ ...course }));
-    // course["fullObject"]["isSelected"]=false;
-    //// console.log("new course list handleAdd", course.fullObject.isSelected)
-    // setFlag(false);
-
-
-    // button change 
-
-    //  //// console.log("flag", course.id)
-
-    //  let array= JSON.parse(localStorage.getItem("course"))
-    //   array.map((e)=>{
-    // //// console.log("flagagagagaaaaaaaaa", e.id)
-    // if(e.id===course.id){
-    //   //// console.log("yes im in", e.id, "and ", course.id);
-    //   setFlag(true);
-    // } else {
-    //   //// console.log("Nothing");
-    //   setFlag(false);
-    // }
-    // })
-
+    
   }
 
   localStorage.setItem("course", JSON.stringify(courses));
@@ -200,26 +165,7 @@ const CourseCard = (props) => {
                 </Button>
               </Link>
 
-              {/* only for soft launch */}
-              {/* <Button size="small" variant="contained"  
-              sx={{color:"secondary.main",
-            "&:hover":{backgroundColor:"secondary.main",
-            color:"primary.main"}}} onClick={()=>{
-              swal("","To Be Announced","");
-            }}
-            >
-             
-                <Typography
-                  sx={{
-                    fontSize: "1rem",
-                  }}
-                >
-               
-                  {t("course_details")}
-                  
-                </Typography>
-                
-              </Button> */}
+              
 
 
 

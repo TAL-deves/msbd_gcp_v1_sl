@@ -1,30 +1,13 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
-import React, { useEffect, useState } from 'react';
-import Divider from '@mui/material/Divider';
+import React from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import api from "../../api/Axios";
-import swal from "sweetalert";
 
-const LEAVE_MESSAGE_URL = "/api/leaveamessage";
-const USER_URL = "/api/userprofile";
-const UPDATE_USER_URL = "/api/updateuserprofile";
+
 
 const Contact = () => {
-  const [leaveMessage, setLeaveMessage] = useState("")
-
-  const [username, setUsername] = useState(localStorage.getItem('user'))
-  const [userInfo, setUserInfo] = useState({})
-  const [fullname, setFullname] = useState()
-  const [email, setEmail] = useState()
-  const [profession, setProfession] = useState("")
-  const [gender, setGender] = useState("")
-
-  const [phonenumber, setPhonenumber] = useState();
-  const [age, setAge] = useState();
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
+  
   AOS.init({ duration: 2000 });
   
 

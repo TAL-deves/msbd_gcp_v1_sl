@@ -1,39 +1,33 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import Icon from "@mui/material/Icon";
 import {Link as Routerlink} from "react-router-dom";
 import { useState, useContext } from "react";
 import api, { login } from "../../api/Axios";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import "./LoginForm.css";
 import LocalStorageService from "../../api/localstorage";
-import { useEffect } from "react";
+
 import {
   Alert,
   AlertTitle,
   InputAdornment,
-  Collapse,
+  
   IconButton,
   Stack,
   CircularProgress,
   Backdrop,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { globalContext } from "../../pages/GlobalContext";
@@ -60,27 +54,7 @@ const LoginForm = (props) => {
 
   const { t } = useContext(globalContext);
   const {
-    userRef,
-    emailRef,
-    errRef,
-    validName,
-    setValidName,
-    userFocus,
-    setUserFocus,
-    validEmail,
-    setValidEmail,
-    setPwd,
-    validPwd,
-    setValidPwd,
-    pwdFocus,
-    setPwdFocus,
-    validMatch,
-    setValidMatch,
-    matchFocus,
-    setMatchFocus,
-    setUser,
-    matchPwd,
-    setMatchPwd, addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus,phoneNumber
+     addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus,phoneNumber
   } = useContext(multiStepContext);
 
   // mui telnet
@@ -102,7 +76,7 @@ const LoginForm = (props) => {
   const [load, setLoad] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
- 
+
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
   let fbObj = JSON.parse(JSON.parse(JSON.stringify(fobject)));
 
@@ -144,28 +118,8 @@ const LoginForm = (props) => {
         localStorageService.setToken(googleData.data.data);
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
-        // window.close();
         window.opener.document.location.href = "/courses"
-        swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
-          timer:10000
-        }).then(()=>{
-          // window.opener.document.location.href = "/courses"
-          window.close();
-        });
-
-        // if(googleData.data.data.access_token !== null){
-        //   // window.close();
-        //   window.opener.document.location.href = "/courses"
-        //   // window.opener.sessionStorage.setItem("access_token", googleData.data.data.access_token)
-        //   swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
-        //     timer:10000
-        //   }).then(()=>{
-        //     // window.location.href = "/userprofile"
-        //     window.close();
-        //   });
-        // } 
-
-
+        window.close();
         // window.location.href="/courses"
         setBackdrop(false)        
       }
@@ -201,9 +155,9 @@ const LoginForm = (props) => {
         localStorageService.setToken(facebookData.data.data);
         // //// console.log(facebookData.reslut);
         // window.opener.location.reload();
-        // window.close();
-        // window.opener.document.location.href = "/courses"
-        window.location.href="/courses"
+        window.opener.document.location.href = "/courses"
+        window.close();
+        // window.location.href="/courses"
       }
     }
   }
@@ -228,11 +182,11 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-  // window.open(
-  //     `${process.env.REACT_APP_API_URL}/api/google`,
-  //     "_self",
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/api/google`,
+    //   "_self",
       
-  //   );
+    // );
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
       "",
@@ -248,19 +202,19 @@ const LoginForm = (props) => {
     var h = 575;
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
-    window.open(
-      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-      "_self"
-      
-    );
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
-    //   "",
-    //   `width=${w}, 
-    //   height=${h}, 
-    //   top=${top}, 
-    //   left=${left}`
+    //   "_self"
+      
     // );
+    window.open(
+      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
+      "",
+      `width=${w}, 
+      height=${h}, 
+      top=${top}, 
+      left=${left}`
+    );
   };
 
 

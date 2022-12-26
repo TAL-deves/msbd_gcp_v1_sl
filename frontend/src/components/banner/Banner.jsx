@@ -1,14 +1,8 @@
 import * as React from "react";
-// import { styled } from '@mui/material/styles';
 import Box from "@mui/material/Box";
-// import Paper from '@mui/material/Paper';
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
-// import './Banner.css';
-import { Container, Paper, Stack } from "@mui/material";
-import { multiForgotContext } from "../../pages/ForgotContext";
+import { Container } from "@mui/material";
 import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';

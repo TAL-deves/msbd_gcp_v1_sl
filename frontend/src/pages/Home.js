@@ -6,7 +6,7 @@ import Instructor from '../components/Instructor/Instructor'
 import DownloadApp from '../components/downloadApp/DownloadApp'
 import Portfolio from '../components/portfolio/Portfolio'
 import ClientFeedback from '../components/clientfeedback/ClientFeedback'
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
 import StepContext, { multiStepContext } from './StepContext'
 
 const Home = () => {

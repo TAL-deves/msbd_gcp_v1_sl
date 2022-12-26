@@ -129,16 +129,6 @@ app.use(
     // exposedHeaders: ['x-auth-token']
   })
 );
-// app.use(
-//   cors({
-//     origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com"],
-//     methods: "GET,POST,PUT,DELETE",
-//     credentials: true,
-//   })
-// );
-// app.use(
-//   cors()
-// );
 app.use(
   express.urlencoded({
     extended: true,

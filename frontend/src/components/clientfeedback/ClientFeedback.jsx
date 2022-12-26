@@ -1,37 +1,16 @@
-import { styled, alpha } from "@mui/material/styles";
 import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
+ 
   Container,
-  CssBaseline,
-  Grid,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext,  useState } from "react";
 import { clientData } from "../../data/clientData";
 import Slider from "react-slick";
-import { Box, display } from "@mui/system";
-import { Link } from "react-router-dom";
-import InstructorCard from "../InstructorCard/InstructorCard";
-import { Height } from "@mui/icons-material";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Box } from "@mui/system";
 
 import { useRef } from "react";
 import ClientCard from "./ClientCard/ClientCard";
 import { globalContext } from "../../pages/GlobalContext";
-import { multiStepContext } from "../../pages/StepContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';

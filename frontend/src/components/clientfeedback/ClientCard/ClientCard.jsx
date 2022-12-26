@@ -6,8 +6,6 @@ import Avatar from '@mui/material/Avatar';
 
 import Typography from '@mui/material/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { CardMedia } from '@mui/material';
-import {motion} from "framer-motion";
 import { Box } from '@mui/system';
 import AOS from 'aos';
 import 'aos/dist/aos.css';

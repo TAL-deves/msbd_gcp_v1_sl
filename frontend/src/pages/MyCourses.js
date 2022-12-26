@@ -23,11 +23,13 @@ import Paper from '@mui/material/Paper';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import axios, { Axios } from "axios";
 import { LinkedinShareButton } from 'react-share';
+// import fileDownload from 'js-file-download';
+
 // import { AiFillLinkedin } from 'react-icons/ai';
 
 
 
-var fileDownload = require('js-file-download');
+ var fileDownload = require('js-file-download');
 
 let USER_COURSES_URL = "/api/usercourses"
 let CERTIFICATE_URL= "/api/certificate"
