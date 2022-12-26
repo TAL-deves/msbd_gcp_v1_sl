@@ -146,7 +146,12 @@ const LoginForm = (props) => {
         // window.opener.location.reload();
         // window.close();
         // window.opener.document.location.href = "/courses"
-
+        swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
+          timer:10000
+        }).then(()=>{
+          // window.location.href = "/userprofile"
+          window.close();
+        });
 
         if(googleData.data.data.access_token !== null){
           // window.close();
