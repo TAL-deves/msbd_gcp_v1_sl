@@ -207,6 +207,7 @@ const LoginForm = (props) => {
     //   "_self"
       
     // );
+    setBackdrop(true);
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
       "",
