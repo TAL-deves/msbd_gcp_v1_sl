@@ -404,7 +404,7 @@ app.get(
       );
 
       res.redirect(
-        process.env.CLIENT_URL +
+        req.hostname +
           `login?gusername=${userid}&gobject=${JSON.stringify(
             responseToSend
           )}&profilename=${userinfo}`
@@ -423,7 +423,7 @@ app.get(
       );
 
       res.redirect(
-        process.env.CLIENT_URL +
+        req.hostname +
           `login?gusername=${userid}&gobject=${JSON.stringify(
             responseToSend
           )}&profilename=${userinfo}`
@@ -486,7 +486,7 @@ app.get(
       );
 
       res.redirect(
-        process.env.CLIENT_URL +
+        req.hostname +
           `login?fusername=${userid}&fobject=${JSON.stringify(
             responseToSend
           )}&fprofilename=${profilename}`
@@ -505,7 +505,7 @@ app.get(
       );
 
       res.redirect(
-        process.env.CLIENT_URL +
+        req.hostname +
           `login?fusername=${userid}&fobject=${JSON.stringify(
             responseToSend
           )}&fprofilename=${profilename}`
