@@ -4325,6 +4325,7 @@ app.get("/api/testgetreq", async (req, res) => {
   console.log("request ------", req.hostname);
   console.log("req.headers.host ------", req.headers.host);
   console.log("req.headers.origin ------", req.headers.origin);
+  console.log("url ------", req.protocol + '://' + req.get('host') + req.originalUrl);
   let data = {
     data: "sample data",
     send: "Got from backend",
