@@ -133,7 +133,6 @@ const LoginForm = (props) => {
       // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let googleData = JSON.parse(recievedData);
-      googleWindowData = googleData.data.data;
 
       const localStorageService = LocalStorageService.getService();
       // //// console.log("Google data : ", googleData.data.result.isError);
@@ -224,7 +223,7 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-    googleWindow = window.open(
+  window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
       "",
       
@@ -352,7 +351,6 @@ const LoginForm = (props) => {
           alignItems: "center",
         }}
       >
-        <Typography>{googleWindowData}</Typography>
         <Avatar sx={{ m: 2, bgcolor: "primary.main", p: 3 }}>
           <LoginIcon />
         </Avatar>
