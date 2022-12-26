@@ -102,9 +102,7 @@ const LoginForm = (props) => {
   const [load, setLoad] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
-  let googleWindow;
-  let googleWindowData;
-
+ 
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
   let fbObj = JSON.parse(JSON.parse(JSON.stringify(fobject)));
 
@@ -149,7 +147,22 @@ const LoginForm = (props) => {
         // window.opener.location.reload();
         // window.close();
         // window.opener.document.location.href = "/courses"
-        window.location.href="/courses"
+
+
+        if(googleData.data.data.access_token !== null){
+          // window.close();
+          window.opener.document.location.href = "/courses"
+          // window.opener.sessionStorage.setItem("access_token", googleData.data.data.access_token)
+          swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
+            timer:10000
+          }).then(()=>{
+            // window.location.href = "/userprofile"
+            window.close();
+          });
+        } 
+
+
+        // window.location.href="/courses"
         setBackdrop(false)        
       }
     }
