@@ -4322,6 +4322,7 @@ app.post("/api/testpostreq", async (req, res) => {
 });
 
 app.get("/api/testgetreq", async (req, res) => {
+  console.log("request ------", req);
   let data = {
     data: "sample data",
     send: "Got from backend",
