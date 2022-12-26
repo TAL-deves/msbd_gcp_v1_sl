@@ -145,25 +145,25 @@ const LoginForm = (props) => {
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
         // window.close();
-        // window.opener.document.location.href = "/courses"
+        window.opener.document.location.href = "/courses"
         swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
           timer:10000
         }).then(()=>{
-          // window.location.href = "/userprofile"
+          // window.opener.document.location.href = "/courses"
           window.close();
         });
 
-        if(googleData.data.data.access_token !== null){
-          // window.close();
-          window.opener.document.location.href = "/courses"
-          // window.opener.sessionStorage.setItem("access_token", googleData.data.data.access_token)
-          swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
-            timer:10000
-          }).then(()=>{
-            // window.location.href = "/userprofile"
-            window.close();
-          });
-        } 
+        // if(googleData.data.data.access_token !== null){
+        //   // window.close();
+        //   window.opener.document.location.href = "/courses"
+        //   // window.opener.sessionStorage.setItem("access_token", googleData.data.data.access_token)
+        //   swal("Success!", `${JSON.stringify(googleData.data.data)}`, "success",{
+        //     timer:10000
+        //   }).then(()=>{
+        //     // window.location.href = "/userprofile"
+        //     window.close();
+        //   });
+        // } 
 
 
         // window.location.href="/courses"
