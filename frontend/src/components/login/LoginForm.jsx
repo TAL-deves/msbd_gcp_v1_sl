@@ -102,6 +102,8 @@ const LoginForm = (props) => {
   const [load, setLoad] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
+  let googleWindow;
+  let googleWindowData;
 
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
   let fbObj = JSON.parse(JSON.parse(JSON.stringify(fobject)));
@@ -133,6 +135,7 @@ const LoginForm = (props) => {
       // //// console.log("recievedData   -------   ", JSON.parse(recievedData));
 
       let googleData = JSON.parse(recievedData);
+      googleWindowData = googleData.data.data;
 
       const localStorageService = LocalStorageService.getService();
       // //// console.log("Google data : ", googleData.data.result.isError);
@@ -208,9 +211,9 @@ const LoginForm = (props) => {
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
     
-    window.open(
+    googleWindow = window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
-      "_self",
+      "",
       
     );
     // window.open(
@@ -336,6 +339,7 @@ const LoginForm = (props) => {
           alignItems: "center",
         }}
       >
+        <Typography>{googleWindowData}</Typography>
         <Avatar sx={{ m: 2, bgcolor: "primary.main", p: 3 }}>
           <LoginIcon />
         </Avatar>
