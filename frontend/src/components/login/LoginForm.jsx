@@ -188,7 +188,7 @@ const LoginForm = (props) => {
       
     // );
     window.open(
-      `${process.env.REACT_APP_API_URL}/api/google`,
+      `${window.location.origin}/apipoint/api/google`,
       "",
       `width=${w}, 
       height=${h}, 
@@ -209,7 +209,7 @@ const LoginForm = (props) => {
     // );
     setBackdrop(true);
     window.open(
-      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
+      `${window.location.origin}/apipoint/api/facebook/callback`,
       "",
       `width=${w}, 
       height=${h}, 
