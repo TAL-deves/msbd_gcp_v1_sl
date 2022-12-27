@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 
 import CourseCard from "../CourseCard/CourseCard";
@@ -134,7 +133,6 @@ const HomeCourses = () => {
   useEffect(() => {
     fetchData();
   }, [language]);
-  const navigate = useNavigate();
 
   let updateCourse = (course, isSelected) => {
     //// console.log(course, isSelected)

@@ -1,22 +1,20 @@
-import { BrowserRouter, Redirect, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter,  Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Verify from "./pages/Verify";
-import Dashboard from "./pages/Dashboard";
 import Navigationbar from "./components/navbar/Navigationbar";
 import Offer from "./components/offer/Offer";
 import Courses from "./pages/Courses";
 import CoursesDetails from "./pages/CoursesDetails";
 import Course from "./pages/Course";
 import Error from "./pages/Error";
-import Footer from "./components/footer/Footer";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
 import LocalStorageService from "./api/localstorage";
 // import ForgotPassword from "./components/Forgotpassword/ForgotPassword";
 import ForgotPassword from "./pages/ForgotPassword";
-import StepContext, { multiStepContext } from "../src/pages/StepContext";
+import StepContext from "../src/pages/StepContext";
 import Forgot_Requestpassword from "./pages/Forgot_Requestpassword";
 import Forgot_ResetPassword from "./pages/Forgot_ResetPassword";
 import ForgotContext from "./pages/ForgotContext";
@@ -24,26 +22,25 @@ import Cart from "./components/Cart/Cart";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OfflineBar from "./components/offlinebar/OfflineBar";
-import { Offline, Online } from "react-detect-offline";
+import { Offline } from "react-detect-offline";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import { Box, Button, Fab, Modal, Paper, TextField, Typography } from "@mui/material";
 import primarytheme from "./style/style";
-import UserProfile from "./pages/UserProfile";
 import MyCourses from "./pages/MyCourses";
 import InstructorDetails from "./pages/InstructorDetails";
 import PaymentHistory from "./pages/PaymentHistory";
 import MyFeedbacks from "./pages/MyFeedbacks";
-import DeactivateAccount from "./pages/DeactivateAccount";
+// import DeactivateAccount from "./pages/DeactivateAccount";
 import Underconstruction from "./pages/Underconstruction";
 import Coursedemo from "./pages/Coursedemo";
 import ScrollToTop from "react-scroll-to-top";
 import GlobalContext from "./pages/GlobalContext";
-import i18n from "i18next";
+// import i18n from "i18next";
 import api from "../src/api/Axios";
-import { useTranslation, initReactI18next, Trans } from "react-i18next";
-import { translationsEn, translationsBn } from "../src/components/navbar/language";
+// import { useTranslation, initReactI18next, Trans } from "react-i18next";
+// import { translationsEn, translationsBn } from "../src/components/navbar/language";
 import ScrollToTops from "./components/ScrollToTops/ScrollToTops";
 import Wavefooter from "./components/Wavefooter/Wavefooter";
 import AboutUs from "./pages/AboutUs";
@@ -51,24 +48,21 @@ import TermsCondition from "./pages/TermsCondition";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import swal from "sweetalert";
-import { WindowSharp } from "@mui/icons-material";
 import Contact from "./components/Contact/Contact";
 import Payment from "./pages/Payment";
 import ProfileTabs from "./pages/ProfileTabs";
-import AddIcon from '@mui/icons-material/Add';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { Container } from "@mui/system";
 import VerifyCertificate from "./components/VerifyCertificate/VerifyCertificate";
 
-const PROFILE_URL = `api/profile`;
+
 const LEAVE_MESSAGE_URL = "/api/leaveamessage";
 const USER_URL = "/api/userprofile";
 
 function App() {
   const [fromtoken, setFromtoken] = useState(false);
   const [user, setUser] = useState("")
-  const loggedin = localStorage.getItem("access_token")
+  // const loggedin = localStorage.getItem("access_token")
   const username = localStorage.getItem("user")
   const [mode, setMode] = useState("theme");
   const [darkmode, setDarkMode] = useState(false);
@@ -86,7 +80,7 @@ function App() {
 
   const [phonenumber, setPhonenumber] = useState();
   const [age, setAge] = useState();
-  const [validEmail, setValidEmail] = useState(false);
+  // const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
 
@@ -361,7 +355,7 @@ function App() {
                   path="login"
                   element={user ? <Navigate to="/courses" /> : <Login setMail={setMail} />}
                 />
-                <Route path="dashboard" element={<Dashboard />} />
+                
                 {/* <Route path="forgotpassword" element={<ForgotPass />} /> */}
                 <Route
                   path="forgotpassword"
@@ -419,7 +413,7 @@ function App() {
                 <Route path="mycourses" element={<MyCourses />} />
                 <Route path="paymenthistory" element={<PaymentHistory />} />
                 <Route path="myfeedback" element={<MyFeedbacks />} />
-                <Route path="dectivateaccount" element={<DeactivateAccount />} />
+                {/* <Route path="dectivateaccount" element={<DeactivateAccount />} /> */}
                 <Route path="instructor-details" element={<InstructorDetails />} />
                 <Route path="verify-certificate" element={<VerifyCertificate />} />
                 {/* <Route path="coursedemo" element={<Course />} /> */}

@@ -1,43 +1,34 @@
-import {React, useContext, useEffect, useState} from "react";
+import {React, useContext,  useState} from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { CardHeader, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import {motion} from "framer-motion";
 import { globalContext } from "../../pages/GlobalContext";
 import {add} from '../../Store/cartSlice';
 import { useDispatch, useSelector } from "react-redux";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
-import swal from "sweetalert";
 
 
 const SSLCourseCard = (props) => {
 
-
-  let mail= props.mail;  
   AOS.init({duration:2000});
   const {t}= useContext(globalContext)
-  const [flag, setFlag] = useState(true);
   
   let title = props.title;
-  let id= props.courseID;
   let instructor = props.instructor;
   let price = props.price;
   let hour = props.hour;
   let lecture = props.lecture;
   let img = props.img;
   let fullObject = props.fullObject;
-  let fullObjectToggle = props.fullObject.toggle;
 
 
-//// console.log(fullObject.id, fullObject.isSelected)
   const dispatch= useDispatch()
 
   // course id finder
@@ -60,7 +51,6 @@ const SSLCourseCard = (props) => {
 // })
 
 //  const [toggle, setToggle]=("x")
- const[found, setFound]=useState(false)
   const handleAdd=(course)=>{
     props.updateCourse(course.fullObject, false)
   dispatch(add({...course}));

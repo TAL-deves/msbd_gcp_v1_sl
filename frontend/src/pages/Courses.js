@@ -6,58 +6,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import api from "../api/Axios"
 
-import { Button, Container, Skeleton } from "@mui/material";
-import { add } from '../Store/cartSlice';
-import { useDispatch, useSelector } from "react-redux";
+import {  Container } from "@mui/material";
 import CourseCard from "../components/CourseCard/CourseCard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SideCart from "../components/SideCart/SideCart";
-import StepContext, { multiStepContext } from "./StepContext";
+import { multiStepContext } from "./StepContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import SSLCourseCard from "../components/SSLCourseCard/SSLCourseCard";
 import { globalContext } from "./GlobalContext";
 
 
 const Courses = (props) => {
-  const {
-    userRef,
-    emailRef,
-    errRef,
-    renderer,
-    userobj,
-    validName,
-    setValidName,
-    userFocus,
-    setUserFocus,
-    validEmail,
-    setValidEmail,
-    email,
-    setEmail,
-    emailFocus,
-    setEmailFocus,
-    password,
-    setPwd,
-    validPwd,
-    setValidPwd,
-    pwdFocus,
-    setPwdFocus,
-    validMatch,
-    setValidMatch,
-    matchFocus,
-    setMatchFocus,
-    errMsg,
-    setErrMsg,
-    success,
-    setSuccess,
-    handleSubmitRegistration,
-    theme,
-    username,
-    setUser,
-    matchPwd,
-    setMatchPwd,
-    registerapiresponse,
-  } = useContext(multiStepContext);
+  
 
   const { language } = useContext(globalContext);
   let mail = props.mail;
@@ -69,7 +28,6 @@ const Courses = (props) => {
 
   const [courses, setCourses] = useState([]);
   const [load, setLoad] = useState(true);
-  let newlang= localStorage.getItem("language")
 
   let fetchData = async () => {
 
@@ -126,7 +84,6 @@ const Courses = (props) => {
     fetchData();
   }, [language]);
 
-  const navigate = useNavigate();
 
 
 

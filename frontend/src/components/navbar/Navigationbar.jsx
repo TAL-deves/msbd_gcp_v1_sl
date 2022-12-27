@@ -7,47 +7,23 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+
 import Stack from "@mui/material/Stack";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './Navigationbar.css';
 import { styled } from "@mui/material/styles";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 import api, { baseURL } from "../../api/Axios";
 import GTranslateIcon from '@mui/icons-material/GTranslate';
-import {
-  createTheme,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  InputLabel,
-  NativeSelect,
-  Paper,
-  Select,
-  Switch,
-  ThemeProvider,
+import { 
+  Switch
 } from "@mui/material";
-import i18n from "i18next";
-import { useTranslation, initReactI18next, Trans } from "react-i18next";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import SchoolIcon from "@mui/icons-material/School";
-import primarytheme from "../../style/style";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import { useSelector } from "react-redux";
-
-import logo2 from "./logo2.png";
-
 import logonill from "./Logo Nill.svg";
-import logo_dark from "./logo_dark.png";
 import Ms_logo from "./Ms_logo.svg";
-
-import { translationsEn, translationsBn } from "./language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { globalContext } from "../../pages/GlobalContext";
@@ -104,19 +80,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 
-// i18n
-//   .use(initReactI18next) // passes i18n down to react-i18next
-//   .init({
-//     resources: {
-//       en: { translation: translationsEn },
-//       bn: { translation: translationsBn },
-//     },
-//     lng: "en",
-//     fallbackLng: "en",
-//     interpolation: { escapeValue: false },
-//   });
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navigationbar = (props) => {
   const { userobj } = useContext(multiStepContext);

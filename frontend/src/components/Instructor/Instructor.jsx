@@ -1,31 +1,15 @@
-import { styled, alpha } from "@mui/material/styles";
+
 import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
+  
   CircularProgress,
   Container,
-  CssBaseline,
-  Grid,
+  
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { instructorData } from "../../data/instructorData";
 import Slider from "react-slick";
-import { Box, display } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Box } from "@mui/system";
 import InstructorCard from "../InstructorCard/InstructorCard";
-import { Height } from "@mui/icons-material";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import api from '../../api/Axios'
 import { useRef } from "react";
 import { globalContext } from "../../pages/GlobalContext";

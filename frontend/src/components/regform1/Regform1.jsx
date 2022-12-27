@@ -80,7 +80,7 @@ const Regform1 = () => {
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
     //   "_self" );
-      setBackdrop(true) 
+    setBackdrop(true) 
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
       "",

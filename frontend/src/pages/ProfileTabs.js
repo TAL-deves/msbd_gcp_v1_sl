@@ -2,16 +2,16 @@ import * as React from "react";
 import PropTypes from "prop-types";
 
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs, { tabsClasses } from "@mui/material/Tabs";
+
+import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserProfile from "./UserProfile";
 import MyCourses from "./MyCourses";
-import Payment from "./Payment";
+
 import MyFeedbacks from "./MyFeedbacks";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
+
 import PaymentHistory from "./PaymentHistory";
 
 function TabPanel(props) {

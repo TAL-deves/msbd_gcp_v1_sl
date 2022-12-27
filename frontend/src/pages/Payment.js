@@ -1,71 +1,48 @@
-import { PhotoCamera } from "@mui/icons-material";
+
 import {
-  Avatar,
   Box,
   Button,
   Container,
-  IconButton,
-  Modal,
+ 
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
+
 import api from "../api/Axios";
-import WebCam from "../components/Webcam/WebCam";
-import axios from "axios";
-import Webcam from "react-webcam";
+
 import swal from "sweetalert";
 
 import { useSelector } from "react-redux";
-import { use } from "i18next";
 import { useLocation } from "react-router";
 import CircularProgress from "@mui/material/CircularProgress";
 
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: { md: "50%", xs: "80%", sm: "80%" },
-  bgcolor: 'other.white',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 
-const videoConstraints = {
-  width: 420,
-  height: 400,
-  facingMode: "user"
-};
 
 const USER_URL = "/api/userprofile"
 const UPDATE_USER_URL = "/api/updateuserprofile"
-const USER_IMAGE_URL = "/api/getuserimage"
 
 const Payment = () => {
-  const webcamRef = React.useRef(null);
   const location = useLocation();
   const total = location.state.total;
   const singleCourse = location.state.singleCourse;
   // // console.log(discountedPrice,"discountedPrice")
-  const [userprofileimage, setUserprofileimage] = useState("")
-  const [image, setImage] = useState("")
-  const [webimage, setWebImage] = useState('')
+  // const [userprofileimage, setUserprofileimage] = useState("")
+  // const [image, setImage] = useState("")
+  // const [webimage, setWebImage] = useState('')
   const [username, setUsername] = useState(localStorage.getItem('user'))
   const [userInfo, setUserInfo] = useState({})
   const [fullname, setFullname] = useState()
   const [phonenumber, setPhonenumber] = useState()
   // const [profession, setProfession] = useState(userInfo.profession)
-  const [age, setAge] = useState()
+  // const [age, setAge] = useState()
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
   const [staddress, setStAddress] = useState();
   const [city, setCity] = useState("");
   const [postcode, setPostcode] = useState("");

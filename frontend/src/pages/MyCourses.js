@@ -2,18 +2,12 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/Axios"
 import { Button, Container, LinearProgress, linearProgressClasses, Table, TableCell, TableContainer, TableRow } from "@mui/material";
-import { add } from '../Store/cartSlice';
-import { useDispatch, useSelector } from "react-redux";
-import CourseCard from "../components/CourseCard/CourseCard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import SideCart from "../components/SideCart/SideCart";
-import StepContext, { multiStepContext } from "./StepContext";
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import swal from "sweetalert";
@@ -21,8 +15,7 @@ import MyCourseCard from "../components/MyCourseCard/MyCourseCard";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import axios, { Axios } from "axios";
-import { LinkedinShareButton } from 'react-share';
+import axios from "axios";
 // import fileDownload from 'js-file-download';
 
 // import { AiFillLinkedin } from 'react-icons/ai';
@@ -32,7 +25,7 @@ import { LinkedinShareButton } from 'react-share';
  var fileDownload = require('js-file-download');
 
 let USER_COURSES_URL = "/api/usercourses"
-let CERTIFICATE_URL= "/api/certificate"
+// let CERTIFICATE_URL= "/api/certificate"
 // let CERTIFICATE_URL= "/api/testingpoint"
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -49,7 +42,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 
 const MyCourses = (props) => {
-  let mail = props.mail;
+ 
   AOS.init();
 
   //// console.log(mail)
@@ -122,7 +115,7 @@ const MyCourses = (props) => {
     fetchData();
   }, []);
 
-  const navigate = useNavigate();
+  
 
   return (
     <>

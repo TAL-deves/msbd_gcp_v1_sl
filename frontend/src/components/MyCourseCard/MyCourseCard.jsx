@@ -1,40 +1,26 @@
-import {React, useContext, useEffect, useState} from "react";
+import {React,   useState} from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+
 import Typography from "@mui/material/Typography";
-import { CardHeader, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
-import {motion} from "framer-motion";
-import { globalContext } from "../../pages/GlobalContext";
+
 import {add} from '../../Store/cartSlice';
 import { useDispatch, useSelector } from "react-redux";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
-import swal from "sweetalert";
 
 
 const MyCourseCard = (props) => {
-
-
-  let mail= props.mail;  
+ 
   AOS.init({duration:2000,once: true});
-  const {t}= useContext(globalContext)
-  const [flag, setFlag] = useState(true);
   
   let title = props.title;
-  let id= props.courseID;
   let instructor = props.instructor;
-  let price = props.price;
   let hour = props.hour;
   let lecture = props.lecture;
   let img = props.img;
-  let fullObject = props.fullObject;
-  let fullObjectToggle = props.fullObject.toggle;
 
 
  //// console.log("fullObject.id", fullObject)
@@ -51,41 +37,32 @@ const MyCourseCard = (props) => {
   // //// console.log("flagagagagaaaaaaaaa", JSON.parse(localStorage.getItem("course")))
  
   
-// useEffect(()=>{
-//   let array= JSON.parse(localStorage.getItem("course"))
-//   array.map((e)=>{
-//     // //// console.log("flagagagagaaaaaaaaa", e.id)
-//   })
-  
-// })
 
-//  const [toggle, setToggle]=("x")
- const[found, setFound]=useState(false)
-  const handleAdd=(course)=>{
-    props.updateCourse(course.fullObject, false)
-  dispatch(add({...course}));
-  // course["fullObject"]["isSelected"]=false;
-  //// console.log("new course list handleAdd", course.fullObject.isSelected)
-  // setFlag(false);
+//   const handleAdd=(course)=>{
+//     props.updateCourse(course.fullObject, false)
+//   dispatch(add({...course}));
+//   // course["fullObject"]["isSelected"]=false;
+//   //// console.log("new course list handleAdd", course.fullObject.isSelected)
+//   // setFlag(false);
   
 
-  // button change 
+//   // button change 
  
-//  //// console.log("flag", course.id)
+// //  //// console.log("flag", course.id)
 
-//  let array= JSON.parse(localStorage.getItem("course"))
-//   array.map((e)=>{
-    // //// console.log("flagagagagaaaaaaaaa", e.id)
-    // if(e.id===course.id){
-    //   //// console.log("yes im in", e.id, "and ", course.id);
-    //   setFlag(true);
-    // } else {
-    //   //// console.log("Nothing");
-    //   setFlag(false);
-    // }
-  // })
+// //  let array= JSON.parse(localStorage.getItem("course"))
+// //   array.map((e)=>{
+//     // //// console.log("flagagagagaaaaaaaaa", e.id)
+//     // if(e.id===course.id){
+//     //   //// console.log("yes im in", e.id, "and ", course.id);
+//     //   setFlag(true);
+//     // } else {
+//     //   //// console.log("Nothing");
+//     //   setFlag(false);
+//     // }
+//   // })
 
-}
+// }
 
  localStorage.setItem("course", JSON.stringify(courses));
 

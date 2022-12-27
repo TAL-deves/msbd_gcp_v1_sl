@@ -5,14 +5,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { CardHeader, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import {motion} from "framer-motion";
 import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
-import swal from "sweetalert";
 
 const InstructorCard = (props) => {
   AOS.init({duration:2000, once: true});

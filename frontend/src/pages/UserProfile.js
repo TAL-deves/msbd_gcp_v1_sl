@@ -1,30 +1,20 @@
-import { PhotoCamera } from "@mui/icons-material";
 import {
   Avatar,
   Box,
   Button,
   CircularProgress,
   Container,
-  FormControl,
-  IconButton,
-  InputLabel,
+  
   MenuItem,
   Modal,
-  Select,
-  Tab,
-  Tabs,
-  TextField,
+    TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import api from "../api/Axios";
-import WebCam from "../components/Webcam/WebCam";
-import axios from "axios";
 import Webcam from "react-webcam";
 import swal from "sweetalert";
-import { useForceUpdate } from "framer-motion";
-import { Navigate, useNavigate } from "react-router";
 
 
 
@@ -74,7 +64,6 @@ const genders = [
 
 const UserProfile = (props) => {
   const webcamRef = React.useRef(null);
-
   const [userprofileimage, setUserprofileimage] = useState("")
   const [image, setImage] = useState("")
   const [webimage, setWebImage] = useState('')
@@ -90,7 +79,7 @@ const UserProfile = (props) => {
   const [load, setLoad] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigate = useNavigate();
+ 
   const [phonenumber, setPhonenumber] = useState();
   const [userPhone, setUserPhone] = useState();
   const [age, setAge] = useState();
@@ -425,7 +414,6 @@ const UserProfile = (props) => {
                         value={phonenumber}
                         name="name"
                         autoComplete="name"
-                        helperText= "Phone number can be added only once"
                         InputProps={{
                           disableUnderline: true,
                           readOnly: true
@@ -449,6 +437,8 @@ const UserProfile = (props) => {
                         inputProps={{
                           maxLength: 14,
                         }}
+                        helperText= "Phone number can be added only once"
+
                         // autoFocus
                         onFocus={() => setPhoneFocus(true)}
                         error={
@@ -655,7 +645,7 @@ const UserProfile = (props) => {
 
                           <br />
                           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                            {webimage != '' ?
+                            {webimage !== '' ?
 
                               <Button onClick={(e) => {
                                 e.preventDefault();
@@ -699,7 +689,6 @@ const UserProfile = (props) => {
           </Grid>
         </Box>)}
     </>
-
 
   );
 };

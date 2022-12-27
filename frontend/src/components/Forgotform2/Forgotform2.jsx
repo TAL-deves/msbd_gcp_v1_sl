@@ -1,27 +1,18 @@
-import { Alert, AlertTitle,InputAdornment, Collapse, CssBaseline, IconButton, Stack } from '@mui/material';
+import { InputAdornment,  IconButton } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {React, useState} from 'react';
 import { useContext } from 'react';
-import { multiStepContext } from '../../pages/StepContext';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+
 import { multiForgotContext } from '../../pages/ForgotContext';
-import {CloseIcon} from '@mui/icons-material/Close';
-// import {  } from "@material-ui";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const ForgotForm2 = () => {
-  const [open, setOpen] = useState(true);
 
 //to show pass
   const [showPassword, setShowPassword] = useState(false);
@@ -35,13 +26,9 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
 
 //
 
-    const {userRef, 
-        emailRef,errRef, validName, setValidName,
-       userFocus, setUserFocus,validEmail, setValidEmail,
-         email, setEmail,emailFocus, setEmailFocus,
-        password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus, validMatch, setValidMatch,matchFocus, setMatchFocus,
-        errMsg, setErrMsg, success, setSuccess,handleSubmit,theme,
-        username, setUser,matchPwd, setMatchPwd, handleSubmitNewPassword}= useContext(multiForgotContext)
+    const {
+        password, setPwd,validPwd, pwdFocus, setPwdFocus, validMatch, matchFocus, setMatchFocus,
+       matchPwd, setMatchPwd, handleSubmitNewPassword}= useContext(multiForgotContext)
   //  //// console.log(password, "this is pass")
     return (
         

@@ -99,6 +99,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
           setCount((count)=>!count)
           // console.log(totalTimeCovered,
           // totalVdoDuration, statusChanged)
+          window.location.reload();
         }
       }
       
@@ -136,7 +137,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
         // // console.log("total played")
       })
       setCurrentTime(player.video.currentTime);
-
+      
     });
 
 

@@ -1,30 +1,13 @@
 import React from 'react';
-import RegisterForm from '../components/register/RegisterForm';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box'; 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import {useRef,useState, useEffect } from "react";
 import api from "../api/Axios";
-import Regform1 from '../components/regform1/Regform1';
-import Regform2 from '../components/Regform2/Regform2';
-import { Modal } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom';
-import ForgotPassword from '../components/Forgotpassword/ForgotPassword';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import i18n from "i18next";
-import { useTranslation, initReactI18next, Trans } from "react-i18next";
-import { translationsEn, translationsBn } from "../components/navbar/language";
+
+import {  useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
 
@@ -44,7 +27,7 @@ const theme = createTheme();
 //
 
 //verify
-const VERIFY_URL = '/api/verify';
+// const VERIFY_URL = '/api/verify';
 const RESEND_VERIFY_URL = '/api/resend-otp';
 
 function Copyright(props) {
@@ -81,7 +64,7 @@ export const multiStepContext= React.createContext(null)
 const StepContext = (props) => {
 
     //registration
-const userRef = useRef();
+// const userRef = useRef();
   const emailRef = useRef();
   const errRef = useRef();
   const [registerapiresponse, setRegisterApiresponse] =useState({});

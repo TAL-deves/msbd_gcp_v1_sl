@@ -222,10 +222,10 @@ const Coursedemo = () => {
   useEffect(() => {
     courseVideo();
 
-    // const interval = setInterval(() => {
-    //   setCount(!count)
+     setInterval(() => {
+      setCount(!count)
 
-    // }, 300000)
+    }, 300000)
 
   }, [count]);
 

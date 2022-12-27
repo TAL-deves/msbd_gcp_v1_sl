@@ -63,17 +63,16 @@ const LoginForm = (props) => {
     // //// console.log(phone)
   }
   const search = useLocation().search;
-  const nameg = new URLSearchParams(search).get("gusername");
+  // const nameg = new URLSearchParams(search).get("gusername");
   const gobject = new URLSearchParams(search).get("gobject");
   const gprofilename = new URLSearchParams(search).get("profilename");
-  const namef = new URLSearchParams(search).get("fusername");
+  // const namef = new URLSearchParams(search).get("fusername");
   const fobject = new URLSearchParams(search).get("fobject");
   const fprofilename = new URLSearchParams(search).get("fprofilename");
 
   const [currentuser, setCurrentuser] = useState("");
   const [gName, setGname] = useState("");
   const [fName, setFname] = useState("");
-  const [load, setLoad] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
 
@@ -188,7 +187,7 @@ const LoginForm = (props) => {
       
     // );
     window.open(
-      `${window.location.origin}/apipoint/api/google`,
+      `${process.env.REACT_APP_API_URL}/api/google`,
       "",
       `width=${w}, 
       height=${h}, 
@@ -207,15 +206,15 @@ const LoginForm = (props) => {
     //   "_self"
       
     // );
-    setBackdrop(true);
     window.open(
-      `${window.location.origin}/apipoint/api/facebook/callback`,
+      `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
       "",
       `width=${w}, 
       height=${h}, 
       top=${top}, 
       left=${left}`
     );
+    setBackdrop(true)
   };
 
 

@@ -1,14 +1,12 @@
-import { Card, CardContent, CardHeader, CircularProgress, Typography } from "@mui/material";
+import { Card, CardContent,  CircularProgress, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import api from "../api/Axios";
-import { multiStepContext } from "./StepContext";
 import swal from "sweetalert";
 
 const REVIEWS_URL = "/api/user-reviews";
 
 const MyFeedbacks = () => {
-  const { userobj } = useContext(multiStepContext);
 
   const [username, setUser] = useState(localStorage.getItem("user"));
   const [reviewData, setReviewData] = useState([]);
