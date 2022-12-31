@@ -119,15 +119,18 @@ mongoose.connect(process.env.DATABASE_CONNECT, function (err, res) {
 });
 
 app.use(express.json());
+// app.use(
+//   cors({
+//     // origin: "*", //Testing
+//     // origin: true,
+//     origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com","https://mindschoolbd.netlify.app/"],
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//     // exposedHeaders: ['x-auth-token']
+//   })
+// );
 app.use(
-  cors({
-    // origin: "*", //Testing
-    // origin: true,
-    origin: ["https://mindschoolbd.com/","https://www.mindschoolbd.com/","mindschoolbd.com","https://mindschoolbd.netlify.app/"],
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-    // exposedHeaders: ['x-auth-token']
-  })
+  cors()
 );
 app.use(
   express.urlencoded({
