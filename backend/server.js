@@ -889,6 +889,16 @@ app.post("/api/clearalltoken", async (req, res) => {
 
         res.send(responseToSend);
       } else {
+        await signUpTemplateCopy.findOneAndUpdate(
+          {
+            username: username,
+          },
+          {
+            $set: {
+              loggedinID: "",
+            },
+          }
+        );
         let setSendResponseData = new sendResponseData(
           null,
           401,
