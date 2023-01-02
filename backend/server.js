@@ -4238,7 +4238,7 @@ app.post("/api/leaveamessage", async (req, res) => {
       let setSendResponseData = new sendResponseData(
         "Message Sent!",
         200,
-        senullrverErrMsg
+        null
       );
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
