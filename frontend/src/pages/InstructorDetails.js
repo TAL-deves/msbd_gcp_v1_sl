@@ -27,6 +27,7 @@ import { Image } from "@mui/icons-material";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { globalContext } from "./GlobalContext";
+import swal from "sweetalert";
 
 const VIDEOLOG_URL = "/videologdata";
 const SINGLE_COURSE_URL = "/api/instructorcourses";
@@ -315,6 +316,18 @@ const InstructorDetails = () => {
                               {course.totalLecture} Lectures
                             </Typography>
                             <br />
+                            {course.instructor.name==="D. Almasur Rahman"?
+                            <>
+                             <Button
+                                size="small"
+                                variant="contained"
+                                sx={{ marginTop: "3%", marginLeft: "27%" }}
+                                onClick={()=>{swal("This course is coming soon", "Thank You", "info")}}
+                              >
+                                Course Details
+                              </Button>
+                            </>
+                            :
                             <Link
                               to={"/course-details"}
                               state={{ courseId: course }}
@@ -327,7 +340,7 @@ const InstructorDetails = () => {
                               >
                                 Course Details
                               </Button>
-                            </Link>
+                            </Link>}
                           </CardContent>
                         </CardActionArea>
                       </Card>

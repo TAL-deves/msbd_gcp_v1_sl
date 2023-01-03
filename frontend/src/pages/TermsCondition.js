@@ -5,7 +5,7 @@ import React from 'react';
 const TermsCondition = () => {
     return (
         <Container>
-            <Box sx={{marginTop:"3rem"}}>
+            <Box sx={{marginTop:"3rem", textAlign:"justify"}}>
             
             <Typography sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>Terms And Conditions</Typography>
                 <p class="p2">Welcome to the web platform of Mind School. We hope that you enjoy great experience using our Platform. This platform is owned and powered by Tech Analytica Limited, a company duly registered under the Registrar of Joint Stock Companies (RJSC) in Bangladesh. <br /><br />These Terms and Conditions (&ldquo;Terms and Conditions&rdquo;) set out the terms and conditions for use of https://mindschoolbd.com/ (the&ldquo;Site&rdquo;), the mobile application(s) (the &ldquo;Application&rdquo;) and any features, subdomains, content (except as specified hereunder), functionality, products, services (including the Services), media, applications, or solutions offered on or through the Site and/or the Application only (hereinafter collectively referred to as the &ldquo;Platform&rdquo;/ &ldquo;Mind School Platform&rdquo;).</p>

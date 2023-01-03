@@ -5,7 +5,7 @@ import React from 'react';
 const RefundPolicy = () => {
     return (
         <Container>
-            <Box sx={{ m: "3rem" }}>
+            <Box sx={{ m: "3rem",textAlign:"justify" }}>
             <Typography sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>Cancellation and Refund Policy</Typography>
                 <p class="p2">&nbsp;</p>
                 <p class="p3"><span class="s1"><strong>Money back / Refund</strong></span></p>

@@ -2,26 +2,21 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, CardMedia, Fab, makeStyles, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import googlebtn from "../downloadApp/playstore.png"
 import applebtn from "../downloadApp/applestore.png";
 import facebook_yellow from "../downloadApp/facebook_yellow.json";
 import yellow_youtube from "../downloadApp/yellow_youtube.json";
 import yellow_insta from "../downloadApp/yellow_insta.json";
 import yellow_twitter from "../downloadApp/yellow_twitter.json";
-import SSLCommerz from "../downloadApp/SSLCommerz.png";
 
-import logo1 from "../navbar/logo1.png";
-import logo2 from "../navbar/logo2.png";
 import Ms_logo from "../navbar/Ms_logo.svg";
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import InstagramIcon from '@mui/icons-material/Instagram';
+
 import Lottie from "lottie-react";
 import swal from 'sweetalert';
 import {Link as Routerlink} from "react-router-dom";
-import { Router } from '@mui/icons-material';
+import SSLweb from './SSLweb.webp';
+import SSLmobile from './SSLmobile.webp'
 
 
 
@@ -103,7 +98,14 @@ export default function Wavefooter() {
             <Grid  sx={{
               color: "other.white"
             }}>
-              <Box sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800",marginBottom:".5rem"}} >Pages</Box>
+              
+              <Box sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800",marginBottom:".5rem"}} >Quick Links</Box>
+              <Box>
+                <Routerlink to="/about" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">
+                  About Us</Typography>
+                </Routerlink>
+              </Box>
               <Box>
                 <Routerlink style={{textDecoration:"none"}} to="/login"  >
                   <Typography sx={{color:"other.white"}} display="inline">Login</Typography>
@@ -132,13 +134,8 @@ export default function Wavefooter() {
               </Box> */}
             </Grid>
             <Grid sx={{ textDecoration: "none" }} >
-              <Box  sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800", marginBottom:".5rem"}}>Mind School BD</Box>
-              <Box>
-                <Routerlink to="/about" style={{ textDecoration: "none" }} color="inherit">
-                <Typography sx={{color:"other.white"}} display="inline">
-                  About Us</Typography>
-                </Routerlink>
-              </Box>
+              <Box  sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800", marginBottom:".5rem"}}>Terms</Box>
+              
               <Box>
                 <Routerlink to="/privacy-policy" style={{ textDecoration: "none" }} >
                 <Typography sx={{color:"other.white"}} display="inline">Privacy Policy</Typography>
@@ -212,7 +209,7 @@ export default function Wavefooter() {
                   </Box>
                 </Link>
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                  <Box onClick={()=>{swal("IOS App Coming Soon","Thanks for your patience","");}}
+                  <Box onClick={()=>{swal("iOS App Coming Soon","Thank You","");}}
                     sx={{
                       // backgroundColor: "other.footercolor",
                       backgroundColor: "secondary.main",
@@ -236,7 +233,7 @@ export default function Wavefooter() {
             pt={{ xs: 1, sm: 5 }}
             pb={{ xs: 5, sm: 0 }}
             sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-            <Link sx={{ textDecoration: "none", color: "other.white" }} href="https://techanalyticaltd.com/" target="new">Powered By Tech Analytica Limited &reg; {new Date().getFullYear()} || Version 1.0</Link>
+            <Link sx={{ textDecoration: "none", color: "other.white" }} href="https://techanalyticaltd.com/" target="new">Powered By <u>Tech Analytica Limited</u> &reg; {new Date().getFullYear()} || Version 1.0</Link>
             {/* <img src={SSLCommerz} alt=''/> */}
 
           </Box>
@@ -244,11 +241,11 @@ export default function Wavefooter() {
           <Grid sx={{ textAlign: "center" }}
             >
             <Grid sx={{ display: { xs: "none", md: "none", lg: "block", xl: "block"} , marginTop:"2rem" }}>
-              <img width={1000} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-03.png" alt='' />
+              <img width={1000} src={SSLweb} alt='' />
 
             </Grid>
             <Grid sx={{ display: { xs: "block", md: "block", lg: "none", xl: "none" }, marginTop:"0rem" }}>
-              <img width={140} src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-04.png" title="SSLCommerz" alt="SSLCommerz" />
+              <img width={140} src={SSLmobile} />
 
             </Grid>
 

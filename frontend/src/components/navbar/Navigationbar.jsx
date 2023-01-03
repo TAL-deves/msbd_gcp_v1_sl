@@ -400,7 +400,8 @@ const Navigationbar = (props) => {
                     color: "secondary.main",
                     display: "block",
                     padding: "0 55px",
-                    fontSize: "1rem"
+                    fontSize: "1rem",
+                    fontWeight:"800"
                   }}
                 >
                   {page.title}
@@ -558,7 +559,8 @@ const Navigationbar = (props) => {
                             "success"
                           );
                           setTimeout(function () {
-                            window.location.href = "/login";
+                            // window.location.href = "/login";
+                            window.location.href = "/";
                             // navigate("/login")
                           }, 1000);
                         } else if (res.data.result.status === 404) {
@@ -571,13 +573,15 @@ const Navigationbar = (props) => {
                             "error"
                           );
                           setTimeout(function () {
-                            window.location.href = "/login";
+                            // window.location.href = "/login";
+                            window.location.href = "/";
                           }, 1000);
                         }
                       })
                       .catch((err) => {
                         swal("Opps!", "There is a server error", "error", { className: "swal-button" });
                         // window.location.href = "/login";
+
                       });
                   }}
                 >

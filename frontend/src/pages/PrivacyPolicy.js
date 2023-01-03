@@ -5,7 +5,7 @@ import React from 'react';
 const PrivacyPolicy = () => {
     return (
         <Container>
-            <Box sx={{ m: "3rem" }}>
+            <Box sx={{ m: "3rem", textAlign:"justify" }}>
            
            <Typography sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>Privacy Policy</Typography>
 <p class="p2">We, Mind School is owned and powered by Tech Analytical Limited, registered under the Bangladesh Companies Act (Act XVIII) of 1994 (hereafter referred to as "Company"), with the incorporation number C-182091/2022, are dedicated to protecting your privacy with regard to the protection of your personal information. To make sure you can use our services, we might get your information and occasionally share it. This notice explains our information policies and the choices you have regarding the collection and use of your information in an effort to further protect your privacy. To make sure that everyone using the website, https://mindschoolbd.com/ (hence "the website") and the "Mind School" (subsequently "the Application") is aware of the privacy policy that regulates their use, by entering onto the website or application, you are indicating that you have read and agreed to the terms and conditions outlined in this Privacy Policy. You must not use the Website or App unless you accept our Privacy Policy, which governs the gathering and use of your personal information. If you have any concerns or questions regarding this privacy statement, you may email our Customer Support at <span class="s1">support@mindschoolbd.com</span>.</p>

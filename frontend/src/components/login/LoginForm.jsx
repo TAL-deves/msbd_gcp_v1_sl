@@ -117,7 +117,7 @@ const LoginForm = (props) => {
         localStorageService.setToken(googleData.data.data);
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
-        window.opener.document.location.href = "/courses"
+        window.opener.document.location.href = "/"
         window.close();
         // window.location.href="/courses"
         setBackdrop(false)        
@@ -154,7 +154,7 @@ const LoginForm = (props) => {
         localStorageService.setToken(facebookData.data.data);
         // //// console.log(facebookData.reslut);
         // window.opener.location.reload();
-        window.opener.document.location.href = "/courses"
+        window.opener.document.location.href = "/"
         window.close();
         // window.location.href="/courses"
       }
@@ -236,7 +236,8 @@ const LoginForm = (props) => {
           // setMail(username)
           // window.location.href = "/courses";
           addUserobj(response.data.data);
-          navigate("/courses")
+          // navigate("/courses")
+          navigate("/")
           // <Navigate to="/courses" />
         }
       } else if (response.data.result.status === 401) {

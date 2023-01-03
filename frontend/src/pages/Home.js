@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Banner from '../components/banner/Banner'
 
 import HomeCourses from '../components/homeCourses/HomeCourses'
@@ -6,6 +6,8 @@ import Instructor from '../components/Instructor/Instructor'
 import DownloadApp from '../components/downloadApp/DownloadApp'
 import Portfolio from '../components/portfolio/Portfolio'
 import ClientFeedback from '../components/clientfeedback/ClientFeedback'
+import Subscribe from '../components/Subscribe/Subscribe'
+import PopWindow from '../components/popWindow/PopWindow'
 // const HomeCourses=React.lazy(()=> HomeCourses('../components/homeCourses/HomeCourses'))
 // const Instructor=React.lazy(()=> Instructor('../components/Instructor/Instructor'))
 // const DownloadApp=React.lazy(()=> DownloadApp('../components/downloadApp/DownloadApp'))
@@ -62,12 +64,14 @@ const Home = () => {
   return (
     <>
       <Banner/>
+      {/* <PopWindow/> */}
       {/* <Player {...playerProps}/> */}
       <HomeCourses/>
       <Instructor/>
       <Portfolio/>
       <ClientFeedback/>
       <DownloadApp/>
+      <Subscribe/>
     </>
   )
 }

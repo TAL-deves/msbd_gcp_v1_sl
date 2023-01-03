@@ -54,6 +54,9 @@ import ProfileTabs from "./pages/ProfileTabs";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Container } from "@mui/system";
 import VerifyCertificate from "./components/VerifyCertificate/VerifyCertificate";
+import CancelIcon from '@mui/icons-material/Cancel';
+import PopWindow from "./components/popWindow/PopWindow";
+
 
 
 const LEAVE_MESSAGE_URL = "/api/leaveamessage";
@@ -293,12 +296,14 @@ function App() {
 
   return (
     <BrowserRouter>
+    
       <ScrollToTops />
       {/* <Scrollbars style={{ 
           height: "100vh"
        }}> */}
       {/* <ThemeProvider theme={mode ? theme : darkTheme}> */}
       <ThemeProvider theme={darkmode ? theme : darkTheme}>
+      
         <GlobalContext>
           <StepContext>
             <Paper sx={{ position: "relative" }}>
@@ -451,6 +456,8 @@ function App() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
+                <Box >
+                
                 <Box sx={{
                   position: 'absolute',
                   top: '50%',
@@ -462,8 +469,9 @@ function App() {
                   bgcolor: 'background.paper',
                   border: '2px solid #000',
                   boxShadow: 24,
-                  p: 4,
+                  p: 4
                 }}>
+                  <CancelIcon onClick={handleClose} sx={{position: 'absolute',color:"white", top:"-7%",right:{xs:"-7%",sm:"-5%", md:"-5%", lg:"-3%",xl:"-3%"}, fontSize:"2rem"}}/>
                   <Container sx={{ display: "flex", alignItems: "center", flexDirection: "column", mt: "1rem" }}>
                     <Typography sx={{ fontSize: "2rem" }} >Leave a Message</Typography>
 
@@ -539,12 +547,13 @@ function App() {
                     <Button
                       sx={{ margin: "2%" }}
                       variant="contained"
-                      onClick={() => handleLeaveMessage()}
+                      onClick={() => handleLeaveMessage() && handleClose()}
                       disabled={!phonenumber}
                     >
                       Send
                     </Button>
                   </Container>
+                </Box>
                 </Box>
               </Modal>
               {/* <ProfileTabs/> */}

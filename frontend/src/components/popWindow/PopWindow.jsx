@@ -1,13 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import RegisterForm from '../register/RegisterForm';
 
 const style = {
-    
-    bgcolor: 'background.paper',
     width:'70%',
     boxShadow: 24,
     p: 4,
@@ -23,7 +19,7 @@ const containerStyle = {
   
 
 const PopWindow = () => {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -34,7 +30,7 @@ const PopWindow = () => {
   }, []);
 
   return (
-    <div>
+    <Box>
     <Modal
       open={open}
       onClose={handleClose}
@@ -45,7 +41,8 @@ const PopWindow = () => {
       <Box sx={style}>
         <RegisterForm />
       </Box>
-    </Modal></div>
+    </Modal>
+    </Box>
   )
 }
 

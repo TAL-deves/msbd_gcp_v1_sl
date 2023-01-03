@@ -111,7 +111,7 @@ const DownloadApp = () => {
               <motion.div whileHover={{scale:1.03}}>
               {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
                 <Box 
-                onClick={()=>{swal("IOS App Coming Soon","Thanks for your patience","");}}
+                onClick={()=>{swal("iOS App Coming Soon","Thank You","");}}
                   sx={{
                     // backgroundColor: "secondary.main",
                     backgroundColor: "other.footercolor",

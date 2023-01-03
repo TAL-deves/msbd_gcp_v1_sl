@@ -431,7 +431,7 @@ return (
               </Link>
               {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
                 <Box
-                onClick={()=>{swal("IOS app is coming soon", "Thanks for your patience", "info")}}
+                onClick={()=>{swal("iOS app is coming soon", "Thank You", "info")}}
                   sx={{
                     // backgroundColor: "other.footercolor",
                     backgroundColor: "secondary.main",

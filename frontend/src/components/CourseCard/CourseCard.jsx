@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
+import swal from "sweetalert";
 
 
 
@@ -138,6 +139,32 @@ const CourseCard = (props) => {
             </Box>
             <Box item>
               {/* uncomment again  */}
+              {instructor==="D. Almasur Rahman"?
+              <>
+              <Button size="small" variant="contained"
+                  sx={{
+                    color: "secondary.main",
+                    "&:hover": {
+                      backgroundColor: "secondary.main",
+                      color: "primary.main"
+                    }
+                  }}
+                  onClick={()=>{swal("This course is Coming Soon","Thank You","info")}}
+                >
+
+                  <Typography
+                    sx={{
+                      fontSize: "1rem",
+                    }}
+                  >
+
+                    {t("course_details")}
+
+                  </Typography>
+
+                </Button>
+              </>
+              :
               <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
                 textDecoration: "none"
               }}>
@@ -163,7 +190,7 @@ const CourseCard = (props) => {
                   </Typography>
 
                 </Button>
-              </Link>
+              </Link>}
 
               
 
