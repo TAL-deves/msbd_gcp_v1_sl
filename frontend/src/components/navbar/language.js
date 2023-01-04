@@ -45,7 +45,11 @@ export const translationsEn = {
     home:"Home",
     selected_courses:"Selected Courses",
     total:"Total",
-    proceed_payment:"Proceed to Payment"
+    proceed_payment:"Proceed to Payment",
+    subscribe:"Subscribe",
+    to_get_all_updates:"to get all the updates from Mind School",
+    corporates:"Corporates",
+    content:"Contents"
 
   };
   
@@ -96,7 +100,11 @@ export const translationsBn = {
     home:"হোমপেজ",
     selected_courses:"নির্বাচিত কোর্স",
     total:"মোট",
-    proceed_payment:"পেমেন্ট করুন"
+    proceed_payment:"পেমেন্ট করুন",
+    subscribe:"সাবস্ক্রাইব",
+    to_get_all_updates:"করুন মাইন্ড স্কুল থেকে সমস্ত আপডেট পেতে",
+    corporates:"কর্পোরেটস",
+    content:"কন্টেন্ট"
 
 
   };

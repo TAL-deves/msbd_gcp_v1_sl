@@ -7,10 +7,12 @@ import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Lottie from "lottie-react";
-import BannerImg from "./web intro 2.json"
+import BannerImg from "./web intro 2.json";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
   const videoRef = React.useRef(null);
+  const navigate = useNavigate();
   AOS.init({ duration: 2000 });
   const { t } = React.useContext(globalContext)
 
@@ -74,6 +76,7 @@ const Banner = () => {
                   />
                 
                 <Button
+                onClick={()=>{navigate("/registration")}}
                   sx={{
                     // top: "30%",
                     // left: "20%",
@@ -85,13 +88,12 @@ const Banner = () => {
                     "&:hover": {
                       backgroundColor: "secondary.main"
                     }
-                  }} 
-                 
-                  href="/registration" 
+                  }}  
                   size="large" 
                   variant="contained">
                   {t("sign_up_now")}
                 </Button>
+                
                 </Box>
             </Grid>
 

@@ -139,7 +139,7 @@ const CourseCard = (props) => {
             </Box>
             <Box item>
               {/* uncomment again  */}
-              {instructor==="D. Almasur Rahman"?
+              {instructor!=="Nazish Shameem Qazi"?
               <>
               <Button size="small" variant="contained"
                   sx={{

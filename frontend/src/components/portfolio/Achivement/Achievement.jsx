@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
-import acvh1 from "./images/achv1.png"
+
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { globalContext } from "../../../pages/GlobalContext";

@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import newsletter from "./newsletter.json"
 import Lottie from "lottie-react";
 import { Container } from '@mui/system';
+import { globalContext } from '../../pages/GlobalContext';
 
 
 const SUBSCRIBE_URL= "/api/subscribe"
@@ -20,6 +21,7 @@ export default function Subscribe() {
     setEmailFocus,phoneNumber,
     phone, setPhone, validPhone, phoneFocus, setPhoneFocus
   } = useContext(multiStepContext);
+  const { t } = useContext(globalContext);
 
   const handleChange = (newPhone) => {
     setPhone(newPhone);
@@ -80,8 +82,8 @@ export default function Subscribe() {
         </Grid>
         <Grid  xs={12} sm={6} md={6} lg={6} xl={6}>
         <Box sx={{textAlign:"center"}}>
-      <Typography sx={{fontSize:"1.6rem", fontWeight:"800", color:"primary.main"}}>Subscribe</Typography>
-      <Typography sx={{fontSize:"1.3rem", fontWeight:"400", color:"primary.main"}}>to get all the updates from Mind School</Typography>
+      <Typography sx={{fontSize:"1.6rem", fontWeight:"800", color:"primary.main"}}>{t("subscribe")}</Typography>
+      <Typography sx={{fontSize:"1.3rem", fontWeight:"400", color:"primary.main"}}>{t("to_get_all_updates")}</Typography>
       </Box>
       <MuiTelInput
         sx={{ width: "100%", marginY: "1rem", color: "primary.main" }}
@@ -104,7 +106,7 @@ export default function Subscribe() {
           : false
         }
       />
-     <Typography sx={{textAlign:"center", color:"primary.main"}}>Or</Typography>
+     <Typography sx={{textAlign:"center", color:"primary.main"}}>{t("or")}</Typography>
 
       <TextField
         margin="normal"
@@ -143,8 +145,8 @@ export default function Subscribe() {
             sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
             disabled={!validEmail && !validPhone}
           >
-            {/* {t("login")} */}
-            Subscribe
+            {t("subscribe")}
+           
         </Button>
         </Grid>
         </Grid>

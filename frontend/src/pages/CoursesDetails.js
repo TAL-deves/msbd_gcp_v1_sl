@@ -280,7 +280,7 @@ return (
               </Button> */}
               
         </Grid>
-        <Grid item xs={12} lg={6} data-aos="fade-left">
+        <Grid item xs={12} lg={6}  data-aos="fade-left">
           <Item>
                 {/* <VideoGridWrapper> */}
             {/* <Grid > */}

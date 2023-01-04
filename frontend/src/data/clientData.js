@@ -3,30 +3,38 @@
 export const clientData = [
   {
     id: "1234a",
-    name: "Istiak Shamim Shishir",
+    name: "Fariha Nayeem",
+    designation:"HR Executive",
+    org:"Agni Systems Ltd.",
     feedback:
-      "I recently got introduced to Mind School by my wife and it has worked wonders for me. I practice it every day and it has brought a lot of positivity and energy into my day. I encourage all you people to try this out and I assure you guaranteed results!",
-    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/profile.webp",
+      "Thank you for such an initiative. This platform & the courses of it helped me to understand how to balance my personal & professional life. I would highly recommend everyone to do the courses to get a balanced happy life",
+    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/fariha.webp",
   },
   {
     id: "1234b",
-    name: "Manas Saha Roy",
+    name: "Jharna Rani",
+    designation:"Asst. Manager",
+    org:"SCI Shipping Corp.",
     feedback:
-      "Mindfulness and Hypnosis should be practiced and part of the educational curriculum of all schools in the world! B/c apps like MSBD help advance the human race and consciousness",
-    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/profile.webp",
+      "Before enrolling the course I wasn't much aware of mental health. My friend referred me to try the courses of Mind School platform. It has helped me improving my lifestyle. I haven't missed a day of meditation since & it has taught me understand and cherish the true happiness in life.",
+    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/jharna.webp",
   },
   {
     id: "1234c",
-    name: "Md. Kamrul Hasan",
+    name: "Md. Ziaul Hoque",
+    designation:"Marketing Officer",
+    org:"Meghna Group of Industries",
     feedback:
-      "Finally found a tool that I can use every day without getting bored. This app has a huge variety of meditation that I can use for any occasion or project I am dealing with",
-    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/profile.webp",
+      "This platform guided me toward a happy life. It is an excellent tool for meditation and self-development exercise. Thank you Mind School team. It helped me to control my thinking, balance my personal affairs, human interaction and many more amazing things.",
+    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/ziaul.webp",
   },
   {
     id: "1234d",
-    name: "Md. Shariful Islam",
+    name: "Md. Aminul Islam",
+    designation:"Executive Officer",
+    org:"Dutch Bangla Bank Ltd.",
     feedback:
-      "Thank you for creating this platform!!! I am learning how to meditate and this app is instrumental in my progress. I love how you can change the background music and various features. This is incredible!",
-    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/profile.webp",
+      "It was an excellent experience. I could finally come out of my life struggles and achieve success and happiness in my career and personal life. I'd want to express my gratitude and recommend Mind School to all those who suffered mental downfalls in life. And yes, meditation can do miracles",
+    image: "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/extra/aminul.webp",
   },
 ];

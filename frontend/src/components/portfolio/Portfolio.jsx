@@ -3,18 +3,12 @@ import "./Portfolio.css";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Container } from "@mui/system";
-import CastForEducationIcon from "@mui/icons-material/CastForEducation";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
-import { Paper, Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
 
 import achievement from "../../data/images/A1.png";
 import achievement_dark from "../../data/images/A2.png";
 import Achievement from "./Achivement/Achievement";
 
-import acvh1 from "./Achivement/images/achv1.png"
-import acvh2 from "./Achivement/images/achv2.png"
-import acvh3 from "./Achivement/images/achv3.png"
-import acvh4 from "./Achivement/images/achv4.png"
 import a9 from "./Achivement/images/A9.png"
 import a10 from "./Achivement/images/A10.png"
 import a11 from "./Achivement/images/A11.png"
@@ -102,18 +96,18 @@ const Portfolio = () => {
               >
                 <Grid >
                   {/* <Grid item > */}
-                  <Achievement picture={a10} count={"120"} text={t("teachers")}/>
+                  <Achievement picture={a10} count={"3k"} text={t("users")}/>
                   {/* </Grid> */}
                   {/* <Grid item> */}
-                  <Achievement picture={a9} count={"3K"} text={t("videos")}/>
+                  <Achievement picture={a9} count={"50"} text={t("corporates")}/>
                   {/* </Grid> */}
                 </Grid>
                 <Grid >
                   {/* <Grid item> */}
-                  <Achievement picture={a11} count={"300"} text={t("users")}/>
+                  <Achievement picture={a11} count={"2.5k"} text={t("subscribers")}/>
                   {/* </Grid> */}
                   {/* <Grid item> */}
-                  <Achievement picture={a12} count={"2.5K"} text={t("subscribers")}/>
+                  <Achievement picture={a12} count={"100"} text={t("content")}/>
                   {/* </Grid> */}
                 </Grid>
               </Grid>

@@ -13,14 +13,15 @@ import 'aos/dist/aos.css';
 const ClientCard = (props) => {
   AOS.init({duration:2000,once: true});
     let name=props.name;
-    // let date=props.date;
+    let designation= props.designation
+    let org= props.org
     let img=props.img;
     let feedback=props.feedback;
 
   return (
     
       <Box sx={{margin:"1.5rem"}}>
-    <Card sx={{ maxWidth: 345,
+    <Card sx={{ maxWidth: 345,height:"19rem",
       "&:hover":{boxShadow:"5"} }} 
       // data-aos="flip-left"
       >
@@ -33,14 +34,22 @@ const ClientCard = (props) => {
             width: 56, height: 56
          }} aria-label="client" >
           </Avatar>
+
         }
-        title={name}
+        // title={name}
+        // title1={designation}
+        // title2={org}
+        title={<CardContent>
+          <Typography sx={{fontSize:"1rem"}}>{name}</Typography>
+          <Typography sx={{fontSize:".7rem"}}>{designation}</Typography>
+          <Typography sx={{fontSize:".8rem"}}>{org}</Typography>
+        </CardContent>}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary" gutterBottom
           height={100}
           sx={{
-            fontSize: ".8rem",
+            fontSize: ".7rem",
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "-webkit-box",

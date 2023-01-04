@@ -113,6 +113,8 @@ const ClientFeedback = () => {
               <div key={obj.id}>
                 <ClientCard 
                   name={obj.name}
+                  designation={obj.designation}
+                  org={obj.org}
                   img={obj.image}
                   feedback={obj.feedback}
                 />

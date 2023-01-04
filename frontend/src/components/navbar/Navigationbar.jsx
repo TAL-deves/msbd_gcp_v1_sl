@@ -88,7 +88,7 @@ const Navigationbar = (props) => {
   const navigate = useNavigate();
   const [lang, setLang]= useState("bn");
 
-  const { t, onChange, count, language, setLanguage } = useContext(globalContext);
+  const { t, onChange, setLanguage } = useContext(globalContext);
 
   const userId = localStorage.getItem("access_token");
   // //// console.log("user local:",userId)
@@ -452,7 +452,7 @@ const Navigationbar = (props) => {
           setLang("bn")
           setLanguage("bn")
           }}>
-           <GTranslateIcon/> <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>ENGLISH </Typography>
+           <GTranslateIcon/> <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem", fontWeight:"800"}}>ENGLISH </Typography>
           </Button>:
           <Button sx={{color:"secondary.main"}} variant="text" onClick={()=>{onChange("bn") 
           setLang("en")
@@ -461,7 +461,7 @@ const Navigationbar = (props) => {
           }
           }>
            <GTranslateIcon/> 
-           <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem"}}>বাংলা </Typography>
+           <Typography display={"inline"} sx={{fontSize:"1rem", paddingLeft:".5rem", fontWeight:"800"}}>বাংলা </Typography>
           </Button>}
           
 
@@ -480,7 +480,7 @@ const Navigationbar = (props) => {
                   sx={{
                     borderColor: "other.white",
                     color: "other.white",
-                    marginRight: "15px",
+                    marginRight: "15px", fontWeight:"800"
                   }}
                 >
                   {/* <Link to="/userprofile" style={{ textDecoration: "none", color:"white"}}> */}
@@ -541,7 +541,7 @@ const Navigationbar = (props) => {
                       color: "other.white",
                       backgroundColor: "secondary.main",
                       border: "1px solid",
-                      borderColor: "other.white",
+                      borderColor: "other.white", fontWeight:"800"
                     },
                   }}
                   onClick={() => {
@@ -624,7 +624,7 @@ const Navigationbar = (props) => {
                 >
                   <Link to="/userprofile" style={textstyle}>
                     <MenuItem
-                      sx={{ color: "other.black" }}
+                      sx={{ color: "other.black", fontWeight:"800" }}
                       onClick={handleCloseUserMenu}
                     >
                       {t("profile")}
@@ -633,7 +633,7 @@ const Navigationbar = (props) => {
                   <Link to="/mycourses" style={textstyle}>
                     <MenuItem
                       onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black" }}
+                      sx={{ color: "other.black", fontWeight:"800" }}
                     >
                       {t("myCourses")}
                     </MenuItem>
@@ -641,7 +641,7 @@ const Navigationbar = (props) => {
                   <Link to="/paymenthistory" style={textstyle}>
                     <MenuItem
                       onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black" }}
+                      sx={{ color: "other.black" , fontWeight:"800"}}
                     >
                       {t("paymentHistory")}
                     </MenuItem>
@@ -649,7 +649,7 @@ const Navigationbar = (props) => {
                   <Link to="/myfeedback" style={textstyle}>
                     <MenuItem
                       onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black" }}
+                      sx={{ color: "other.black", fontWeight:"800" }}
                     >
                       {t("myFeedbacks")}
                     </MenuItem>
@@ -726,12 +726,12 @@ const Navigationbar = (props) => {
                     variant="outlined"
                     sx={{
                       color: "other.white",
-                      backgroundColor: "secondary.main",
+                      backgroundColor: "secondary.main", fontWeight:"800",
                       "&:hover": {
                         color: "#fff",
                         backgroundColor: "secondary.main",
                         border: "1px solid",
-                        borderColor: "other.white",
+                        borderColor: "other.white", fontWeight:"800"
                       },
                     }}
                   >
@@ -748,10 +748,10 @@ const Navigationbar = (props) => {
                     sx={{
                       borderColor: "other.white",
                       color: "secondary.main",
-                      marginLeft: "15px",
+                      marginLeft: "15px", fontWeight:"800",
                       "&:hover": {
                         backgroundColor: "other.white",
-                        color: "primary.main",
+                        color: "primary.main", fontWeight:"800"
                       },
                     }}
                   >
@@ -824,11 +824,11 @@ const Navigationbar = (props) => {
     </AppBar>
   );
 
-    <globalContext.Provider value={{lang}}>
+    // <globalContext.Provider value={{lang}}>
                         
-      {props.children}
+    //   {props.children}
 
-    </globalContext.Provider>
+    // </globalContext.Provider>
 };
 
 

@@ -89,6 +89,7 @@ const userMessages = require("./Database/models/userMessages");
 const userPendingPurchase = require("./Database/models/userPendingPurchase");
 const certificateData = require("./Database/models/certificateData");
 var QRCode = require("qrcode");
+const subscribers = require("./Database/models/subscribers");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -129,9 +130,6 @@ app.use(
     // exposedHeaders: ['x-auth-token']
   })
 );
-// app.use(
-//   cors()
-// );
 app.use(
   express.urlencoded({
     extended: true,
@@ -407,7 +405,7 @@ app.get(
       );
 
       res.redirect(
-        'https://' +req.headers.host+"/" +
+        process.env.CLIENT_URL +
           `login?gusername=${userid}&gobject=${JSON.stringify(
             responseToSend
           )}&profilename=${userinfo}`
@@ -426,7 +424,7 @@ app.get(
       );
 
       res.redirect(
-        'https://' +req.headers.host+"/" +
+        process.env.CLIENT_URL +
           `login?gusername=${userid}&gobject=${JSON.stringify(
             responseToSend
           )}&profilename=${userinfo}`
@@ -489,7 +487,7 @@ app.get(
       );
 
       res.redirect(
-        'https://' +req.headers.host+"/" +
+        process.env.CLIENT_URL +
           `login?fusername=${userid}&fobject=${JSON.stringify(
             responseToSend
           )}&fprofilename=${profilename}`
@@ -508,7 +506,7 @@ app.get(
       );
 
       res.redirect(
-        'https://' +req.headers.host+"/" +
+        process.env.CLIENT_URL +
           `login?fusername=${userid}&fobject=${JSON.stringify(
             responseToSend
           )}&fprofilename=${profilename}`
@@ -4279,6 +4277,33 @@ app.get("/api/getusermessages", async (req, res) => {
   }
 });
 
+//! Subscribers api
+
+app.post("/api/subscribe", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const {phoneNumber, email} = req.body;
+
+    let subscribersData = new subscribers({
+      phoneNumber: phoneNumber,
+      email: email
+    });
+    await subscribersData.save();
+
+    let setSendResponseData = new sendResponseData("Subscribed", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData);
+
+    res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
 //! Getting Log Data
 app.get("/api/checklogdata", async (req, res) => {
   let totalusers = await signUpTemplateCopy.count();
@@ -4335,11 +4360,6 @@ app.post("/api/testpostreq", async (req, res) => {
 });
 
 app.get("/api/testgetreq", async (req, res) => {
-  console.log("request ------", req.hostname);
-  console.log("req.headers.host ------", 'https://' +req.headers.host+"/");
-  console.log("req.headers.origin ------", req.headers.originalUrl);
-  console.log("url ------", req.protocol + '://' + req.get('host') + req.originalUrl);
-  console.log("url ------", req.protocol + '://' + req.get('host') );
   let data = {
     data: "sample data",
     send: "Got from backend",
