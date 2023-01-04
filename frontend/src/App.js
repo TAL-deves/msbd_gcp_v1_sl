@@ -165,10 +165,11 @@ function App() {
                 currentstatus={mode}
                 darkmode={darkmode}
               />
-              {/* <Routes>
-                <Route exact path="/" element={<Home />}>
-                  <Route index element={<Home />} />
-                </Route>
+               <Routes>
+                <Route exact index path="/" element={<Home />}></Route>
+               </Routes>
+              {/*
+
                 <Route
                   path="registration"
                   element={user ? <Navigate to="/courses" /> : <Register />}
