@@ -113,7 +113,7 @@ const Banner = () => {
             }}
           >
             <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-              <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+             
             </Box>
           </Grid>
         </Grid>
