@@ -169,9 +169,10 @@ function App() {
                <Routes>
                <Suspense fallback={<div>Loading...</div>}>
                 <Route exact index path="/" element={<Home />}></Route>
-              
+                </Suspense>
+              </Routes> 
 
-                <Route
+                {/* <Route
                   path="registration"
                   element={user ? <Navigate to="/courses" /> : <Register />}
                 ></Route>
@@ -251,7 +252,7 @@ function App() {
                   element={<TermsCondition />}
                 />
               </Suspense>
-              </Routes> 
+              </Routes>  */}
               <Wavefooter />
               <ScrollToTop smooth color="primary.main" />
             </Paper>
