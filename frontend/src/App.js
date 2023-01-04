@@ -9,7 +9,7 @@ import Courses from "./pages/Courses";
 import CoursesDetails from "./pages/CoursesDetails";
 import Course from "./pages/Course";
 import Error from "./pages/Error";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 
 import LocalStorageService from "./api/localstorage";
 // import ForgotPassword from "./components/Forgotpassword/ForgotPassword";
@@ -164,11 +164,12 @@ function App() {
                 themestatus={setMode}
                 currentstatus={mode}
                 darkmode={darkmode}
-              />
+                />
+               
                <Routes>
+               <Suspense fallback={<div>Loading...</div>}>
                 <Route exact index path="/" element={<Home />}></Route>
-               </Routes>
-              {/*
+              
 
                 <Route
                   path="registration"
@@ -249,7 +250,8 @@ function App() {
                   path="terms-and-conditions"
                   element={<TermsCondition />}
                 />
-              </Routes> */}
+              </Suspense>
+              </Routes> 
               <Wavefooter />
               <ScrollToTop smooth color="primary.main" />
             </Paper>
