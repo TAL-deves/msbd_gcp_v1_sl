@@ -71,8 +71,6 @@ const USER_URL = "/api/userprofile";
 function App() {
   const [fromtoken, setFromtoken] = useState(false);
   const [user, setUser] = useState("");
-  // const loggedin = localStorage.getItem("access_token")
-  const username = localStorage.getItem("user");
   const [mode, setMode] = useState("theme");
   const [darkmode, setDarkMode] = useState(false);
   const [mail, setMail] = useState("");
@@ -124,7 +122,6 @@ function App() {
   const theme = createTheme(primarytheme);
 
   useEffect(() => {
-    handleGetUser();
 
     // localStorage.setItem("theme", mode)
     if (localStorage.getItem("theme") === "theme") {
@@ -153,10 +150,6 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTops />
-      {/* <Scrollbars style={{ 
-          height: "100vh"
-       }}> */}
-      {/* <ThemeProvider theme={mode ? theme : darkTheme}> */}
       <ThemeProvider theme={darkmode ? theme : darkTheme}>
         <GlobalContext>
           <StepContext>
