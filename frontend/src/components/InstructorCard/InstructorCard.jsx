@@ -11,6 +11,7 @@ import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
+import swal from "sweetalert";
 
 const InstructorCard = (props) => {
   AOS.init({duration:2000, once: true});
@@ -19,6 +20,8 @@ const InstructorCard = (props) => {
   let instructor = props.instructor;
   let img = props.img;
   let fullObject = props.fullObject;
+  
+  // console.log(title)
 
   return (
     <motion.div whileHover={{scale:1.03}}>
@@ -77,6 +80,7 @@ const InstructorCard = (props) => {
       <CardActions>
 
            {/* uncomment after gcp upload  */}
+           {title==="Nazish Shameem Qazi"?
       <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
               textDecoration:"none"
             }}>
@@ -90,7 +94,16 @@ const InstructorCard = (props) => {
             {t("instructor_details")}
           </Typography>
         </Button>
-</Link>
+</Link>:
+<Button size="small" variant="contained" onClick={()=>{swal("Instructor details coming soon","Thank You","info")}} sx={{color:"secondary.main"}}>
+          <Typography
+            sx={{
+              fontSize: "1rem",
+            }}
+          >
+            {t("instructor_details")}
+          </Typography></Button>}
+
 
 
         {/* <Button onClick={()=>{

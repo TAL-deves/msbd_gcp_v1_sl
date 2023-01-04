@@ -167,9 +167,7 @@ let fetchCourseDetails= async()=>{
     "Access-Control-Allow-Credentials": true,
   })
   .then((data) => {
-     // console.log("single course id", data);
      setState(data.data.data)
-     
   });
 
 };
@@ -177,19 +175,14 @@ let fetchCourseDetails= async()=>{
 useEffect(() => {
   fetchData();
   fetchCourseDetails()
-  
 }, [language]);
 
 
 let existingCourse;
 let newButton= false
-// console.log(" courses----",courses)
 if(courses!==null && courses.length !== 0){
-  // console.log("find check-----",courses.find(c=>c.courseID===state?.courseID))
    existingCourse=courses.find(c=>c.courseID===state?.courseID)
-  //  console.log("existed courses----",existingCourse)
-  //  setStartButton(true)
-  newButton=true
+   newButton=true
 }
 
 
@@ -286,7 +279,7 @@ return (
             {/* <Grid > */}
         {/* <VdoPlayerStyle> */}
         <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"80%",  paddingTop:".8rem", paddingBottom:".5rem", overflow:"hidden"}}>
-            <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe ref={videoRef} width="100%" height="315" src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4" title="YouTube video player" frameborder="0" ></iframe>
             </Box>
           {/* </VdoPlayerStyle> */}
     {/* </Grid> */}

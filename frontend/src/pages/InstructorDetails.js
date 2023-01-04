@@ -117,27 +117,7 @@ const InstructorDetails = () => {
         });
 
     });
-    // console.log("single course id", courses);
-    // }
-    // else
-    // {
-    //   // setCourses([])
-    //   state.courses.map(async (singleCourse) => {
-    //     var courseID = singleCourse;
-    //     await api
-    //       .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language}), {
-    //         headers: { "Content-Type": "application/json" },
-    //         "Access-Control-Allow-Credentials": true,
-    //       })
-    //       .then((data) => {
-    //         courses.push(data.data.data);
-
-    //       });
-
-    //   });
-    //   // console.log("single course id", courses);
-    // }
-    // console.log(" useeffect", courses)
+   
   }, [language]);
 
 
@@ -200,14 +180,23 @@ const InstructorDetails = () => {
                 >
                   Profile of {state?.name}
                 </Typography>
-                <Typography sx={{ paddingLeft: "10%", marginTop: "2%", textAlign:"center" }}>
-                  {state?.description_title1}
+                <Typography
+                  variant="h5"
+                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
+                >
+                  {state?.description1}
                 </Typography>
                 <Typography
                   variant="h5"
                   sx={{ paddingLeft: "20%", marginTop: "2%" }}
                 >
-                  {state?.description}{" "}
+                  {state?.description2}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
+                >
+                  {state?.description3}
                 </Typography>
               </Grid>
               <Grid item lg={4} md={6} sm={12}>
@@ -251,7 +240,7 @@ const InstructorDetails = () => {
                   </VdoPlayerStyle> */}
 
                   <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%",justifyContent:"center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-                    <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe ref={videoRef} width="100%" height="315" src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </Box>
                 </Grid>
                 {/* </VideoGridWrapper> */}
