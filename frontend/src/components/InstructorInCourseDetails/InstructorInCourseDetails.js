@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 const InstructorInCourseDetails = (props) => {
   AOS.init({duration:2000});
   let title = props.title;
+  let instructor= props.instructor
   let img = props.img;
   let description = props.description;
 
@@ -54,11 +55,11 @@ const InstructorInCourseDetails = (props) => {
           {/* uncomment after ssl  */}
         {/* {instructor} */}
 
-        Instructor
+        {instructor}
         </Typography>
         </Box>
     </Box>
-    <Typography variant="subtitle_1" color="black">
+    <Typography variant="subtitle_1" color="black" sx={{textAlign:"justify"}}>
     {description}
         </Typography>
         </Box>

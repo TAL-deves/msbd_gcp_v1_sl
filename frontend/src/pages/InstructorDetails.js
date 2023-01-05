@@ -28,10 +28,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { globalContext } from "./GlobalContext";
 import swal from "sweetalert";
+import { Container } from "@mui/system";
 
 const VIDEOLOG_URL = "/videologdata";
 const SINGLE_COURSE_URL = "/api/instructorcourses";
-const INSTRUCTOR_DETAILS_URL = "/api/instructor";
+const INSTRUCTOR_DETAILS_URL = "/api/instructordetails";
 
 const VideoGridWrapper = styled(Grid)(({ theme }) => ({
   marginTop: "30%",
@@ -91,15 +92,30 @@ const InstructorDetails = () => {
   AOS.init({ duration: 2000 });
   const [played, setPlayed] = useState(0);
   const [courses, setCourses] = useState([]);
-  const [courseID, setCourseID] = useState();
-
+  const [instructorInfo, setInstructorInfo] = useState();
+  
   let location = useLocation();
 
   let state = location.state.instructorId;
-  localStorage.setItem("instructor",state._id);
-  // console.log("instructor",localStorage.getItem("instructor"))
-  
+  localStorage.setItem("instructor", state._id);
+   
+
   let instructorID = localStorage.getItem("instructor")
+
+
+  let instructorDetails=async()=>{
+    let instructorID= state?._id;
+
+    await api
+    .post(INSTRUCTOR_DETAILS_URL, JSON.stringify({ instructorID, language }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+      setInstructorInfo(data.data.data)
+      
+    });
+  }
 
   useEffect(() => {
     // if(language==="en"){
@@ -112,237 +128,193 @@ const InstructorDetails = () => {
           "Access-Control-Allow-Credentials": true,
         })
         .then((data) => {
-          // console.log("ins dta",data.data.data);
           setCourses(data.data.data)
         });
 
     });
-   
-  }, [language]);
 
+    
+    instructorDetails()
+
+  }, [language]);
 
 
   return (
     <Box>
-      <Box>
-        <Typography
-          variant="h4"
-          sx={{ paddingLeft: "40%", marginTop: "2%" }}
-        ></Typography>
+      <Container>
+        <Box>
+          <Typography
+            variant="h4"
+            sx={{ paddingLeft: "40%", marginTop: "2%" }}
+          ></Typography>
 
-        <Box style={{ width: "100%" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              p: 1,
-              m: 1,
-              bgcolor: "background.paper",
-              borderRadius: 1,
-            }}
-          >
-            <Grid
-              container
+          <Box style={{ width: "100%" }}>
+            <Typography
+              variant="h4"
+              sx={{ mt: "2%", textAlign: "center" }}
+            >
+              {instructorInfo?.name}
+            </Typography>
+            <Typography
+              sx={{ mb: "2%", textAlign: "center", fontSize: "1.5rem" }}
+            >
+              {instructorInfo?.designation}
+            </Typography>
+            <Box
               sx={{
+                display: "flex",
+                alignItems: "center",
+                p: 1,
+                m: 1,
+                bgcolor: "background.paper",
+                borderRadius: 1,
+              }}
+            >
+              <Grid
+                container
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: {
+                    xs: "center",
+                    md: "flex-start",
+                    lg: "flex-start",
+                  },
+                  // paddingLeft: "10%",
+                  marginLeft: "5%", marginRight: "5%"
+                }}
+              >
+                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                  <Box data-aos="fade-right" >
+                    <img width={300} height={300} src={instructorInfo?.image} alt="" />
+                  </Box>
+                </Grid>
+
+                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                  <Grid>
+                    <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", justifyContent: "center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
+                      <iframe ref={videoRef} width="100%" height="315" src={instructorInfo?.intro} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </Box>
+                  </Grid>
+                  {/* </VideoGridWrapper> */}
+                </Grid>
+              </Grid>
+            </Box>
+            <Box>
+
+              {instructorInfo?.description.map((description) => {
+                return (
+                  <>
+                    <Typography
+                      variant="h5"
+                      sx={{ margin: "5%", textAlign: "justify" }}
+                    >
+                      {description}
+                    </Typography>
+                  </>
+                );
+              })}
+
+
+              {/* </Container>  */}
+            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                marginTop: "5rem",
                 display: "flex",
                 justifyContent: {
                   xs: "center",
+                  sm: "center",
                   md: "flex-start",
                   lg: "flex-start",
                 },
-                // paddingLeft: "10%",
-                marginLeft: "5%", marginRight:"5%"
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Grid sx={{ marginLeft: "5%", marginRight:"5%" }} item lg={2} md={6} sm={12}>
-                <br />
-                <br />
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent:"center" }}>
-                  <Box data-aos="fade-right">
-                    {/* <Paper sx={{height:"100px", width:"100px"}}>
-                <img  src={state?.image} alt="" /></Paper> */}
-                    <Avatar
-                      variant={"rounded"}
-                      alt="The image"
-                      src={state?.image}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid data-aos="zoom-in" sx={{ marginRight: "2%" }} item lg={4} md={6} sm={12}>
-                <Typography
-                  variant="h4"
-                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
-                >
-                  Profile of {state?.name}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
-                >
-                  {state?.description1}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
-                >
-                  {state?.description2}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ paddingLeft: "20%", marginTop: "2%" }}
-                >
-                  {state?.description3}
-                </Typography>
-              </Grid>
-              <Grid item lg={4} md={6} sm={12}>
-                {/* <VideoGridWrapper> */}
-                <Grid>
-                  {/* <VdoPlayerStyle>
-                    <Box data-aos="fade-left">
-                      <ReactPlayer
-                        url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-                        controls={false}
-                        loop={true}
-                        playing={true}
-                        onProgress={(progress) => {
-                          setPlayed(progress.playedSeconds);
-                        }}
-                        onPlay={() => {
-                          //// console.log("play data sent");
-                          const response = api.post(
-                            VIDEOLOG_URL,
-                            JSON.stringify({}),
-                            {
-                              headers: { "Content-Type": "application/json" },
-                              "Access-Control-Allow-Credentials": true,
-                            }
-                          );
-                        }}
-                        onPause={() => {
-                          //// console.log("pause data sent");
-                          const response = api.post(
-                            VIDEOLOG_URL,
-                            JSON.stringify({}),
-                            {
-                              headers: { "Content-Type": "application/json" },
-                              "Access-Control-Allow-Credentials": true,
-                            }
-                          );
-                        }}
-                        // onProgress={//// console.log("playing")}
-                      />
+              Courses List of {instructorInfo?.name}
+            </Typography>
+            <Grid sx={{
+              display: "flex", justifyContent: "space-around",
+              flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
+            }}>
+              <Grid
+                container
+                // columns={{ xs: 10, sm: 10, md: 10, lg: 10 }}
+                xs={10}
+                // lg={8}
+                justifyContent="center"
+              >
+                {courses.map((course) => {
+                  return (
+                    <Box key={course.id} data-aos="flip-left">
+                      <CardGridStyle>
+                        <Card sx={{ width: "100%" }}>
+                          <CardActionArea>
+                            <CardMediaStyle>
+                              <CardMedia
+                                component="img"
+                                height="200"
+                                image={course.thumbnail}
+                                alt={course.title}
+                              />
+                            </CardMediaStyle>
+                            <CardContent>
+                              <Typography variant="h6" component="Box">
+                                {course.title}
+                              </Typography>
+                              <br />
+                              <Typography variant="body4" color="text.secondary">
+                                {course.instructor.name}
+                              </Typography>
+                              <Typography variant="h6" color="text.primary">
+                                &#2547;{course.price}
+                              </Typography>
+                              <Typography variant="body3" color="text.primary">
+                                Total {course.courseLength} hours |{" "}
+                                {course.totalLecture} Lectures
+                              </Typography>
+                              <br />
+                              {course.instructor.name === "D. Almasur Rahman" ?
+                                <>
+                                  <Button
+                                    size="small"
+                                    variant="contained"
+                                    sx={{ marginTop: "3%", marginLeft: "27%" }}
+                                    onClick={() => { swal("This course is coming soon", "Thank You", "info") }}
+                                  >
+                                    Course Details
+                                  </Button>
+                                </>
+                                :
+                                <Link
+                                  to={"/course-details"}
+                                  state={{ courseId: course }}
+                                  style={textstyle}
+                                >
+                                  <Button
+                                    size="small"
+                                    variant="contained"
+                                    sx={{ marginTop: "3%", marginLeft: "27%" }}
+                                  >
+                                    Course Details
+                                  </Button>
+                                </Link>}
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </CardGridStyle>
                     </Box>
-                  </VdoPlayerStyle> */}
-
-                  <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%",justifyContent:"center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-                    <iframe ref={videoRef} width="100%" height="315" src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  </Box>
-                </Grid>
-                {/* </VideoGridWrapper> */}
+                    // <Box key={course.id}>{course.title}</Box>
+                  );
+                })}
               </Grid>
             </Grid>
+            <Box></Box>
           </Box>
-          <Typography
-            variant="h4"
-            sx={{
-              marginTop: "5rem",
-              display: "flex",
-              justifyContent: {
-                xs: "center",
-                sm: "center",
-                md: "flex-start",
-                lg: "flex-start",
-              },
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Courses List of {state?.name}
-          </Typography>
-          <Grid sx={{
-            display: "flex", justifyContent: "space-around",
-            flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
-          }}>
-            <Grid
-              container
-              // columns={{ xs: 10, sm: 10, md: 10, lg: 10 }}
-              xs={10}
-              // lg={8}
-              justifyContent="center"
-            >
-              {courses.map((course) => {
-                return (
-                  <Box key={course.id} data-aos="flip-left">
-                    <CardGridStyle>
-                      <Card sx={{ width: "100%" }}>
-                        <CardActionArea>
-                          <CardMediaStyle>
-                            <CardMedia
-                              component="img"
-                              height="200"
-                              image={course.thumbnail}
-                              alt={course.title}
-                            />
-                          </CardMediaStyle>
-                          <CardContent>
-                            <Typography variant="h6" component="Box">
-                              {course.title}
-                            </Typography>
-                            <br />
-                            <Typography variant="body4" color="text.secondary">
-                              {course.instructor.name}
-                            </Typography>
-                            <Typography variant="h6" color="text.primary">
-                              &#2547;{course.price}
-                            </Typography>
-                            <Typography variant="body3" color="text.primary">
-                              Total {course.courseLength} hours |{" "}
-                              {course.totalLecture} Lectures
-                            </Typography>
-                            <br />
-                            {course.instructor.name==="D. Almasur Rahman"?
-                            <>
-                             <Button
-                                size="small"
-                                variant="contained"
-                                sx={{ marginTop: "3%", marginLeft: "27%" }}
-                                onClick={()=>{swal("This course is coming soon", "Thank You", "info")}}
-                              >
-                                Course Details
-                              </Button>
-                            </>
-                            :
-                            <Link
-                              to={"/course-details"}
-                              state={{ courseId: course }}
-                              style={textstyle}
-                            >
-                              <Button
-                                size="small"
-                                variant="contained"
-                                sx={{ marginTop: "3%", marginLeft: "27%" }}
-                              >
-                                Course Details
-                              </Button>
-                            </Link>}
-                          </CardContent>
-                        </CardActionArea>
-                      </Card>
-                    </CardGridStyle>
-                  </Box>
-                  // <Box key={course.id}>{course.title}</Box>
-                );
-              })}
-            </Grid>
-          </Grid>
-          <Box></Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 };

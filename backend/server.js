@@ -2074,7 +2074,7 @@ app.post("/api/getuserimage", async (req, res) => {
   let recievedResponseData = decryptionOfData(req, res);
   req.body = recievedResponseData;
 
-  console.log("getuserimage ---- ", req.body);
+  // console.log("getuserimage ---- ", req.body);
 
   let userSessionStatus = await tokenChecking(req);
 
@@ -2798,21 +2798,10 @@ app.post("/api/allinstructors", async (req, res) => {
   try {
     let data = await allData.find();
 
-    // console.log(data[0].instructorData);
-
-    // if (data) {
-    let setSendResponseData = new sendResponseData(data[0], 200, null);
+    let setSendResponseData = new sendResponseData(data[0].instructorData, 200, null);
     let responseToSend = encryptionOfData(setSendResponseData.success());
     res.send(responseToSend);
-    // } else {
-    //   let setSendResponseData = new sendResponseData(allInstructors, 200, null);
-    //   let responseToSend = encryptionOfData(setSendResponseData.success());
-    //   res.send(responseToSend);
-    // }
 
-    // let setSendResponseData = new sendResponseData(data[0], 200, null);
-    // let responseToSend = encryptionOfData(setSendResponseData.success());
-    // res.send(responseToSend);
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -2827,6 +2816,8 @@ app.post("/api/instructordetails", async (req, res) => {
 
     const { instructorID, language } = req.body;
 
+    // console.log("req.body-----",req.body);
+
     // let result = allInstructors.instructorData.find(
     //   (item) => item._id === instructorID
     // );
@@ -2835,9 +2826,9 @@ app.post("/api/instructordetails", async (req, res) => {
     let instructorData;
 
     if (language === "bn") {
-      instructorData = data[0].instructorData.bn;
-    } else {
       instructorData = data[0].instructorData.en;
+    } else {
+      instructorData = data[0].instructorData.bn;
     }
 
     let result = instructorData.find((item) => item._id == instructorID);
@@ -2852,7 +2843,7 @@ app.post("/api/instructordetails", async (req, res) => {
       res.send(responseToSend);
     }
   } catch (error) {
-    console.log("inside catch");
+    // console.log("inside catch");
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
     res.send(responseToSend);
@@ -3615,7 +3606,7 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
 
 //! ********** User courses and payment history part ***********/
 app.post("/api/usercourses", async (req, res) => {
-  try {
+  // try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
@@ -3623,7 +3614,7 @@ app.post("/api/usercourses", async (req, res) => {
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
-      // console.log("/api/usercourses ----- ", req.body);
+      console.log("/api/usercourses ----- ", req.body);
       let data = await allData.find();
       // data = data[0].coursesData.en;
       // let array2 = data.coursesData.en
@@ -3690,7 +3681,7 @@ app.post("/api/usercourses", async (req, res) => {
         // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
         // array3 = [...array2];
         // console.log("userallcourses array3 ----- ", array3);
-        // console.log("userallcourses list ----- ", array2);
+        // console.log("userallcourses list ----- ", array1);
 
         array1.map((e) => {
           let objects = array2.find((e2) => e2.courseID == e);
@@ -3771,6 +3762,8 @@ app.post("/api/usercourses", async (req, res) => {
 
         userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
+        console.log("array31----", array31);
+
         let setSendResponseData = new sendResponseData(array31, 200, null);
         let responseToSend = encryptionOfData(setSendResponseData.success());
         res.send(responseToSend);
@@ -3785,16 +3778,17 @@ app.post("/api/usercourses", async (req, res) => {
         res.send(responseToSend);
       }
     } else {
+      console.log("in else");
       console.log("Not allowed", userSessionStatus);
       let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
     //! This is for token checking END
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
+  // } catch (error) {
+  //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+  //   let responseToSend = encryptionOfData(setSendResponseData.error());
+  //   res.send(responseToSend);
+  // }
 });
 //! payment history (encrypiton, token check)
 app.post("/api/paymenthistory", async (req, res) => {

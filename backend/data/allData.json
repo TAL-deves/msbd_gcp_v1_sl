@@ -1,243 +1,488 @@
 {
   "_id": {
-    "$oid": "638c7b543510413d197d4933"
+    "$oid": "638c7b543510413d197d4934"
   },
-  "coursesData": [
-    {
-      "courseID": "C001",
-      "title": "Fearless Belive",
-      "introduction": "Practical mindfulness meditation course showing the method how to increase concentration and reduce stress",
-      "description": [
-        "By the end of this programme you will have experienced and practiced all of the key mindfulness meditations. You will have learned how to",
-        "Develop your mental capacity, concentration, capability and focus",
-        "Calm yourself in moments of anger, high stress and anxiety",
-        "Develop ongoing resilience to stress and anxiety",
-        "Deal calmly with stressful communications"
-      ],
-      "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
-      "courseLength": "07",
-      "totalLecture": "15",
-      "price": "1000",
-      "instructor": {
+  "coursesData": {
+    "en": [
+      {
+        "courseID": "C006",
+        "title": "Welcome To Meditation",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "In just 6 easy workshops, you can learn how to meditate and begin to transform every aspect of your life: Increase your intuition, mental focus, inner confidence and problem solving abilities. The course will help you to release stress, improve health, become more centered and attract more happiness. ",
+          "You will be guided through learning the best methods to sit, breathe, relax, calm the mind, visualize and more. It also includes six unique guided meditations all designed and presented by Nazish S. Qazi.  For beginners and improvers to develop their meditating practice."
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
+        "courseLength": "2.5",
+        "totalLecture": "12",
+        "price": "5000",
+        "instructor": {
+          "_id": 10006,
+          "name": "Nazish Shameem Qazi",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+          "designation": "The 'Mind Coach'",
+          "description": "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life.",
+          "description1": "Nazish is an expert life coach, business trainer, psychologist and author. She has helped hundreds of people from many different backgrounds and disciplines to transform their lives for the better. Her passion is helping people discover their true purpose, build inner confidence and bring more happiness and fulfilment into their lives.",
+          "description2": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
+          "description3": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
+          "courses": [
+            "C006"
+          ]
+        }
+      },
+      {
+        "courseID": "C001",
+        "title": "Fearless Belive",
+        "introduction": "Practical mindfulness meditation course showing the method how to increase concentration and reduce stress",
+        "description": [
+          "By the end of this programme you will have experienced and practiced all of the key mindfulness meditations. You will have learned how to",
+          "Develop your mental capacity, concentration, capability and focus",
+          "Calm yourself in moments of anger, high stress and anxiety",
+          "Develop ongoing resilience to stress and anxiety",
+          "Deal calmly with stressful communications"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "courseLength": "07",
+        "totalLecture": "15",
+        "price": "5000",
+        "instructor": {
+          "_id": 10001,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Director of Training and founder of inMindSight",
+          "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
+          "courses": [
+            "C001"
+          ]
+        }
+      },
+      {
+        "courseID": "C005",
+        "title": "Anger Management And Power of Positive Thinking",
+        "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
+        "description": [
+          "Relax and relieve stress using a simple relaxation and meditation technique",
+          "You will learn what mindfulness meditation is all about and how to practice it.",
+          "Practice self-observation and meditation with compassion and clarity"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power.webp",
+        "courseLength": "6",
+        "totalLecture": "10",
+        "price": "5000",
+        "instructor": {
+          "_id": 10005,
+          "name": "D. Almasur Rahman",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "The Brain Lady",
+          "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
+          "courses": [
+            "C005"
+          ]
+        }
+      },
+      {
+        "courseID": "C003",
+        "title": "Creative Meditation",
+        "introduction": "yoga for life",
+        "description": [
+          "learn theory and practice of meditation and start benefiting from practice of mediation. And also teach others on how to mediatiate"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "courseLength": "07",
+        "totalLecture": "11",
+        "price": "6000",
+        "instructor": {
+          "_id": 10003,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Health & Fitness Coach | Best Selling Instructor",
+          "description": "Im a certified coach and author",
+          "courses": [
+            "C003"
+          ]
+        }
+      },
+      {
+        "courseID": "C004",
+        "title": "Self Healing in a Naural Way",
+        "introduction": "A simple, heart-centered relaxation and meditation you can do every day",
+        "description": [
+          "Relax and relieve stress using a simple relaxation and meditation technique",
+          "Connect mind and heart, naturally and gently",
+          "Practice self-observation and meditation with compassion and clarity"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "courseLength": "05",
+        "totalLecture": "05",
+        "price": "5000",
+        "instructor": {
+          "_id": 10004,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Heartfulness Meditation Trainer",
+          "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
+          "courses": [
+            "C004"
+          ]
+        }
+      },
+      {
+        "courseID": "C002",
+        "title": "Money Mind Mastery",
+        "introduction": "Teach a group how to meditate in your workplace or community",
+        "description": [
+          "Rebuild your life through psychology and spirituality",
+          "Join a community of other meditation leaders around the world"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "courseLength": "07",
+        "totalLecture": "14",
+        "price": "8000",
+        "instructor": {
+          "_id": 10002,
+          "name": "Dr. Abul Kalam",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "Psychologist",
+          "description": "Dr. Abul Kalam is a Psychologist.",
+          "courses": [
+            "C002"
+          ]
+        }
+      }
+    ],
+    "bn": [
+      {
+        "courseID": "C006",
+        "title": "মেডিটেশনে স্বাগতম",
+        "introduction": "কিভাবে সহজে ধ্যান/মেডিটেশন করতে হয় তা ধাপে ধাপে শিখুন, ঠিক কি করা উচিত এবং কি করা উচিত নয়।",
+        "description": [
+          "মাত্র ছয়টা ওয়ার্কশপের মাধ্যমে আপনি শিখবেন কিভাবে মেডিটেশন করা যায় এবং এর মাধ্যমে জীবনের প্রতিটি ক্ষেত্রে রূপান্তর ঘটানো যায়: যেমন ইন্টিউশন বা অন্তর্দৃষ্টি বৃদ্ধি করা,মনকে কেন্দ্রীভূত করা, আত্মবিশ্বাস বৃদ্ধি করা এবং সমস্যা সমাধানের দক্ষতা বৃদ্ধি করা। এই কোর্স আপনাকে সাহায্য করবে মানসিকভাবে চাপমুক্ত রাখতে, সুস্বাস্থ্যতা বৃদ্ধিতে এবং সুখ সমৃদ্ধি অর্জনে ।",
+          "আপনি আরও শিখবেন কিভাবে সঠিক পদ্ধতিতে মেডিটেশনের সময় বসতে হয়, নিঃশ্বাস নিতে হয়, মনকে শান্ত ও স্থির করতে হয়, কল্পনা করতে হয় এবং আরো অনেক কিছু । এই কোর্সের মধ্যে আরো থাকছে ছয়টি অসাধারণ নিয়ন্ত্রিত মেডিটেশন যা স্বয়ং ইন্সট্রাক্টর নাজিশ এস. কাজী করিয়েছেন ,তাদের জন্য যারা মেডিটেশন প্রাথমিকভাবে শুরু করছেন এবং যারা মেডিটেশনে আরো দক্ষতা অর্জন করতে চান।"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
+        "courseLength": "২.৫",
+        "totalLecture": "১২",
+        "price": "5000",
+        "instructor": {
+          "_id": 10007,
+          "name": "নাজিশ শামীম কাজী",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+          "designation": "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে'",
+          "description": "নাজিশ এস. কাজী গান গাওয়ার জন্য একটি উদ্ভাবনী পদ্ধতির মাধ্যমে লোকেদের সাহায্য করার জন্য তার আবেগকে প্রকাশ করার জন্য সঙ্গীত ব্যবসায় 40 বছরের নিরাময় শিল্পে 23 বছরের ক্যারিয়ারকে একত্রিত করেছেন। তিনি একটি আধুনিক সমাজকে রূপান্তর, স্ট্রেস-মুক্তি এবং বিশুদ্ধ উপস্থিতি খুঁজে পেতে সাহায্য করার জন্য গানের বাটি সহ থেরাপিউটিক কৌশল ব্যবহারে অগ্রগামী।",
+          "description1": "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন।  তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপরণত আনত সহযয কর।",
+          "description2": "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।",
+          "courses": [
+            "C006"
+          ]
+        }
+      },
+      {
+        "courseID": "C001",
+        "title": "নির্ভীক বেলিভ",
+        "introduction": "প্রাকটিক্যাল মাইন্ডফুলনেস মেডিটেশন কোর্স যে পদ্ধতিটি দেখায় কীভাবে ঘনত্ব বাড়ানো যায় এবং চাপ কমানো যায়",
+        "description": [
+          "এই প্রোগ্রামের শেষে আপনি সমস্ত মূল মাইন্ডফুলনেস মেডিটেশনের অভিজ্ঞতা এবং অনুশীলন করবেন। আপনি কিভাবে শিখেছেন হবে",
+          "আপনার মানসিক ক্ষমতা, একাগ্রতা, ক্ষমতা এবং ফোকাস বিকাশ করুন",
+          "রাগ, উচ্চ চাপ এবং উদ্বেগের মুহূর্তে নিজেকে শান্ত করুন",
+          "চাপ এবং উদ্বেগের জন্য চলমান স্থিতিস্থাপকতা বিকাশ করুন",
+          "চাপযুক্ত যোগাযোগের সাথে শান্তভাবে ডিল করুন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "courseLength": "০৭",
+        "totalLecture": "১৫",
+        "price": "5000",
+        "instructor": {
+          "_id": 10001,
+          "name": "ড. আবুল কালাম",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
+          "description": "10 বছর ধরে আমি জীবন, শক্তি, আত্মা, নিরাময়, আকর্ষণের আইন অধ্যয়ন করছি কেন আমি এখানে আছি, আধ্যাত্মিক জগত কীভাবে কাজ করে এবং কীভাবে আমার জীবনকে আশ্চর্যজনক করে তুলতে পারি। আপনার মত আধ্যাত্মিক দিকনির্দেশনা, প্রজ্ঞা এবং আপনি যে গভীর রূপান্তর খুঁজছেন।",
+          "courses": [
+            "C001"
+          ]
+        }
+      },
+      {
+        "courseID": "C005",
+        "title": "ইতিবাচক চিন্তার শক্তি ",
+        "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
+        "description": [
+          "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
+          "আপনি মাইন্ডফুলনেস মেডিটেশন কী এবং কীভাবে এটি অনুশীলন করবেন তা শিখবেন।",
+          "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power.webp",
+        "courseLength": "৬",
+        "totalLecture": "১০",
+        "price": "5000",
+        "instructor": {
+          "_id": 10005,
+          "name": "ড. আলমাসুর রহমান",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "ব্রেন লেডি",
+          "description": "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত",
+          "courses": [
+            "C005"
+          ]
+        }
+      },
+      {
+        "courseID": "C003",
+        "title": "সৃজনশীল ধ্যান",
+        "introduction": "yoga for life",
+        "description": [
+          "ধ্যানের তত্ত্ব এবং অনুশীলন শিখুন এবং মধ্যস্থতার অনুশীলন থেকে উপকৃত হওয়া শুরু করুন। এবং কিভাবে মধ্যস্থতা করতে হয় তা অন্যদের শেখান"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "courseLength": "৭",
+        "totalLecture": "১১",
+        "price": "6000",
+        "instructor": {
+          "_id": 10003,
+          "name": "ড. আবুল কালাম",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "স্বাস্থ্য ও ফিটনেস কোচ | বেস্ট সেলিং ইন্সট্রাক্টর",
+          "description": "আমি একজন প্রত্যয়িত কোচ এবং লেখক",
+          "courses": [
+            "C003"
+          ]
+        }
+      },
+      {
+        "courseID": "C004",
+        "title": "একটি প্রাকৃতিক উপায়ে স্ব নিরাময়",
+        "introduction": "একটি সহজ, হৃদয়-কেন্দ্রিক শিথিলকরণ এবং ধ্যান আপনি প্রতিদিন করতে পারেন",
+        "description": [
+          "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
+          "স্বাভাবিকভাবে এবং মৃদুভাবে মন এবং হৃদয় সংযোগ করুন",
+          "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "courseLength": "৫",
+        "totalLecture": "৫",
+        "price": "5000",
+        "instructor": {
+          "_id": 10004,
+          "name": "ড. আবুল কালাম ",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "হার্টফুলনেস মেডিটেশন প্রশিক্ষক",
+          "description": "আমি উপাদান সরবরাহের অ্যানের উপায় পছন্দ করি। এই কোর্সটি ছোট রত্ন দিয়ে পূর্ণ, এক বাটি দিয়ে ব্যবহার করার জন্য অনেক আশ্চর্যজনক কৌশল সহ সম্পদগুলি সত্যিই দরকারী এবং কোর্সে ভাল মূল্য যোগ করে! এটি আমার জন্য একটি ভাল ম্যাচ ছিল। আমি সত্যিই পরবর্তী পদক্ষেপের জন্য অপেক্ষা করছি (পর্ব 3)! আশীর্বাদ !",
+          "courses": [
+            "C004"
+          ]
+        }
+      },
+      {
+        "courseID": "C002",
+        "title": "মানি মাইন্ড মাস্টারি",
+        "introduction": "আপনার কর্মক্ষেত্রে বা সম্প্রদায়ে কীভাবে ধ্যান করতে হয় তা একটি দলকে শেখান",
+        "description": [
+          "আপনার জীবনকে পুনরায় গড়ে তুলুন সাইকোলজি এবং স্পিরিচুয়ালিটির মাধ্যমে",
+          "বিশ্বের অন্যান্য ধ্যান নেতাদের একটি সম্প্রদায়ে যোগ দিন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "courseLength": "৭",
+        "totalLecture": "১৪",
+        "price": "8000",
+        "instructor": {
+          "_id": 10002,
+          "name": "ড. আবুল কালাম ",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+          "designation": "মনোবিজ্ঞানী",
+          "description": "ড. আবুল কালাম একজন মনোবিজ্ঞানী।",
+          "courses": [
+            "C002"
+          ]
+        }
+      }
+    ]
+  },
+  "instructorData": {
+    "en": [
+      {
         "_id": 10001,
         "name": "Dr. Abul Kalam",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "Director of Training and founder of inMindSight",
-        "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
+        "description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
         "courses": [
-          "C001"
+          "C001",
+          "C002",
+          "C003",
+          "C004"
         ]
-      }
-    },
-    {
-      "courseID": "C007",
-      "title": "Welcome To Meditation (update)",
-      "introduction": "Sample course data is passed!",
-      "description": [
-        "Sound-crafting a complete BLISSbowls™ Sound Healing Session with just one bowl!",
-        "How to integrate a metal or quartz crystal singing bowl into any Energy or Bodywork Healing modality.",
-        "Providing new sound healing ideas for practitioners of all kinds, including energy workers, massage therapists, and bodyworkers.",
-        "Develop health, inner wisdom, mindfulness and true happiness",
-        "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
-      ],
-      "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
-      "courseLength": "2.5",
-      "totalLecture": "6",
-      "price": "2000",
-      "instructor": {
-        "_id": 10007,
-        "name": "Nazish Shameem Qazi",
-        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
-        "designation": "Sound Energy Practitioner, BLISSbowls™ Healing Methods",
-        "description": "Nazish S. Qazi combines a 23-year career in the healing arts with 40 years in the music business to manifest her passion for helping people through an innovative approach to singing bowls. She is a pioneer in the use of therapeutic techniques with singing bowls to help a modern society find transformation, stress-relief and pure presence.",
-        "courses": [
-          "C007"
-        ]
-      }
-    },
-    {
-      "courseID": "C005",
-      "title": "Power of Positive Thinking (updated)",
-      "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
-      "description": [
-        "Relax and relieve stress using a simple relaxation and meditation technique",
-        "You will learn what mindfulness meditation is all about and how to practice it.",
-        "Practice self-observation and meditation with compassion and clarity"
-      ],
-      "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power.webp",
-      "courseLength": "2.5",
-      "totalLecture": "10",
-      "price": "3000",
-      "instructor": {
-        "_id": 10005,
+      },
+      {
+        "_id": 10002,
         "name": "D. Almasur Rahman",
+        "designation": "Meditation Teacher and Life Coach",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
-        "designation": "The Brain Lady",
-        "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
+        "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
         "courses": [
           "C005"
         ]
-      }
-    },{
-      "courseID": "C003",
-      "title": "Creative Meditation",
-      "introduction": "yoga for life",
-      "description": [
-        "learn theory and practice of meditation and start benefiting from practice of mediation. And also teach others on how to mediatiate"
-      ],
-      "thumbnail":
-        "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
-      "courseLength": "07",
-      "totalLecture": "11",
-      "price": "To be released",
-      "instructor": {
+      },
+      {
         "_id": 10003,
-        "name": "Dr. Abul Kalam",
-        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
-        "designation": "Health & Fitness Coach | Best Selling Instructor",
-        "description": "Im a certified coach and author",
-        "courses": ["C003"]
-      }
-    },
-    {
-      "courseID": "C004",
-      "title": "Self Healing in a Naural Way",
-      "introduction":
-        "A simple, heart-centered relaxation and meditation you can do every day",
-      "description": [
-        "Relax and relieve stress using a simple relaxation and meditation technique",
-        "Connect mind and heart, naturally and gently",
-        "Practice self-observation and meditation with compassion and clarity"
-      ],
-      "thumbnail":
-        "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
-      "courseLength": "05",
-      "totalLecture": "05",
-      "price": "To be released",
-      "instructor": {
+        "name": "Md. Mostafizur Rahman",
+        "designation": "Health & Fitness Coach",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
+        "description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
+        "courses": []
+      },
+      {
         "_id": 10004,
-        "name": "Dr. Abul Kalam",
+        "name": "Nazish Shameem Qazi",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+        "designation": "The 'Mind Coach'",
+        "description": "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life.",
+        "description1": "Nazish is an expert life coach, business trainer, psychologist and author. She has helped hundreds of people from many different backgrounds and disciplines to transform their lives for the better. Her passion is helping people discover their true purpose, build inner confidence and bring more happiness and fulfilment into their lives.",
+        "description2": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
+        "description3": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
+        "courses": [
+          "C006"
+        ]
+      }
+    ],
+    "bn": [
+      {
+        "_id": 10001,
+        "name": "ডাঃ আবুল কালাম",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
-        "designation": "Heartfulness Meditation Trainer",
-        "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
-        "courses": ["C004"]
-      }
-    },
-    {
-      "courseID": "C006",
-      "title": "Anger and Stress Management",
-      "introduction":
-        "Learn the art of meditation and mastery of the mind. Bring inner peace, focus and mindfulness into your life.",
-      "description": [
-        "Learn to calm the mind and enter into a state of deep meditation and relaxation",
-        "Several powerful mindfulness breathing techniques for meditation to cleanse and harmonize mind and body",
-        "Recover and/ or prevent burn-out and stress through mindfulness meditation",
-        "Meditations to realize that you create for a great part your own reality and how you can influence that",
-        "Develop health, inner wisdom, mindfulness and true happiness",
-        "4 hours of BEA (brain enhancing audio) mp3 files to help harmonize the brain for easier meditation"
-      ],
-      "thumbnail":
-        "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger.webp",
-      "courseLength": "3",
-      "totalLecture": "10",
-      "price": "To be released",
-      "instructor": {
-        "_id": 10006,
-        "name": "D. Almasur Rahman",
-        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
-        "designation": "Founder & CEO, Meditation Magazine",
-        "description":
-          "Hi, I'm Kevin! When I was in college, I was anxious and depressed. I was smoking a lot of weed, addicted to video games, taking a lot of psychedelics, waking up around 2pm every day. I was going out of my mind. Thankfully, a friend introduced me to meditation, and it gave me my life back.",
-        "courses": ["C006"]
-      }
-    },
-    {
-      "courseID": "C002",
-      "title": "Money Mind Mastery",
-      "introduction":
-        "Teach a group how to meditate in your workplace or community",
-      "description": [
-        "আপনার জীবনকে পুনরায় গড়ে তুলুন সাইকোলজি এবং স্পিরিচুয়ালিটির মাধ্যমে",
-        "Join a community of other meditation leaders around the world"
-      ],
-      "thumbnail":
-        "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
-      "courseLength": "07",
-      "totalLecture": "14",
-      "price": "To be released",
-      "instructor": {
+        "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
+        "description": "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।",
+        "courses": [
+          "C001",
+          "C002",
+          "C003",
+          "C004"
+        ]
+      },
+      {
         "_id": 10002,
-        "name": "Dr. Abul Kalam",
-        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
-        "designation": "Psychologist",
-        "description":
-          "Dr. Abul Kalam is a Psychologist.",
-        "courses": ["C002"]
+        "name": "ড. আলমাসুর রহমান",
+        "designation": "মেডিটেশন টিচার এবং লাইফ কোচ",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+        "description": "D. আলমাসুর রহমান একজন অত্যন্ত উপলব্ধিকৃত সিদ্ধ সন্ন্যাসী যিনি আমাদের কাছে সংস্কৃত ঐতিহ্যের মধ্যে তাঁর শিক্ষার উপর ভিত্তি করে উচ্চতর যোগের হিমালয় ঐতিহ্য প্রকাশ করেন। তিনি হিমালয় থেকে ধ্যানের পারদর্শী ব্যক্তিদের বংশ থেকে এসেছেন যারা ঋষি ঋষি বৃত্তি এবং নাথ যোগিক অনুশীলনের সমন্বয়ের জন্য পরিচিত। মূল দর্শনের সংস্কৃত শ্লোক এবং সন্ন্যাসীর অনুসন্ধান পদ্ধতির গভীর ধ্যান তার গভীর উপলব্ধির দিকে পরিচালিত করেছিল। পরম পবিত্রতা সরাসরি মূল সংস্কৃত সাহিত্য থেকে সূক্ষ্ম স্পষ্টতার সাথে মূল দর্শন শিক্ষা দেন।",
+        "courses": [
+          "C005"
+        ]
+      },
+      {
+        "_id": 10003,
+        "name": "মোঃ মোস্তাফিজুর রহমান",
+        "designation": "স্বাস্থ্য ও ফিটনেস কোচ",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
+        "description": "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।",
+        "courses": []
+      },
+      {
+        "_id": 10004,
+        "name": "নাজিশ শামীম কাজী",
+        "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+        "designation": "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে'",
+        "description": "নাজিশ এস. কাজী গান গাওয়ার জন্য একটি উদ্ভাবনী পদ্ধতির মাধ্যমে লোকেদের সাহায্য করার জন্য তার আবেগকে প্রকাশ করার জন্য সঙ্গীত ব্যবসায় 40 বছরের নিরাময় শিল্পে 23 বছরের ক্যারিয়ারকে একত্রিত করেছেন। তিনি একটি আধুনিক সমাজকে রূপান্তর, স্ট্রেস-মুক্তি এবং বিশুদ্ধ উপস্থিতি খুঁজে পেতে সাহায্য করার জন্য গানের বাটি সহ থেরাপিউটিক কৌশল ব্যবহারে অগ্রগামী।",
+        "description1": "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন।  তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপরণত আনত সহযয কর।",
+        "description2": "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।",
+        "courses": [
+          "C006"
+        ]
       }
-    }
-  ],
-  "instructorData": [
-    {
-      "_id": 10001,
-      "name": "Dr. Abul Kalam",
-      "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
-      "designation": "Director of Training and founder of inMindSight",
-      "description": "hello",
-      "courses": [
-        "C001",
-        "C002",
-        "C003",
-        "C004"
-      ]
-    },
-    {
-      "_id": 10002,
-      "name": "D. Almasur Rahman",
-      "designation": "Meditation Teacher and Life Coach",
-      "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
-      "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
-      "courses": [
-        "C005",
-        "C006"
-      ]
-    },
-    {
-      "_id": 10003,
-      "name": "Md. Mostafizur Rahman",
-      "designation": "Health & Fitness Coach",
-      "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
-      "description": "hello",
-      "courses": []
-    },
-    {
-      "_id": 10004,
-      "name": "Nazish Shameem Qazi",
-      "designation": "Heartfulness Meditation Trainer",
-      "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
-      "description": "hello",
-      "courses": [
-        "C007"
-      ]
-    }
-  ],
+    ]
+  },
   "courseData": [
     {
       "courseID": "C001",
       "title": "Fearless Belive",
       "lessons": [
         {
-          "title": "Mind school introduction",
+          "title": "Course no 1 Episode no 1",
+          "episode": 1,
           "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Course no 1 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 1 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Course no 1 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 12",
+          "episode": 12,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 13",
+          "episode": 13,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 14",
+          "episode": 14,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 1 Episode no 15",
+          "episode": 15,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:15"
         }
       ]
@@ -247,120 +492,339 @@
       "title": "Money Mind Mastery",
       "lessons": [
         {
-          "title": "Mind school introduction",
+          "title": "Course no 2 Episode no 1",
+          "episode": 1,
           "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Course no 2 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 2 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 2 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Course no 2 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 12",
+          "episode": 12,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 13",
+          "episode": 13,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 2 Episode no 14",
+          "episode": 14,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:15"
         }
       ]
     },
     {
       "courseID": "C003",
-      "title":"Creative Meditation",
+      "title": "Creative Meditation",
       "lessons": [
         {
-          "title": "Mind school introduction",
+          "title": "Course no 3 Episode no 1",
+          "episode": 1,
           "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Course no 3 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 3 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 3 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Course no 3 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 3 Episode no 11",
+          "episode": 11,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:15"
         }
       ]
     },
     {
       "courseID": "C004",
-      "title":"Self Healing in a Naural Way",
+      "title": "Self Healing in a Naural Way",
       "lessons": [
         {
-          "title": "Mind school introduction",
+          "title": "Course no 4 Episode no 1",
+          "episode": 1,
           "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Course no 4 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 4 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 4 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Course no 4 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:15"
         }
       ]
-    },{
+    },
+    {
       "courseID": "C005",
-      "title":"Power of Positive Thinking",
+      "title": "Anger Management And Power of Positive Thinking",
       "lessons": [
         {
-          "title": "Mind school introduction",
+          "title": "Course no 5 Episode no 1",
+          "episode": 1,
           "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Course no 5 Episode no 2",
+          "episode": 2,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 5 Episode no 3",
+          "episode": 3,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "01:25"
+        },
+        {
+          "title": "Course no 5 Episode no 4",
+          "episode": 4,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Course no 5 Episode no 5",
+          "episode": 5,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 5 Episode no 6",
+          "episode": 6,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 5 Episode no 7",
+          "episode": 7,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 5 Episode no 8",
+          "episode": 8,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 5 Episode no 9",
+          "episode": 9,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "length": "00:15"
+        },
+        {
+          "title": "Course no 5 Episode no 10",
+          "episode": 10,
+          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
           "length": "00:15"
         }
       ]
-    },{
+    },
+    {
       "courseID": "C006",
-      "title": "Anger and Stress Management",
-      "lessons": [
-        {
-          "title": "Mind school introduction",
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
-        },
-        {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
-          "length": "00:14"
-        },
-        {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
-          "length": "00:15"
-        }
-      ]
-    },{
-      "courseID": "C007",
       "title": "Welcome To Meditation",
       "lessons": [
         {
-          "title": "Mind school introduction",
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
+          "title": "Lesson 1",
+          "episode": 1,
+          "videoID": "808c3b9a962a4e13907c423e673a3eb7",
           "length": "01:25"
         },
         {
-          "title": "A beautiful view",
-          "videoID": "9338b38192cf47b39c69245d5e4aa6ac",
+          "title": "Meditation Exercise 1",
+          "episode": 2,
+          "videoID": "684de8600add48359615e124101e1457",
+          "length": "01:25"
+        },
+        {
+          "title": "Lesson 2",
+          "episode": 3,
+          "videoID": "beab7d62d93d42bb93f639c05d8fa1d5",
+          "length": "01:25"
+        },
+        {
+          "title": "Meditation Exercise 2",
+          "episode": 4,
+          "videoID": "2166971535ac4c65bcdd48a5252319c5",
           "length": "00:14"
         },
         {
-          "title": "River view",
-          "videoID": "2e10cc559b8543118d8707f9d629361f",
+          "title": "Lesson 3",
+          "episode": 5,
+          "videoID": "0190e5794e214244a4a4df83a0d5d72c",
+          "length": "00:15"
+        },
+        {
+          "title": " Meditation Exercise 3 ",
+          "episode": 6,
+          "videoID": "a3cb8937bacf4e8aad47631e2249bec1",
+          "length": "00:15"
+        },
+        {
+          "title": "Lesson 4",
+          "episode": 7,
+          "videoID": "ba0086eda31a46be8023336e2cc19186",
+          "length": "00:15"
+        },
+        {
+          "title": "Meditation Exercise 4 ",
+          "episode": 8,
+          "videoID": "659ed402e433451ab92671b2e2eb5f87",
+          "length": "00:15"
+        },
+        {
+          "title": "Lesson 5",
+          "episode": 9,
+          "videoID": "52f813805cd942b997485c272b889aaa",
+          "length": "00:15"
+        },
+        {
+          "title": "Meditation Exercise 5",
+          "episode": 10,
+          "videoID": "66a525bea3204231b73625200ffe27d6",
+          "length": "00:15"
+        },
+        {
+          "title": "Lesson 6",
+          "episode": 11,
+          "videoID": "b9013d209dc241e39ae143b0a8a00b00",
+          "length": "00:15"
+        },
+        {
+          "title": "Meditation Exercise 6",
+          "episode": 12,
+          "videoID": "66bb94e264e14ff285ac0fbdd460deee",
           "length": "00:15"
         }
       ]

@@ -75,12 +75,10 @@ const Instructor = () => {
       .then((data) => {
         let listOfInstructor;
         if(localStorage.getItem("language")==="bn"){
-          listOfInstructor = data.data.data.instructorData.en;
-          // // console.log("coursesbn",listOfInstructor)
-
+          listOfInstructor = data.data.data.en;
         }
         else{
-          listOfInstructor = data.data.data.instructorData.bn;
+          listOfInstructor = data.data.data.bn;
           //// console.log("coursesen",listOfInstructor)
         }
         // let localInstructor = JSON.parse(localStorage.getItem("courselist"));

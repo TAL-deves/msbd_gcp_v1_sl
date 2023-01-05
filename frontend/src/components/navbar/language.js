@@ -49,8 +49,16 @@ export const translationsEn = {
     subscribe:"Subscribe",
     to_get_all_updates:"to get all the updates from Mind School",
     corporates:"Corporates",
-    content:"Contents"
-
+    content:"Contents",
+    sign_up:"Sign Up",
+    sign_up_with_google:"SIGN UP WITH GOOGLE",
+    sign_up_with_facebook:"SIGN UP WITH FACEBOOK",
+    sign_up_with_email:"SIGN UP WITH EMAIL",
+    full_name:"Full Name",
+    already_have_an_acc:"Already have an account? Login here",
+    phone:"Phone Number",
+    back:"Back",
+    next:"Next"
   };
   
 export const translationsBn = {
@@ -104,7 +112,14 @@ export const translationsBn = {
     subscribe:"সাবস্ক্রাইব",
     to_get_all_updates:"করুন মাইন্ড স্কুল থেকে সমস্ত আপডেট পেতে",
     corporates:"কর্পোরেটস",
-    content:"কন্টেন্ট"
-
-
+    content:"কন্টেন্ট",
+    sign_up:"সাইন আপ",
+    sign_up_with_google:"জিমেইল দিয়ে সাইন আপ করুন",
+    sign_up_with_facebook:"ফেসবুক দিয়ে সাইন আপ করুন",
+    sign_up_with_email:"ইমেইল দিয়ে সাইন আপ করুন",
+    full_name:"পুরো নাম",
+    already_have_an_acc:"একাউন্ট আছে? এখানে লগইন করুন",
+    phone:"ফোন নম্বর",
+    back:"পূর্ববর্তী",
+    next:"পরবর্তী"
   };

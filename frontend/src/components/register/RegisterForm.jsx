@@ -27,6 +27,7 @@ import VerifyForm from "../verify/VerifyForm";
 // import "./Register.css";
 import { Container } from "@mui/system";
 import swal from "sweetalert";
+import { globalContext } from "../../pages/GlobalContext";
 
 const theme = createTheme();
 
@@ -75,6 +76,7 @@ const RegisterForm = () => {
     setMatchPwd,
     registerapiresponse,
   } = useContext(multiStepContext);
+  const { t } = useContext(globalContext)
   const [verify, setVerify] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = React.useState(false);
@@ -184,7 +186,7 @@ const RegisterForm = () => {
                 disabled={activeStep === 0 || activeStep === 2}
                 sx={{ mr: 1, mb: 5 }}
               >
-                back 
+                {t("back")}
               </Button>
               {/* && registerapiresponse !== null &&
             registerapiresponse?.result?.isError === false */}
@@ -222,7 +224,8 @@ const RegisterForm = () => {
                   onClick={()=>{handleLoadingNext()}}
                   sx={{ mr: 5, mb: 5 }}
                 >
-                  Next{" "}
+                  {/* Next{" "} */}
+                  {t("next")}
                 </Button></>
               )}
             </div>

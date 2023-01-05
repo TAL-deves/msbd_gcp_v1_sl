@@ -54,7 +54,6 @@ const CourseCard = (props) => {
 
   localStorage.setItem("course", JSON.stringify(courses));
 
-
   return (
     <motion.div whileHover={{ scale: 1.03 }}>
       <Box
@@ -113,6 +112,7 @@ const CourseCard = (props) => {
           }}>
 
             <Box item mb={1} mr={1}>
+            {fullObject.available?
               <Button size="small" variant="contained"
                 sx={{
                   backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
@@ -126,20 +126,41 @@ const CourseCard = (props) => {
 
 
               >
+                
                 <Typography
                   sx={{
                     fontSize: "1rem",
                   }}
                 >
-                  {/* {t("buy")} */}
                   {fullObject.isSelected === true ? <>{t("buy")}</> : <>{t("selected")}</>}
-                  {/* {fullObjectToggle==="y"?<>{t("buy")}</>:<>{t("selected")}</>}  */}
                 </Typography>
+   
               </Button>
+              :
+              <Button size="small" variant="contained"
+              sx={{
+                backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
+                  backgroundColor: "primary.main",
+                  color: "secondary.main"
+                }
+              }}
+              onClick={() => swal("This course is coming soon","Thank You", "info")
+
+              }
+            >
+              <Typography
+                  sx={{
+                    fontSize: "1rem",
+                  }}
+                >
+                  {t("buy")}
+                </Typography>
+            </Button>
+              }
             </Box>
             <Box item>
               {/* uncomment again  */}
-              {instructor!=="Nazish Shameem Qazi"?
+              {!fullObject.available?
               <>
               <Button size="small" variant="contained"
                   sx={{

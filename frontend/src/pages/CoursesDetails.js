@@ -188,8 +188,6 @@ if(courses!==null && courses.length !== 0){
 
 
 
-
-
 return (
    
     <Box >
@@ -205,17 +203,8 @@ return (
             {/* Demo */}
             </Typography>
           <Typography variant="h6"
-           sx={{marginTop:"2rem", marginBottom:"2rem"}}>
-            {state?.description}
-            
-            {/* {(state?.description).map((description)=>
-            console.log(state?.description)
-            (<Typography variant="h6">{description}</Typography>
-              
-            )
-            )} */}
-
-           
+           sx={{marginTop:"2rem", marginBottom:"2rem", textAlign:"justify"}}>
+            {state?.description}           
             </Typography>
 
             
@@ -325,7 +314,8 @@ return (
            display:"flex",alignItems:"center"}}>
             <CheckCircleOutlineIcon/>Course Decription:
             </Typography>
-         {state?.description}
+            <Typography variant="h6" sx={{textAlign:"justify"}}>
+         {state?.description}</Typography>
         </Typography>
         <Typography variant="h6">
         <Typography variant="h6" 
@@ -342,10 +332,10 @@ return (
                 title={state?.instructor?.name}
                 instructor={state?.instructor?.designation}
                 img={state?.instructor?.image}
-                description= {state?.instructor?.description}
-              ></InstructorInCourseDetails>
+                description= {state?.instructor?.description[0]}
+             >
+          </InstructorInCourseDetails>
         <Box>
-
         </Box>
         <Box 
         sx={{margin:"2%",padding:"2%",border:"1px solid white",
@@ -353,57 +343,11 @@ return (
         boxShadow: "1px 1px 14px 1px rgba(102,102,102,0.83);"}}>
         <Typography
          sx={{
-          paddingBottom:"5%"}} 
+          paddingBottom:"5%", textAlign:"center"}} 
           variant="h4">
-            You can Download Our App From Here
+            Download Our App
         </Typography>
-        {/* <Box 
-        sx={{paddingTop:"5%",
-         paddingBottom:"5%", 
-         display:"flex", 
-         justifyContent:"space-around"}}>
-        <Grid sx={{}}>   
-              <Box >
-              <Link href='https://google.com'>               
-       <Button variant="text" 
-       sx={{
-        p:0, mt:1
-       }}>
-        <CardMedia
-        component="img"
-        // height="300"
-        image={googlebtn}
-        alt="image"
-        sx={{
-          m:0,
-          p:0,height:{md:"50px", sm:"40px"},width:{md:"150px", sm:"120px"}
-        }}
-      />
-       </Button>
-       </Link> 
-              </Box>
-              </Grid>
-              <Grid>
-              <Box>
-              <Link href='https://google.com'>
-       <Button variant="text" sx={{
-        p:0, mt:1
-       }}>
-        <CardMedia
-        component="img"
-        // height="auto"
-        image={applebtn}
-        alt="image"
-        sx={{
-          mt:0,
-          p:0, height:{md:"50px", sm:"40px"},width:{md:"150px", sm:"120px"}
-        }}
-      />
-       </Button>
-       </Link> 
-              </Box>
-              </Grid>       
-        </Box> */}
+    
            <Box sx={{display:"flex", alignItems:"center"}}>
           <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
                 <Box

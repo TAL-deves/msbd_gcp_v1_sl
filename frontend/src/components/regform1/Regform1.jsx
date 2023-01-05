@@ -15,22 +15,20 @@ import { multiStepContext } from "../../pages/StepContext";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiTelInput } from "mui-tel-input";
 import {Link as Routerlink} from "react-router-dom";
+import { globalContext } from "../../pages/GlobalContext";
 
 
 
 const Regform1 = () => {
-  const {
-    
+  const {    
     validName,
     userFocus,
     setUserFocus,
@@ -38,16 +36,15 @@ const Regform1 = () => {
     email,
     setEmail,
     emailFocus,
-    setEmailFocus,
-    
-    errMsg,
-    
-    handleSubmit,
-    
+    setEmailFocus,    
+    errMsg,    
+    handleSubmit,    
     username,
     setUser,
     phone, setPhone,validPhone, phoneFocus,setPhoneFocus
   } = useContext(multiStepContext);
+
+   const { t } = useContext(globalContext)
 
   const [open, setOpen] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
@@ -126,7 +123,7 @@ const Regform1 = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            {t("sign_up")}
           </Typography>
         </Box>
         <Box
@@ -173,7 +170,7 @@ const Regform1 = () => {
                 }}
               />
               <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
-                Sign up with google
+                {t("sign_up_with_google")}
               </Typography>
               {/* </Link> */}
             </Button>
@@ -198,13 +195,13 @@ const Regform1 = () => {
                 }}
               />
               <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
-                Sign up with facebook
+              {t("sign_up_with_facebook")}
               </Typography>
             </Button>
 
             <Typography component="p" variant="p" sx={{ textAlign: "center" }}>
-              Or <br />
-              Sign Up with Email
+            {t("or")} <br />
+            {t("sign_up_with_email")}
             </Typography>
           </Grid>
           {errMsg ? (
@@ -249,7 +246,7 @@ const Regform1 = () => {
             {/* MUI phone added */}
             <MuiTelInput 
             sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
-            label="Phone Number"
+            label={t("phone")}
             defaultCountry="BD" 
             //  autoFocus
             value={phone} 
@@ -296,7 +293,7 @@ const Regform1 = () => {
               required
               fullWidth
               id="username  "
-              label="Full name "
+              label={t("full_name")}
               name="username"
               autoComplete="username"
               // autoFocus
@@ -335,7 +332,7 @@ const Regform1 = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t("email")}
               name="email"
               // error={errMsg}
               autoComplete="email"
@@ -371,7 +368,8 @@ const Regform1 = () => {
               <Grid item xs></Grid>
               <Grid item>
                 <Routerlink to="/login" style={{textDecoration:"none"}} variant="body2">
-                  <Typography sx={{color:"primary.main"}}>{"Already have an account? Login here"}</Typography>
+                  <Typography sx={{color:"primary.main"}}>
+                  {t("already_have_an_acc")}</Typography>
                 </Routerlink>
               </Grid>
             </Grid>

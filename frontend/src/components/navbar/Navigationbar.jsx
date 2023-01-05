@@ -128,16 +128,11 @@ const Navigationbar = (props) => {
   // lang 
   useEffect(()=>{
     localStorage.setItem("language",lang)
-  // // console.log(lang)
   },[lang])
 
   const pages = [
     { title: `${t("home")}`, href: "/" },
     { title: `${t("course")}`, href: "/courses" },
-    // { title: `${t("bookAnAppoinment")}`, href: "/apointment" },
-    // { title: `${t("live")}`, href: "/live" },
-    // { title: `${t("group")}`, href: "/group" },
-    // { title: `${t("store")}`, href: "/store" },
     { title: `${t("about")}`, href: "/about" },
     { title: `${t("contact")}`, href: "/contact" },
   ];

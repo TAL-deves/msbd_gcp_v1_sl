@@ -177,19 +177,6 @@ const Cart = (props) => {
         >
           {courses.map((course) => {
             return (
-              // <Box key={course.courseID} sx={{ maxWidth: 345, mb:"15px", display:"flex" }}>
-              //   <CourseCard 
-              //   title={course.title}
-              //   img={course.img}
-              //   instructor={course.instructor}
-              //   price={course.price}
-              //   hour={course.hour}
-              //   lecture={course.lecture}
-              //   fullObject={course}
-              //   />
-              //   <Button  
-              //   onClick={()=>handleRemove(course.title)}>X</Button>
-              // </Box>
 
               <>
               
