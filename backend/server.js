@@ -645,6 +645,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
     // console.log("userExists   ----   ", userExists);
 
     if (!userExists) {
+      const newId = uuidv4();
       if (req.body.method === "google") {
         //! google new registration
 
@@ -656,6 +657,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
           active: true,
+          loggedinID: newId
         });
 
         await signUpUser.save();
@@ -697,6 +699,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
           active: true,
+          loggedinID: newId
         });
 
         await signUpUser.save();
