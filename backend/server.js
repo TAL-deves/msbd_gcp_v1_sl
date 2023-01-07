@@ -2696,12 +2696,14 @@ app.post("/api/course", async (req, res) => {
         });
       }
 
+      let userCompletedLessonUpdatedFiltered = userCompletedLessonsUpdated.filter((item,index) => userCompletedLessonsUpdated.indexOf(item) === index);
+
       if (result) {
         let dataJSON = {
           courseID: result.courseID,
           title: result.title,
           lessons: result.lessons,
-          lessonsCompleted: userCompletedLessonsUpdated,
+          lessonsCompleted: userCompletedLessonUpdatedFiltered,
         };
         // console.log("result ----", dataJSON);
         let setSendResponseData = new sendResponseData(dataJSON, 200, null);
