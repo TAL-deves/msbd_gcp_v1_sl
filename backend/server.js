@@ -3731,6 +3731,8 @@ app.post("/api/usercourses", async (req, res) => {
               });
             }
 
+            let userCompletedLessonUpdatedFiltered = userCompletedLessonsUpdated.filter((item,index) => userCompletedLessonsUpdated.indexOf(item) === index);
+
             //? if language is en then send bn data
 
             coursedetailsData = data[0].coursesData.en;
@@ -3739,7 +3741,7 @@ app.post("/api/usercourses", async (req, res) => {
               (item) => item.courseID == item.courseID
             );
 
-            let total_course = userCompletedLessonsUpdated.length;
+            let total_course = userCompletedLessonUpdatedFiltered.length;
             let total_completed = parseInt(result.totalLecture);
 
             let progress = (total_course / total_completed) * 100;
