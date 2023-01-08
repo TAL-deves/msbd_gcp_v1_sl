@@ -25,7 +25,7 @@ import axios from "axios";
  var fileDownload = require('js-file-download');
 
 let USER_COURSES_URL = "/api/usercourses"
-// let CERTIFICATE_URL= "/api/certificate"
+ let CHECK_DEVICE_URL= "/api/checkdeviceanduser"
 // let CERTIFICATE_URL= "/api/testingpoint"
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -49,45 +49,18 @@ const MyCourses = (props) => {
 
   const [courses, setCourses] = useState([]);
   const [load, setLoad] = useState(true);
-
+  
   let fullName=props.fullName
+  let setIsAndroid= props.setIsAndroid
   let username = localStorage.getItem("user")
   let fetchData = async () => {
-    // cmmnt later after my courses api created
-    // await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
-    //   .then((data) => {
-    //     // //// console.log(" THis is the data -----  "+data.data.data.coursesData);
-    //     let listOfCourse;
-    //     if(localStorage.getItem("language")==="bn"){
-    //        listOfCourse = data.data.data.coursesData.en;
-    //        // console.log("coursesbn",listOfCourse)
-
-    //     }
-    //     else{
-    //       listOfCourse = data.data.data.coursesData.bn;
-    //       // console.log("coursesen",listOfCourse)
-    //     }
-    //     setCourses(listOfCourse)
-    //     setLoad(false);
-    //   });
-
-
-    // uncomment 
-    
-
-    await api
+      await api
       .post(USER_COURSES_URL, JSON.stringify({ username }), {
         headers: { "Content-Type": "application/json" },
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        // console.log("ins dta", data);
-        // if (data.data.result.status === 404) {
-        //   // swal("No Puchase Done Yet", "You will get to see only purchased courses here","info")
-        //   setCourses([])
-        // }
-       
-        // console.log("data", data)
+        
 
         if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
           localStorage.removeItem("access_token");
@@ -110,9 +83,22 @@ const MyCourses = (props) => {
         setLoad(false);
       });
   };
+  let fetchDeviceData = async () => {
+      await api
+      .post(CHECK_DEVICE_URL, JSON.stringify({ username }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((data) => {
+       console.log("device",data.data.data.data.platform)
+      setIsAndroid(data.data.data.data.platform)
+      });
+  };
+  
 
   useEffect(() => {
     fetchData();
+    fetchDeviceData();
   }, []);
 
   

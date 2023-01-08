@@ -38,6 +38,7 @@ import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
 import { globalContext } from "./GlobalContext";
 import swal from "sweetalert";
+import { t } from "i18next";
 
 
 
@@ -120,7 +121,7 @@ const CoursesDetails = () => {
   const [startbutton, setStartButton]= useState(true)
   const videoRef = React.useRef(null);
   const navigate = useNavigate();
-  const { language } = useContext(globalContext);
+  const { language, t } = useContext(globalContext);
   AOS.init({duration:2000});
   const [played, setPlayed] = useState(0);
   const [state, setState] = useState({});
@@ -285,7 +286,7 @@ return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={7} data-aos="fade-right">
-        <Typography variant="h4" sx={{color:"primary.main"}}>Course Details:</Typography>
+        <Typography variant="h4" sx={{color:"primary.main"}}>{t("course_details")}:</Typography>
         {/* <Typography variant="h6" >
         <img  src={state?.thumbnail} alt=""/>
         </Typography> */}
@@ -294,13 +295,13 @@ return (
         sx={{color:"primary.main",
         marginTop:"2rem", display:"flex",alignItems:"center"
         }}><CheckCircleOutlineIcon/>
-        Total Lecture: </Typography>{state?.totalLecture}
+       {t("total_lecture")}: </Typography>{state?.totalLecture}
         </Typography>
         <Typography variant="h6">
         <Typography variant="h6" sx={{color:"primary.main",
       marginTop:"1rem", display:"flex",alignItems:"center"}}>
-        <CheckCircleOutlineIcon/>Course Length:</Typography>
-         {state?.courseLength} Hours
+        <CheckCircleOutlineIcon/>{t("course_length")}:</Typography>
+         {state?.courseLength} {t("hours")}
         </Typography>
         <Typography variant="h6">
         {/* {state?.description} */}
@@ -312,7 +313,7 @@ return (
           <Typography variant="h6" 
           sx={{color:"primary.main", marginTop:"1rem",
            display:"flex",alignItems:"center"}}>
-            <CheckCircleOutlineIcon/>Course Decription:
+            <CheckCircleOutlineIcon/>{t("course_description")}:
             </Typography>
             <Typography variant="h6" sx={{textAlign:"justify"}}>
          {state?.description}</Typography>
@@ -321,7 +322,7 @@ return (
         <Typography variant="h6" 
         sx={{color:"primary.main", marginTop:"1rem",
          display:"flex",alignItems:"center"}}>
-        <CheckCircleOutlineIcon/>Course Price:  </Typography>
+        <CheckCircleOutlineIcon/>{t("course_price")}:  </Typography>
         ৳{state?.price}
         </Typography>
         </Grid>

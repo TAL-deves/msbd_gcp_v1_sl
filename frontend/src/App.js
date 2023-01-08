@@ -228,7 +228,7 @@ function App() {
                   />
                   {/* <Route path="userprofile" element={<UserProfile />} /> */}
                   <Route path="userprofile" element={<ProfileTabs />} />
-                  <Route path="mycourses" element={<MyCourses />} />
+                  {/* <Route path="mycourses" element={<MyCourses />} /> */}
                   <Route path="paymenthistory" element={<PaymentHistory />} />
                   <Route path="myfeedback" element={<MyFeedbacks />} />
                   {/* <Route path="dectivateaccount" element={<DeactivateAccount />} /> */}

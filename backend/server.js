@@ -90,6 +90,7 @@ const userPendingPurchase = require("./Database/models/userPendingPurchase");
 const certificateData = require("./Database/models/certificateData");
 var QRCode = require("qrcode");
 const subscribers = require("./Database/models/subscribers");
+var useragent = require("express-useragent");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -145,6 +146,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(useragent.express());
 
 const myLogger = function (req, res, next) {
   // console.log(req.headers.useraagent)
@@ -529,12 +531,14 @@ app.post("/api/signupmobile", async (req, res) => {
     // console.log("userExists   ----   ", userExists);
 
     if (!userExists) {
+      const newId = uuidv4();
       const signUpUser = new signUpTemplateCopy({
         fullname: req.body.name,
         username: req.body.googleId,
         email: req.body.email,
         password: req.body.googleId,
         googleId: req.body.googleId,
+        loggedinID: newId,
       });
 
       await signUpUser.save();
@@ -657,7 +661,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
           active: true,
-          loggedinID: newId
+          loggedinID: newId,
         });
 
         await signUpUser.save();
@@ -699,7 +703,6 @@ app.post("/api/signupmobiletest", async (req, res) => {
           googleId: req.body.googleId,
           facebookId: req.body.facebookId,
           active: true,
-          loggedinID: newId
         });
 
         await signUpUser.save();
@@ -1689,7 +1692,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
         // Finalize the PDF and end the stream
         doc.end();
       });
-
   } catch (error) {
     console.log("Inside catch");
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
@@ -2696,7 +2698,15 @@ app.post("/api/course", async (req, res) => {
         });
       }
 
-      let userCompletedLessonUpdatedFiltered = userCompletedLessonsUpdated.filter((item,index) => userCompletedLessonsUpdated.indexOf(item) === index);
+      // console.log("userCompletedLessons",userCompletedLessons);
+      // console.log("userCompletedLessonsUpdated",userCompletedLessonsUpdated);
+
+      let userCompletedLessonUpdatedFiltered =
+        userCompletedLessonsUpdated.filter(
+          (item, index) => userCompletedLessonsUpdated.indexOf(item) === index
+        );
+
+      // console.log("userCompletedLessonUpdatedFiltered",userCompletedLessonUpdatedFiltered);
 
       if (result) {
         let dataJSON = {
@@ -2803,10 +2813,13 @@ app.post("/api/allinstructors", async (req, res) => {
   try {
     let data = await allData.find();
 
-    let setSendResponseData = new sendResponseData(data[0].instructorData, 200, null);
+    let setSendResponseData = new sendResponseData(
+      data[0].instructorData,
+      200,
+      null
+    );
     let responseToSend = encryptionOfData(setSendResponseData.success());
     res.send(responseToSend);
-
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -3372,8 +3385,8 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
     res.send("okay");
   } else {
     res.json({
-      data:null,
-      result: "failed"
+      data: null,
+      result: "failed",
     });
   }
 });
@@ -3612,185 +3625,189 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
 //! ********** User courses and payment history part ***********/
 app.post("/api/usercourses", async (req, res) => {
   // try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
 
-    //! This is for token checking Start
-    let userSessionStatus = await tokenChecking(req);
+  //! This is for token checking Start
+  let userSessionStatus = await tokenChecking(req);
 
-    if (userSessionStatus.data != null) {
-      console.log("/api/usercourses ----- ", req.body);
-      let data = await allData.find();
-      // data = data[0].coursesData.en;
-      // let array2 = data.coursesData.en
+  if (userSessionStatus.data != null) {
+    // console.log("/api/usercourses ----- ", req.body);
+    let data = await allData.find();
+    // data = data[0].coursesData.en;
+    // let array2 = data.coursesData.en
 
-      let userCourses = await usersPurchasedCourses.find({
-        $and: [{ username: req.body.username }, { status: "VALID" }],
+    let userCourses = await usersPurchasedCourses.find({
+      $and: [{ username: req.body.username }, { status: "VALID" }],
+    });
+
+    let userallcourses = [];
+
+    //? NO expiry checking
+    // userCourses.map((item) => {
+    //   item.coursesList.map((item2) => {
+    //     userallcourses.push(item2);
+    //   });
+    // });
+
+    //? with expiry checking
+    // userCourses.map((item) => {
+    //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
+    //     console.log("expired");
+    //   } else {
+    //     item.coursesList.map((item2) => {
+    //       userallcourses.push(item2);
+    //     });
+    //   }
+    // });
+
+    //? with expiry checking and status changing
+    Promise.all(
+      userCourses.map(async (item) => {
+        if (moment(new Date()).isSameOrAfter(new Date(item.expirationDate))) {
+          await usersPurchasedCourses.findOneAndUpdate(
+            {
+              $and: [
+                { username: "+8801779561764" },
+                { status: "VALID" },
+                { coursesList: item.coursesList },
+              ],
+            },
+            {
+              $set: {
+                courseExpityStatus: "VALIDITY EXPIRED",
+              },
+            }
+          );
+
+          // console.log("expired --- ", item);
+        } else {
+          item.coursesList.map((item2) => {
+            userallcourses.push(item2);
+          });
+        }
+      })
+    );
+
+    if (userCourses[0]) {
+      let array1 = userallcourses;
+      let array2 = data[0].coursesData.en;
+      let array3 = [];
+      let array31 = [];
+
+      // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
+      // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
+      // array3 = [...array2];
+      // console.log("userallcourses array3 ----- ", array3);
+      // console.log("userallcourses list ----- ", array1);
+
+      array1.map((e) => {
+        let objects = array2.find((e2) => e2.courseID == e);
+        // console.log("e --- ", e, "objects ---", objects);
+
+        let courses = {
+          courseID: objects.courseID,
+          title: objects.title,
+          thumbnail: objects.thumbnail,
+          courseLength: objects.courseLength,
+          totalLecture: objects.totalLecture,
+          instructor: objects.instructor.name,
+          complete: false,
+          status: 0,
+        };
+
+        array31.push({ ...courses });
+        array3.push({ ...objects });
+        return true;
       });
 
-      let userallcourses = [];
+      // console.log("array31",array31);
 
-      //? NO expiry checking
-      // userCourses.map((item) => {
-      //   item.coursesList.map((item2) => {
-      //     userallcourses.push(item2);
-      //   });
-      // });
+      //! with progress
 
-      //? with expiry checking
-      // userCourses.map((item) => {
-      //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
-      //     console.log("expired");
-      //   } else {
-      //     item.coursesList.map((item2) => {
-      //       userallcourses.push(item2);
-      //     });
-      //   }
-      // });
+      await Promise.all(
+        array31.map(async (item, index) => {
+          let userCompletedLessons = await lessonProgress.find({
+            $and: [
+              { username: req.body.username },
+              { courseID: item.courseID },
+              { complete: true },
+            ],
+          });
 
-      //? with expiry checking and status changing
-      Promise.all(
-        userCourses.map(async (item) => {
-          if (moment(new Date()).isSameOrAfter(new Date(item.expirationDate))) {
-            await usersPurchasedCourses.findOneAndUpdate(
-              {
-                $and: [
-                  { username: "+8801779561764" },
-                  { status: "VALID" },
-                  { coursesList: item.coursesList },
-                ],
-              },
-              {
-                $set: {
-                  courseExpityStatus: "VALIDITY EXPIRED",
-                },
-              }
-            );
+          let userCompletedLessonsUpdated = [];
 
-            // console.log("expired --- ", item);
-          } else {
-            item.coursesList.map((item2) => {
-              userallcourses.push(item2);
+          if (userCompletedLessons[0] !== null) {
+            userCompletedLessons.map((item) => {
+              // console.log("item",item.lessonNumber);
+              userCompletedLessonsUpdated.push(item.lessonNumber);
             });
           }
+
+          let userCompletedLessonUpdatedFiltered =
+            userCompletedLessonsUpdated.filter(
+              (item, index) =>
+                userCompletedLessonsUpdated.indexOf(item) === index
+            );
+
+          //? if language is en then send bn data
+
+          coursedetailsData = data[0].coursesData.en;
+
+          let result = coursedetailsData.find(
+            (item) => item.courseID == item.courseID
+          );
+
+          let total_course = userCompletedLessonUpdatedFiltered.length;
+          let total_completed = parseInt(result.totalLecture);
+
+          let progress = (total_course / total_completed) * 100;
+
+          // console.log(" progress ", Math.ceil(progress));
+          if (Math.ceil(progress) > 100) {
+            progress = 100;
+          }
+          item.status = Math.ceil(progress);
         })
       );
 
-      if (userCourses[0]) {
-        let array1 = userallcourses;
-        let array2 = data[0].coursesData.en;
-        let array3 = [];
-        let array31 = [];
+      let userAuditLoggerData = {
+        username: req.body.username,
+        url: req.originalUrl,
+        timestamp: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }),
+      };
 
-        // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
-        // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
-        // array3 = [...array2];
-        // console.log("userallcourses array3 ----- ", array3);
-        // console.log("userallcourses list ----- ", array1);
+      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-        array1.map((e) => {
-          let objects = array2.find((e2) => e2.courseID == e);
-          // console.log("e --- ", e, "objects ---", objects);
+      // console.log("array31----", array31);
 
-          let courses = {
-            courseID: objects.courseID,
-            title: objects.title,
-            thumbnail: objects.thumbnail,
-            courseLength: objects.courseLength,
-            totalLecture: objects.totalLecture,
-            instructor: objects.instructor.name,
-            complete: false,
-            status: 0,
-          };
-
-          array31.push({ ...courses });
-          array3.push({ ...objects });
-          return true;
-        });
-
-        // console.log("array31",array31);
-
-        //! with progress
-
-        await Promise.all(
-          array31.map(async (item, index) => {
-            let userCompletedLessons = await lessonProgress.find({
-              $and: [
-                { username: req.body.username },
-                { courseID: item.courseID },
-                { complete: true },
-              ],
-            });
-
-            let userCompletedLessonsUpdated = [];
-
-            if (userCompletedLessons[0] !== null) {
-              userCompletedLessons.map((item) => {
-                // console.log("item",item.lessonNumber);
-                userCompletedLessonsUpdated.push(item.lessonNumber);
-              });
-            }
-
-            let userCompletedLessonUpdatedFiltered = userCompletedLessonsUpdated.filter((item,index) => userCompletedLessonsUpdated.indexOf(item) === index);
-
-            //? if language is en then send bn data
-
-            coursedetailsData = data[0].coursesData.en;
-
-            let result = coursedetailsData.find(
-              (item) => item.courseID == item.courseID
-            );
-
-            let total_course = userCompletedLessonUpdatedFiltered.length;
-            let total_completed = parseInt(result.totalLecture);
-
-            let progress = (total_course / total_completed) * 100;
-
-            // console.log(" progress ", Math.ceil(progress));
-            if (Math.ceil(progress) > 100) {
-              progress = 100;
-            }
-            item.status = Math.ceil(progress);
-          })
-        );
-
-        let userAuditLoggerData = {
-          username: req.body.username,
-          url: req.originalUrl,
-          timestamp: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric",
-          }),
-        };
-
-        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
-
-        console.log("array31----", array31);
-
-        let setSendResponseData = new sendResponseData(array31, 200, null);
-        let responseToSend = encryptionOfData(setSendResponseData.success());
-        res.send(responseToSend);
-      } else {
-        // console.log("userCourses else ----- ", userCourses[0]);
-        let setSendResponseData = new sendResponseData(
-          null,
-          200,
-          "No purchase done yet"
-        );
-        let responseToSend = encryptionOfData(setSendResponseData.success());
-        res.send(responseToSend);
-      }
+      let setSendResponseData = new sendResponseData(array31, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
     } else {
-      console.log("in else");
-      console.log("Not allowed", userSessionStatus);
-      let responseToSend = encryptionOfData(userSessionStatus);
+      // console.log("userCourses else ----- ", userCourses[0]);
+      let setSendResponseData = new sendResponseData(
+        null,
+        200,
+        "No purchase done yet"
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
     }
-    //! This is for token checking END
+  } else {
+    // console.log("in else");
+    // console.log("Not allowed", userSessionStatus);
+    let responseToSend = encryptionOfData(userSessionStatus);
+    res.send(responseToSend);
+  }
+  //! This is for token checking END
   // } catch (error) {
   //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
   //   let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4030,7 +4047,6 @@ app.post("/api/playthevideo", async (req, res) => {
   }
 });
 
-
 //? applypromocode related API
 app.post("/api/applypromocode", async (req, res) => {
   try {
@@ -4081,6 +4097,40 @@ app.post("/api/applypromocode", async (req, res) => {
   }
 });
 
+//! ****** Device & admin cheking API *******
+app.post("/api/checkdeviceanduser", async (req, res) => {
+
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let developersStatus;
+
+    let user = await signUpTemplateCopy.findOne({
+      "username" : req.body.username,
+      "developer" : true
+    })
+    if(user === null){
+      developersStatus = false;
+    } else {
+      developersStatus = true;
+    }
+
+  let data = {
+    data : req.useragent,
+    developersStatus: developersStatus
+  }
+
+  let setSendResponseData = new sendResponseData(data, 200, null);
+  let responseToSend = encryptionOfData(setSendResponseData.success());
+  res.send(responseToSend);
+} catch (error) {
+  let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+  let responseToSend = encryptionOfData(setSendResponseData.error());
+  res.send(responseToSend);
+}
+});
+
 //? Log related API
 //! ******* videologdata API *******/
 app.post("/api/videologdata", async (req, res) => {
@@ -4110,7 +4160,6 @@ app.post("/api/videologdata", async (req, res) => {
     // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
 
     if (userSessionStatus.data != null) {
-     
       let logVideData = new videoLogData({
         username: username,
         courseID: courseID,
@@ -4125,9 +4174,9 @@ app.post("/api/videologdata", async (req, res) => {
         lessonNumber: episode,
         currentProgress: currentProgress,
       });
-  
+
       await logVideData.save();
-  
+
       if (
         req.body.status === "ended" &&
         req.body.totalTimeCovered === req.body.totalVdoDuration
@@ -4140,7 +4189,7 @@ app.post("/api/videologdata", async (req, res) => {
             { complete: true },
           ],
         });
-  
+
         if (!lessonProgressData[0]) {
           let lessonProgressNew = new lessonProgress({
             username: username,
@@ -4150,7 +4199,7 @@ app.post("/api/videologdata", async (req, res) => {
             lessonNumber: episode,
             complete: true,
           });
-  
+
           await lessonProgressNew.save();
         } else {
           // console.log("Already watched  ");
@@ -4159,14 +4208,13 @@ app.post("/api/videologdata", async (req, res) => {
           // res.send(responseToSend);
         }
       }
-  
+
       videoLogger.log("info", `${JSON.stringify(req.body)}`);
-  
+
       let setSendResponseData = new sendResponseData("sent", 200, null);
       let responseToSend = encryptionOfData(setSendResponseData);
-  
-      res.send(responseToSend);
 
+      res.send(responseToSend);
     } else {
       console.log("Not allowed", userSessionStatus);
       let responseToSend = encryptionOfData(userSessionStatus);
@@ -4178,6 +4226,90 @@ app.post("/api/videologdata", async (req, res) => {
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
     res.send(responseToSend);
+  }
+});
+//! ******* videologdata API *******/
+app.post("/api/videologdatatest", async (req, res) => {
+  try {
+    // let recievedResponseData = decryptionOfData(req, res);
+    // req.body = recievedResponseData;
+
+    const {
+      courseID,
+      videoID,
+      username,
+      status,
+      actionTime,
+      totalTimeCovered,
+      totalTimePlayed,
+      totalVdoDuration,
+      videoTitle,
+      lessonTitle,
+      episode,
+      currentProgress,
+    } = req.body;
+
+    let logVideData = new videoLogData({
+      username: username,
+      courseID: courseID,
+      videoID: videoID,
+      status: status,
+      actionTime: actionTime,
+      totalTimeCovered: totalTimeCovered,
+      totalTimePlayed: totalTimePlayed,
+      totalVdoDuration: totalVdoDuration,
+      courseName: videoTitle,
+      lessonName: lessonTitle,
+      lessonNumber: episode,
+      currentProgress: currentProgress,
+    });
+
+    await logVideData.save();
+
+    if (
+      req.body.status === "ended" &&
+      req.body.totalTimeCovered === req.body.totalVdoDuration
+    ) {
+      console.log("in 1st if");
+
+      let lessonProgressData = await lessonProgress.find({
+        $and: [
+          { username: username },
+          { courseID: courseID },
+          { lessonNumber: episode },
+          { complete: true },
+        ],
+      });
+
+      if (!lessonProgressData[0]) {
+        console.log("inside dublicate if", lessonProgressData);
+        let lessonProgressNew = new lessonProgress({
+          username: username,
+          courseName: videoTitle,
+          courseID: courseID,
+          videoID: videoID,
+          lessonNumber: episode,
+          complete: true,
+        });
+
+        await lessonProgressNew.save();
+      } else {
+        console.log("inside else");
+        // console.log("Already watched  ");
+        // let setSendResponseData = new sendResponseData("Updated", 200, null);
+        // let responseToSend = encryptionOfData(setSendResponseData);
+        // res.send(responseToSend);
+      }
+    }
+    videoLogger.log("info", `${JSON.stringify(req.body)}`);
+    let setSendResponseData = new sendResponseData("sent", 200, null);
+    res.send(setSendResponseData);
+  } catch (error) {
+    console.log("serverErrMsg", serverErrMsg);
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(setSendResponseData);
   }
 });
 
@@ -4285,11 +4417,11 @@ app.post("/api/subscribe", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const {phoneNumber, email} = req.body;
+    const { phoneNumber, email } = req.body;
 
     let subscribersData = new subscribers({
       phoneNumber: phoneNumber,
-      email: email
+      email: email,
     });
     await subscribersData.save();
 
@@ -4324,25 +4456,23 @@ app.get("/api/checklogdata", async (req, res) => {
   res.json(data);
 });
 
-
 //! User session check
 app.post("/api/sessioncheck", async (req, res) => {
   // try {
-    let recievedResponseData = decryptionOfData(req, res);
-    req.body = recievedResponseData;
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
 
-    
-    // console.log("/api/sessioncheck ", userSessionStatus);
+  // console.log("/api/sessioncheck ", userSessionStatus);
 
-    let userSessionStatus = await tokenChecking(req);
+  let userSessionStatus = await tokenChecking(req);
 
-    // console.log("token check: ---- ", userSessionStatus);
+  // console.log("token check: ---- ", userSessionStatus);
 
-    let responseToSend = encryptionOfData(userSessionStatus);
-    res.send(responseToSend);
-    // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
-    // let responseToSend = encryptionOfData(setSendResponseData.success());
-    // res.send(responseToSend);
+  let responseToSend = encryptionOfData(userSessionStatus);
+  res.send(responseToSend);
+  // let setSendResponseData = new sendResponseData(userSessionStatus, 200, null);
+  // let responseToSend = encryptionOfData(setSendResponseData.success());
+  // res.send(responseToSend);
   // } catch (error) {
   //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
   //   let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4370,7 +4500,7 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   try {
-    res.send("test")
+    res.send("test");
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
     let responseToSend = encryptionOfData(setSendResponseData.error());

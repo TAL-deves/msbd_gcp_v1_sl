@@ -149,9 +149,9 @@ const Navigationbar = (props) => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}>
+            {/* <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}> */}
               {/* <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-              <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
+              <Box onClick={()=>{navigate("/")}} sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
                 {localStorage.getItem("theme") === "theme" ?
                   <img src={logonill} alt="logo" width="50" />
                   :
@@ -160,12 +160,14 @@ const Navigationbar = (props) => {
                 {/* <img src={logonill} alt="logo" width="50" /> */}
 
               </Box>
-            </Link>
+            {/* </Link> */}
             <Typography
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              // href="/"
+              onClick={()=>{navigate("/")}}
+              onC
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "none", lg: "flex" },
@@ -586,8 +588,8 @@ const Navigationbar = (props) => {
 
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <Link to="/userprofile">
                 <AccountCircleIcon
-                  onClick={handleOpenUserMenu}
                   sx={{
                     cursor: "pointer",
                     fontSize: "2rem",
@@ -601,63 +603,7 @@ const Navigationbar = (props) => {
                     },
                   }}
                 />
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <Link to="/userprofile" style={textstyle}>
-                    <MenuItem
-                      sx={{ color: "other.black", fontWeight:"800" }}
-                      onClick={handleCloseUserMenu}
-                    >
-                      {t("profile")}
-                    </MenuItem>
-                  </Link>
-                  <Link to="/mycourses" style={textstyle}>
-                    <MenuItem
-                      onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black", fontWeight:"800" }}
-                    >
-                      {t("myCourses")}
-                    </MenuItem>
-                  </Link>
-                  <Link to="/paymenthistory" style={textstyle}>
-                    <MenuItem
-                      onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black" , fontWeight:"800"}}
-                    >
-                      {t("paymentHistory")}
-                    </MenuItem>
-                  </Link>
-                  <Link to="/myfeedback" style={textstyle}>
-                    <MenuItem
-                      onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black", fontWeight:"800" }}
-                    >
-                      {t("myFeedbacks")}
-                    </MenuItem>
-                  </Link>
-                  {/* <Link to="/dectivateaccount" style={textstyle}>
-                    <MenuItem
-                      onClick={handleCloseUserMenu}
-                      sx={{ color: "other.black" }}
-                    >
-                      {t("deactivateAccount")}
-                    </MenuItem>
-                  </Link> */}
-                </Menu>
+                </Link>
                 <LogoutIcon
                   onClick={() => {
                     api

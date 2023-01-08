@@ -58,7 +58,12 @@ export const translationsEn = {
     already_have_an_acc:"Already have an account? Login here",
     phone:"Phone Number",
     back:"Back",
-    next:"Next"
+    next:"Next",
+    total_lecture:"Total Lecture",
+    course_length:"Course Length",
+    course_description:"Course Description",
+    course_price:"Course Price",
+    hours:"Hours"
   };
   
 export const translationsBn = {
@@ -121,5 +126,10 @@ export const translationsBn = {
     already_have_an_acc:"একাউন্ট আছে? এখানে লগইন করুন",
     phone:"ফোন নম্বর",
     back:"পূর্ববর্তী",
-    next:"পরবর্তী"
+    next:"পরবর্তী",
+    total_lecture:"মোট লেকচার",
+    course_length:"কোর্স দৈর্ঘ্য",
+    course_description:"কোর্স বর্ণনা",
+    course_price:"কোর্স মূল্য",
+    hours:"ঘন্টা"
   };
