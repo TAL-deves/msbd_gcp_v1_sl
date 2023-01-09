@@ -100,7 +100,7 @@ export default function ProfileTabs() {
             </Box>
             {isAndroid==="iPhone"?
             
-            <Button variant="contained" onClick={()=>{swal("iOS app is coming soon","Thank You", "infp")}} sx={{textDecoration:"none", margin:"2rem"}}>
+            <Button variant="contained" onClick={()=>{swal("iOS app is coming soon","Thank You", "info")}} sx={{textDecoration:"none", margin:"2rem"}}>
             Download App
          </Button>:
             <Link target="_blank" href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school&pli=1">
@@ -169,7 +169,7 @@ export default function ProfileTabs() {
             </Box>
             {isAndroid==="iPhone"?
             
-            <Button variant="contained" onClick={()=>{swal("iOS app is coming soon","Thank You", "infp")}} sx={{textDecoration:"none", margin:"2rem"}}>
+            <Button variant="contained" onClick={()=>{swal("iOS app is coming soon","Thank You", "info")}} sx={{textDecoration:"none", margin:"2rem"}}>
             Download App
          </Button>:
             <Link target="_blank" href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school&pli=1">

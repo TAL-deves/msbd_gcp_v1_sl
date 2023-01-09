@@ -47,6 +47,7 @@ var Key = CryptoJS.enc.Utf8.parse(keyString);
 
 const LOGIN_URL = `/api/oauth/token`;
 const SESSION_CLEAR = `/api/clearalltoken`;
+let CHECK_DEVICE_URL= "/api/checkdeviceanduser"
 
 const theme = createTheme();
 
@@ -167,6 +168,7 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [open, setOpen] = useState(true);
+  const [ isAndroid,setIsAndroid]= React.useState()
  
   const [sessionFound, setSessionFound] = useState(false);
   //to show pass
@@ -216,7 +218,17 @@ const LoginForm = (props) => {
     );
     setBackdrop(true)
   };
-
+//   let fetchDeviceData = async () => {
+//     await api
+//     .post(CHECK_DEVICE_URL, JSON.stringify({ username }), {
+//       headers: { "Content-Type": "application/json" },
+//       "Access-Control-Allow-Credentials": true,
+//     })
+//     .then((data) => {
+//      console.log("device",data.data.data.data.platform)
+//     setIsAndroid(data.data.data.data.platform)
+//     });
+// };
 
 
   const handleSubmit = async (event) => {
@@ -238,6 +250,7 @@ const LoginForm = (props) => {
           addUserobj(response.data.data);
           // navigate("/courses")
           navigate("/")
+
           // <Navigate to="/courses" />
         }
       } else if (response.data.result.status === 401) {
@@ -503,7 +516,9 @@ const LoginForm = (props) => {
           <Button
             type="submit"
             fullWidth
-            onClick={handleLoading}
+            onClick={()=>{handleLoading()
+            // fetchDeviceData()
+          }}
             variant="contained"
             sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
           >
