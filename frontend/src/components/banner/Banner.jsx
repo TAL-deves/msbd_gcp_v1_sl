@@ -45,7 +45,6 @@ React.useEffect(()=>{
     // width: {xs:320},
     borderRadius: "50px",
     marginTop: "1rem",
-    
 
   };
 
@@ -56,7 +55,7 @@ React.useEffect(()=>{
         swal({ title: "WELCOME!",
  text: "Download our Mind School app for better experience!",
  icon: "info",
-button:"Download"}).then(okay => {
+buttons:[true, "Download"]}).then(okay => {
    if (okay) {    
     window.location.href = "https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school&pli=1";
   }
