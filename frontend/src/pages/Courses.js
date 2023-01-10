@@ -43,7 +43,7 @@ const Courses = (props) => {
         }
         else{
           listOfCourse = data.data.data.coursesData.bn;
-          // console.log("coursesen",listOfCourse)
+          //  console.log("coursesen",listOfCourse)
         }
         let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         //// console.log(localCourseList);

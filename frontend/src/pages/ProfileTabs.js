@@ -92,11 +92,11 @@ export default function ProfileTabs() {
           <UserProfile />
         </TabPanel>
         <TabPanel value={value} index={1}>
-        {isAndroid==="Android" || isAndroid==="iPhone"?          
+        {isAndroid==="Android" || isAndroid==="iPhone" ||isAndroid==="Linux"?          
           <Box>
           <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <Box sx={{paddingLeft:"10%", paddingRight:"10%", border:"1rem"}}>
-              <Typography sx={{fontSize:"1.3rem"}}>If you are trying to watch our course content from the mobile or tab browser then please download our app for better service. Thank you.</Typography>
+              <Typography sx={{fontSize:"1.3rem", textAlign:"center"}}>Please download the app to continue on mobile device.</Typography>
             </Box>
             {isAndroid==="iPhone"?
             
@@ -160,12 +160,12 @@ export default function ProfileTabs() {
           <UserProfile setFullName={setFullName}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {isAndroid==="Android" || isAndroid==="iPhone"? 
+          {isAndroid==="Android" || isAndroid==="iPhone" || isAndroid==="Linux"? 
           <Box>
           {/* <MyCourses /> */}
           <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <Box sx={{paddingLeft:"10%", paddingRight:"10%", border:"1rem"}}>
-              <Typography sx={{fontSize:"1.3rem"}}>If you are trying to watch our course content from the mobile or tab browser then please download our app for better service. Thank you.</Typography>
+              <Typography sx={{fontSize:"1.3rem", textAlign:"center"}}>Please download the app to continue on mobile device.</Typography>
             </Box>
             {isAndroid==="iPhone"?
             

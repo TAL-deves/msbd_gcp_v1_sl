@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/949.4f343c4a.chunk.css","mappings":"AAGA,+BACI,gBACJ,CACA,wBAEI,kBAAmB,CADnB,YAEJ","sources":["components/portfolio/Portfolio.css"],"sourcesContent":[".port_title{\n    padding-left: 50%;\n}\n.portfolio_content{\n    padding-left: 50%;\n}\n.singlecontentportfolio{\n    display: flex;\n    align-items: center;\n}"],"names":[],"sourceRoot":""}

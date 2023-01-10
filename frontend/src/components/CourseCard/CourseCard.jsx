@@ -102,8 +102,8 @@ const CourseCard = (props) => {
               {price ? <>&#x9F3;{price}</> : <>&#x9F3;Course price</>}
             </Typography>
             <Typography variant="body2">
-              {hour ? <>Total {hour} hours</> : <>Course hour</>} |{" "}
-              {lecture ? <>{lecture} lessons</> : <>Course lecture</>}
+              {hour ? <>{t("total")} {hour} {t("hours")}</> : <>Course hour</>} |{" "}
+              {lecture ? <>{lecture} {t("lessons")}</> : <>Course lecture</>}
             </Typography>
           </CardContent>
           <CardActions sx={{

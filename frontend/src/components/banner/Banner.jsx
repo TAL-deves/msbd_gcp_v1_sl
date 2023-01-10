@@ -21,6 +21,7 @@ const Banner = () => {
   const { t } = React.useContext(globalContext)
   const [ isAndroid,setIsAndroid]= React.useState()
 
+
   let username = localStorage.getItem("user")
 
   let fetchDeviceData = async () => {
@@ -50,7 +51,7 @@ React.useEffect(()=>{
 
   return (
     <Container>
-        {isAndroid==="Android" ? 
+        {isAndroid==="Android" || isAndroid==="Linux" ? 
       <Box data-aos="fade-right" onLoad={()=>{
         swal({ title: "WELCOME!",
  text: "Download our Mind School app for better experience!",

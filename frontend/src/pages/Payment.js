@@ -478,7 +478,7 @@ const Payment = () => {
             </Box>
           </Container>
           {/* uncomment after testing  */}
-          {/* <Button
+          <Button
             // type="submit" 
             // fullWidth
             variant="contained"
@@ -493,9 +493,9 @@ const Payment = () => {
             disabled={!postcode || !staddress || !city || !email || !fullname}
           >
             Checkout
-          </Button> */}
+          </Button>
    {/* comment this button later  */}
-          <Button
+          {/* <Button
             variant="contained"
             sx={{ mt: 3, mb: 2, fontSize: "1rem", justifyContent: "center" }}
             onClick={
@@ -507,7 +507,7 @@ const Payment = () => {
               }}
           >
             Checkout
-          </Button>
+          </Button> */}
 
 
           {/* only for devs  */}
