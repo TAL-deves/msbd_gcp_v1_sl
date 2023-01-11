@@ -91,6 +91,7 @@ const certificateData = require("./Database/models/certificateData");
 var QRCode = require("qrcode");
 const subscribers = require("./Database/models/subscribers");
 var useragent = require("express-useragent");
+const notificationMessages = require("./Database/models/notificationMessages");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -4099,7 +4100,6 @@ app.post("/api/applypromocode", async (req, res) => {
 
 //! ****** Device & admin cheking API *******
 app.post("/api/checkdeviceanduser", async (req, res) => {
-
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
@@ -4107,28 +4107,28 @@ app.post("/api/checkdeviceanduser", async (req, res) => {
     let developersStatus;
 
     let user = await signUpTemplateCopy.findOne({
-      "username" : req.body.username,
-      "developer" : true
-    })
-    if(user === null){
+      username: req.body.username,
+      developer: true,
+    });
+    if (user === null) {
       developersStatus = false;
     } else {
       developersStatus = true;
     }
 
-  let data = {
-    data : req.useragent,
-    developersStatus: developersStatus
-  }
+    let data = {
+      data: req.useragent,
+      developersStatus: developersStatus,
+    };
 
-  let setSendResponseData = new sendResponseData(data, 200, null);
-  let responseToSend = encryptionOfData(setSendResponseData.success());
-  res.send(responseToSend);
-} catch (error) {
-  let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-  let responseToSend = encryptionOfData(setSendResponseData.error());
-  res.send(responseToSend);
-}
+    let setSendResponseData = new sendResponseData(data, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
 });
 
 //? Log related API
@@ -4435,6 +4435,119 @@ app.post("/api/subscribe", async (req, res) => {
 
     res.send(responseToSend);
   }
+});
+
+//! Sending push notification
+
+app.post("/api/notification", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { username, notificationId } = req.body;
+
+    let user = await signUpTemplateCopy.findOne({
+      username: username,
+    });
+
+    if (user) {
+      await signUpTemplateCopy.findOneAndUpdate(
+        {
+          username: username,
+        },
+        {
+          $set: {
+            notificationId: notificationId,
+          },
+        }
+      );
+
+      let setSendResponseData = new sendResponseData("Okay", 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let setSendResponseData = new sendResponseData(
+        null,
+        404,
+        "no user found"
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/pushnotification", async (req, res) => {
+  // const { body, title, image, to, registration_ids } = req.body;
+  const {
+    body,
+    title,
+    imageLink,
+    videoLink,
+    dataTitle,
+    dataBody,
+    dataImageLink,
+    dataVideoLink,
+    to,
+    registration_ids,
+    priority
+  } = req.body;
+
+  console.log(req.body);
+
+  var data = JSON.stringify({
+    to: to,
+    registration_ids: registration_ids,
+    priority: priority,
+    notification: {
+      title: title,
+      body: body,
+      image: imageLink,
+      video: videoLink
+    },
+    data: {
+      title: dataTitle,
+      body: dataBody,
+      dataImageLink: dataImageLink,
+      dataVideoLink: dataVideoLink,
+    },
+  });
+
+  var config = {
+    method: "post",
+    url: "https://fcm.googleapis.com/fcm/send",
+    headers: {
+      Authorization:
+        "key=AAAAxCcsSdk:APA91bGTAuEPNReBhNQwqiRpxgFhNRBGCK1RV4-aag59IPcNC8OEOJQ3nXOHWTmeJLLP3DiiKuUMDSHiU87W1iioCSWO0iNq8C4rTxcBqcrw5eiuVqYFTCQPUl-Tmobpp0tsSKAl89GK",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  await axios(config)
+    .then(async function (response) {
+      await new notificationMessages({
+        title: title,
+        body: body,
+        imageLink: imageLink,
+        videoLink: videoLink,
+        dataTitle: dataTitle,
+        dataBody: dataBody,
+        dataImageLink: dataImageLink,
+        dataVideoLink: dataVideoLink,
+        sentTo: to,
+        priority: priority
+      }).save();
+
+      res.json(response.data);
+    })
+    .catch(function (error) {
+      res.json(error);
+    });
 });
 
 //! Getting Log Data

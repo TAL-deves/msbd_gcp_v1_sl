@@ -99,6 +99,9 @@ const signUpTemplate = new mongoose.Schema({
   developer: {
     type: Boolean,
     default: false
+  },
+  notificationId:{
+    type: String
   }
 });
 
