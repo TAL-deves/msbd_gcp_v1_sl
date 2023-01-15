@@ -82,26 +82,6 @@ Item.propTypes = {
   ]),
 };
 
-const CardGridStyle = styled(Card)(({ theme }) => ({
-    margin: "5px",
-  }));
-  
-  const CardMediaStyle = styled(CardMedia)(({ theme }) => ({
-    width: "105%",
-  }));
-
-const VideoGridWrapper = styled(Grid)(({ theme }) => ({
-  marginTop: "10%",
-}));
-
-
-const VdoPlayerStyle = styled("div")(({ theme }) => ({
-  width: "100%",
-  height: "100%",
-}));
-
-
-
 Item.propTypes = {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
@@ -269,7 +249,7 @@ return (
             {/* <Grid > */}
         {/* <VdoPlayerStyle> */}
         <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"80%",  paddingTop:".8rem", paddingBottom:".5rem", overflow:"hidden"}}>
-            <iframe ref={videoRef} width="100%" height="315" src="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4" title="YouTube video player" frameborder="0" ></iframe>
+            <iframe ref={videoRef} width="100%" height="315" src={state?.courseIntro} title="YouTube video player" frameborder="0" ></iframe>
             </Box>
           {/* </VdoPlayerStyle> */}
     {/* </Grid> */}
@@ -349,7 +329,7 @@ return (
             Download Our App
         </Typography>
     
-           <Box sx={{display:"flex", alignItems:"center"}}>
+           <Box sx={{display:"flex",justifyContent:"space-around", alignItems:"center"}}>
           <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
                 <Box
                   sx={{

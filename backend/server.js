@@ -92,6 +92,7 @@ var QRCode = require("qrcode");
 const subscribers = require("./Database/models/subscribers");
 var useragent = require("express-useragent");
 const notificationMessages = require("./Database/models/notificationMessages");
+const userNotification = require("./Database/models/userNotification");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -4390,7 +4391,7 @@ app.post("/api/leaveamessage", async (req, res) => {
 });
 
 //! Getting User message Data
-app.get("/api/getusermessages", async (req, res) => {
+app.post("/api/getusermessages", async (req, res) => {
   try {
     let getAllUserMessages = await userMessages.find();
     let getAllUserMessagesCount = await userMessages.find().count();
@@ -4401,8 +4402,8 @@ app.get("/api/getusermessages", async (req, res) => {
     };
 
     let setSendResponseData = new sendResponseData(data, 200, null);
-    // let responseToSend = encryptionOfData(setSendResponseData.success());
-    res.send(setSendResponseData);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4430,7 +4431,26 @@ app.post("/api/subscribe", async (req, res) => {
 
     res.send(responseToSend);
   } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/allsubscribers", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    await subscribers.find().then((data) => {
+      let setSendResponseData = new sendResponseData(data, 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData);
+
+      res.send(responseToSend);
+    });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
     res.send(responseToSend);
@@ -4482,7 +4502,9 @@ app.post("/api/notification", async (req, res) => {
 });
 
 app.post("/api/pushnotification", async (req, res) => {
-  // const { body, title, image, to, registration_ids } = req.body;
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
+
   const {
     body,
     title,
@@ -4494,26 +4516,27 @@ app.post("/api/pushnotification", async (req, res) => {
     dataVideoLink,
     to,
     registration_ids,
-    priority
+    priority,
   } = req.body;
 
-  console.log(req.body);
+  const newId = uuidv4().replaceAll("-", "");
 
   var data = JSON.stringify({
     to: to,
-    registration_ids: registration_ids,
     priority: priority,
     notification: {
-      title: title,
+      "android_channel_id": "high_importance_channel",
       body: body,
+      title: title,
       image: imageLink,
-      video: videoLink
     },
     data: {
-      title: dataTitle,
-      body: dataBody,
-      dataImageLink: dataImageLink,
-      dataVideoLink: dataVideoLink,
+      body: dataTitle,
+      title: dataBody,
+      videoUrl: dataVideoLink,
+    },
+    android: {
+      priority: priority,
     },
   });
 
@@ -4530,7 +4553,10 @@ app.post("/api/pushnotification", async (req, res) => {
 
   await axios(config)
     .then(async function (response) {
+      console.log(response.data);
+
       await new notificationMessages({
+        _id: newId,
         title: title,
         body: body,
         imageLink: imageLink,
@@ -4540,14 +4566,190 @@ app.post("/api/pushnotification", async (req, res) => {
         dataImageLink: dataImageLink,
         dataVideoLink: dataVideoLink,
         sentTo: to,
-        priority: priority
+        priority: priority,
       }).save();
 
-      res.json(response.data);
+      let setSendResponseData = new sendResponseData("sent", 200, null);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+
+      res.send(responseToSend);
     })
     .catch(function (error) {
-      res.json(error);
+      let setSendResponseData = new sendResponseData(null, 500, error.message);
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+
+      res.send(responseToSend);
     });
+});
+
+app.post("/api/allnotification", async (req, res) => {
+  try {
+    await notificationMessages
+      .find()
+      .then((data) => {
+        let setSendResponseData = new sendResponseData(data, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/readallnotification", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { username } = req.body;
+
+    let notificationIDs = [];
+
+    await notificationMessages.find({}).then((data) => {
+      data.map(async (dt) => {
+        notificationIDs.push(dt.id);
+      });
+    });
+
+    await userNotification
+      .findOne({
+        username: username,
+      })
+      .then(async (data) => {
+        if (!data) {
+          await new userNotification({
+            username: username,
+            notificationid: notificationIDs,
+          }).save();
+        } else {
+          await userNotification.findOneAndUpdate(
+            {
+              username: username,
+            },
+            {
+              $set: {
+                notificationid: notificationIDs,
+              },
+            }
+          );
+        }
+      });
+
+    let setSendResponseData = new sendResponseData("Done", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/readonenotification", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { username, nid } = req.body;
+
+    let notificationIDs = [];
+    notificationIDs.push(nid);
+
+    await userNotification
+      .findOne({
+        username: username,
+      })
+      .then(async (data) => {
+        if (!data) {
+          await new userNotification({
+            username: username,
+            notificationid: notificationIDs,
+          }).save();
+        } else {
+          await userNotification.findOneAndUpdate(
+            {
+              username: username,
+            },
+            {
+              $push: {
+                notificationid: nid,
+              },
+            }
+          );
+        }
+      });
+
+    let setSendResponseData = new sendResponseData("Done", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch {
+    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/userreadnotification", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { username } = req.body;
+
+    let data = await userNotification.findOne({
+      username: username,
+    });
+
+    console.log(data.notificationid);
+    let setSendResponseData = new sendResponseData(
+      data.notificationid,
+      200,
+      null
+    );
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch {
+    let setSendResponseData = new sendResponseData(null, 500, error.message);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/webnotification", async (req, res) => {
+  try {
+    await notificationMessages
+      .find({
+        sentTo: "web"
+      })
+      .then((data) => {
+        let setSendResponseData = new sendResponseData(data.reverse(), 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
 });
 
 //! Getting Log Data

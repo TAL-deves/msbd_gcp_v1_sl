@@ -405,7 +405,7 @@ const LoginForm = (props) => {
                   <Typography>
                     Do you want to logout from all other devices?
                   </Typography>
-                  <Button onClick={clearSession}>Clear</Button>
+                  <Button sx={{mt:"1rem"}} variant="outlined" onClick={clearSession}>Clear Sessions</Button>
                 </>
               ) : (
                 ""

@@ -14,10 +14,14 @@ import PaymentHistory from "./PaymentHistory";
 import { Button, Link } from "@mui/material";
 import { Container } from "@mui/system";
 import DataEntry from "../components/dataEntry/DataEntry";
+import PushNotification from "../components/PushNotification/PushNotification";
+import UserMessages from "./UserMessages";
+import SubscriberList from "./SubscriberList";
 
+const DEV_CHECK_URL = "/api/userprofile"
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  
+  const { children, value, index, ...other } = props; 
+
 
   return (
     <div
@@ -54,25 +58,51 @@ export default function ProfileTabs() {
   const [value, setValue] = React.useState(0);
   const [fullName, setFullName]= React.useState("")
   const [isAndroid, setIsAndroid]=React.useState()
-  console.log("isAndroid",isAndroid)
+  const [isDev, setIsDev]= React.useState()
+ 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // let checkAndroid = async () => {
-  //   const response = await api.post(USER_URL,
-  //     JSON.stringify({ username }),
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       'Access-Control-Allow-Credentials': true
-  //     }
-  //   )}
+  let username= localStorage.getItem('user')
+  let handleGetUser = async () => {
+    const response = await api.post(DEV_CHECK_URL,
+      JSON.stringify({ username }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        'Access-Control-Allow-Credentials': true
+      }
+    )
+     console.log(response.data.data.developer)
+     setIsDev(response.data.data.developer)
 
-  
+  }
+
+  React.useEffect(() => {
+    handleGetUser()
+  }, [])
 
   return (
     <Box>
-      <Box sx={{ bgcolor: "background.paper", display:{sm:"none",md:"none",lg:"none"} }}>
+      <Box sx={{ bgcolor: "background.paper", display:{lg:"none"} }}>
+        {isDev?
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab label="User Profile" {...a11yProps(0)} />
+          <Tab label="My Courses" {...a11yProps(1)} />
+          <Tab label="Payment" {...a11yProps(2)} />
+          <Tab label="Feedbacks" {...a11yProps(3)} />
+           <Tab label="Data Entry" {...a11yProps(4)} />
+           <Tab label="Push Notification" {...a11yProps(5)} />          
+           <Tab label="Messages" {...a11yProps(6)} />          
+           <Tab label="Subscribers" {...a11yProps(7)} />          
+        </Tabs>
+        :
         <Tabs
         // orientation="vartical"
           value={value}
@@ -84,10 +114,8 @@ export default function ProfileTabs() {
           <Tab label="User Profile" {...a11yProps(0)} />
           <Tab label="My Courses" {...a11yProps(1)} />
           <Tab label="Payment" {...a11yProps(2)} />
-          <Tab label="Feedbacks" {...a11yProps(3)} />
-          {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-          
-        </Tabs>
+          <Tab label="Feedbacks" {...a11yProps(3)} />         
+        </Tabs>}
         <TabPanel value={value} index={0}>
           <UserProfile />
         </TabPanel>
@@ -127,6 +155,15 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={4}>
           <DataEntry />
         </TabPanel>
+        <TabPanel value={value} index={5}>
+          <PushNotification />
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          <UserMessages/>
+        </TabPanel>
+        <TabPanel value={value} index={7}>
+          <SubscriberList/>
+        </TabPanel>
       </Box>
 
       <Box
@@ -134,14 +171,15 @@ export default function ProfileTabs() {
           bgcolor: "background.paper",
           display: {
              xs:"none",
-            sm:"flex",
-            md:"flex",
+            sm:"none",
+            md:"none",
             lg:"flex",
             xl:"flex",
         },
           width: "auto",       
         }}
       >
+        {isDev?
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -154,8 +192,24 @@ export default function ProfileTabs() {
           <Tab label="My Courses" {...a11yProps(1)} />
           <Tab label="Payment" {...a11yProps(2)} />
           <Tab label="Feedbacks" {...a11yProps(3)} />
-          {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-        </Tabs>
+          <Tab label="Data Entry" {...a11yProps(4)} />
+          <Tab label="Push Notification" {...a11yProps(5)} />
+          <Tab label="Messages" {...a11yProps(6)} />          
+          <Tab label="Subscribers" {...a11yProps(7)} /> 
+        </Tabs>:
+        <Tabs
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+        sx={{ borderRight: 1, borderColor: "divider", width: "20vw" }}
+      >
+        <Tab label="User Profile" {...a11yProps(0)} />
+        <Tab label="My Courses" {...a11yProps(1)} />
+        <Tab label="Payment" {...a11yProps(2)} />
+        <Tab label="Feedbacks" {...a11yProps(3)} />      
+      </Tabs>}
         <TabPanel value={value} index={0}>
           <UserProfile setFullName={setFullName}/>
         </TabPanel>
@@ -193,6 +247,15 @@ export default function ProfileTabs() {
         </TabPanel>
         <TabPanel value={value} index={4}>
           <DataEntry />
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+          <PushNotification />
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          <UserMessages/>
+        </TabPanel>
+        <TabPanel value={value} index={7}>
+          <SubscriberList/>
         </TabPanel>
       </Box>
     </Box>

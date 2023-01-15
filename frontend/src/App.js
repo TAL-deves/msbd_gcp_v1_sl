@@ -62,8 +62,7 @@ function App() {
   const [mode, setMode] = useState("theme");
   const [darkmode, setDarkMode] = useState(false);
   const [mail, setMail] = useState("");
-
-
+  const [n, setN]=useState(0)
 
   // test dark theme
   const darkTheme = createTheme({
@@ -158,7 +157,7 @@ function App() {
                   darkmode={darkmode}
                 />
                 <Routes>
-                  ¸<Route exact path="/" element={<Home />}></Route>
+                  ¸<Route exact path="/" element={<Home n={n} setN={setN}/>}></Route>
                   <Route
                     path="registration"
                     element={user ? <Navigate to="/courses" /> : <Register />}

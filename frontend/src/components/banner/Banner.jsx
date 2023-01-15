@@ -21,7 +21,6 @@ const Banner = () => {
   const { t } = React.useContext(globalContext)
   const [ isAndroid,setIsAndroid]= React.useState()
 
-
   let username = localStorage.getItem("user")
 
   let fetchDeviceData = async () => {
@@ -107,6 +106,26 @@ buttons:[true, "Download"]}).then(okay => {
                     style={style}
                   />
                 
+                {username?
+                <Button
+                onClick={()=>{navigate("/userprofile")}}
+                  sx={{
+                    // top: "30%",
+                    // left: "20%",
+                    mb:".5rem",
+                    mt:".5rem",
+                    // height: "2.5rem",
+                    backgroundColor: "secondary.main",
+                    color: "primary.main",
+                    "&:hover": {
+                      backgroundColor: "secondary.main"
+                    }
+                  }}  
+                  size="large" 
+                  variant="contained">
+                  {t("dashboard")}
+                  
+                </Button>:
                 <Button
                 onClick={()=>{navigate("/registration")}}
                   sx={{
@@ -125,6 +144,7 @@ buttons:[true, "Download"]}).then(okay => {
                   variant="contained">
                   {t("sign_up_now")}
                 </Button>
+                }
                 
                 </Box>
             </Grid>
@@ -198,6 +218,26 @@ buttons:[true, "Download"]}).then(okay => {
                   style={style}
                 />
               
+              {username?
+              <Button
+              onClick={()=>{navigate("/userprofile")}}
+                sx={{
+                  // top: "30%",
+                  // left: "20%",
+                  mb:".5rem",
+                  mt:".5rem",
+                  // height: "2.5rem",
+                  backgroundColor: "secondary.main",
+                  color: "primary.main",
+                  "&:hover": {
+                    backgroundColor: "secondary.main"
+                  }
+                }}  
+                size="large" 
+                variant="contained">
+                {t("dashboard")}
+                
+              </Button>:
               <Button
               onClick={()=>{navigate("/registration")}}
                 sx={{
@@ -215,7 +255,7 @@ buttons:[true, "Download"]}).then(okay => {
                 size="large" 
                 variant="contained">
                 {t("sign_up_now")}
-              </Button>
+              </Button>}
               
               </Box>
           </Grid>

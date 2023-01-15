@@ -713,7 +713,7 @@ const Navigationbar = (props) => {
                       padding: "5px",
                       "&:hover": {
                         color: "#fff",
-                        backgroundColor: "other.white",
+                        backgroundColor: "secondary.main",
                         borderRadius: "5px",
                       },
                     }}

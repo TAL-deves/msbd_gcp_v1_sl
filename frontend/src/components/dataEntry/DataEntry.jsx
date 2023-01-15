@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Button, Container, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 
@@ -20,6 +20,7 @@ export default function DataEntry() {
     const [instructorCourses, setInstructorCourses] = useState("")
 
     return (
+        <Container>
         <Box>
             <Typography sx={{textAlign:"center", fontSize:"1.5rem"}}>Submit Information to store in Database</Typography>
                 <TextField
@@ -161,5 +162,6 @@ export default function DataEntry() {
                    Submit
                 </Button>
         </Box>
+        </Container>
     )
 }

@@ -64,7 +64,8 @@ export const translationsEn = {
     course_description:"Course Description",
     course_price:"Course Price",
     hours:"Hours",
-    lessons:"lessons"
+    lessons:"lessons",
+    dashboard:"Dashboard"
   };
   
 export const translationsBn = {
@@ -133,5 +134,6 @@ export const translationsBn = {
     course_description:"কোর্স বর্ণনা",
     course_price:"কোর্স মূল্য",
     hours:"ঘন্টা",
-    lessons:"টি লেসন"
+    lessons:"টি লেসন",
+    dashboard:"ড্যাশবোর্ড"
   };

@@ -105,7 +105,7 @@ export default function VerifyCertificate() {
    
     return (
         <Box>
-            <Container sx={{ height: "auto" }}>
+            <Container sx={{ height: {xs:"auto", sm:"70vh"} }}>
                 <Box sx={{
                     display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10%", border: "1px solid #f7eed7", borderRadius: "10px",boxShadow:"1px 1px 14px 1px rgba(102,102,102,0.83);"
                 }}>

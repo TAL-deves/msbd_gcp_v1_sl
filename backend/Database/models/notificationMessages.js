@@ -1,35 +1,42 @@
 const mongoose = require("mongoose");
 
 const notificationMessages = new mongoose.Schema({
+  _id: {
+    type: String,
+  },
   title: {
     type: String,
   },
   body: {
-    type: String,
+    type : String,
   },
   imageLink: {
-    type: String,
+    type : String,
   },
   videoLink: {
-    type: String,
+    type : String,
   },
   dataTitle: {
-    type: String,
+    type : String,
   },
   dataBody: {
-    type: String,
+    type : String,
   },
   dataImageLink: {
-    type: String,
+    type : String,
   },
   dataVideoLink: {
-    type: String,
+    type : String,
   },
   sentTo:{
-    type:String
+    type : String
   },
   priority:{
-    type:String
+    type : String
+  },
+  read:{
+    type : Boolean,
+    default : true 
   }
 });
 

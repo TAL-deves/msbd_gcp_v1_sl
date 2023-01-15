@@ -7,25 +7,38 @@ import DownloadApp from '../components/downloadApp/DownloadApp'
 import Portfolio from '../components/portfolio/Portfolio'
 import ClientFeedback from '../components/clientfeedback/ClientFeedback'
 import Subscribe from '../components/Subscribe/Subscribe'
+import api from "../api/Axios"
 
+const WEB_NOTIFICATION_URL = "/api/webnotification"
 
-const Home = () => {
+const Home = (props) => {
+  
+  const [webNotificationData, setWebNotificationData]= useState({})
+  let handleWebNotification = async () => {       
+    await api.post(WEB_NOTIFICATION_URL, JSON.stringify({ }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((data) => {
+        setWebNotificationData(data.data.data[0])
+        // console.log(data.data.data[0])
+      });
+     
+  };
 
-
+  useEffect(()=>{
+    handleWebNotification()
+    
+  },[])
+console.log(props.n)
   return (
     <>
-    {/* use after ios app creation  */}
-       {/* {isAndroid==="Android" || isAndroid==="iPhone"?          
-          <>
-            {isAndroid==="iPhone"?            
-            swal("iOS app is coming soon","Thank You", "info"):
-            swal("iOS app is coming soon","Thank You", "infp")
-          }
-          </>:<></>
-         } */}
-        
           
       <Banner/>
+      {props.n===0?
+      <>
+      {webNotificationData.read?
+      <PopWindow n={props.n} setN={props.setN} webNotificationData={webNotificationData}/>:<></>}</>:<></>}
       <HomeCourses/>
       <Instructor/>
       <Portfolio/>

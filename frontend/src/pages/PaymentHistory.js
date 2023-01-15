@@ -57,8 +57,7 @@ const PaymentHistory = () => {
         "Access-Control-Allow-Credentials": true,
       }
     );
-    // // console.log("response data", response.data.result.status)
-
+    
     if (
       response.data.result.status === 401 ||
       response.data.result.status === 400 ||
