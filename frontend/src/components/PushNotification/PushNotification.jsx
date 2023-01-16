@@ -57,26 +57,28 @@ export default function PushNotification() {
     //     console.log(username, title, body, dataBody, dataTitle, imageLink, dataImageLink, videoLink, dataVideoLink, priority,to)
     // }
 
-    let handlePushNotification = async () => {       
-        await api.post(PUSH_NOTIFICATION_URL, JSON.stringify({ username, title, body, dataBody, dataTitle, imageLink, dataImageLink, videoLink, dataVideoLink, priority,to }), {
+    let handlePushNotification = async () => {
+        await api.post(PUSH_NOTIFICATION_URL, JSON.stringify({ username, title, body, dataBody, dataTitle, imageLink, dataImageLink, videoLink, dataVideoLink, priority, to }), {
             headers: { "Content-Type": "application/json" },
             "Access-Control-Allow-Credentials": true,
-          })
-          .then((data) => {
-            if(data.data.result.status===200){
-                swal("Success","Push Notification Sent","success")
-            }
-            else{
-                swal("failed", "Failed to send notification", "error")
-            }
-          });
-         
-      };
+        })
+            .then((data) => {
+                if (data.data.result.status === 200) {
+                    swal("Success", "Push Notification Sent", "success")
+                }
+                else {
+                    swal("failed", "Failed to send notification", "error")
+                }
+            });
+
+    };
 
     return (
-        <Container sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-            <Typography sx={{fontSize:"1.5rem", fontWeight:"600", textAlign:"center"}}>Insert Information for Push Notification</Typography>
-            <Box sx={{ paddingLeft:"5rem", paddingRight:"5rem"}}>
+        <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "600", textAlign: "center" }}>Insert Information for Push Notification</Typography>
+            <Box sx={{ paddingLeft: "5rem", paddingRight: "5rem" }}>
+
+                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>Web Plate</Typography>
                 <TextField
                     margin="normal"
                     fullWidth
@@ -85,15 +87,6 @@ export default function PushNotification() {
                     id="introduction"
                     focused
                     onChange={(e) => { setTitle(e.target.value) }}
-                />
-                <TextField
-                    margin="normal"
-                    fullWidth
-                    name="introduction"
-                    label="Data Title"
-                    id="introduction"
-                    focused
-                    onChange={(e) => { setDataTitle(e.target.value) }}
                 />
                 <TextField
                     margin="normal"
@@ -108,15 +101,6 @@ export default function PushNotification() {
                     margin="normal"
                     fullWidth
                     name="introduction"
-                    label="Data Body"
-                    id="introduction"
-                    focused
-                    onChange={(e) => { setDataBody(e.target.value) }}
-                />
-                <TextField
-                    margin="normal"
-                    fullWidth
-                    name="introduction"
                     label="Image Link"
                     id="introduction"
                     focused
@@ -126,19 +110,38 @@ export default function PushNotification() {
                     margin="normal"
                     fullWidth
                     name="introduction"
-                    label="Data Image Link"
+                    label="Video Link"
                     id="introduction"
                     focused
-                    onChange={(e) => { setDataImageLink(e.target.value) }}
+                    onChange={(e) => { setVideoLink(e.target.value) }}
+                />
+                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>App Plate</Typography>
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    name="introduction"
+                    label="Data Title"
+                    id="introduction"
+                    focused
+                    onChange={(e) => { setDataTitle(e.target.value) }}
                 />
                 <TextField
                     margin="normal"
                     fullWidth
                     name="introduction"
-                    label="Video Link"
+                    label="Data Body"
                     id="introduction"
                     focused
-                    onChange={(e) => { setVideoLink(e.target.value) }}
+                    onChange={(e) => { setDataBody(e.target.value) }}
+                />
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    name="introduction"
+                    label="Data Image Link"
+                    id="introduction"
+                    focused
+                    onChange={(e) => { setDataImageLink(e.target.value) }}
                 />
                 <TextField
                     margin="normal"
@@ -167,9 +170,9 @@ export default function PushNotification() {
                         </MenuItem>
                     ))}
                 </TextField>
-                <br/>
+                <br />
                 <TextField
-                fullWidth
+                    fullWidth
                     margin="normal"
                     id="outlined-select-currency"
                     select

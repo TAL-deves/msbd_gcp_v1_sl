@@ -61,7 +61,6 @@ const LoginForm = (props) => {
   // mui telnet
   const handleChange = (newPhone) => {
     setPhone(newPhone);
-    // //// console.log(phone)
   }
   const search = useLocation().search;
   // const nameg = new URLSearchParams(search).get("gusername");

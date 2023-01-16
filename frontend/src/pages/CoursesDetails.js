@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Grid,CardActionArea } from "@mui/material";
+import { Grid,CardActionArea, DialogActions, DialogContent, Dialog } from "@mui/material";
 import InstructorCard from "../components/InstructorCard/InstructorCard";
 import {
   BrowserRouter as Router,
@@ -38,7 +38,11 @@ import 'aos/dist/aos.css';
 import InstructorInCourseDetails from "../components/InstructorInCourseDetails/InstructorInCourseDetails";
 import { globalContext } from "./GlobalContext";
 import swal from "sweetalert";
-import { t } from "i18next";
+import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import appimage_dark from "../components/downloadApp/downloadappanimation.json";
+
+let CHECK_DEVICE_URL = "/api/checkdeviceanduser"
 
 
 
@@ -108,14 +112,23 @@ const CoursesDetails = () => {
   const [instructorState, setInstructorState] = useState(instructorData);
   const [courses, setCourses] = useState([]);
   const [load, setLoad] = useState(true);
+  const [isAndroid, setIsAndroid] = React.useState()
   const loggedin= localStorage.getItem("access_token")
   let location = useLocation();
+  let username = localStorage.getItem("user")
   
 
   let fullobject = location.state.courseId;
   let courseID= fullobject.courseID
 
 
+  const style = {
+    height: { xs: 320 },
+    width: { xs: 320 },
+    borderRadius: "50px",
+    margin: "5px",
+
+  };
 
 let fetchData = async () => {
   let username = localStorage.getItem("user")
@@ -153,10 +166,36 @@ let fetchCourseDetails= async()=>{
 
 };
 
+let fetchDeviceData = async () => {
+  await api
+    .post(CHECK_DEVICE_URL, JSON.stringify({ username }), {
+      headers: { "Content-Type": "application/json" },
+      "Access-Control-Allow-Credentials": true,
+    })
+    .then((data) => {
+      setIsAndroid(data.data.data.data.platform)
+    });
+};
+
+const [open, setOpen] = React.useState(false);
+const [scroll, setScroll] = React.useState('paper');
+
+const handleClickOpen = (scrollType) => () => {
+  setOpen(true);
+  setScroll(scrollType);
+};
+
+const handleClose = () => {
+  setOpen(false);
+};
+
+const descriptionElementRef = React.useRef(null);
+
 useEffect(() => {
   fetchData();
   fetchCourseDetails()
-}, [language]);
+  fetchDeviceData()
+}, [language, open]);
 
 
 let existingCourse;
@@ -205,7 +244,121 @@ return (
           variant="contained">Buy Now
         </Button>
         :
-          <Routerlink to="/coursedemo" state={{ courseId: state}}
+        <>
+        {isAndroid === "Android" || isAndroid === "Linux" || isAndroid === "iPhone" ?
+        <>
+         <Button variant="contained" color="primary" onClick={handleClickOpen()}>
+         <Typography variant="p" color="other.dark" 
+         >
+           Start Now
+         </Typography>         
+       </Button>
+       <Dialog
+            open={open}
+            onClose={handleClose}
+            scroll={scroll}
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+          >
+            <DialogContent dividers={scroll === 'paper'}>
+              <Container
+                // data-aos="fade-up"
+                sx={{
+                  color: "primary.main",
+                  alignContent: "center",
+                }}
+              >
+                <Box>
+                  <Typography
+                    gutterBottom
+                    sx={{
+                      fontSize: "1.5rem",
+                      fontWeight: "500",
+                      textAlign: "center",
+                    }}
+                  >
+                    {/* {t("download_app")} */}
+                    Download Our Mobile App 
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    sx={{
+                      fontSize: "1rem",
+                      fontWeight: "5400",
+                      textAlign: "center",
+                    }}
+                  >
+                    {/* {t("download_app")} */}
+                    To run the courses on mobile devices
+                  </Typography>
+                  {isAndroid === "Android" || isAndroid === "Linux" ?
+                    <motion.div whileHover={{ scale: 1.03 }}>
+                      <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
+                        <Box
+                          // onClick={()=>{swal("","App Coming Soon","");}}
+                          sx={{
+                            backgroundColor: "other.footercolor",
+                            cursor: "pointer",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            padding: "10px",
+                            borderRadius: "20px",
+                            boxShadow: "4",
+                            "&:hover": { boxShadow: "5" }
+                          }}
+                        >
+                          <img src={googlebtn} alt="google" width="72%" />
+                        </Box>
+                      </Link>
+                    </motion.div> :
+
+                    <motion.div whileHover={{ scale: 1.03 }}>
+                      {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                      <Box
+                        onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
+                        sx={{
+                          // backgroundColor: "secondary.main",
+                          backgroundColor: "other.footercolor",
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: "10px",
+                          borderRadius: "20px",
+                          boxShadow: "4",
+                          "&:hover": { boxShadow: "5" }
+                        }}
+                      >
+                        <img src={applebtn} alt="google" width="60%" />
+                      </Box>
+                      {/* </Link> */}
+                    </motion.div>}
+                  <Lottie
+                    animationData={appimage_dark}
+                    style={style}
+                  />
+                </Box>
+                {/* </Grid> */}
+              </Container>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  handleClose()
+                }} variant="contained" sx={{
+                  "&:hover": {
+                    backgroundColor: "secondary.main",
+                    color: "primary.main", fontWeight: "800"
+                  }
+                }}>Close</Button>
+            </DialogActions>
+          </Dialog>
+</>
+          :
+          <>
+          
+            <Routerlink to="/coursedemo" state={{ courseId: state}}
           style={{textDecoration:'none'}}
           >
             <Button variant="contained" color="primary">
@@ -215,6 +368,7 @@ return (
               </Typography>
             </Button>
           </Routerlink>
+          </>}</>
         
           }</>:
            <Routerlink to="/login" 

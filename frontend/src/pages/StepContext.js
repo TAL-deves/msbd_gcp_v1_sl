@@ -284,7 +284,7 @@ const handleSubmitRegistration = async (e) => {
 
     return (
         <div>
-            <multiStepContext.Provider value={{phoneNumber,backdrop, setBackdrop,resendbtn, setResendbtn,phoneNumber,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
+            <multiStepContext.Provider value={{phoneNumber,backdrop, setBackdrop,resendbtn, setResendbtn,phone, setPhone, userobj,addUserobj,useremail, setUseremail,Copyright, renderer,otp, setOTP,
                 emailRef,errRef, validName, setValidName,
                 userFocus, setUserFocus,validEmail, setValidEmail,
                  email, setEmail,emailFocus, setEmailFocus,

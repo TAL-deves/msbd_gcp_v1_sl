@@ -24,12 +24,10 @@ const DownloadApp = () => {
   };
   return (
     <Container
-      // data-aos="fade-up"
       sx={{
         border: "1px solid primary.main",
         boxShadow: "1px 1px 14px 1px rgba(102,102,102,0.83);",
         borderRadius: "10px",
-        // marginBottom: "0%",
         color: "primary.main",
         alignContent: "center",
         marginTop: "5rem"

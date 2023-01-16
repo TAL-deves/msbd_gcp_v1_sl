@@ -30,14 +30,13 @@ const Home = (props) => {
     handleWebNotification()
     
   },[])
-console.log(props.n)
   return (
     <>
           
       <Banner/>
       {props.n===0?
       <>
-      {webNotificationData.read?
+      {webNotificationData.read || !webNotificationData?
       <PopWindow n={props.n} setN={props.setN} webNotificationData={webNotificationData}/>:<></>}</>:<></>}
       <HomeCourses/>
       <Instructor/>

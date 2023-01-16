@@ -94,12 +94,15 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     setValidAge(AGE_REGEX.test(age));
+    // // console.log(validAge)
   }, [age])
   useEffect(() => {
     setValidPhone(PHONE_REGEX.test(phonenumber));
+    // // console.log(validAge)
   }, [phonenumber])
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
+    // // console.log(validEmail)
   }, [email])
 
   const capture = React.useCallback(
@@ -108,6 +111,8 @@ const UserProfile = (props) => {
       setWebImage(imageSrc)
 
     },
+
+
     [webcamRef]
   );
 
@@ -684,6 +689,7 @@ const UserProfile = (props) => {
           </Grid>
         </Box>)}
     </>
+
 
   );
 };
