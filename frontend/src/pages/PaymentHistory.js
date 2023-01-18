@@ -37,16 +37,7 @@ const PaymentHistory = () => {
     return { courseName, date, price, transactionId, status };
   }
 
-  const rows = [
-    createData("Purify with yahia amin", "11/1/2022", 2500, 24, "Success"),
-    createData(
-      "Learn Mindfulness Meditation for a Calmer and Clearer mind",
-      "11/1/2022",
-      4000,
-      24,
-      "Success"
-    ),
-  ];
+  
 
   let handleGetPaymentHistory = async () => {
     const response = await api.post(
@@ -86,6 +77,7 @@ const PaymentHistory = () => {
       // setPhonenumber(response.data.data.phoneNumber)\
       // console.log("removed sesssion", response);
       setData(response.data.data);
+      console.log(response.data.data)
       setLoad(false);
     }
     // return response.data.data
@@ -153,12 +145,12 @@ const PaymentHistory = () => {
           <Table sx={{ minWidth: { xs: "100%", sm: 250, md: 100, lg: 650, xl: 650 } }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Course Name</TableCell>
-                <TableCell align="right">Purchase Date</TableCell>
-                <TableCell align="right">Expiry Date</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Transaction ID</TableCell>
-                <TableCell align="right">Status</TableCell>
+                <TableCell>Course ID</TableCell>
+                <TableCell align="left">Purchase Date</TableCell>
+                <TableCell align="left">Expiry Date</TableCell>
+                <TableCell align="left">Price</TableCell>
+                <TableCell align="left">Transaction ID</TableCell>
+                <TableCell align="left">Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -180,7 +172,7 @@ const PaymentHistory = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.coursesList}
+                    {JSON.stringify(row.coursesList).replace("[","").replace("]","")}
                   </TableCell>
                   {/* <TableCell align="right">{new Date(row.dateOfPurchase).toJSON().slice(0,10)}</TableCell> */}
                   {/* <TableCell align="right">{purchaseDate}</TableCell> */}

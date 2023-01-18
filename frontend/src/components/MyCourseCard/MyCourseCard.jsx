@@ -68,14 +68,14 @@ const MyCourseCard = (props) => {
 
 
   return (
-    <Box>
+    <Box sx={{width:"50%"}}>
      {/* <motion.div whileHover={{scale:1.03}}> */}
       {/* <Box
         // data-aos="zoom-in"
        > */}
-    <Card sx={{ margin: "0" ,width:"100%",display:"flex", alignItems:"center",
+    <Card sx={{ width:"100%",display:"flex", alignItems:"center",
     "&:hover":{boxShadow:"5"}}}   >
-      <Box sx={{width:"50%"}}>
+      <Box >
       <CardMedia 
         component="img"
         // height="50%"

@@ -17,11 +17,11 @@ import swal from 'sweetalert';
 import {Link as Routerlink} from "react-router-dom";
 import SSLweb from './SSLweb.webp';
 import SSLmobile from './SSLmobile.webp'
-
-
+import { StayPrimaryLandscape } from '@mui/icons-material';
+import "./Wavefooter.css"
 
 export default function Wavefooter() {
-
+  let user= localStorage.getItem('user');
   const style = {
     height: 50,
     width: 50,
@@ -106,7 +106,24 @@ export default function Wavefooter() {
                   About Us</Typography>
                 </Routerlink>
               </Box>
+              {user?
+              <>
               <Box>
+                
+              <Routerlink style={{textDecoration:"none"}} to="/"  >
+                <Typography sx={{color:"other.white"}} display="inline">Login</Typography>
+                
+              </Routerlink>
+            </Box>
+            <Box>
+              <Routerlink to="/" style={{ textDecoration: "none" }} >
+              <Typography sx={{color:"other.white"}} display="inline">Signup</Typography>
+              </Routerlink>
+            </Box></>
+            :
+              <>
+              <Box>
+                
                 <Routerlink style={{textDecoration:"none"}} to="/login"  >
                   <Typography sx={{color:"other.white"}} display="inline">Login</Typography>
                   
@@ -116,7 +133,7 @@ export default function Wavefooter() {
                 <Routerlink to="/registration" style={{ textDecoration: "none" }} >
                 <Typography sx={{color:"other.white"}} display="inline">Signup</Typography>
                 </Routerlink>
-              </Box>
+              </Box></>}
               <Box>
                 <Routerlink to="/courses" style={{ textDecoration: "none" }} >
                 <Typography sx={{color:"other.white"}} display="inline">Courses</Typography>
@@ -209,7 +226,15 @@ export default function Wavefooter() {
                   </Box>
                 </Link>
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                  <Box onClick={()=>{swal("iOS App Coming Soon","Thank You","");}}
+                  <Box onClick={()=>
+                  // {swal("iOS App Coming Soon","Thank You","");}
+                  {swal("iOS App Coming Soon","Thank You","",{
+                    buttons: {
+                      text: "Back",
+                    }
+                  });}
+                  
+                }
                     sx={{
                       // backgroundColor: "other.footercolor",
                       backgroundColor: "secondary.main",
@@ -233,7 +258,7 @@ export default function Wavefooter() {
             pt={{ xs: 1, sm: 5 }}
             pb={{ xs: 5, sm: 0 }}
             sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-            <Link sx={{ textDecoration: "none", color: "other.white" }} href="https://techanalyticaltd.com/" target="new">Powered By <u>Tech Analytica Limited</u> &reg; {new Date().getFullYear()} || Version 1.0</Link>
+            <Box>Powered By <Link sx={{ textDecoration: "none", color: "other.white",  }} href="https://techanalyticaltd.com/" target="new"><u>Tech Analytica Limited</u></Link> &reg; {new Date().getFullYear()} || Version 1.0</Box>
             {/* <img src={SSLCommerz} alt=''/> */}
 
           </Box>

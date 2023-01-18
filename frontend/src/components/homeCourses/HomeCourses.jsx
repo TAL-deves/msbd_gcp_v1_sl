@@ -44,12 +44,11 @@ const HomeCourses = () => {
     cssEase: "linear",
     speed: 500,
     arrows: true,
-
     nextArrow: <SlickArrowRight />,
     prevArrow: <SlickArrowLeft />,
     slidesToShow: 3,
     slidesToScroll: 1,
-    initialSlide: 1,
+    initialSlide: 0,
 
     // centerMode: true, // enable center mode
     // centerPadding: '50px', // set center padding

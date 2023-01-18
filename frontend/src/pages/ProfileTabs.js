@@ -138,7 +138,7 @@ export default function ProfileTabs() {
                 // data-aos="fade-up"
                 sx={{
                   color: "primary.main",
-                  alignContent: "center",
+                  alignContent: "center"
                 }}
               >
                 <Box>
@@ -177,7 +177,9 @@ export default function ProfileTabs() {
                             padding: "10px",
                             borderRadius: "20px",
                             boxShadow: "4",
-                            "&:hover": { boxShadow: "5" }
+                            "&:hover": { boxShadow: "5" },
+                            width:"50%",
+                            marginLeft:"25%"
                           }}
                         >
                           <img src={googlebtn} alt="google" width="72%" />

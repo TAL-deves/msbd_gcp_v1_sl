@@ -41,6 +41,7 @@ import swal from "sweetalert";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import appimage_dark from "../components/downloadApp/downloadappanimation.json";
+import ReactPlayer from "react-player";
 
 let CHECK_DEVICE_URL = "/api/checkdeviceanduser"
 
@@ -207,7 +208,6 @@ if(courses!==null && courses.length !== 0){
 
 
 
-
 return (
    
     <Box >
@@ -217,15 +217,19 @@ return (
       <Grid container spacing={2}
        sx={{marginTop:"5rem"}}>
         <Grid item xs={12} lg={6} data-aos="fade-right">
-          <Typography variant="h4" sx={{color:"primary.main"}}>
+          <Typography variant="h4" sx={{marginBottom:"1rem",color:"primary.main"}}>
           
             {state?.title}
-            {/* Demo */}
-            </Typography>
-          <Typography variant="h6"
-           sx={{marginTop:"2rem", marginBottom:"2rem", textAlign:"justify"}}>
-            {state?.description}           
-            </Typography>
+            </Typography>     
+
+          {state.description?
+            state.description.map((dt)=>{
+              return <Typography variant="h6"
+              sx={{ marginBottom:"1rem", textAlign:"justify"}}>
+               {dt}           
+               </Typography>
+            }):
+            ""}
 
             
            <>
@@ -236,8 +240,7 @@ return (
          {existingCourse===undefined?
           <Button sx={{marginLeft:"0rem"}}
           //  onClick={response}
-          onClick={() => {
-            
+          onClick={() => {            
             navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID} }
             )
           }}
@@ -358,7 +361,7 @@ return (
           :
           <>
           
-            <Routerlink to="/coursedemo" state={{ courseId: state}}
+            <Routerlink to="/course-video" state={{ courseId: state}}
           style={{textDecoration:'none'}}
           >
             <Button variant="contained" color="primary">
@@ -402,9 +405,11 @@ return (
                 {/* <VideoGridWrapper> */}
             {/* <Grid > */}
         {/* <VdoPlayerStyle> */}
-        <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"80%",  paddingTop:".8rem", paddingBottom:".5rem", overflow:"hidden"}}>
-            <iframe ref={videoRef} width="100%" height="315" src={state?.courseIntro} title="YouTube video player" frameborder="0" ></iframe>
-            </Box>
+        <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"100%",  paddingTop:".8rem", paddingBottom:".5rem"}}>
+            {/* <iframe ref={videoRef} width="100%" height="315" src={state?.courseIntro} title="YouTube video player" frameborder="0" ></iframe> */}
+            <ReactPlayer width='100%'
+           height='100%' controls="true" url={state?.courseIntro}/>
+        </Box>
           {/* </VdoPlayerStyle> */}
     {/* </Grid> */}
     {/* </VideoGridWrapper> */}
@@ -416,7 +421,7 @@ return (
        
     </Container>
 
-    <Container sx={{marginTop:"5rem"}}>
+    <Container sx={{marginTop:"5rem", width:{xs:"100%", sm:"60%", md:"60%", lg:"100%"}}}>
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={7} data-aos="fade-right">
@@ -444,13 +449,13 @@ return (
         {/* ৳{state?.instructor} */}
         </Typography>
         <Typography variant="h6">
-          <Typography variant="h6" 
+          {/* <Typography variant="h6" 
           sx={{color:"primary.main", marginTop:"1rem",
            display:"flex",alignItems:"center"}}>
             <CheckCircleOutlineIcon/>{t("course_description")}:
-            </Typography>
-            <Typography variant="h6" sx={{textAlign:"justify"}}>
-         {state?.description}</Typography>
+            </Typography> */}
+            {/* <Typography variant="h6" sx={{textAlign:"justify"}}>
+         {state?.description}</Typography> */}
         </Typography>
         <Typography variant="h6">
         <Typography variant="h6" 
@@ -520,6 +525,10 @@ return (
                 </Box>
               {/* </Link> */}
           </Box>
+          <Lottie
+                animationData={appimage_dark}
+                style={style}
+              />
         </Box>
     </Box>
         </Grid>      

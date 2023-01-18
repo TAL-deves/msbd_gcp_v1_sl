@@ -77,7 +77,6 @@ const MyCourses = (props) => {
             setCourses([])
           }
           else{setCourses(data.data.data)}
-          
         }
 
         setLoad(false);
@@ -90,7 +89,6 @@ const MyCourses = (props) => {
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-       console.log("device",data.data.data.data.platform)
       setIsAndroid(data.data.data.data.platform)
       });
   };
@@ -150,9 +148,10 @@ const MyCourses = (props) => {
               ) : (
                 <>
                   <TableContainer component={Paper} sx={{ marginTop: "0rem" }}>
-                    <Table sx={{ minWidth: {xs:"100%",sm:"100%",md:"100%", lg:900, xl:900 } }} aria-label="simple table">
+                    <Table sx={{ minWidth: {xs:"100%",sm:"100%",md:700, lg:900, xl:900 } }} aria-label="simple table">
                       <TableRow>
                         {courses.map((course) => {
+                          // console.log("course",course)
                           return (
 
                             <Box key={course.courseID} fullWidth
@@ -167,7 +166,7 @@ const MyCourses = (props) => {
                                   title={course.title}
                                   id={course.courseID}
                                   img={course.thumbnail}
-                                  instructor={course.instructor.name}
+                                  instructor={course.instructor}
                                   price={course.price}
                                   hour={course.courseLength}
                                   lecture={course.totalLecture}
@@ -226,7 +225,7 @@ const MyCourses = (props) => {
                                   paddingBottom: ".5rem"
                                 }}>
                                   {/* uncomment again  */}
-                                  <Link to={"/coursedemo"} state={{ courseId: course }} style={{
+                                  <Link to={"/course-video"} state={{ courseId: course }} style={{
                                     textDecoration: "none"
                                   }}>
 

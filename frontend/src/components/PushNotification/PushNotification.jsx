@@ -24,13 +24,18 @@ const Priorities = [
 ];
 const toList = [
     {
+        value: 'none',
+        label: 'None',
+    },
+    {
         value: '/topics/all',
-        label: '/topics/all',
+        label: 'All',
     },
     {
         value: 'web',
         label: 'web',
     },
+    
 ];
 export default function PushNotification() {
 
@@ -41,9 +46,11 @@ export default function PushNotification() {
     const [imageLink, setImageLink] = useState()
     const [dataImageLink, setDataImageLink] = useState()
     const [videoLink, setVideoLink] = useState()
+    const [file, setFile] =useState()
+    const [target, setTarget] =useState()
     const [dataVideoLink, setDataVideoLink] = useState()
     const [priority, setPriority] = useState("high")
-    const [to, setTo] = useState("/topics/all")
+    const [to, setTo] = useState("none")
     let username = localStorage.getItem('user')
 
     // let handlePushNotification = async () => {
@@ -58,7 +65,7 @@ export default function PushNotification() {
     // }
 
     let handlePushNotification = async () => {
-        await api.post(PUSH_NOTIFICATION_URL, JSON.stringify({ username, title, body, dataBody, dataTitle, imageLink, dataImageLink, videoLink, dataVideoLink, priority, to }), {
+        await api.post(PUSH_NOTIFICATION_URL, JSON.stringify({ username, title, body, dataBody, dataTitle, imageLink, dataImageLink, videoLink, dataVideoLink, priority, to, file, target }), {
             headers: { "Content-Type": "application/json" },
             "Access-Control-Allow-Credentials": true,
         })
@@ -78,7 +85,7 @@ export default function PushNotification() {
             <Typography sx={{ fontSize: "1.5rem", fontWeight: "600", textAlign: "center" }}>Insert Information for Push Notification</Typography>
             <Box sx={{ paddingLeft: "5rem", paddingRight: "5rem" }}>
 
-                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>Web Plate</Typography>
+                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>Notification Tray</Typography>
                 <TextField
                     margin="normal"
                     fullWidth
@@ -115,7 +122,7 @@ export default function PushNotification() {
                     focused
                     onChange={(e) => { setVideoLink(e.target.value) }}
                 />
-                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>App Plate</Typography>
+                <Typography sx={{fontSize:"1.5rem", fontWeight:"800", textAlign:"center"}}>App Popup</Typography>
                 <TextField
                     margin="normal"
                     fullWidth
@@ -151,6 +158,24 @@ export default function PushNotification() {
                     id="introduction"
                     focused
                     onChange={(e) => { setDataVideoLink(e.target.value) }}
+                />
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    name="introduction"
+                    label="File"
+                    id="introduction"
+                    focused
+                    onChange={(e) => { setFile(e.target.value) }}
+                />
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    name="introduction"
+                    label="Target"
+                    id="introduction"
+                    focused
+                    onChange={(e) => { setTarget(e.target.value) }}
                 />
                 <TextField
                     margin="normal"

@@ -22,7 +22,6 @@ export default function UserMessages() {
           "Access-Control-Allow-Credentials": true,
         })
         .then((data) => {
-          console.log("handleUserMessage", data.data.data.messages);
           setData(data.data.data.messages);
         });
     };

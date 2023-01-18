@@ -1,11 +1,12 @@
 import { Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 // import vdoimage from '../components/downloadApp/Y tr.jpg';
 import instructorData from '../data/instructorData';
 import Modal from '@mui/material/Modal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { globalContext } from './GlobalContext';
 
 const style = {
   position: 'absolute',
@@ -22,6 +23,7 @@ const style = {
 };
 
 const AboutUs = () => {
+  const {  t } = useContext(globalContext);
   AOS.init({duration:2000});
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -100,7 +102,7 @@ const AboutUs = () => {
                   color: "primary.main",
                 }}
               >
-                Mind <span style={{ color: "#f8b100" }}>School</span>
+                {t("mind")} <span style={{ color: "#f8b100" }}>{t("school")}</span>
               </Typography>
               <Box sx={{ width: "70%" }}>
                 <Typography
@@ -110,13 +112,11 @@ const AboutUs = () => {
                     color: "primary.main",
                   }}
                 >
-                  A{" "}
+                  {t("a")}{" "}
                   <span style={{ color: "#f8b100", fontWeight: "800" }}>
-                    powerful{" "}
+                    {t("powerful")}{" "}
                   </span>
-                  <span style={{ fontWeight: "800" }}>platform</span> where you
-                  learn how to live a satisfying, miraculous and blissful life
-                </Typography>
+                  <span style={{ fontWeight: "800" }}>{t("platform")}</span> {t("about_us_intro")}</Typography>
               </Box>
             </Box>
           </Grid>
@@ -158,13 +158,15 @@ const AboutUs = () => {
             <Typography 
             data-aos="fade-right"
              sx={{fontSize:"2rem", fontWeight:"800",textAlign:"center"}}>
-            About Us
+            {t("about_us")}
             </Typography>
             <Typography data-aos="fade-left">
-            A healthy mind is the mantra of a healthy life, healthy physic, and healthy relationship. Mental Health is at top concerns in present era and improving the quality of our life experience is pre-eminent. Mind School is the platform where we aim to teach and train people how to develop your relationship, health, career, mindset and mental wellbeing by illuminating on your own inner intellectual strength and capacity. Here you can learn the prime lessons of your life that matters the most.
+            {/* A healthy mind is the mantra of a healthy life, healthy physic, and healthy relationship. Mental Health is at top concerns in present era and improving the quality of our life experience is pre-eminent. Mind School is the platform where we aim to teach and train people how to develop your relationship, health, career, mindset and mental wellbeing by illuminating on your own inner intellectual strength and capacity. Here you can learn the prime lessons of your life that matters the most. */}
+            {t("about_us1")}
             </Typography>
             <Typography data-aos="fade-right" sx={{mt:"1rem"}}>
-            We desire to bring joy, love and fulfilment in people’s life by sharing this unique gift brought forward by our incredibly talented mind trainers. With the ease of access to internet and technological enhancement, backed by cutting edge IT solutions, we present contents and courses through this powerful platform that can transform you radically. We welcome you to grab this life changing opportunity and surround yourself with positive affirmation.
+            {/* We desire to bring joy, love and fulfilment in people’s life by sharing this unique gift brought forward by our incredibly talented mind trainers. With the ease of access to internet and technological enhancement, backed by cutting edge IT solutions, we present contents and courses through this powerful platform that can transform you radically. We welcome you to grab this life changing opportunity and surround yourself with positive affirmation. */}
+            {t("about_us2")}
             </Typography>
             </Box>
             

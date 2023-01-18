@@ -44,7 +44,7 @@
           "Develop ongoing resilience to stress and anxiety",
           "Deal calmly with stressful communications"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless%20Believe.webp",
         "courseLength": "07",
         "totalLecture": "15",
         "price": "5000",
@@ -54,7 +54,9 @@
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Director of Training and founder of inMindSight",
-          "description": "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking.",
+          "description": [
+            "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking."
+          ],
           "courses": [
             "C001"
           ]
@@ -79,7 +81,9 @@
           "name": "D. Almasur Rahman",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "The Brain Lady",
-          "description": "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place.",
+          "description": [
+            "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place."
+          ],
           "courses": [
             "C005"
           ]
@@ -87,22 +91,33 @@
       },
       {
         "courseID": "C003",
-        "title": "Creative Meditation",
-        "introduction": "yoga for life",
+        "title": "Dynamic Meditation",
+        "introduction": "",
         "description": [
-          "learn theory and practice of meditation and start benefiting from practice of mediation. And also teach others on how to mediatiate"
+          "Meditation is a technique of using your subconscious mind by controlling your brain frequency through relaxation. It helps you to learn how to regulate your thinking, consciousness, emotion and feeling in a composed way. Dynamic Meditation refers to meditating with complete awareness while your bodily soul level remains fully active.",
+          "Meditation happens when your Body, Brain, Mind and Nature act together in harmony. Therefore, meditation is staying active in every dimension with self-awareness. Staying active both in inner level and outer level with complete awareness is meditation.",
+          "Why Meditate?",
+          "If a person is successful in three areas of his/her life, only then he/she can appreciate life completely. They can then properly support their family, contribute to the world, help other people and lead a happy, peaceful and active life. There three areas are:",
+          "- Health",
+          "- Relationship",
+          "- Financial Solvency",
+          "To prosper in these areas of life, everyone should know how to exercise your body, mind and brain together in an appropriate manner.",
+          "What will you learn:",
+          "In this course you will learn how you can manage every aspect of your life by using your inner strength, how to resolve every problem of life, how to reprogram the negative notions of your mind into positive reality, how to receive guidance on every query from higher source by activating your inner voice, how to regulate your habits toward positivity and controlling your tension, anger and negative emotions positively. It will also help you in developing your focus, grow confidence, increase concentration in your study, understanding people by using your left brain and right brain in a balanced way, make subjective communication, using your sixth sense, taking right decision and creating inner peace and happiness."
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Dynamic%20Meditation.webp",
         "courseLength": "07",
         "totalLecture": "11",
         "price": "6000",
-        "available": false,
+        "available": true,
         "instructor": {
           "_id": 10003,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Health & Fitness Coach | Best Selling Instructor",
-          "description": "Im a certified coach and author",
+          "description": [
+            "Im a certified coach and author"
+          ],
           "courses": [
             "C003"
           ]
@@ -117,7 +132,7 @@
           "Connect mind and heart, naturally and gently",
           "Practice self-observation and meditation with compassion and clarity"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self%20Healing%20in%20aNatural%20Way.webp",
         "courseLength": "05",
         "totalLecture": "05",
         "price": "5000",
@@ -127,7 +142,9 @@
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Heartfulness Meditation Trainer",
-          "description": "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!",
+          "description": [
+            "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!"
+          ],
           "courses": [
             "C004"
           ]
@@ -136,22 +153,39 @@
       {
         "courseID": "C002",
         "title": "Money Mind Mastery",
-        "introduction": "Teach a group how to meditate in your workplace or community",
+        "introduction": "",
         "description": [
-          "Rebuild your life through psychology and spirituality",
-          "Join a community of other meditation leaders around the world"
+          "In modern world money is the main mean of exchange, using which we can perform any trade or transaction. Therefore, to carry out our day-to-day life and meeting all the necessity, money is an important instrument.",
+          "Generally, we use our physical body, knowledge and mind to earn money. Earning money is still considered as the toughest task in our life. Many people earn less money compared to their struggle, whereas many people earn more money compared to their effort. We have several negative concept, belief or fear about money which are the biggest barriers toward earning money. Money Mind Mastery course lets you know the main obstacles in earning money and how you can resolve those.",
+          "We hold two types of power primarily; one is our physical power and the second one is our mental power which we can define as the power of our subconscious mind. When we intend to change any certain circumstance in our life, naturally we invest maximum physical effort compared to our mind power or the power of our subconscious mind. Through this course, you will learn just by practicing correct techniques and your subconscious mind, how to earn more money and manage your money simply.",
+          "What will you learn:",
+          "• The process of managing your Body, Mind and Brain through relaxation",
+          "• Figuring out and removing the money blocking and blind spots of mind",
+          "• Omitting the limited belief and establish the belief of abundance",
+          "• Removing your inner fear and training your thought, emotion and feeling for money",
+          "• Acclimatizing the process of using your mind toward earning and spending",
+          "• Acclimatizing the process of settling your mind in case of scarcity of money",
+          "• Exercising the power of your Mind, Body and Brain to fix the wealth goal",
+          "• Focus and Vision Board with Affirmation",
+          "• Applying Good Luck rules",
+          "• Correct distribution of Mind Money to unlock Money Abundance",
+          "• Learn the Law of Money Mind Mastery",
+          "• Triggering mechanism of Money Mind Mastery",
+          "• Secret to multiply happiness"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money%20MInd%20Mastery.webp",
         "courseLength": "07",
         "totalLecture": "14",
         "price": "8000",
-        "available": false,
+        "available": true,
         "instructor": {
           "_id": 10002,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Psychologist",
-          "description": "Dr. Abul Kalam is a Psychologist.",
+          "description": [
+            "Dr. Abul Kalam is a Psychologist."
+          ],
           "courses": [
             "C002"
           ]
@@ -199,7 +233,7 @@
           "চাপ এবং উদ্বেগের জন্য চলমান স্থিতিস্থাপকতা বিকাশ করুন",
           "চাপযুক্ত যোগাযোগের সাথে শান্তভাবে ডিল করুন"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless%20Believe.webp",
         "courseLength": "০৭",
         "totalLecture": "১৫",
         "price": "5000",
@@ -209,7 +243,9 @@
           "name": "ড. আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
-          "description": "10 বছর ধরে আমি জীবন, শক্তি, আত্মা, নিরাময়, আকর্ষণের আইন অধ্যয়ন করছি কেন আমি এখানে আছি, আধ্যাত্মিক জগত কীভাবে কাজ করে এবং কীভাবে আমার জীবনকে আশ্চর্যজনক করে তুলতে পারি। আপনার মত আধ্যাত্মিক দিকনির্দেশনা, প্রজ্ঞা এবং আপনি যে গভীর রূপান্তর খুঁজছেন।",
+          "description": [
+            "10 বছর ধরে আমি জীবন, শক্তি, আত্মা, নিরাময়, আকর্ষণের আইন অধ্যয়ন করছি কেন আমি এখানে আছি, আধ্যাত্মিক জগত কীভাবে কাজ করে এবং কীভাবে আমার জীবনকে আশ্চর্যজনক করে তুলতে পারি। আপনার মত আধ্যাত্মিক দিকনির্দেশনা, প্রজ্ঞা এবং আপনি যে গভীর রূপান্তর খুঁজছেন।"
+          ],
           "courses": [
             "C001"
           ]
@@ -234,7 +270,9 @@
           "name": "ড. আলমাসুর রহমান",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "ব্রেন লেডি",
-          "description": "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত",
+          "description": [
+            "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত"
+          ],
           "courses": [
             "C005"
           ]
@@ -242,22 +280,31 @@
       },
       {
         "courseID": "C003",
-        "title": "সৃজনশীল ধ্যান",
-        "introduction": "yoga for life",
+        "title": "ডায়নামিক মেডিটেশন",
+        "introduction": "",
         "description": [
-          "ধ্যানের তত্ত্ব এবং অনুশীলন শিখুন এবং মধ্যস্থতার অনুশীলন থেকে উপকৃত হওয়া শুরু করুন। এবং কিভাবে মধ্যস্থতা করতে হয় তা অন্যদের শেখান"
+          "মেডিটেশন হচ্ছে রিলাক্সেশন এর মাধ্যমে ব্রেনের ফ্রিকোয়েন্সিকে নিয়ন্ত্রণ করে অবচেতন মনকে ব্যবহার করার প্রক্রিয়া, যা দ্বারা নিজের চিন্তা চেতনা আবেগ অনুভূতিকে নিয়ন্ত্রণে এনে সঠিক মাত্রায় তার ব্যবহার করতে শিখায়। ডায়নামিক মেডিটেশন হচ্ছে শারীরিক আত্মার স্তরে সচল থেকে সচেতনতার সাথে মেডিটেটিভ লেভেলে কাজ করা।",
+          "ডায়নামিক মেডিটেশন কেন করবেন?",
+          "একটি মানুষ তার জীবনের তিনটি বিষয়ে যদি সঠিক মাত্রায় সফল হতে পারে, তখনই সেই ব্যক্তি তার জীবনকে পরিপূর্ণভাবে উপভোগ করতে পারবে। পরিবারকে সঠিক ভাবে সহযোগিতা করতে পারবে, পৃথিবীতে তার ইচ্ছেমত অবদান রেখে যেতে পারবে, মানুষকে সাহায্য করতে পারবে এবং সুখ শান্তি ও কর্মময় ভাবে জীবন-যাপন করতে পারবে।",
+          "সেই তিনটি বিষয় হচ্ছেঃ",
+          "১) স্বাস্থ্য",
+          "২) সম্পর্ক",
+          "৩) আর্থিক স্বচ্ছলতা",
+          "আর এই তিনটি বিষয়ে পরিপূর্ণভাবে সফলতা অর্জনের জন্য প্রতিটি মানুষের উচিত তার দেহ, মন ও মস্তিষ্ককে সঠিকভাবে ব্যবহার করতে পারা।  এই কোর্সে আপনি রপ্ত করা শিখবেন যে কিভাবে নিজের ভেতরের ক্ষমতা কে ব্যবহার করে জীবনের প্রতিটি বিষয়কে পরিচালনা করা, জীবনের প্রতিটি সমস্যাকে সঠিকভাবে সমাধান করা, নিজের মনের নেগেটিভ জিনিসগুলো কে রিপ্রোগ্রামিং এর মাধ্যমে  পজিটিভ করা,  নিজের ভিতরের সত্ত্বাকে জাগ্রত করে জীবনের প্রতিটি বিষয়ে উচ্চতর উৎস থেকে নির্দেশনা বা গাইডেন্স নেওয়া,  নিজের  অভ্যাসগুলোকে পজেটিভ ভাবে পরিবর্তন করা, দুশ্চিন্তা,রাগ এবং নিজের নেগেটিভ ইমোশনগুলো কে নিয়ন্ত্রণ করে পজিটিভ করা, একাগ্রতা বাড়ানো, মনোবল বৃদ্ধি করা,  পড়ালেখায় মনোযোগ বৃদ্ধি করা, লক্ষ্য বা ফোকাস ঠিক করা, আত্ম প্রকাশক যোগাযোগ তৈরি করা, ষষ্ঠ ইন্দ্রিয়কে ব্যবহার করা, সঠিক ভাবে সিদ্ধান্ত নিতে পারা, আত্মিক শান্তি এবং সুখ তৈরি করা।"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Creative.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Dynamic%20Meditation.webp",
         "courseLength": "৭",
         "totalLecture": "১১",
         "price": "6000",
-        "available": false,
+        "available": true,
         "instructor": {
           "_id": 10003,
           "name": "ড. আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "স্বাস্থ্য ও ফিটনেস কোচ | বেস্ট সেলিং ইন্সট্রাক্টর",
-          "description": "আমি একজন প্রত্যয়িত কোচ এবং লেখক",
+          "description": [
+            "আমি একজন প্রত্যয়িত কোচ এবং লেখক"
+          ],
           "courses": [
             "C003"
           ]
@@ -272,7 +319,7 @@
           "স্বাভাবিকভাবে এবং মৃদুভাবে মন এবং হৃদয় সংযোগ করুন",
           "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self%20Healing%20in%20aNatural%20Way.webp",
         "courseLength": "৫",
         "totalLecture": "৫",
         "price": "5000",
@@ -282,7 +329,9 @@
           "name": "ড. আবুল কালাম ",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "হার্টফুলনেস মেডিটেশন প্রশিক্ষক",
-          "description": "আমি উপাদান সরবরাহের অ্যানের উপায় পছন্দ করি। এই কোর্সটি ছোট রত্ন দিয়ে পূর্ণ, এক বাটি দিয়ে ব্যবহার করার জন্য অনেক আশ্চর্যজনক কৌশল সহ সম্পদগুলি সত্যিই দরকারী এবং কোর্সে ভাল মূল্য যোগ করে! এটি আমার জন্য একটি ভাল ম্যাচ ছিল। আমি সত্যিই পরবর্তী পদক্ষেপের জন্য অপেক্ষা করছি (পর্ব 3)! আশীর্বাদ !",
+          "description": [
+            "আমি উপাদান সরবরাহের অ্যানের উপায় পছন্দ করি। এই কোর্সটি ছোট রত্ন দিয়ে পূর্ণ, এক বাটি দিয়ে ব্যবহার করার জন্য অনেক আশ্চর্যজনক কৌশল সহ সম্পদগুলি সত্যিই দরকারী এবং কোর্সে ভাল মূল্য যোগ করে! এটি আমার জন্য একটি ভাল ম্যাচ ছিল। আমি সত্যিই পরবর্তী পদক্ষেপের জন্য অপেক্ষা করছি (পর্ব 3)! আশীর্বাদ !"
+          ],
           "courses": [
             "C004"
           ]
@@ -291,22 +340,40 @@
       {
         "courseID": "C002",
         "title": "মানি মাইন্ড মাস্টারি",
-        "introduction": "আপনার কর্মক্ষেত্রে বা সম্প্রদায়ে কীভাবে ধ্যান করতে হয় তা একটি দলকে শেখান",
+        "introduction": "",
         "description": [
-          "আপনার জীবনকে পুনরায় গড়ে তুলুন সাইকোলজি এবং স্পিরিচুয়ালিটির মাধ্যমে",
-          "বিশ্বের অন্যান্য ধ্যান নেতাদের একটি সম্প্রদায়ে যোগ দিন"
+          "বস্তুজগতের সবকিছুর বিনিময় মাধ্যম হল টাকা, যেই মাধ্যমকে ব্যবহার করে যে কোন বস্তুর ধরন, পরিবর্তন, পরিবর্ধন এবং আদান-প্রদান সবকিছুই করা হয়। অর্থাৎ অর্থ হল জীবনকে চালানো এবং সকল প্রয়োজনকে মেটানোর একটি গুরুত্বপূর্ণ মাধ্যম।",
+          "সাধারণত আমরা আমাদের শরীর, মেধা এবং মনকে ব্যবহারের মাধ্যমে টাকা বা অর্থ উপার্জন করি। অর্থ উপার্জন এখনো বহু মানুষের কাছে সবচেয়ে কঠিন একটি কাজ। অনেক মানুষ পরিশ্রমের তুলনায় কম অর্থ উপার্জন করেন আবার অনেকে অল্প পরিশ্রমেই অনেক অর্থ উপার্জন করে ফেলেন। অর্থ নিয়ে আমাদের মধ্যে যে নেতিবাচক ধারণা, বিশ্বাস কিংবা ভয় রয়েছে, তা আমাদের জীবনে অর্থ উপার্জনের ক্ষেত্রে সবচাইতে বড় প্রতিবন্ধকতা। মানি মাইন্ড মাষ্টারি কোর্সে আপনি জানবেন সেই প্রতিবন্ধকতার কারণগুলো এবং তা সমাধানের কৌশল।",
+          "আমাদের দুই ধরনের শক্তি আছে, একটি শারিরিক শক্তি আর অন্যটি মানসিক শক্তি বা সাবকনশাস মাইন্ডের পাওয়ার। আমরা যখন কোন কিছু পরিবর্তন করতে চাই তখন আমরা স্বভাবতই শারিরিকভাবে বেশি শ্রম দিয়ে থাকি কিন্তু মনের শক্তি বা সাবকনশাস মাইন্ডকে ব্যবহার করি খুবই সামান্য। এই কোর্সে আপনি শিখবেন কিভাবে মনের শক্তিকে সঠিক প্রক্রিয়ায় ব্যবহার করে বাস্তব জীবনে অর্থ উপার্জন এবং অর্থের নিয়ন্ত্রিত ব্যবহার সহজ করা যায়।",
+          "এই কোর্সে আপনি যা যা শিখবেনঃ",
+          "১. শরীর, মন, মস্তিষ্ককে রিলাক্সেশনের মাধ্যমে সঠিক ব্যবহার করার প্রক্রিয়া।",
+          "২. অর্থ সংক্রান্ত নেতিবাচক ধারণা, বিশ্বাস কিংবা ভয় রয়েছে, তা খুঁজে বের করা এবং এই প্রতিবন্ধকতা পরিহার করা।",
+          "৩. সীমাবদ্ধ বিশ্বাসকে ভেঙ্গে ফেলা এবং প্রাচুর্যের বিশ্বাস ধারনাকে প্রোথিত করা।",
+          "৪. টাকার জন্য আপনার চিন্তা আবেগ ও অনুভূতির সঠিক ব্যবহার করা, মনের গভীরের ভয় দূর করা।",
+          "৫. উপার্জন করা এবং ব্যয় করা এই দুটো ক্ষেত্রেই মনের সঠিক মাত্রায় ব্যবহারের প্রক্রিয়া রপ্ত করা।",
+          "৬. প্রয়োজনের তুলনায় অর্থের সরবরাহ কমে গেলে সঠিক মাইন্ড সেট করাকে রপ্ত করা।",
+          "৭. সম্পদ অর্জনের লক্ষ্য নির্ধারন করা, সেই অনুযায়ী শরীর, মস্তিষ্ক এবং মনের সর্বোচ্চ ক্ষমতাকে ব্যবহার করা।",
+          "৮. ফোকাস ও ভিশনবোর্ড এবং অ্যাফারমেশন।",
+          "৯. সৌভাগ্য অর্জনের কৌশল রপ্ত করা।",
+          "১০. অর্থ ব্যবহারের বা বিতরনের ক্ষেত্রে মনের সঠিক ব্যবহার করা যা আপনার প্রাচুর্যের পথকে উম্মুক্ত করবে।",
+          "১১. মানি মাইন্ড মাস্টারির কৌশল রপ্ত করা।",
+          "১২. মানি মাইন্ড মাস্টারির ট্রিগার মেক্যানিজম।",
+          "১৩. সুখ বা খুশিকে বহুগুণ বৃদ্ধি করার কৌশল রপ্ত করা।",
+          "এর পাশাপাশি এই কোর্সের প্রতিটি লেসনে একটি করে অসাধারণ গাইডেড মেডিটেশন যা আপনাকে বিষয়গুলো মনের গভীরে প্রোথিত করতে দারুন ভাবে সাহায্য করবে।"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Money%20MInd%20Mastery.webp",
         "courseLength": "৭",
         "totalLecture": "১৪",
         "price": "8000",
-        "available": false,
+        "available": true,
         "instructor": {
           "_id": 10002,
           "name": "ড. আবুল কালাম ",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মনোবিজ্ঞানী",
-          "description": "ড. আবুল কালাম একজন মনোবিজ্ঞানী।",
+          "description": [
+            "ড. আবুল কালাম একজন মনোবিজ্ঞানী।"
+          ],
           "courses": [
             "C002"
           ]
@@ -321,8 +388,10 @@
         "name": "Dr. Abul Kalam",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "Director of Training and founder of inMindSight",
-        "description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
-        "available": false,
+        "description": [
+          "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."
+        ],
+        "available": true,
         "courses": [
           "C001",
           "C002",
@@ -335,7 +404,9 @@
         "name": "D. Almasur Rahman",
         "designation": "Meditation Teacher and Life Coach",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
-        "description": "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature.",
+        "description": [
+          "D. Almasur Rahman is a highly realized siddha monk who reveals to us a Himalayan tradition of higher yoga based on his tutelage within the Sanskrit heritage. He hails from lineages of meditation adepts from Himalaya who are known for their combination of rishi sagely scholarship and nātha yogic practices. Deep meditation on the Sanskrit verses of cardinal philosophies and monastic inquiry methods led to his profound realization. His Holiness teaches cardinal philosophies with exquisite clarity directly from the original Sanskrit literature."
+        ],
         "available": false,
         "courses": [
           "C005"
@@ -346,7 +417,9 @@
         "name": "Md. Mostafizur Rahman",
         "designation": "Health & Fitness Coach",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
-        "description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
+        "description": [
+          "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."
+        ],
         "available": false,
         "courses": []
       },
@@ -373,8 +446,10 @@
         "name": "ডাঃ আবুল কালাম",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "প্রশিক্ষণ পরিচালক এবং inMindSight এর প্রতিষ্ঠাতা",
-        "description": "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।",
-        "available": false,
+        "description": [
+          "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।"
+        ],
+        "available": true,
         "courses": [
           "C001",
           "C002",
@@ -387,7 +462,9 @@
         "name": "ড. আলমাসুর রহমান",
         "designation": "মেডিটেশন টিচার এবং লাইফ কোচ",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
-        "description": "D. আলমাসুর রহমান একজন অত্যন্ত উপলব্ধিকৃত সিদ্ধ সন্ন্যাসী যিনি আমাদের কাছে সংস্কৃত ঐতিহ্যের মধ্যে তাঁর শিক্ষার উপর ভিত্তি করে উচ্চতর যোগের হিমালয় ঐতিহ্য প্রকাশ করেন। তিনি হিমালয় থেকে ধ্যানের পারদর্শী ব্যক্তিদের বংশ থেকে এসেছেন যারা ঋষি ঋষি বৃত্তি এবং নাথ যোগিক অনুশীলনের সমন্বয়ের জন্য পরিচিত। মূল দর্শনের সংস্কৃত শ্লোক এবং সন্ন্যাসীর অনুসন্ধান পদ্ধতির গভীর ধ্যান তার গভীর উপলব্ধির দিকে পরিচালিত করেছিল। পরম পবিত্রতা সরাসরি মূল সংস্কৃত সাহিত্য থেকে সূক্ষ্ম স্পষ্টতার সাথে মূল দর্শন শিক্ষা দেন।",
+        "description": [
+          "D. আলমাসুর রহমান একজন অত্যন্ত উপলব্ধিকৃত সিদ্ধ সন্ন্যাসী যিনি আমাদের কাছে সংস্কৃত ঐতিহ্যের মধ্যে তাঁর শিক্ষার উপর ভিত্তি করে উচ্চতর যোগের হিমালয় ঐতিহ্য প্রকাশ করেন। তিনি হিমালয় থেকে ধ্যানের পারদর্শী ব্যক্তিদের বংশ থেকে এসেছেন যারা ঋষি ঋষি বৃত্তি এবং নাথ যোগিক অনুশীলনের সমন্বয়ের জন্য পরিচিত। মূল দর্শনের সংস্কৃত শ্লোক এবং সন্ন্যাসীর অনুসন্ধান পদ্ধতির গভীর ধ্যান তার গভীর উপলব্ধির দিকে পরিচালিত করেছিল। পরম পবিত্রতা সরাসরি মূল সংস্কৃত সাহিত্য থেকে সূক্ষ্ম স্পষ্টতার সাথে মূল দর্শন শিক্ষা দেন।"
+        ],
         "available": false,
         "courses": [
           "C005"
@@ -398,7 +475,9 @@
         "name": "মোঃ মোস্তাফিজুর রহমান",
         "designation": "স্বাস্থ্য ও ফিটনেস কোচ",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/mostafizurRahman.webp",
-        "description": "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।",
+        "description": [
+          "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।"
+        ],
         "available": false,
         "courses": []
       },
@@ -522,88 +601,88 @@
       "title": "Money Mind Mastery",
       "lessons": [
         {
-          "title": "Course no 2 Episode no 1",
+          "title": "Lesson 1",
           "episode": 1,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "7a00e299e545483488d5e2300d0fe8d6",
+          "length": "31:36"
         },
         {
-          "title": "Course no 2 Episode no 2",
+          "title": "Lesson 2",
           "episode": 2,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "37dc191a94864ad0aa8abf3c985f4f8a",
+          "length": "22:59"
         },
         {
-          "title": "Course no 2 Episode no 3",
+          "title": "Lesson 3",
           "episode": 3,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "7687d72bc80d4068b78b7d3fa4665da5",
+          "length": "16:01"
         },
         {
-          "title": "Course no 2 Episode no 4",
+          "title": "Lesson 4",
           "episode": 4,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:14"
+          "videoID": "d754b034ca4c445dbadd3f1784a5231a",
+          "length": "32:49"
         },
         {
-          "title": "Course no 2 Episode no 5",
+          "title": "Lesson 5",
           "episode": 5,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "31fb415f8cc24e5eb48b3041e68c5f5e",
+          "length": "34:20"
         },
         {
-          "title": "Course no 2 Episode no 6",
+          "title": "Lesson 6",
           "episode": 6,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "e681edc8f29c4e4b9bce356ce1c8366e",
+          "length": "41:30"
         },
         {
-          "title": "Course no 2 Episode no 7",
+          "title": "Lesson 7",
           "episode": 7,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "dab5dd1c745845dfb81f556b80de875f",
+          "length": "37:27"
         },
         {
-          "title": "Course no 2 Episode no 8",
+          "title": "Lesson 8",
           "episode": 8,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "89f44137943c44a88613529be7bc7b4a",
+          "length": "29:39"
         },
         {
-          "title": "Course no 2 Episode no 9",
+          "title": "Lesson 9",
           "episode": 9,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "a22a99f6cb60454e93b60cb534504271",
+          "length": "27:1532"
         },
         {
-          "title": "Course no 2 Episode no 10",
+          "title": "Lesson 10",
           "episode": 10,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "bc3443402e054bcf98ffab27cb59258f",
+          "length": "26:01"
         },
         {
-          "title": "Course no 2 Episode no 11",
+          "title": "Lesson 11",
           "episode": 11,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "c63272287fca447095bee0c3dfd81b6c",
+          "length": "35:39"
         },
         {
-          "title": "Course no 2 Episode no 12",
+          "title": "Lesson 12",
           "episode": 12,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "ee19a1a722704c80930befb47a17898f",
+          "length": "35:23"
         },
         {
-          "title": "Course no 2 Episode no 13",
+          "title": "Lesson 13",
           "episode": 13,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "eaa859b871e944f0a33a925520160f61",
+          "length": "30:34"
         },
         {
-          "title": "Course no 2 Episode no 14",
+          "title": "Lesson 14",
           "episode": 14,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "34295b5b14384e94a4b8c8c9b46074d4",
+          "length": "43:51"
         }
       ]
     },
@@ -789,73 +868,73 @@
           "title": "Lesson 1",
           "episode": 1,
           "videoID": "808c3b9a962a4e13907c423e673a3eb7",
-          "length": "01:25"
+          "length": "21:05"
         },
         {
           "title": "Meditation Exercise 1",
           "episode": 2,
           "videoID": "684de8600add48359615e124101e1457",
-          "length": "01:25"
+          "length": "05:55"
         },
         {
           "title": "Lesson 2",
           "episode": 3,
           "videoID": "da8980af44ef444ebcb2c5281ca7589d",
-          "length": "01:25"
+          "length": "18:13"
         },
         {
           "title": "Meditation Exercise 2",
           "episode": 4,
           "videoID": "2166971535ac4c65bcdd48a5252319c5",
-          "length": "00:14"
+          "length": "08:06"
         },
         {
           "title": "Lesson 3",
           "episode": 5,
           "videoID": "30006aec4bdf443db7e9c67596480eab",
-          "length": "00:15"
+          "length": "16:52"
         },
         {
           "title": " Meditation Exercise 3 ",
           "episode": 6,
           "videoID": "a3cb8937bacf4e8aad47631e2249bec1",
-          "length": "00:15"
+          "length": "07:52"
         },
         {
           "title": "Lesson 4",
           "episode": 7,
           "videoID": "ba0086eda31a46be8023336e2cc19186",
-          "length": "00:15"
+          "length": "15:08"
         },
         {
           "title": "Meditation Exercise 4 ",
           "episode": 8,
           "videoID": "659ed402e433451ab92671b2e2eb5f87",
-          "length": "00:15"
+          "length": "09:51"
         },
         {
           "title": "Lesson 5",
           "episode": 9,
           "videoID": "52f813805cd942b997485c272b889aaa",
-          "length": "00:15"
+          "length": "13:35"
         },
         {
           "title": "Meditation Exercise 5",
           "episode": 10,
           "videoID": "66a525bea3204231b73625200ffe27d6",
-          "length": "00:15"
+          "length": "14:37"
         },
         {
           "title": "Lesson 6",
           "episode": 11,
           "videoID": "b9013d209dc241e39ae143b0a8a00b00",
-          "length": "00:15"
+          "length": "22:38"
         },
         {
           "title": "Meditation Exercise 6",
           "episode": 12,
           "videoID": "66bb94e264e14ff285ac0fbdd460deee",
-          "length": "00:15"
+          "length": "14:03"
         }
       ]
     }

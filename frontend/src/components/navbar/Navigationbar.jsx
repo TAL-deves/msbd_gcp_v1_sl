@@ -151,7 +151,7 @@ const Navigationbar = (props) => {
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             {/* <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}> */}
               {/* <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-              <Box onClick={()=>{navigate("/")}} sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
+              <Box onClick={()=>{navigate("/")}} sx={{cursor:"pointer", display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
                 {localStorage.getItem("theme") === "theme" ?
                   <img src={logonill} alt="logo" width="50" />
                   :
@@ -169,6 +169,7 @@ const Navigationbar = (props) => {
               onClick={()=>{navigate("/")}}
               onC
               sx={{
+                cursor:"pointer",
                 mr: 2,
                 display: { xs: "none", md: "none", lg: "flex" },
                 // fontFamily: "monospace",
@@ -534,12 +535,12 @@ const Navigationbar = (props) => {
                   sx={{
                     color: "other.white",
                     backgroundColor: "secondary.main",
-                    "&:hover": {
-                      color: "other.white",
-                      backgroundColor: "secondary.main",
-                      border: "1px solid",
-                      borderColor: "other.white", fontWeight:"800"
-                    },
+                    // "&:hover": {
+                    //   color: "other.white",
+                    //   backgroundColor: "secondary.main",
+                    //   // border: "1px solid",
+                    //   // borderColor: "other.white", fontWeight:"800"
+                    // },
                   }}
                   onClick={() => {
                     api

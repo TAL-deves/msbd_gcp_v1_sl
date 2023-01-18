@@ -391,6 +391,10 @@ const Coursedemo = () => {
                       </Typography>
                     </AccordionDetails> :
                     <AccordionDetails>
+                      <Box sx={{ display: "flex" }}>
+                          <AccessTimeIcon />
+                          <Typography>Duration: {courseVdo.length}</Typography>
+                        </Box>
                       <Button variant="contained" disabled> Play</Button>
                     </AccordionDetails>}
                 </Accordion>

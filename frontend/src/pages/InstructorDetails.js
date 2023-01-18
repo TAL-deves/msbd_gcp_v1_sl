@@ -29,6 +29,7 @@ import 'aos/dist/aos.css';
 import { globalContext } from "./GlobalContext";
 import swal from "sweetalert";
 import { Container } from "@mui/system";
+import ReactPlayer from "react-player";
 
 const VIDEOLOG_URL = "/videologdata";
 const SINGLE_COURSE_URL = "/api/instructorcourses";
@@ -113,7 +114,6 @@ const InstructorDetails = () => {
     })
     .then((data) => {
       setInstructorInfo(data.data.data)
-      
     });
   }
 
@@ -193,7 +193,9 @@ const InstructorDetails = () => {
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <Grid>
                     <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", justifyContent: "center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-                      <iframe ref={videoRef} width="100%" height="315" src={instructorInfo?.intro} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      {/* <iframe ref={videoRef} width="100%" height="315" src={instructorInfo?.intro} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+                      <ReactPlayer width='100%'
+           height='315' controls="true" url={instructorInfo?.intro}/>
                     </Box>
                   </Grid>
                   {/* </VideoGridWrapper> */}
@@ -202,7 +204,7 @@ const InstructorDetails = () => {
             </Box>
             <Box>
 
-              {instructorInfo?.description.map((description) => {
+              {instructorInfo?.description?instructorInfo?.description.map((description) => {
                 return (
                   <>
                     <Typography
@@ -213,7 +215,7 @@ const InstructorDetails = () => {
                     </Typography>
                   </>
                 );
-              })}
+              }):""}
 
 
               {/* </Container>  */}
@@ -250,7 +252,7 @@ const InstructorDetails = () => {
                   return (
                     <Box key={course.id} data-aos="flip-left">
                       <CardGridStyle>
-                        <Card sx={{ width: "100%" }}>
+                        <Card >
                           <CardActionArea>
                             <CardMediaStyle>
                               <CardMedia

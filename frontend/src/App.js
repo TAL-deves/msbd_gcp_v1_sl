@@ -242,7 +242,7 @@ function App() {
                   />
                   {/* <Route path="coursedemo" element={<Course />} /> */}
                   {/* <Route path="coursedemo" element={loggedin ? <Coursedemo /> : <Navigate to="/login" />} /> */}
-                  <Route path="coursedemo" element={<Coursedemo />} />
+                  <Route path="course-video" element={<Coursedemo />} />
                   <Route path="about" element={<AboutUs />} />
                   <Route path="contact" element={<Contact />} />
                   <Route path="privacy-policy" element={<PrivacyPolicy />} />
