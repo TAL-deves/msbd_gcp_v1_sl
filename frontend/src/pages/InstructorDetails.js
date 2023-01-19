@@ -94,27 +94,27 @@ const InstructorDetails = () => {
   const [played, setPlayed] = useState(0);
   const [courses, setCourses] = useState([]);
   const [instructorInfo, setInstructorInfo] = useState();
-  
+
   let location = useLocation();
 
   let state = location.state.instructorId;
   localStorage.setItem("instructor", state._id);
-   
+
 
   let instructorID = localStorage.getItem("instructor")
 
 
-  let instructorDetails=async()=>{
-    let instructorID= state?._id;
+  let instructorDetails = async () => {
+    let instructorID = state?._id;
 
     await api
-    .post(INSTRUCTOR_DETAILS_URL, JSON.stringify({ instructorID, language }), {
-      headers: { "Content-Type": "application/json" },
-      "Access-Control-Allow-Credentials": true,
-    })
-    .then((data) => {
-      setInstructorInfo(data.data.data)
-    });
+      .post(INSTRUCTOR_DETAILS_URL, JSON.stringify({ instructorID, language }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((data) => {
+        setInstructorInfo(data.data.data)
+      });
   }
 
   useEffect(() => {
@@ -130,10 +130,7 @@ const InstructorDetails = () => {
         .then((data) => {
           setCourses(data.data.data)
         });
-
     });
-
-    
     instructorDetails()
 
   }, [language]);
@@ -161,50 +158,40 @@ const InstructorDetails = () => {
               {instructorInfo?.designation}
             </Typography>
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                p: 1,
-                m: 1,
-                bgcolor: "background.paper",
-                borderRadius: 1,
-              }}
             >
               <Grid
-                container
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: {
-                    xs: "center",
-                    md: "flex-start",
-                    lg: "flex-start",
-                  },
-                  // paddingLeft: "10%",
-                  marginLeft: "5%", marginRight: "5%"
+                  display: "flex", justifyContent: "space-around", alignItems: "center",
+                  flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
                 }}
               >
-                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                <Grid
+                  container
+                  xs={10}
+                  sm={6}
+                  md={6}
+                  lg={3}
+                  xl={3}
+                  justifyContent="center"
+                >
                   <Box data-aos="fade-right" >
                     <img width={300} height={300} src={instructorInfo?.image} alt="" />
                   </Box>
                 </Grid>
 
-                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                {/* <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <Grid>
                     <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", justifyContent: "center", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-                      {/* <iframe ref={videoRef} width="100%" height="315" src={instructorInfo?.intro} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
                       <ReactPlayer width='100%'
            height='315' controls="true" url={instructorInfo?.intro}/>
                     </Box>
                   </Grid>
-                  {/* </VideoGridWrapper> */}
-                </Grid>
+                </Grid> */}
               </Grid>
             </Box>
             <Box>
 
-              {instructorInfo?.description?instructorInfo?.description.map((description) => {
+              {instructorInfo?.description ? instructorInfo?.description.map((description) => {
                 return (
                   <>
                     <Typography
@@ -215,7 +202,7 @@ const InstructorDetails = () => {
                     </Typography>
                   </>
                 );
-              }):""}
+              }) : ""}
 
 
               {/* </Container>  */}
@@ -237,19 +224,24 @@ const InstructorDetails = () => {
             >
               Courses List of {instructorInfo?.name}
             </Typography>
-            <Grid sx={{
-              display: "flex", justifyContent: "space-around",
-              flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
-            }}>
-              <Grid
-                container
-                // columns={{ xs: 10, sm: 10, md: 10, lg: 10 }}
-                xs={10}
-                // lg={8}
-                justifyContent="center"
-              >
-                {courses.map((course) => {
-                  return (
+            <Grid
+              sx={{
+                display: "flex", justifyContent: "space-around", alignItems: "center",
+                flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
+              }}
+            >
+
+              {courses.map((course) => {
+                return (
+                  <Grid
+                    container
+                    xs={10}
+                    sm={6}
+                    md={6}
+                    lg={6}
+                    xl={6}
+                    justifyContent="center"
+                  >
                     <Box key={course.id} data-aos="flip-left">
                       <CardGridStyle>
                         <Card >
@@ -257,26 +249,29 @@ const InstructorDetails = () => {
                             <CardMediaStyle>
                               <CardMedia
                                 component="img"
-                                height="200"
+                                height="auto"
+                                width="auto"
                                 image={course.thumbnail}
                                 alt={course.title}
                               />
                             </CardMediaStyle>
-                            <CardContent>
-                              <Typography variant="h6" component="Box">
-                                {course.title}
-                              </Typography>
-                              <br />
-                              <Typography variant="body4" color="text.secondary">
-                                {course.instructor.name}
-                              </Typography>
-                              <Typography variant="h6" color="text.primary">
-                                &#2547;{course.price}
-                              </Typography>
-                              <Typography variant="body3" color="text.primary">
-                                Total {course.courseLength} hours |{" "}
-                                {course.totalLecture} Lectures
-                              </Typography>
+                            <CardContent >
+                              <Box sx={{ height: "8rem" }}>
+                                <Typography variant="h6" component="Box">
+                                  {course.title}
+                                </Typography>
+                                <br />
+                                <Typography variant="body4" color="text.secondary">
+                                  {course.instructor.name}
+                                </Typography>
+                                <Typography variant="h6" color="text.primary">
+                                  &#2547;{course.price}
+                                </Typography>
+                                <Typography variant="body3" color="text.primary">
+                                  Total {course.courseLength} hours |{" "}
+                                  {course.totalLecture} Lectures
+                                </Typography>
+                              </Box>
                               <br />
                               {course.instructor.name === "D. Almasur Rahman" ?
                                 <>
@@ -290,6 +285,8 @@ const InstructorDetails = () => {
                                   </Button>
                                 </>
                                 :
+                                <>
+                                {course.available?
                                 <Link
                                   to={"/course-details"}
                                   state={{ courseId: course }}
@@ -302,16 +299,28 @@ const InstructorDetails = () => {
                                   >
                                     Course Details
                                   </Button>
-                                </Link>}
+                                </Link>:
+                                <>
+                                <Button
+                                    size="small"
+                                    variant="contained"
+                                    sx={{ marginTop: "3%", marginLeft: "27%" }}
+                                    onClick={()=>{swal("This course is coming soon","Thank You", "info")}}
+                                  >
+                                    Course Details
+                                  </Button>
+                                </>}
+                                </>}
                             </CardContent>
                           </CardActionArea>
                         </Card>
                       </CardGridStyle>
                     </Box>
-                    // <Box key={course.id}>{course.title}</Box>
-                  );
-                })}
-              </Grid>
+                    {/* // <Box key={course.id}>{course.title}</Box> */}
+                  </Grid>
+                );
+              })}
+
             </Grid>
             <Box></Box>
           </Box>

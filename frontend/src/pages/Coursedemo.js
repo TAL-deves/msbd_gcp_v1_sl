@@ -123,9 +123,8 @@ const Coursedemo = () => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      swal("You are logged out", "Your session ended, Please login again", "info")
+      swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
       // navigate("/login")
-      window.location.href = "/login";
       // console.log("removed sesssion")
     }
     // e.preventDefault();
@@ -159,9 +158,8 @@ const Coursedemo = () => {
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
 
-          swal("You are logged out", "Your session ended, Please login again", "info")
+          swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
           // navigate("/login")
-          window.location.href = "/login";
           // console.log("removed sesssion")
         }
       });
@@ -326,9 +324,8 @@ const Coursedemo = () => {
                             localStorage.removeItem("refresh_token");
                             localStorage.removeItem("user");
 
-                            swal("You are logged out", "Your session ended, Please login again", "info")
+                            swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
                             // navigate("/login")
-                            window.location.href = "/login";
                             // console.log("removed sesssion")
                           }
 

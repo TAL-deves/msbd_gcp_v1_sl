@@ -1949,7 +1949,7 @@ app.post("/api/userprofile", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-    // console.log("User userSessionStatus", userSessionStatus.result.errMsg);
+    console.log("User userSessionStatus", userSessionStatus);
 
     if (userSessionStatus.data != null) {
       // console.log("User is allowed");
@@ -4961,11 +4961,14 @@ async function tokenChecking(req, res) {
     let tokenObj = await tokenModel.findOne({
       accessToken: token,
     });
+
+    // console.log("Here --- ",tokenObj);
+
     if (tokenObj) {
       let currentDate = new Date().getTime();
       let tokenExpires = new Date(tokenObj.accessTokenExpiresAt).getTime();
       let expiry = (tokenExpires - currentDate) / 1000;
-
+      // console.log(currentDate, "  ", tokenExpires ,"  ", expiry);
       if (expiry < 0) {
         let tokenExpiryStatus = {
           data: null,
@@ -4975,7 +4978,10 @@ async function tokenChecking(req, res) {
             errMsg: "token is expired",
           },
         };
-        console.log("Token expired");
+        // console.log("Token expired");
+
+        revokeToken(tokenObj);
+
         return tokenExpiryStatus;
         // return false;
       } else {
@@ -5000,7 +5006,7 @@ async function tokenChecking(req, res) {
           errMsg: "No token in DB",
         },
       };
-      console.log("No token in DB");
+      // console.log("No token in DB");
       return tokenExpiryStatus;
       // return false;
     }

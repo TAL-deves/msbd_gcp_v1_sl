@@ -2,6 +2,7 @@ import { Api } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import api from "../../api/Axios";
+import swal from "sweetalert";
 /**
  * Component consuming the VdocipherAPI
  */
@@ -34,10 +35,17 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        // // console.log("object")
-         
-         
+        
+      if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("user");
+  
+        swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+      }
       });
+
+
   }
 
   // console.log(courseID, "status course")

@@ -241,10 +241,13 @@ const Navigationbar = (props) => {
                 <Link
                   key={t("about")}
                   to={"/about"}
-                  style={{ textDecoration: "none", color: "#000" }}
+                  style={{ textDecoration: "none", color: "#000",
+                  
+                 }}
                 >
                   <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography sx={{ color: "primary.main" }}>
+                    <Typography sx={{ color: "primary.main",
+                     }}>
                       {t("about")}
                     </Typography>
                   </MenuItem>
@@ -478,7 +481,12 @@ const Navigationbar = (props) => {
                   sx={{
                     borderColor: "other.white",
                     color: "other.white",
-                    marginRight: "15px", fontWeight:"800"
+                    marginRight: "15px", fontWeight:"800",
+                    "&:hover": {
+                      color: "other.white",
+                      border: "1px solid",
+                      borderColor: "secondary.main"
+                    },
                   }}
                 >
                   {/* <Link to="/userprofile" style={{ textDecoration: "none", color:"white"}}> */}
@@ -535,12 +543,14 @@ const Navigationbar = (props) => {
                   sx={{
                     color: "other.white",
                     backgroundColor: "secondary.main",
-                    // "&:hover": {
-                    //   color: "other.white",
-                    //   backgroundColor: "secondary.main",
-                    //   // border: "1px solid",
-                    //   // borderColor: "other.white", fontWeight:"800"
-                    // },
+                    border: "1px solid",
+                    borderColor: "secondary.main",
+                    "&:hover": {
+                      color: "other.white",
+                      backgroundColor: "#f8b819",
+                      border: "1px solid",
+                      borderColor: "other.main"
+                    },
                   }}
                   onClick={() => {
                     api

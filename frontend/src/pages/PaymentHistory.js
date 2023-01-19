@@ -62,9 +62,8 @@ const PaymentHistory = () => {
         "You are logged out",
         "Your session ended, Please login again",
         "info"
-      );
+      ).then(()=>{window.location.href = "/login";});
       // navigate("/login")
-      window.location.href = "/login";
       setLoad(false);
        
     } else {

@@ -228,11 +228,7 @@ export default function Wavefooter() {
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
                   <Box onClick={()=>
                   // {swal("iOS App Coming Soon","Thank You","");}
-                  {swal("iOS App Coming Soon","Thank You","",{
-                    buttons: {
-                      text: "Back",
-                    }
-                  });}
+                  {swal("iOS App Coming Soon","Thank You","");}
                   
                 }
                     sx={{

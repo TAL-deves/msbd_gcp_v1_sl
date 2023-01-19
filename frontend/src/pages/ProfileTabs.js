@@ -109,7 +109,7 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
-            <Tab label="Data Entry" {...a11yProps(4)} />
+            {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
             <Tab label="Push Notification" {...a11yProps(5)} />
             <Tab label="Messages" {...a11yProps(6)} />
             <Tab label="Subscribers" {...a11yProps(7)} />
@@ -268,7 +268,7 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
-            <Tab label="Data Entry" {...a11yProps(4)} />
+            {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
             <Tab label="Push Notification" {...a11yProps(5)} />
             <Tab label="Messages" {...a11yProps(6)} />
             <Tab label="Subscribers" {...a11yProps(7)} />

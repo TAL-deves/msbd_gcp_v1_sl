@@ -11,6 +11,7 @@ import BannerImg from "./web intro 2.json";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/Axios"
 import swal from 'sweetalert'
+import ReactPlayer from "react-player";
 
 
 
@@ -80,6 +81,7 @@ const Banner = () => {
             }}>
               <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", mx:"1rem",  }}>
                 <Lottie
+                  // animationData={BannerImg}
                   animationData={BannerImg}
                   style={style}
                 />
@@ -144,7 +146,9 @@ const Banner = () => {
           }}
         >
           <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", height: "80%", paddingTop: ".8rem", paddingBottom: ".5rem", overflow: "hidden" }}>
-            <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {/* <iframe ref={videoRef} width="100%" height="315" src="https://www.youtube.com/embed/XP6BvzptxR8?autoplay=0&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+            <ReactPlayer width='100%'
+           height='100%' controls="true" url="https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/misc/Intro%20Final.mp4"/>
           </Box>
         </Grid>
       </Grid>

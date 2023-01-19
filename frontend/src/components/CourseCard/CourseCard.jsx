@@ -63,9 +63,13 @@ const CourseCard = (props) => {
           margin: "0", width: "100%",
           "&:hover": { boxShadow: "5" }
         }}   >
+          {fullObject.available?
+          <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
+                textDecoration: "none"
+              }}>
           <CardMedia
             component="img"
-            height="200"
+            height="auto"
 
             image={
               img
@@ -74,6 +78,20 @@ const CourseCard = (props) => {
             }
             alt="image"
           />
+          </Link>
+          :
+          <>
+          <CardMedia
+            component="img"
+            height="auto"
+            image={
+              img
+                ? `${img}`
+                : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+            }
+            alt="image"
+          />
+          </>}
           <CardContent sx={{
             display: "flex",
             flexDirection: "column",

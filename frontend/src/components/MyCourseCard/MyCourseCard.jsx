@@ -75,11 +75,11 @@ const MyCourseCard = (props) => {
        > */}
     <Card sx={{ width:"100%",display:"flex", alignItems:"center",
     "&:hover":{boxShadow:"5"}}}   >
-      <Box >
+      <Box>
       <CardMedia 
         component="img"
-        // height="50%"
-        //  width="10%"
+        // height="130px"
+        // width="170px"
         image={
           img
             ? `${img}`
@@ -88,7 +88,7 @@ const MyCourseCard = (props) => {
         alt="image"
       />
       </Box>
-      <CardContent sx={{display:"flex",
+      <CardContent sx={{display:"flex",width:"8rem",
        flexDirection:"column",
        justifyContent:"flex-start",
       //  alignItems:"center"
