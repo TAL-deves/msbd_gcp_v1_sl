@@ -17,7 +17,7 @@ const InstructorInCourseDetails = (props) => {
   let img = props.img;
   let description = props.description;
   let fullObject= props.fullobject
-console.log("fullObject ins det",fullObject)
+// console.log("fullObject ins det",fullObject)
   return (
     <motion.div whileHover={{scale:1.03}}>
       <Box sx={{

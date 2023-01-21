@@ -20,7 +20,7 @@ const InstructorCard = (props) => {
   let instructor = props.instructor;
   let img = props.img;
   let fullObject = props.fullObject;
-  console.log("fullObject in homepage inst det",fullObject)
+  // console.log("fullObject in homepage inst det",fullObject)
   
 
   return (

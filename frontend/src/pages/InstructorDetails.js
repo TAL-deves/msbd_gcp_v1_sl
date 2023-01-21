@@ -99,7 +99,7 @@ const InstructorDetails = () => {
 
   let state = location.state.instructorId;
   localStorage.setItem("instructor", state._id);
-console.log("instructor details",state)
+// console.log("instructor details",state)
 
   let instructorID = localStorage.getItem("instructor")
 
@@ -122,7 +122,7 @@ console.log("instructor details",state)
     // setCourses([])
     state.courses.map(async (singleCourse) => {
       var courseID = instructorID;
-      console.log("courseID", courseID)
+      // console.log("courseID", courseID)
       await api
         .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language }), {
           headers: { "Content-Type": "application/json" },
@@ -130,7 +130,7 @@ console.log("instructor details",state)
         })
         .then((data) => {
           setCourses(data.data.data)
-          console.log("first courses", data.data.data)
+          // console.log("first courses", data.data.data)
         });
     });
     instructorDetails()
@@ -234,7 +234,7 @@ console.log("instructor details",state)
             >
 
               {courses.map((course) => {
-                console.log("first course", course)
+                // console.log("first course", course)
                 return (
                   <Grid
                     container

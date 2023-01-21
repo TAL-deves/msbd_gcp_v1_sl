@@ -76,7 +76,7 @@ const PaymentHistory = () => {
       // setPhonenumber(response.data.data.phoneNumber)\
       // console.log("removed sesssion", response);
       setData(response.data.data);
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setLoad(false);
     }
     // return response.data.data

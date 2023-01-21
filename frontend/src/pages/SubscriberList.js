@@ -18,7 +18,7 @@ export default function SubscriberList() {
         "Access-Control-Allow-Credentials": true,
       })
       .then((data) => {
-        console.log("handleSubscriberList", data.data.data);
+        // console.log("handleSubscriberList", data.data.data);
         setData(data.data.data);
       });
   };

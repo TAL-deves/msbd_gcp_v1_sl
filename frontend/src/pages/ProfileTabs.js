@@ -110,9 +110,9 @@ export default function ProfileTabs() {
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
             {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-            <Tab label="Push Notification" {...a11yProps(5)} />
-            <Tab label="Messages" {...a11yProps(6)} />
-            <Tab label="Subscribers" {...a11yProps(7)} />
+            <Tab label="Push Notification" {...a11yProps(4)} />
+            <Tab label="Messages" {...a11yProps(5)} />
+            <Tab label="Subscribers" {...a11yProps(6)} />
           </Tabs>
           :
           <Tabs
@@ -228,16 +228,16 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
-        <TabPanel value={value} index={4}>
+        {/* <TabPanel value={value} index={4}>
           <DataEntry />
-        </TabPanel>
-        <TabPanel value={value} index={5}>
+        </TabPanel> */}
+        <TabPanel value={value} index={4}>
           <PushNotification />
         </TabPanel>
-        <TabPanel value={value} index={6}>
+        <TabPanel value={value} index={5}>
           <UserMessages />
         </TabPanel>
-        <TabPanel value={value} index={7}>
+        <TabPanel value={value} index={6}>
           <SubscriberList />
         </TabPanel>
       </Box>
@@ -269,9 +269,9 @@ export default function ProfileTabs() {
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
             {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-            <Tab label="Push Notification" {...a11yProps(5)} />
-            <Tab label="Messages" {...a11yProps(6)} />
-            <Tab label="Subscribers" {...a11yProps(7)} />
+            <Tab label="Push Notification" {...a11yProps(4)} />
+            <Tab label="Messages" {...a11yProps(5)} />
+            <Tab label="Subscribers" {...a11yProps(6)} />
           </Tabs> :
           <Tabs
             orientation="vertical"
@@ -321,16 +321,16 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
-        <TabPanel value={value} index={4}>
+        {/* <TabPanel value={value} index={4}>
           <DataEntry />
-        </TabPanel>
-        <TabPanel value={value} index={5}>
+        </TabPanel> */}
+        <TabPanel value={value} index={4}>
           <PushNotification />
         </TabPanel>
-        <TabPanel value={value} index={6}>
+        <TabPanel value={value} index={5}>
           <UserMessages />
         </TabPanel>
-        <TabPanel value={value} index={7}>
+        <TabPanel value={value} index={6}>
           <SubscriberList />
         </TabPanel>
       </Box>

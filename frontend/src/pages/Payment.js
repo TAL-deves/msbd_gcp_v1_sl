@@ -142,7 +142,7 @@ const Payment = () => {
       .then((data) => {
         // // console.log(" Testing data ----- ", data.data.data.redirectGatewayURL);
         // window.open(`${data.data.data.redirectGatewayURL}`, "_self")
-        console.log("payment loader ---------", data)
+        // console.log("payment loader ---------", data)
         var w = 620;
         var h = 575;
         // console.log(typeof (total), "total type")
