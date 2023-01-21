@@ -99,7 +99,7 @@ const InstructorDetails = () => {
 
   let state = location.state.instructorId;
   localStorage.setItem("instructor", state._id);
-
+console.log("instructor details",state)
 
   let instructorID = localStorage.getItem("instructor")
 
@@ -122,6 +122,7 @@ const InstructorDetails = () => {
     // setCourses([])
     state.courses.map(async (singleCourse) => {
       var courseID = instructorID;
+      console.log("courseID", courseID)
       await api
         .post(SINGLE_COURSE_URL, JSON.stringify({ courseID, language }), {
           headers: { "Content-Type": "application/json" },
@@ -129,6 +130,7 @@ const InstructorDetails = () => {
         })
         .then((data) => {
           setCourses(data.data.data)
+          console.log("first courses", data.data.data)
         });
     });
     instructorDetails()
@@ -232,6 +234,7 @@ const InstructorDetails = () => {
             >
 
               {courses.map((course) => {
+                console.log("first course", course)
                 return (
                   <Grid
                     container
@@ -246,7 +249,14 @@ const InstructorDetails = () => {
                       <CardGridStyle>
                         <Card >
                           <CardActionArea>
+                          {course.available?
+                                <Link
+                                  to={"/course-details"}
+                                  state={{ courseId: course }}
+                                  style={textstyle}
+                                >
                             <CardMediaStyle>
+                           
                               <CardMedia
                                 component="img"
                                 height="auto"
@@ -254,7 +264,20 @@ const InstructorDetails = () => {
                                 image={course.thumbnail}
                                 alt={course.title}
                               />
+                              
                             </CardMediaStyle>
+                            </Link>:
+                            <CardMediaStyle>
+                           
+                            <CardMedia
+                              component="img"
+                              height="auto"
+                              width="auto"
+                              image={course.thumbnail}
+                              alt={course.title}
+                            />
+                            
+                          </CardMediaStyle>}
                             <CardContent >
                               <Box sx={{ height: "8rem" }}>
                                 <Typography variant="h6" component="Box">

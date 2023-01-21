@@ -49,14 +49,14 @@
         "courseLength": "07",
         "totalLecture": "15",
         "price": "5000",
-        "available": true,
+        "available": false,
         "instructor": {
           "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "For 10 years I have been studying life, energy, spirit, healing, Law of Attraction to understand why I am here, how the spiritual world works and how to make my life amazing.I am a compassionate and grounded Reiki Energy Healer offering beautiful souls like you spiritual guidance, wisdom, and the deep transformation you are seeking."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
           ],
           "courses": [
             "C001"
@@ -119,7 +119,7 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Im a certified coach and author"
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
           ],
           "courses": [
             "C003"
@@ -140,14 +140,14 @@
         "courseLength": "04",
         "totalLecture": "06",
         "price": "5000",
-        "available": true,
+        "available": false,
         "instructor": {
           "_id": 10004,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "I LOVE Ann's way of delivering the material. This course is full of little gems, with many surprising techniques to use with one bowl plus the resources are really usefull and add good value to the course! This was a good match for me. I am really looking forward for the next step (Part 3)! Blessings!"
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
           ],
           "courses": [
             "C004"
@@ -189,7 +189,7 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Dr. Abul Kalam is a Psychologist."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
           ],
           "courses": [
             "C002"
@@ -243,14 +243,14 @@
         "courseLength": "০৭",
         "totalLecture": "১৫",
         "price": "5000",
-        "available": true,
+        "available": false,
         "instructor": {
           "_id": 10001,
           "name": "ডাঃ আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "10 বছর ধরে আমি জীবন, শক্তি, আত্মা, নিরাময়, আকর্ষণের আইন অধ্যয়ন করছি কেন আমি এখানে আছি, আধ্যাত্মিক জগত কীভাবে কাজ করে এবং কীভাবে আমার জীবনকে আশ্চর্যজনক করে তুলতে পারি। আপনার মত আধ্যাত্মিক দিকনির্দেশনা, প্রজ্ঞা এবং আপনি যে গভীর রূপান্তর খুঁজছেন।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
           ],
           "courses": [
             "C001"
@@ -311,7 +311,7 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "আমি একজন প্রত্যয়িত কোচ এবং লেখক"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
           ],
           "courses": [
             "C003"
@@ -339,7 +339,7 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "আমি উপাদান সরবরাহের অ্যানের উপায় পছন্দ করি। এই কোর্সটি ছোট রত্ন দিয়ে পূর্ণ, এক বাটি দিয়ে ব্যবহার করার জন্য অনেক আশ্চর্যজনক কৌশল সহ সম্পদগুলি সত্যিই দরকারী এবং কোর্সে ভাল মূল্য যোগ করে! এটি আমার জন্য একটি ভাল ম্যাচ ছিল। আমি সত্যিই পরবর্তী পদক্ষেপের জন্য অপেক্ষা করছি (পর্ব 3)! আশীর্বাদ !"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
           ],
           "courses": [
             "C004"
@@ -382,7 +382,7 @@
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "ড. আবুল কালাম একজন মনোবিজ্ঞানী।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
           ],
           "courses": [
             "C002"
@@ -399,9 +399,9 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "Mind Trainer and NLP Coach",
         "description": [
-          "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."
+          "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
         ],
-        "available": true,
+        "available": false,
         "courses": [
           "C001",
           "C002",
@@ -457,9 +457,9 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
         "description": [
-          "জনপ্রিয় বিশ্বাসের বিপরীতে, Lorem Ipsum কেবল এলোমেলো পাঠ্য নয়। এটি 45 খ্রিস্টপূর্বাব্দের ধ্রুপদী ল্যাটিন সাহিত্যের একটি অংশে শিকড় রয়েছে, এটি 2000 বছরেরও বেশি পুরানো। ভার্জিনিয়ার হ্যাম্পডেন-সিডনি কলেজের একজন ল্যাটিন অধ্যাপক রিচার্ড ম্যাকক্লিনটক লোরেম ইপসাম প্যাসেজ থেকে আরও অস্পষ্ট ল্যাটিন শব্দ কনসেক্টুরের সন্ধান করেছিলেন এবং শাস্ত্রীয় সাহিত্যে এই শব্দের উদ্ধৃতিগুলির মধ্য দিয়ে গিয়ে সন্দেহাতীত উত্সটি আবিষ্কার করেছিলেন।"
+          "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
         ],
-        "available": true,
+        "available": false,
         "courses": [
           "C001",
           "C002",

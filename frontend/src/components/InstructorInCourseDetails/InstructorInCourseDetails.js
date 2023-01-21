@@ -8,6 +8,7 @@ import {motion} from "framer-motion";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Box } from "@mui/system";
+import { Link } from "react-router-dom";
 
 const InstructorInCourseDetails = (props) => {
   AOS.init({duration:2000});
@@ -15,7 +16,8 @@ const InstructorInCourseDetails = (props) => {
   let instructor= props.instructor
   let img = props.img;
   let description = props.description;
-
+  let fullObject= props.fullobject
+console.log("fullObject ins det",fullObject)
   return (
     <motion.div whileHover={{scale:1.03}}>
       <Box sx={{
@@ -48,9 +50,21 @@ const InstructorInCourseDetails = (props) => {
         alt="Live from space album cover"
       />
         <Box>
+        {/* {fullObject.available? */}
+        {fullObject?
+      <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
+              textDecoration:"none"
+            }}> 
         <Typography variant="h5" color="black" >
         {title}
         </Typography>
+         </Link>:
+         <>
+         <Typography variant="h5" color="black" >
+        {title}
+        </Typography>
+         </>}
+        {/* :<></>}  */}
         <Typography variant="h7" color="black">
           {/* uncomment after ssl  */}
         {/* {instructor} */}

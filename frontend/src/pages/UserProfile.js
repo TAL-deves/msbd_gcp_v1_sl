@@ -48,15 +48,15 @@ const USER_IMAGE_URL = "/api/getuserimage"
 
 const genders = [
   {
-    value: 'male',
+    value: 'Male',
     label: 'Male',
   },
   {
-    value: 'female',
+    value: 'Female',
     label: 'Female',
   },
   {
-    value: 'others',
+    value: 'Others',
     label: 'Others',
   }
 ];
@@ -159,7 +159,7 @@ const UserProfile = (props) => {
     else {
       setUserInfo(response.data.data)
       setEmail(response.data.data.email)
-      setGender(response.data.data.gender ? response.data.data.gender : "male")
+      setGender(response.data.data.gender ? response.data.data.gender : "Male")
       setProfession(response.data.data.profession)
       setFullname(response.data.data.fullname)
       setAge(response.data.data.age)

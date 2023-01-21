@@ -163,6 +163,7 @@ let fetchCourseDetails= async()=>{
   })
   .then((data) => {
      setState(data.data.data)
+      // console.log(data.data.data)
   });
 
 };
@@ -400,12 +401,12 @@ return (
               </Button> */}
               
         </Grid>
-        <Grid item xs={12} lg={6}  data-aos="fade-left">
-          <Item>
+        <Grid item xs={12} lg={6} sx={{position:"relative"}}  data-aos="fade-left">
+          <Item sx={{paddingTop:{xs:"1rem",sm:"1rem", md:"1rem",lg:"6rem"},position:"sticky", top:0}}>
                 {/* <VideoGridWrapper> */}
             {/* <Grid > */}
         {/* <VdoPlayerStyle> */}
-        <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"100%",  paddingTop:".8rem", paddingBottom:".5rem"}}>
+        <Box sx={{backgroundColor:"primary.main", borderRadius:"10px",width:"100%",height:"100%",  paddingTop:".8rem", paddingBottom:".5rem", }}>
             {/* <iframe ref={videoRef} width="100%" height="315" src={state?.courseIntro} title="YouTube video player" frameborder="0" ></iframe> */}
             <ReactPlayer width='100%'
            height='100%' controls="true" url={state?.courseIntro}/>
@@ -469,6 +470,7 @@ return (
         <Box>
           {/* instructor card */}
           <InstructorInCourseDetails
+                fullobject={state?.instructor}
                 title={state?.instructor?.name}
                 instructor={state?.instructor?.designation}
                 img={state?.instructor?.image}
