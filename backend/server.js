@@ -93,6 +93,8 @@ const subscribers = require("./Database/models/subscribers");
 var useragent = require("express-useragent");
 const notificationMessages = require("./Database/models/notificationMessages");
 const userNotification = require("./Database/models/userNotification");
+const sliderData = require("./Database/models/sliderData");
+const faqData = require("./Database/models/faqData");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -3629,189 +3631,189 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
 //! ********** User courses and payment history part ***********/
 app.post("/api/usercourses", async (req, res) => {
   try {
-  let recievedResponseData = decryptionOfData(req, res);
-  req.body = recievedResponseData;
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
 
-  //! This is for token checking Start
-  let userSessionStatus = await tokenChecking(req);
+    //! This is for token checking Start
+    let userSessionStatus = await tokenChecking(req);
 
-  if (userSessionStatus.data != null) {
-    // console.log("/api/usercourses ----- ", req.body);
-    let data = await allData.find();
-    // data = data[0].coursesData.en;
-    // let array2 = data.coursesData.en
+    if (userSessionStatus.data != null) {
+      // console.log("/api/usercourses ----- ", req.body);
+      let data = await allData.find();
+      // data = data[0].coursesData.en;
+      // let array2 = data.coursesData.en
 
-    let userCourses = await usersPurchasedCourses.find({
-      $and: [{ username: req.body.username }, { status: "VALID" }],
-    });
-
-    let userallcourses = [];
-
-    //? NO expiry checking
-    // userCourses.map((item) => {
-    //   item.coursesList.map((item2) => {
-    //     userallcourses.push(item2);
-    //   });
-    // });
-
-    //? with expiry checking
-    // userCourses.map((item) => {
-    //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
-    //     console.log("expired");
-    //   } else {
-    //     item.coursesList.map((item2) => {
-    //       userallcourses.push(item2);
-    //     });
-    //   }
-    // });
-
-    //? with expiry checking and status changing
-    Promise.all(
-      userCourses.map(async (item) => {
-        if (moment(new Date()).isSameOrAfter(new Date(item.expirationDate))) {
-          await usersPurchasedCourses.findOneAndUpdate(
-            {
-              $and: [
-                { username: req.body.username },
-                { status: "VALID" },
-                { coursesList: item.coursesList },
-              ],
-            },
-            {
-              $set: {
-                courseExpityStatus: "VALIDITY EXPIRED",
-              },
-            }
-          );
-
-          // console.log("expired --- ", item);
-        } else {
-          item.coursesList.map((item2) => {
-            userallcourses.push(item2);
-          });
-        }
-      })
-    );
-
-    if (userCourses[0]) {
-      let array1 = userallcourses;
-      let array2 = data[0].coursesData.en;
-      let array3 = [];
-      let array31 = [];
-
-      // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
-      // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
-      // array3 = [...array2];
-      // console.log("userallcourses array3 ----- ", array3);
-      // console.log("userallcourses list ----- ", array1);
-
-      array1.map((e) => {
-        let objects = array2.find((e2) => e2.courseID == e);
-        // console.log("e --- ", e, "objects ---", objects);
-
-        let courses = {
-          courseID: objects.courseID,
-          title: objects.title,
-          thumbnail: objects.thumbnail,
-          courseLength: objects.courseLength,
-          totalLecture: objects.totalLecture,
-          instructor: objects.instructor.name,
-          complete: false,
-          status: 0,
-        };
-
-        array31.push({ ...courses });
-        array3.push({ ...objects });
-        return true;
+      let userCourses = await usersPurchasedCourses.find({
+        $and: [{ username: req.body.username }, { status: "VALID" }],
       });
 
-      // console.log("array31",array31);
+      let userallcourses = [];
 
-      //! with progress
+      //? NO expiry checking
+      // userCourses.map((item) => {
+      //   item.coursesList.map((item2) => {
+      //     userallcourses.push(item2);
+      //   });
+      // });
 
-      await Promise.all(
-        array31.map(async (item, index) => {
-          let userCompletedLessons = await lessonProgress.find({
-            $and: [
-              { username: req.body.username },
-              { courseID: item.courseID },
-              { complete: true },
-            ],
-          });
+      //? with expiry checking
+      // userCourses.map((item) => {
+      //   if(moment(new Date()).isSameOrAfter(new Date(item.expirationDate))){
+      //     console.log("expired");
+      //   } else {
+      //     item.coursesList.map((item2) => {
+      //       userallcourses.push(item2);
+      //     });
+      //   }
+      // });
 
-          let userCompletedLessonsUpdated = [];
-
-          if (userCompletedLessons[0] !== null) {
-            userCompletedLessons.map((item) => {
-              // console.log("item",item.lessonNumber);
-              userCompletedLessonsUpdated.push(item.lessonNumber);
-            });
-          }
-
-          let userCompletedLessonUpdatedFiltered =
-            userCompletedLessonsUpdated.filter(
-              (item, index) =>
-                userCompletedLessonsUpdated.indexOf(item) === index
+      //? with expiry checking and status changing
+      Promise.all(
+        userCourses.map(async (item) => {
+          if (moment(new Date()).isSameOrAfter(new Date(item.expirationDate))) {
+            await usersPurchasedCourses.findOneAndUpdate(
+              {
+                $and: [
+                  { username: req.body.username },
+                  { status: "VALID" },
+                  { coursesList: item.coursesList },
+                ],
+              },
+              {
+                $set: {
+                  courseExpityStatus: "VALIDITY EXPIRED",
+                },
+              }
             );
 
-          //? if language is en then send bn data
-
-          coursedetailsData = data[0].coursesData.en;
-
-          let result = coursedetailsData.find(
-            (item) => item.courseID == item.courseID
-          );
-
-          let total_course = userCompletedLessonUpdatedFiltered.length;
-          let total_completed = parseInt(result.totalLecture);
-
-          let progress = (total_course / total_completed) * 100;
-
-          // console.log(" progress ", Math.ceil(progress));
-          if (Math.ceil(progress) > 100) {
-            progress = 100;
+            // console.log("expired --- ", item);
+          } else {
+            item.coursesList.map((item2) => {
+              userallcourses.push(item2);
+            });
           }
-          item.status = Math.ceil(progress);
         })
       );
 
-      let userAuditLoggerData = {
-        username: req.body.username,
-        url: req.originalUrl,
-        timestamp: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-        }),
-      };
+      if (userCourses[0]) {
+        let array1 = userallcourses;
+        let array2 = data[0].coursesData.en;
+        let array3 = [];
+        let array31 = [];
 
-      userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+        // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
+        // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
+        // array3 = [...array2];
+        // console.log("userallcourses array3 ----- ", array3);
+        // console.log("userallcourses list ----- ", array1);
 
-      // console.log("array31----", array31);
+        array1.map((e) => {
+          let objects = array2.find((e2) => e2.courseID == e);
+          // console.log("e --- ", e, "objects ---", objects);
 
-      let setSendResponseData = new sendResponseData(array31, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
+          let courses = {
+            courseID: objects.courseID,
+            title: objects.title,
+            thumbnail: objects.thumbnail,
+            courseLength: objects.courseLength,
+            totalLecture: objects.totalLecture,
+            instructor: objects.instructor.name,
+            complete: false,
+            status: 0,
+          };
+
+          array31.push({ ...courses });
+          array3.push({ ...objects });
+          return true;
+        });
+
+        // console.log("array31",array31);
+
+        //! with progress
+
+        await Promise.all(
+          array31.map(async (item, index) => {
+            let userCompletedLessons = await lessonProgress.find({
+              $and: [
+                { username: req.body.username },
+                { courseID: item.courseID },
+                { complete: true },
+              ],
+            });
+
+            let userCompletedLessonsUpdated = [];
+
+            if (userCompletedLessons[0] !== null) {
+              userCompletedLessons.map((item) => {
+                // console.log("item",item.lessonNumber);
+                userCompletedLessonsUpdated.push(item.lessonNumber);
+              });
+            }
+
+            let userCompletedLessonUpdatedFiltered =
+              userCompletedLessonsUpdated.filter(
+                (item, index) =>
+                  userCompletedLessonsUpdated.indexOf(item) === index
+              );
+
+            //? if language is en then send bn data
+
+            coursedetailsData = data[0].coursesData.en;
+
+            let result = coursedetailsData.find(
+              (item) => item.courseID == item.courseID
+            );
+
+            let total_course = userCompletedLessonUpdatedFiltered.length;
+            let total_completed = parseInt(result.totalLecture);
+
+            let progress = (total_course / total_completed) * 100;
+
+            // console.log(" progress ", Math.ceil(progress));
+            if (Math.ceil(progress) > 100) {
+              progress = 100;
+            }
+            item.status = Math.ceil(progress);
+          })
+        );
+
+        let userAuditLoggerData = {
+          username: req.body.username,
+          url: req.originalUrl,
+          timestamp: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          }),
+        };
+
+        userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+        // console.log("array31----", array31);
+
+        let setSendResponseData = new sendResponseData(array31, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      } else {
+        // console.log("userCourses else ----- ", userCourses[0]);
+        let setSendResponseData = new sendResponseData(
+          null,
+          200,
+          "No purchase done yet"
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      }
     } else {
-      // console.log("userCourses else ----- ", userCourses[0]);
-      let setSendResponseData = new sendResponseData(
-        null,
-        200,
-        "No purchase done yet"
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.success());
+      // console.log("in else");
+      // console.log("Not allowed", userSessionStatus);
+      let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
-  } else {
-    // console.log("in else");
-    // console.log("Not allowed", userSessionStatus);
-    let responseToSend = encryptionOfData(userSessionStatus);
-    res.send(responseToSend);
-  }
-  //! This is for token checking END
+    //! This is for token checking END
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4520,12 +4522,12 @@ app.post("/api/pushnotification", async (req, res) => {
     registration_ids,
     priority,
     file,
-    target
+    target,
   } = req.body;
 
   const newId = uuidv4().replaceAll("-", "");
 
-  if(to==="none"){
+  if (to === "none") {
     var data = JSON.stringify({
       to: target,
       priority: priority,
@@ -4540,7 +4542,7 @@ app.post("/api/pushnotification", async (req, res) => {
         title: dataBody,
         videoUrl: dataVideoLink,
         image: imageLink,
-        file: file
+        file: file,
       },
       android: {
         priority: priority,
@@ -4561,7 +4563,7 @@ app.post("/api/pushnotification", async (req, res) => {
         title: dataBody,
         videoUrl: dataVideoLink,
         image: imageLink,
-        file: file
+        file: file,
       },
       android: {
         priority: priority,
@@ -4622,16 +4624,17 @@ app.post("/api/allnotification", async (req, res) => {
     let userReadNotificationsList;
 
     function removeDuplicates(arr) {
-      return arr.filter((item, 
-          index) => arr.indexOf(item) === index);
-  }
+      return arr.filter((item, index) => arr.indexOf(item) === index);
+    }
 
     let userReadNotifications = await userNotification.findOne({
       username: username,
     });
 
-    if(userReadNotifications){
-      userReadNotificationsList = removeDuplicates(userReadNotifications.notificationid)
+    if (userReadNotifications) {
+      userReadNotificationsList = removeDuplicates(
+        userReadNotifications.notificationid
+      );
     } else {
       userReadNotificationsList = [];
     }
@@ -4639,13 +4642,16 @@ app.post("/api/allnotification", async (req, res) => {
     await notificationMessages
       .find()
       .then((data) => {
-
         notifications = {
-          allNotifications : data,
-          userReadNotifications: userReadNotificationsList
-        }
+          allNotifications: data,
+          userReadNotifications: userReadNotificationsList,
+        };
 
-        let setSendResponseData = new sendResponseData(notifications, 200, null);
+        let setSendResponseData = new sendResponseData(
+          notifications,
+          200,
+          null
+        );
         let responseToSend = encryptionOfData(setSendResponseData.success());
         res.send(responseToSend);
       })
@@ -4786,11 +4792,7 @@ app.post("/api/userreadnotification", async (req, res) => {
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
     } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "No data"
-      );
+      let setSendResponseData = new sendResponseData(null, 404, "No data");
       let responseToSend = encryptionOfData(setSendResponseData.success());
       res.send(responseToSend);
     }
@@ -4827,6 +4829,154 @@ app.post("/api/webnotification", async (req, res) => {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
+    res.send(responseToSend);
+  }
+});
+
+//! faq api
+app.post("/api/addfaqdata", async (req, res) => {
+  try {
+    // let recievedResponseData = decryptionOfData(req, res);
+    // req.body = recievedResponseData;
+
+    const { question, answer, language } = req.body;
+
+    await new faqData({
+      question: question,
+      answer: answer,
+      language: language,
+    })
+      .save()
+      .then((data) => {
+        let setSendResponseData = new sendResponseData(data, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/faq", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { language } = req.body;
+
+    if (language === "en") {
+      await faqData
+        .find({
+          language: "bn",
+        })
+        .then((data) => {
+          let setSendResponseData = new sendResponseData(
+            data.reverse(),
+            200,
+            null
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        })
+        .catch((e) => {
+          let setSendResponseData = new sendResponseData(
+            null,
+            500,
+            serverErrMsg
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        });
+    } else {
+      await faqData
+        .find({
+          language: "en",
+        })
+        .then((data) => {
+          let setSendResponseData = new sendResponseData(
+            data.reverse(),
+            200,
+            null
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        })
+        .catch((e) => {
+          let setSendResponseData = new sendResponseData(
+            null,
+            500,
+            serverErrMsg
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        });
+    }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  }
+});
+
+//! ad slider api
+app.post("/api/addsliderdata", async (req, res) => {
+  try {
+    // let recievedResponseData = decryptionOfData(req, res);
+    // req.body = recievedResponseData;
+
+    const { imageLink, videoLink, lottieLink } = req.body;
+
+    await new sliderData({
+      imageLink: imageLink,
+      videoLink: videoLink,
+      lottieLink: lottieLink,
+    })
+      .save()
+      .then((data) => {
+        let setSendResponseData = new sendResponseData(data, 200, null);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/sliderdata", async (req, res) => {
+  try {
+    await sliderData
+      .find()
+      .then((data) => {
+        let setSendResponseData = new sendResponseData(
+          data.reverse(),
+          200,
+          null
+        );
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+        let responseToSend = encryptionOfData(setSendResponseData.success());
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
     res.send(responseToSend);
   }
 });
