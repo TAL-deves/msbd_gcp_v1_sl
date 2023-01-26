@@ -31,10 +31,10 @@ export default function UserMessages() {
 
   const columns = useMemo(
     () => [
-      {
-        accessorKey: "_id",
-        header: "ID",
-      },
+      // {
+      //   accessorKey: "_id",
+      //   header: "ID",
+      // },
       {
         accessorFn: (row) => row.fullname,
         id: "fullname",
@@ -49,6 +49,11 @@ export default function UserMessages() {
         accessorFn: (row) => row.leaveMessage, 
         id: "leaveMessage",
         header: "leaveMessage",
+      },
+      {
+        accessorFn: (row) => row.date, 
+        id: "date",
+        header: "date",
       },
     ],
     []

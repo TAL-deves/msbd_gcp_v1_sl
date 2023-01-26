@@ -8,43 +8,44 @@ import Portfolio from '../components/portfolio/Portfolio'
 import ClientFeedback from '../components/clientfeedback/ClientFeedback'
 import Subscribe from '../components/Subscribe/Subscribe'
 import api from "../api/Axios"
+import Faq from '../components/Faq/Faq'
 
 const WEB_NOTIFICATION_URL = "/api/webnotification"
 
 const Home = (props) => {
   
-  const [webNotificationData, setWebNotificationData]= useState({})
-  let handleWebNotification = async () => {       
-    await api.post(WEB_NOTIFICATION_URL, JSON.stringify({ }), {
-        headers: { "Content-Type": "application/json" },
-        "Access-Control-Allow-Credentials": true,
-      })
-      .then((data) => {
-        setWebNotificationData(data.data.data[0])
-        // console.log(data.data.data[0])
-      });
+  // const [webNotificationData, setWebNotificationData]= useState({})
+  // let handleWebNotification = async () => {       
+  //   await api.post(WEB_NOTIFICATION_URL, JSON.stringify({ }), {
+  //       headers: { "Content-Type": "application/json" },
+  //       "Access-Control-Allow-Credentials": true,
+  //     })
+  //     .then((data) => {
+  //       setWebNotificationData(data.data.data[0])
+  //       // console.log(data.data.data[0])
+  //     });
      
-  };
+  // };
 
-  useEffect(()=>{
-    handleWebNotification()
+  // useEffect(()=>{
+  //   handleWebNotification()
     
-  },[])
+  // },[])
   return (
     <>
           
       <Banner/>
-      {props.n===0?
+      {/* {props.n===0?
       <>
-      {webNotificationData.read || !webNotificationData?
-      <PopWindow n={props.n} setN={props.setN} webNotificationData={webNotificationData}/>:<></>}</>:<></>}
+      {webNotificationData.read || !webNotificationData ?
+      <PopWindow n={props.n} setN={props.setN} webNotificationData={webNotificationData}/>:<></>}</>:<></>} */}
       <HomeCourses/>
       <Instructor/>
       <Portfolio/>
       <ClientFeedback/>
       <DownloadApp/>
       <Subscribe/>
-    
+      {/* <Faq/> */}
     </>
   )
 }

@@ -37,6 +37,9 @@ const notificationMessages = new mongoose.Schema({
   read:{
     type : Boolean,
     default : true 
+  }, 
+  date:{
+    type: Number
   }
 });
 

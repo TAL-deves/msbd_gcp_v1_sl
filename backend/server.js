@@ -84,7 +84,6 @@ const allData = require("./Database/models/allData");
 const usersPurchasedCourses = require("./Database/models/usersPurchasedCourses");
 const lessonProgress = require("./Database/models/lessonProgress");
 const videoLogData = require("./Database/models/videoLogData");
-const test = require("./Database/models/test");
 const userMessages = require("./Database/models/userMessages");
 const userPendingPurchase = require("./Database/models/userPendingPurchase");
 const certificateData = require("./Database/models/certificateData");
@@ -95,6 +94,7 @@ const notificationMessages = require("./Database/models/notificationMessages");
 const userNotification = require("./Database/models/userNotification");
 const sliderData = require("./Database/models/sliderData");
 const faqData = require("./Database/models/faqData");
+const { welcomeSmsService } = require("./services/welcomeSmsService");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -3688,6 +3688,7 @@ app.post("/api/usercourses", async (req, res) => {
 
             // console.log("expired --- ", item);
           } else {
+            // console.log("expired --- ", item);
             item.coursesList.map((item2) => {
               userallcourses.push(item2);
             });
@@ -3704,8 +3705,7 @@ app.post("/api/usercourses", async (req, res) => {
         // array1 = array1.filter((e1) => array2.some((e2) => e2.courseID === e1));
         // array2 = array2.filter((e1) => array1.some((e2) => e2 === e1.courseID));
         // array3 = [...array2];
-        // console.log("userallcourses array3 ----- ", array3);
-        // console.log("userallcourses list ----- ", array1);
+        // console.log("array1 ----- ", array1);
 
         array1.map((e) => {
           let objects = array2.find((e2) => e2.courseID == e);
@@ -4351,6 +4351,13 @@ app.post("/api/leaveamessage", async (req, res) => {
       fullname: fullname,
       email: email,
       leaveMessage: leaveMessage,
+      date: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      hour:"numeric",
+      minute:"numeric"
+      })
     });
 
     saveUserMessage.save();
@@ -4401,7 +4408,7 @@ app.post("/api/getusermessages", async (req, res) => {
     let getAllUserMessagesCount = await userMessages.find().count();
 
     let data = {
-      messages: getAllUserMessages,
+      messages: getAllUserMessages.reverse(),
       total: getAllUserMessagesCount,
     };
 
@@ -4427,6 +4434,13 @@ app.post("/api/subscribe", async (req, res) => {
     let subscribersData = new subscribers({
       phoneNumber: phoneNumber,
       email: email,
+      date: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      }),
     });
     await subscribersData.save();
 
@@ -4448,7 +4462,7 @@ app.post("/api/allsubscribers", async (req, res) => {
     req.body = recievedResponseData;
 
     await subscribers.find().then((data) => {
-      let setSendResponseData = new sendResponseData(data, 200, null);
+      let setSendResponseData = new sendResponseData(data.reverse(), 200, null);
       let responseToSend = encryptionOfData(setSendResponseData);
 
       res.send(responseToSend);
@@ -4598,6 +4612,7 @@ app.post("/api/pushnotification", async (req, res) => {
         dataVideoLink: dataVideoLink,
         sentTo: to,
         priority: priority,
+        date: Date.now()
       }).save();
 
       let setSendResponseData = new sendResponseData("sent", 200, null);
@@ -4640,7 +4655,11 @@ app.post("/api/allnotification", async (req, res) => {
     }
 
     await notificationMessages
-      .find()
+      .find({
+        sentTo: {
+          $ne: "web",
+        },
+      })
       .then((data) => {
         notifications = {
           allNotifications: data,
@@ -4986,8 +5005,14 @@ app.get("/api/checklogdata", async (req, res) => {
   let totalusers = await signUpTemplateCopy.count();
   let totalViews = await logData.count();
   let totalLogins = await loginData.count();
-  let totalPurchases = await purchaseData.count();
+  let totalPurchases = await usersPurchasedCourses
+    .find({
+      status: "VALID",
+    })
+    .count();
   let totalLoggedinUsers = await tokenModel.count();
+  let totalMessages = await userMessages.count();
+  let totalReviews = await reviews.count();
 
   let data = {
     totalUsers: totalusers,
@@ -4995,6 +5020,8 @@ app.get("/api/checklogdata", async (req, res) => {
     totalLogins: totalLogins,
     totalPurchases: totalPurchases,
     totalLoggedinUsers: totalLoggedinUsers,
+    totalMessages: totalMessages,
+    totalReviews: totalReviews,
   };
 
   res.json(data);
@@ -5095,6 +5122,11 @@ const validateUserSignUp = async (arg) => {
         errorMsg: "",
       },
     };
+
+    // welcomeSmsService({
+    //   reciever: phoneNumber
+    // })
+
     return msg;
   }
 };

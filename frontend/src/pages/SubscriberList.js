@@ -29,11 +29,11 @@ export default function SubscriberList() {
 
   const columns = useMemo(
     () => [
-      {
-        accessorKey: "_id",
-        header: "ID",
-        // size: 100,
-      },
+      // {
+      //   accessorKey: "_id",
+      //   header: "ID",
+      //   // size: 100,
+      // },
       {
         accessorFn: (row) => row.phoneNumber,
         id: "phoneNumber",
@@ -44,6 +44,12 @@ export default function SubscriberList() {
         accessorFn: (row) => row.email,
         id: "email",
         header: "email",
+        // size: 100,
+      },
+      {
+        accessorFn: (row) => row.date,
+        id: "date",
+        header: "date",
         // size: 100,
       },
     ],

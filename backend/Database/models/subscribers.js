@@ -6,6 +6,9 @@ const subscribers = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
+  },
+  date: {
+    type: String
   }
 });
 

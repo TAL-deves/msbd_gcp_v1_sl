@@ -508,11 +508,6 @@ const UserProfile = (props) => {
                       </TextField>
                     </Box>
 
-                    <input
-                      hidden
-                      accept="image/*"
-                      type="file"
-                    />
                     <>
                     </>
                     <Button
@@ -623,14 +618,19 @@ const UserProfile = (props) => {
                               />
                             </Grid>
                             <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
-                              {webimage ? <img src={webimage} alt=""
-                                style={{
-                                  //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
-                                  //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
-                                  height: "200px",
-                                  width: "200px",
-                                  objectFit: "contain"
-                                }} /> :
+                              {webimage ? 
+                              <>
+                              {webimage.length<2048000?
+                              <img src={webimage} alt=""
+                              style={{
+                                //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
+                                //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
+                                height: "200px",
+                                width: "200px",
+                                objectFit: "contain"
+                              }} />:<Typography sx={{color:"red"}}>Image is too big, try an image smaller than 2MB</Typography>}
+                              
+                              </> :
                                 <>{image ? <img src={(image)} alt=""
                                 // style={{maxWidth: "100%", height:"auto"
                                 //  }}
@@ -672,7 +672,7 @@ const UserProfile = (props) => {
                             <Button
                               variant="outlined"
                               component="label"
-                              disabled={image === '' && webimage === '' ? true : false}
+                              disabled={image === '' && webimage === '' || webimage.length>2048000 ? true : false}
                               onClick={handleApiWeb}
 
                             >

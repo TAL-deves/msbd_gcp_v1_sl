@@ -40,6 +40,10 @@ const videoLogData = new mongoose.Schema({
   actionTime: {
     type: Number,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  }
 }, {collection:"videoLogData"});
 
 module.exports = mongoose.model("videoLogData", videoLogData);

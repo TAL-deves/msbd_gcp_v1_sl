@@ -443,11 +443,12 @@ return (
         <CheckCircleOutlineIcon/>{t("course_length")}:</Typography>
          {state?.courseLength} {t("hours")}
         </Typography>
+        <Typography variant="h6" sx={{color:"primary.main",
+      marginTop:"1rem", display:"flex",alignItems:"center"}}>
+        <CheckCircleOutlineIcon/>{t("validity")}:</Typography>
         <Typography variant="h6">
-        {/* {state?.description} */}
-        </Typography>
-        <Typography variant="h6">
-        {/* ৳{state?.instructor} */}
+        {/* {state?.validity} Days */}
+        {t("days")}
         </Typography>
         <Typography variant="h6">
           {/* <Typography variant="h6" 
@@ -518,7 +519,7 @@ return (
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: "10px",
+                    padding: "9px",
                     borderRadius: "10px",
                     margin:"2%"
                   }}

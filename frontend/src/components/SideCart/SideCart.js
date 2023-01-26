@@ -117,9 +117,9 @@ const SideCart = (props) => {
     },
 
     ).then(() => {
-
+    
       navigate("/courses")
-
+      localStorage.setItem("course",[]);
       // window.close();
     })
     // localStorage.setItem("course",[[]])
@@ -469,10 +469,10 @@ const SideCart = (props) => {
                 <TextField
                   margin="normal"
                   // required
-                  focused
+                  // focused
                   fullWidth
                   id="name"
-                  label="Promo Code"
+                  label="Promocode"
                   size="small"
                   style={{ width: 110 }}
                   // value={}

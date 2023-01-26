@@ -73,9 +73,11 @@ const InstructorInCourseDetails = (props) => {
         </Typography>
         </Box>
     </Box>
-    <Typography variant="subtitle_1" color="black" sx={{textAlign:"justify"}}>
+    <Box sx={{textAlign:"justify"}}>
+    <Typography variant="subtitle_1" color="black" >
     {description}
         </Typography>
+    </Box>
         </Box>
     </Box>
    

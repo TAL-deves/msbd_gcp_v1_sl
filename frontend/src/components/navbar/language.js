@@ -74,8 +74,9 @@ export const translationsEn = {
     school:"School",
     powerful:"powerful",
     platform:"platform",
-    a:"A"
-
+    a:"A",
+    validity:"Validity",
+    days:"120 Days"
   };
   
 export const translationsBn = {
@@ -155,4 +156,6 @@ export const translationsBn = {
     a:"একটি",
     powerful:"প্রগতিশীল",
     platform:"প্লাটফর্ম",
+    validity:"মেয়াদ",
+    days:"১২০ দিন"
   };

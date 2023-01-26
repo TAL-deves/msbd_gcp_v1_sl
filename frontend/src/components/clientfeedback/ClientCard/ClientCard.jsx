@@ -13,8 +13,8 @@ import 'aos/dist/aos.css';
 const ClientCard = (props) => {
   AOS.init({duration:2000,once: true});
     let name=props.name;
-    let designation= props.designation
-    let org= props.org
+    let designation= props.designation;
+    let org= props.org;
     let img=props.img;
     let feedback=props.feedback;
 

@@ -12,6 +12,9 @@ const userMessages = new mongoose.Schema({
   },
   leaveMessage: {
     type: String,
+  },
+  date: {
+    type: String
   }
 });
 

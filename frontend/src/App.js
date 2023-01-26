@@ -53,6 +53,7 @@ import loadingAnimation from "./assets/loadingAnimation.json";
 
 
 
+
 const Home = lazy(() => import("./pages/Home"));
 
 function App() {
@@ -120,6 +121,7 @@ function App() {
 
   return (
     <BrowserRouter>
+   
       <Suspense
         fallback={
           <Box sx={{
@@ -138,7 +140,7 @@ function App() {
           </Box>
         }
       >
-        <ScrollToTops />
+        {/* <ScrollToTops /> */}
         <ThemeProvider theme={darkmode ? theme : darkTheme}>
           <GlobalContext>
             <StepContext>
@@ -251,8 +253,7 @@ function App() {
                     element={<TermsCondition />}
                   />
                 </Routes>
-                {/* <Footer /> */}
-
+                
                 <Wavefooter />
                 <SendMessage />
                 <ScrollToTop smooth color="primary.main" />
@@ -262,6 +263,7 @@ function App() {
         </ThemeProvider>
         {/* </Scrollbars> */}
       </Suspense>
+      
     </BrowserRouter>
   );
 }

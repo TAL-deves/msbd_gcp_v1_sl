@@ -100,15 +100,16 @@ const CourseCard = (props) => {
           }}>
             <Typography
               gutterBottom
-              height={30}
+              height={50}
               sx={{
                 fontSize: "1.2rem",
-                overflow: "hidden",
+                // overflow: "inherit",
+                
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
                 WebkitLineClamp: "2",
                 WebkitBoxOrient: "vertical",
-                fontWeight: "500"
+                fontWeight: "500",
               }}
             >
               {title ? <>{title}</> : <>Course title</>}
