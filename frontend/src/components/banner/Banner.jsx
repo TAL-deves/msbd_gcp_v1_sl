@@ -132,7 +132,6 @@ const Banner = () => {
             }}>
               <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", mx:"1rem",  }}>
                 <Lottie
-                  // animationData={BannerImg}
                   animationData={BannerImg}
                   style={style}
                 />

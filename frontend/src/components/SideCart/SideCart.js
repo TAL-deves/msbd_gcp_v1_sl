@@ -119,7 +119,6 @@ const SideCart = (props) => {
     ).then(() => {
     
       navigate("/courses")
-      localStorage.setItem("course",[]);
       // window.close();
     })
     // localStorage.setItem("course",[[]])

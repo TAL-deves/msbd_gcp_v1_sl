@@ -239,15 +239,15 @@ const InstructorDetails = () => {
                   <Grid
                     container
                     xs={10}
-                    sm={6}
+                    sm={8}
                     md={6}
                     lg={6}
                     xl={6}
                     justifyContent="center"
                   >
                     <Box key={course.id} data-aos="flip-left">
-                      <CardGridStyle>
-                        <Card >
+                      {/* <CardGridStyle> */}
+                        <Card sx={{width:"350px", m:".3rem"}}>
                           <CardActionArea>
                           {course.available?
                                 <Link
@@ -337,7 +337,7 @@ const InstructorDetails = () => {
                             </CardContent>
                           </CardActionArea>
                         </Card>
-                      </CardGridStyle>
+                      {/* </CardGridStyle> */}
                     </Box>
                     {/* // <Box key={course.id}>{course.title}</Box> */}
                   </Grid>

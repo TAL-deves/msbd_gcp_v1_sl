@@ -98,7 +98,6 @@ const UserProfile = (props) => {
   }, [age])
   useEffect(() => {
     setValidPhone(PHONE_REGEX.test(phonenumber));
-    // // console.log(validAge)
   }, [phonenumber])
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -167,7 +166,6 @@ const UserProfile = (props) => {
       setGoogleId(response.data.data.googleId)
       setFacebookId(response.data.data.facebookId)
       setUserPhone(response.data.data.phoneNumber)
-      // console.log(response.data.data, "user prof response")
       setLoad(false);
       props.setFullName(response.data.data.fullname)
     }

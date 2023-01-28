@@ -1,24 +1,22 @@
 
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
- 
+
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-
 import api from "../api/Axios";
-
 import swal from "sweetalert";
-
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import CircularProgress from "@mui/material/CircularProgress";
+import {countries} from "../components/navbar/countries"
 
-
-
+const PHONE_REGEX = /^[0-9+]*$/;
 
 
 
@@ -49,6 +47,9 @@ const Payment = () => {
   const [country, setCountry] = useState("Bangladesh");
   const [email, setEmail] = useState("");
   const [developer, setDeveloper] = useState();
+  const [phoneFocus, setPhoneFocus] = useState(false);
+  const [validPhone, setValidPhone] = useState(false);
+  const [userPhone, setUserPhone] = useState();
   // const[user, setUsername]=useState("")
 
 
@@ -69,7 +70,7 @@ const Payment = () => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+      swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
       // navigate("/login")
       // console.log("removed sesssion")
     }
@@ -81,6 +82,8 @@ const Payment = () => {
       setStAddress(response.data.data.streetAddress)
       setPostcode(response.data.data.postCode)
       setPhonenumber(response.data.data.phoneNumber)
+      setUserPhone(response.data.data.phoneNumber)
+      console.log("fon number response", response.data.data)
       setDeveloper(response.data.data.developer)
     }
     setLoad(false);
@@ -93,6 +96,10 @@ const Payment = () => {
     handleGetUser();
 
   }, [email])
+
+  useEffect(() => {
+    setValidPhone(PHONE_REGEX.test(phonenumber));
+  }, [phonenumber])
 
 
   //payment api
@@ -126,7 +133,7 @@ const Payment = () => {
       !singleCourse ?
         (courses = courseList) : (courses = [singleCourse])
     }
-    let phonenumber = userInfo.username;
+    // let phonenumber = userInfo.username;
     let price = total
     await api
       .post(
@@ -164,7 +171,7 @@ const Payment = () => {
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
 
-          swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+          swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
           // navigate("/login")
           // console.log("removed sesssion")
         }
@@ -183,7 +190,7 @@ const Payment = () => {
       !singleCourse ?
         (courses = courseList) : (courses = [singleCourse])
     }
-    let phonenumber = userInfo.username;
+    // let phonenumber = userInfo.username;
     let price = total
     await api
       .post(
@@ -220,7 +227,7 @@ const Payment = () => {
 
   // update profile 
   let handleUpdateUserProfile = async () => {
-    let phonenumber = userInfo.username;
+    // let phonenumber = userInfo.username;
     const response = await api.post(UPDATE_USER_URL,
       JSON.stringify({ fullname, username, phonenumber, email, staddress, city, postcode, country }),
       {
@@ -304,7 +311,7 @@ const Payment = () => {
                       }}
                     // autoFocus
                     />
-                    {phonenumber ?
+                    {/* {phonenumber ?
                       <TextField
                         margin="normal"
                         focused
@@ -325,6 +332,28 @@ const Payment = () => {
                         }}
                         autoFocus
                       /> :
+                    <TextField
+                      margin="normal"
+                      focused
+                      fullWidth
+                      id="name"
+                      label="Phone Number"
+                      onChange={(e) => { setPhonenumber(e.target.value) }}
+                      value={phonenumber}
+                      name="name"
+                      autoComplete="name"
+
+                      InputProps={{
+                        disableUnderline: true,
+                        // readOnly: true
+                      }}
+                      inputProps={{
+                        maxLength: 320,
+                      }}
+                      autoFocus
+                    />} */}
+
+{userPhone ?
                       <TextField
                         margin="normal"
                         focused
@@ -335,15 +364,41 @@ const Payment = () => {
                         value={phonenumber}
                         name="name"
                         autoComplete="name"
-
                         InputProps={{
                           disableUnderline: true,
                           readOnly: true
                         }}
-                        inputProps={{
-                          maxLength: 320,
-                        }}
+                        // inputProps={{
+                        //   maxLength: 14,
+                        // }}
+
                         autoFocus
+                      /> :
+                      <TextField
+                        margin="normal"
+                        focused
+                        fullWidth
+                        id="name"
+                        label="Phone Number"
+                        onChange={(e) => { setPhonenumber(e.target.value) }}
+                        value={phonenumber}
+                        name="name"
+                        autoComplete="name"
+                        inputProps={{
+                          maxLength: 14,
+                        }}
+                        helperText= "Phone number can be added only once"
+
+                        // autoFocus
+                        onFocus={() => setPhoneFocus(true)}
+                        error={
+                          phoneFocus 
+                          && !validPhone ?
+                            true :
+                            false
+                        }
+                        
+                        
                       />}
                     <TextField
                       margin="normal"
@@ -449,7 +504,7 @@ const Payment = () => {
                       }}
                     />
 
-                    <TextField
+                    {/* <TextField
                       margin="normal"
                       fullWidth
                       id="country"
@@ -463,6 +518,42 @@ const Payment = () => {
                       inputProps={{
                         maxLength: 320,
                       }}
+                    /> */}
+
+                    <Autocomplete
+                 
+                    // fullWidth
+                      id="country-select-demo"
+                      // sx={{ width: 300 }}
+                      options={countries}
+                      defaultValue={ countries[18] }
+                      autoHighlight
+                      getOptionLabel={(option) => option.label}
+                      renderOption={(props, option) => (
+                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                          <img
+                            loading="lazy"
+                            width="20"
+                            src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                            srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                            alt=""
+                          />
+                          {option.label} ({option.code}) +{option.phone}
+                        </Box>
+                      )}
+                      renderInput={(params) => (
+                        <TextField
+                        margin="normal"
+                        required
+                        focused
+                          {...params}
+                          label="Choose a country"
+                          inputProps={{
+                            ...params.inputProps,
+                            autoComplete: 'new-password', // disable autocomplete and autofill
+                          }}
+                        />
+                      )}
                     />
 
 
@@ -487,12 +578,12 @@ const Payment = () => {
                 handleUpdateUserProfile();
                 setLoad(true);
               }}
-            
-            disabled={!postcode || !staddress || !city || !email || !fullname}
+
+            disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber}
           >
             Checkout
           </Button>
-   {/* comment this button later  */}
+          {/* comment this button later  */}
           {/* <Button
             variant="contained"
             sx={{ mt: 3, mb: 2, fontSize: "1rem", justifyContent: "center" }}

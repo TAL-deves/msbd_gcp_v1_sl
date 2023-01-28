@@ -237,6 +237,10 @@ const LoginForm = (props) => {
       // //// console.log("response ", response);
       // setLoad(false);
       setBackdrop(false)
+      console.log(response)
+      if(response=== "Error: Network unreachable"){
+        swal("Server Error!", `${response.data.result.errMsg}`, "warning");
+      }
       if (response.data.result.status === 409) {
         setSessionFound(true);
         setErrMsg(response.data.result.errMsg);
@@ -422,6 +426,7 @@ const LoginForm = (props) => {
         >
 
           {/* uncomment letter for login with phone  */}
+          
           <MuiTelInput 
             sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
             label="Phone Number"

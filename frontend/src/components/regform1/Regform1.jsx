@@ -24,6 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MuiTelInput } from "mui-tel-input";
 import {Link as Routerlink} from "react-router-dom";
 import { globalContext } from "../../pages/GlobalContext";
+import swal from "sweetalert";
 
 
 
@@ -256,7 +257,9 @@ const Regform1 = () => {
               maxLength: 16,
               // minLength:12
             }}
-            onFocus={() => setPhoneFocus(true)}
+            onFocus={() => {setPhoneFocus(true) ;
+            // swal("bd","","info")
+          }}
             error={
               phoneFocus && !validPhone ? 
               true : 

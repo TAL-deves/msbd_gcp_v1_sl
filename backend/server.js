@@ -2162,7 +2162,7 @@ app.post("/api/updateuserprofile", async (req, res) => {
       age,
     } = req.body;
 
-    console.log(req.body);
+    console.log("Update user profile body ------  ",req.body);
 
     let userSessionStatus = await tokenChecking(req);
 
@@ -2643,10 +2643,9 @@ app.post("/api/courseavailed", async (req, res, next) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    let courseid = req.body.courseID;
 
     let user = await signUpTemplateCopy.findOne({
-      username: "manas@manas.com",
+      username: req.body.username,
     });
 
     let usercourses = user.purchasedCourses;
