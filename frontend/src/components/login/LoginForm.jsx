@@ -237,7 +237,7 @@ const LoginForm = (props) => {
       // //// console.log("response ", response);
       // setLoad(false);
       setBackdrop(false)
-      console.log(response)
+      // console.log(response)
       if(response=== "Error: Network unreachable"){
         swal("Server Error!", `${response.data.result.errMsg}`, "warning");
       }

@@ -83,7 +83,7 @@ const Payment = () => {
       setPostcode(response.data.data.postCode)
       setPhonenumber(response.data.data.phoneNumber)
       setUserPhone(response.data.data.phoneNumber)
-      console.log("fon number response", response.data.data)
+      // console.log("fon number response", response.data.data)
       setDeveloper(response.data.data.developer)
     }
     setLoad(false);
