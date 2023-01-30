@@ -23,6 +23,9 @@ const signUpTemplate = new mongoose.Schema({
   facebookId: {
     type: String,
   },
+  appleId: {
+    type: String,
+  },
   profilename: {
     type: String,
   },

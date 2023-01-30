@@ -76,7 +76,10 @@ export const translationsEn = {
     platform:"platform",
     a:"A",
     validity:"Validity",
-    days:"120 Days"
+    days:"120 Days",
+    refer:"Refer to your friends",
+    refer_button:"Refer"
+
   };
   
 export const translationsBn = {
@@ -157,5 +160,7 @@ export const translationsBn = {
     powerful:"প্রগতিশীল",
     platform:"প্লাটফর্ম",
     validity:"মেয়াদ",
-    days:"১২০ দিন"
+    days:"১২০ দিন",
+    refer:"রেফার করুন আপনার বন্ধুদের​",
+    refer_button:"রেফার"
   };

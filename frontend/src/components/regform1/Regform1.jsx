@@ -49,6 +49,7 @@ const Regform1 = () => {
 
   const [open, setOpen] = useState(true);
   const [backdrop, setBackdrop] = useState(false);
+  const [alert, setAlert] = useState(false);
   
   // const googleAuth = () => {
   //   window.open(
@@ -244,8 +245,11 @@ const Regform1 = () => {
                           <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} /> */}
             </label>
 
+            {alert?
+        <Alert severity="info">Signup with Google or Facebook if you are outside of Bangladesh</Alert>:<></>}
             {/* MUI phone added */}
             <MuiTelInput 
+            onClick={()=>{setAlert(true)}}
             sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
             label={t("phone")}
             defaultCountry="BD" 

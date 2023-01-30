@@ -5,6 +5,10 @@ import {
   Button,
   Container,
 
+  MenuItem,
+
+  Select,
+
   TextField,
   Typography,
 } from "@mui/material";
@@ -44,7 +48,7 @@ const Payment = () => {
   const [staddress, setStAddress] = useState();
   const [city, setCity] = useState("");
   const [postcode, setPostcode] = useState("");
-  const [country, setCountry] = useState("Bangladesh");
+  const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [developer, setDeveloper] = useState();
   const [phoneFocus, setPhoneFocus] = useState(false);
@@ -83,8 +87,9 @@ const Payment = () => {
       setPostcode(response.data.data.postCode)
       setPhonenumber(response.data.data.phoneNumber)
       setUserPhone(response.data.data.phoneNumber)
-      // console.log("fon number response", response.data.data)
       setDeveloper(response.data.data.developer)
+       setCountry(response.data.data.country)
+      // console.log(response.data.data.country)
     }
     setLoad(false);
     // return response.data.data
@@ -457,7 +462,7 @@ const Payment = () => {
                     <TextField
                       margin="normal"
                       required
-                      focused
+                      // focused
                       fullWidth
                       id="stadress"
                       label="Street Address"
@@ -474,7 +479,7 @@ const Payment = () => {
                       margin="normal"
                       required
                       fullWidth
-                      focused
+                      // focused
                       id="postcode"
                       label="Post Code"
                       value={postcode}
@@ -492,7 +497,7 @@ const Payment = () => {
                       required
                       fullWidth
                       id="city"
-                      focused
+                      // focused
                       label="City"
                       value={city}
                       inputProps={{
@@ -500,35 +505,24 @@ const Payment = () => {
                       }}
                       onChange={(e) => {
                         setCity(e.target.value);
-                        // console.log(city)
                       }}
                     />
 
-                    {/* <TextField
-                      margin="normal"
-                      fullWidth
-                      id="country"
-                      label="Country"
-                      name="country"
-                      value={country}
-                      autoComplete="email"
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      inputProps={{
-                        maxLength: 320,
-                      }}
-                    /> */}
-
-                    <Autocomplete
-                 
+                    {/* <Autocomplete                 
                     // fullWidth
                       id="country-select-demo"
                       // sx={{ width: 300 }}
+                      defaultValue={countries[18]}
                       options={countries}
-                      defaultValue={ countries[18] }
+                      // value={country}
                       autoHighlight
-                      getOptionLabel={(option) => option.label}
+                      getOptionLabel={(option) => option.label
+                      }
+                      onChange = {
+                        (event, newValue) => {
+                          setCountry(newValue.label);
+                        }
+                      }
                       renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                           <img
@@ -554,8 +548,29 @@ const Payment = () => {
                           }}
                         />
                       )}
-                    />
-
+                    /> */}
+                       <Select
+                       
+                    defaultValue={"Bangladesh"}
+                    variant="outlined"
+                    value={country}
+                    displayEmpty
+                    fullWidth
+                    label="City"
+                    name="language"
+                    
+                    notched={false}
+                    onChange={(e)=>{setCountry(e.target.value)}}
+                   sx={{mt:"1rem"}}
+                  >
+                    {countries.map((country) => {
+            return (
+              <MenuItem value={country.label}>{country.label}</MenuItem>
+            );
+          })}
+                   
+                    
+                  </Select>
 
                   </Box>
 

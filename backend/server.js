@@ -95,6 +95,7 @@ const userNotification = require("./Database/models/userNotification");
 const sliderData = require("./Database/models/sliderData");
 const faqData = require("./Database/models/faqData");
 const { welcomeSmsService } = require("./services/welcomeSmsService");
+const qrData = require("./Database/models/qrData");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -635,6 +636,220 @@ app.post("/api/signupmobile", async (req, res) => {
 });
 
 //? google,fb login for mobile
+// app.post("/api/signupmobiletest", async (req, res) => {
+//   try {
+//     let recievedResponseData = decryptionOfData(req, res);
+//     req.body = recievedResponseData;
+
+//     // console.log("signupmobiletest    -----  ", req.body);
+
+//     let userExists = await signUpTemplateCopy.findOne({
+//       // googleId: req.body.googleId,
+//       $and: [
+//         { googleId: req.body.googleId },
+//         { facebookId: req.body.facebookId },
+//       ],
+//     });
+
+//     // console.log("userExists   ----   ", userExists);
+
+//     if (!userExists) {
+//       const newId = uuidv4();
+//       if (req.body.method === "google") {
+//         //! google new registration
+
+//         const signUpUser = new signUpTemplateCopy({
+//           fullname: req.body.fullname,
+//           username: req.body.googleId,
+//           email: req.body.email,
+//           password: req.body.googleId,
+//           googleId: req.body.googleId,
+//           facebookId: req.body.facebookId,
+//           active: true,
+//           loggedinID: newId,
+//         });
+
+//         await signUpUser.save();
+//         let googleOptions = {
+//           body: {
+//             grant_type: "password",
+//             username: req.body.googleId,
+//             password: req.body.googleId,
+//             loginMethod: "google",
+//             profileName: req.body.name,
+//           },
+//           headers: {
+//             "user-agent": "Thunder Client (https://www.thunderclient.com)",
+//             accept: "*/*",
+//             "content-type": "application/x-www-form-urlencoded",
+//             authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+//             "content-length": "81",
+//             "accept-encoding": "gzip, deflate, br",
+//             host: process.env.SERVER_URL,
+//             connection: "close",
+//           },
+//           method: "POST",
+//           query: {},
+//         };
+
+//         let token = await obtainToken(googleOptions);
+//         let foundtoken = token;
+
+//         let responseToSend = encryptionOfData(foundtoken);
+
+//         res.send(responseToSend);
+//       } else {
+//         //! facebook new registration
+//         const signUpUser = new signUpTemplateCopy({
+//           fullname: req.body.fullname,
+//           username: req.body.facebookId,
+//           email: req.body.email,
+//           password: req.body.facebookId,
+//           googleId: req.body.googleId,
+//           facebookId: req.body.facebookId,
+//           active: true,
+//         });
+
+//         await signUpUser.save();
+
+//         let facebookOptions = {
+//           body: {
+//             grant_type: "password",
+//             username: req.body.facebookId,
+//             password: req.body.facebookId,
+//             loginMethod: "facebook",
+//           },
+//           headers: {
+//             "user-agent": "Thunder Client (https://www.thunderclient.com)",
+//             accept: "*/*",
+//             "content-type": "application/x-www-form-urlencoded",
+//             authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+//             "content-length": "81",
+//             "accept-encoding": "gzip, deflate, br",
+//             host: process.env.SERVER_URL,
+//             connection: "close",
+//           },
+//           method: "POST",
+//           query: {},
+//         };
+
+//         let token = await obtainToken(facebookOptions);
+//         let foundtoken = token;
+
+//         let responseToSend = encryptionOfData(foundtoken);
+
+//         res.send(responseToSend);
+//       }
+//     } else {
+//       if (req.body.method === "google") {
+//         //! Google login
+//         let googleOptions = {
+//           body: {
+//             grant_type: "password",
+//             username: req.body.googleId,
+//             password: req.body.googleId,
+//             loginMethod: "google",
+//             profileName: req.body.name,
+//           },
+//           headers: {
+//             "user-agent": "Thunder Client (https://www.thunderclient.com)",
+//             accept: "*/*",
+//             "content-type": "application/x-www-form-urlencoded",
+//             authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+//             "content-length": "81",
+//             "accept-encoding": "gzip, deflate, br",
+//             host: process.env.SERVER_URL,
+//             connection: "close",
+//           },
+//           method: "POST",
+//           query: {},
+//         };
+
+//         let userLoginInfo = await signUpTemplateCopy.findOne({
+//           username: req.body.googleId,
+//         });
+
+//         if (!userLoginInfo.loggedinID) {
+//           // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+//           const newId = uuidv4();
+//           await userLoginInfo.updateOne({
+//             loggedinID: newId,
+//           });
+
+//           let token = await obtainToken(googleOptions);
+//           let foundtoken = token;
+
+//           let responseToSend = encryptionOfData(foundtoken);
+
+//           res.send(responseToSend);
+//         } else {
+//           let setSendResponseData = new sendResponseData(
+//             null,
+//             409,
+//             "An active session found!"
+//           );
+//           let responseToSend = encryptionOfData(setSendResponseData.error());
+//           res.send(responseToSend);
+//         }
+//       } else {
+//         let facebookOptions = {
+//           body: {
+//             grant_type: "password",
+//             username: req.body.facebookId,
+//             password: req.body.facebookId,
+//             loginMethod: "facebook",
+//           },
+//           headers: {
+//             "user-agent": "Thunder Client (https://www.thunderclient.com)",
+//             accept: "*/*",
+//             "content-type": "application/x-www-form-urlencoded",
+//             authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+//             "content-length": "81",
+//             "accept-encoding": "gzip, deflate, br",
+//             host: process.env.SERVER_URL,
+//             connection: "close",
+//           },
+//           method: "POST",
+//           query: {},
+//         };
+
+//         let userLoginInfo = await signUpTemplateCopy.findOne({
+//           username: req.body.facebookId,
+//         });
+
+//         if (!userLoginInfo.loggedinID) {
+//           // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
+//           const newId = uuidv4();
+//           await userLoginInfo.updateOne({
+//             loggedinID: newId,
+//           });
+
+//           let token = await obtainToken(facebookOptions);
+//           let foundtoken = token;
+
+//           let responseToSend = encryptionOfData(foundtoken);
+
+//           res.send(responseToSend);
+//         } else {
+//           let setSendResponseData = new sendResponseData(
+//             null,
+//             409,
+//             "An active session found!"
+//           );
+//           let responseToSend = encryptionOfData(setSendResponseData.error());
+//           res.send(responseToSend);
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     let setSendResponseData = new sendResponseData(null, 500, "Server error!");
+//     let responseToSend = encryptionOfData(setSendResponseData.error());
+
+//     res.send(responseToSend);
+//   }
+// });
+
 app.post("/api/signupmobiletest", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
@@ -647,10 +862,9 @@ app.post("/api/signupmobiletest", async (req, res) => {
       $and: [
         { googleId: req.body.googleId },
         { facebookId: req.body.facebookId },
+        { appleId: req.body.appleId },
       ],
     });
-
-    // console.log("userExists   ----   ", userExists);
 
     if (!userExists) {
       const newId = uuidv4();
@@ -697,7 +911,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
         let responseToSend = encryptionOfData(foundtoken);
 
         res.send(responseToSend);
-      } else {
+      } else if (req.body.method === "facebook") {
         //! facebook new registration
         const signUpUser = new signUpTemplateCopy({
           fullname: req.body.fullname,
@@ -738,6 +952,48 @@ app.post("/api/signupmobiletest", async (req, res) => {
         let responseToSend = encryptionOfData(foundtoken);
 
         res.send(responseToSend);
+      } else {
+        //! facebook new registration
+        const signUpUser = new signUpTemplateCopy({
+          fullname: req.body.fullname,
+          username: req.body.appleId,
+          email: req.body.email,
+          password: req.body.appleId,
+          googleId: req.body.googleId,
+          facebookId: req.body.facebookId,
+          appleId: req.body.appleId,
+          active: true,
+        });
+
+        await signUpUser.save();
+
+        let appleOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.appleId,
+            password: req.body.appleId,
+            loginMethod: "apple",
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let token = await obtainToken(appleOptions);
+        let foundtoken = token;
+
+        let responseToSend = encryptionOfData(foundtoken);
+
+        res.send(responseToSend);
       }
     } else {
       if (req.body.method === "google") {
@@ -769,18 +1025,27 @@ app.post("/api/signupmobiletest", async (req, res) => {
         });
 
         if (!userLoginInfo.loggedinID) {
-          // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
-          const newId = uuidv4();
-          await userLoginInfo.updateOne({
-            loggedinID: newId,
-          });
+          if (userLoginInfo.active === true) {
+            const newId = uuidv4();
+            await userLoginInfo.updateOne({
+              loggedinID: newId,
+            });
 
-          let token = await obtainToken(googleOptions);
-          let foundtoken = token;
+            let token = await obtainToken(googleOptions);
+            let foundtoken = token;
 
-          let responseToSend = encryptionOfData(foundtoken);
+            let responseToSend = encryptionOfData(foundtoken);
 
-          res.send(responseToSend);
+            res.send(responseToSend);
+          } else {
+            let setSendResponseData = new sendResponseData(
+              null,
+              403,
+              "Account is not active or locked! Please contact support."
+            );
+            let responseToSend = encryptionOfData(setSendResponseData.error());
+            res.send(responseToSend);
+          }
         } else {
           let setSendResponseData = new sendResponseData(
             null,
@@ -790,7 +1055,7 @@ app.post("/api/signupmobiletest", async (req, res) => {
           let responseToSend = encryptionOfData(setSendResponseData.error());
           res.send(responseToSend);
         }
-      } else {
+      } else if (req.body.method === "facebook") {
         let facebookOptions = {
           body: {
             grant_type: "password",
@@ -817,18 +1082,84 @@ app.post("/api/signupmobiletest", async (req, res) => {
         });
 
         if (!userLoginInfo.loggedinID) {
-          // if (userLoginInfo.active === true && userLoginInfo.locked === false) {
-          const newId = uuidv4();
-          await userLoginInfo.updateOne({
-            loggedinID: newId,
-          });
+          if (userLoginInfo.active === true) {
+            const newId = uuidv4();
+            await userLoginInfo.updateOne({
+              loggedinID: newId,
+            });
 
-          let token = await obtainToken(facebookOptions);
-          let foundtoken = token;
+            let token = await obtainToken(facebookOptions);
+            let foundtoken = token;
 
-          let responseToSend = encryptionOfData(foundtoken);
+            let responseToSend = encryptionOfData(foundtoken);
 
+            res.send(responseToSend);
+          } else {
+            let setSendResponseData = new sendResponseData(
+              null,
+              403,
+              "Account is not active or locked! Please contact support."
+            );
+            let responseToSend = encryptionOfData(setSendResponseData.error());
+            res.send(responseToSend);
+          }
+        } else {
+          let setSendResponseData = new sendResponseData(
+            null,
+            409,
+            "An active session found!"
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.error());
           res.send(responseToSend);
+        }
+      } else {
+        let appleOptions = {
+          body: {
+            grant_type: "password",
+            username: req.body.appleId,
+            password: req.body.appleId,
+            loginMethod: "apple",
+          },
+          headers: {
+            "user-agent": "Thunder Client (https://www.thunderclient.com)",
+            accept: "*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            authorization: "Basic YXBwbGljYXRpb246c2VjcmV0",
+            "content-length": "81",
+            "accept-encoding": "gzip, deflate, br",
+            host: process.env.SERVER_URL,
+            connection: "close",
+          },
+          method: "POST",
+          query: {},
+        };
+
+        let userLoginInfo = await signUpTemplateCopy.findOne({
+          username: req.body.appleId,
+        });
+
+        if (!userLoginInfo.loggedinID) {
+          if (userLoginInfo.active === true) {
+            const newId = uuidv4();
+            await userLoginInfo.updateOne({
+              loggedinID: newId,
+            });
+
+            let token = await obtainToken(appleOptions);
+            let foundtoken = token;
+
+            let responseToSend = encryptionOfData(foundtoken);
+
+            res.send(responseToSend);
+          } else {
+            let setSendResponseData = new sendResponseData(
+              null,
+              403,
+              "Account is not active or locked! Please contact support."
+            );
+            let responseToSend = encryptionOfData(setSendResponseData.error());
+            res.send(responseToSend);
+          }
         } else {
           let setSendResponseData = new sendResponseData(
             null,
@@ -1297,6 +1628,77 @@ app.post("/api/resend-otp", async (req, res) => {
   }
 });
 
+app.post("/api/deleteaccount", async (req, res) => {
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
+
+  const { username } = req.body;
+  console.log("/api/deleteaccount", username);
+
+  await signUpTemplateCopy
+    .findOneAndUpdate(
+      {
+        username: username,
+      },
+      {
+        $set: {
+          active: false,
+          locked: true,
+        },
+      }
+    )
+    .then((data) => {
+      let setSendResponseData = new sendResponseData(
+        "Your account is deleted, please contact mind school for further support.",
+        200,
+        null
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    })
+    .catch((e) => {
+      let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    });
+});
+
+app.post("/api/reactiveaccount", async (req, res) => {
+  let recievedResponseData = decryptionOfData(req, res);
+  req.body = recievedResponseData;
+
+  const { username } = req.body;
+
+  console.log("/api/reactiveaccount", username);
+
+  await signUpTemplateCopy
+    .findOneAndUpdate(
+      {
+        username: username,
+      },
+      {
+        $set: {
+          active: true,
+          locked: false,
+        },
+      }
+    )
+    .then((data) => {
+      let setSendResponseData = new sendResponseData(
+        "Account is active now.",
+        200,
+        null
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    })
+    .catch((e) => {
+      let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    });
+});
+
 //! ******* users API *******/ (encryption done)
 //? Not in use <--- START --->
 app.post("/api/user", async (req, res, next) => {
@@ -1349,7 +1751,7 @@ app.post("/api/certificate", async (req, res) => {
       courseID,
     } = req.body;
 
-    // console.log(req.body);
+    console.log(req.body);
 
     completeDate = new Date().toLocaleDateString("en-US", {
       month: "long",
@@ -1369,8 +1771,21 @@ app.post("/api/certificate", async (req, res) => {
       size: "A4",
     });
 
-    // Draw the certificate image
-    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+    if (courseID == "C006") {
+      // Draw the certificate image
+      doc.image("./images/nazishQazi.png", 0, 0, { width: 841 });
+    } else if (
+      courseID == "C001" ||
+      courseID == "C002" ||
+      courseID == "C003" ||
+      courseID == "C004"
+    ) {
+      // Draw the certificate image
+      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+    } else {
+      // Draw the certificate image
+      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+    }
 
     // Set the font to Dancing Script
     doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
@@ -1951,7 +2366,7 @@ app.post("/api/userprofile", async (req, res) => {
 
     let userSessionStatus = await tokenChecking(req);
 
-    console.log("User userSessionStatus", userSessionStatus);
+    // console.log("User userSessionStatus", userSessionStatus);
 
     if (userSessionStatus.data != null) {
       // console.log("User is allowed");
@@ -2162,7 +2577,7 @@ app.post("/api/updateuserprofile", async (req, res) => {
       age,
     } = req.body;
 
-    console.log("Update user profile body ------  ",req.body);
+    console.log("Update user profile body ------  ", req.body);
 
     let userSessionStatus = await tokenChecking(req);
 
@@ -2642,7 +3057,6 @@ app.post("/api/courseavailed", async (req, res, next) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-
 
     let user = await signUpTemplateCopy.findOne({
       username: req.body.username,
@@ -3329,7 +3743,7 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   if (value_d === "mobile") {
@@ -3412,7 +3826,7 @@ app.post("/api/ssl-payment-success", async (req, res) => {
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -3491,7 +3905,7 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -3568,7 +3982,7 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 90 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4354,9 +4768,9 @@ app.post("/api/leaveamessage", async (req, res) => {
         month: "long",
         day: "numeric",
         year: "numeric",
-      hour:"numeric",
-      minute:"numeric"
-      })
+        hour: "numeric",
+        minute: "numeric",
+      }),
     });
 
     saveUserMessage.save();
@@ -4611,7 +5025,7 @@ app.post("/api/pushnotification", async (req, res) => {
         dataVideoLink: dataVideoLink,
         sentTo: to,
         priority: priority,
-        date: Date.now()
+        date: Date.now(),
       }).save();
 
       let setSendResponseData = new sendResponseData("sent", 200, null);
@@ -4999,7 +5413,279 @@ app.post("/api/sliderdata", async (req, res) => {
   }
 });
 
-//! Getting Log Data
+//! login with QR
+app.post("/api/qrfromweb", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    // Generate random 16 bytes to use as IV
+    var IV = CryptoJS.enc.Utf8.parse("1583288699248111");
+    var keyString = "thisIsAverySpecialSecretKey00000";
+    var Key = CryptoJS.enc.Utf8.parse(keyString);
+
+    try {
+      const { request } = req.body.qrdata;
+
+      var decryptedFromText = CryptoJS.AES.decrypt(
+        { ciphertext: CryptoJS.enc.Base64.parse(request.ct) },
+        Key,
+        {
+          iv: IV,
+          mode: CryptoJS.mode.CBC,
+        }
+      );
+
+      let obj = decryptedFromText.toString(CryptoJS.enc.Utf8);
+
+      console.log("obj ----", JSON.parse(obj).id);
+
+      // await qrData.deleteMany(
+      //   {
+      //     qrid: JSON.parse(obj).id,
+      //     username: null,
+      //   },
+      //   {}
+      // );
+
+      //   await qrData.findOneAndDelete({
+      //     $and:{qrid: JSON.parse(obj).id,
+      //     username: null}
+      // },{
+
+      // })
+
+      // let exists = await qrData.find({
+      //   qrid: JSON.parse(obj).id
+      // })
+
+      // console.log("exists", Boolean(exists[0]));
+      // if(!exists[0]){
+
+      // }
+
+      await new qrData({
+        qrid: JSON.parse(obj).id,
+        date: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        }),
+      })
+        .save()
+        .then(() => {
+          let setSendResponseData = new sendResponseData("sent", 200, null);
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        })
+        .catch(() => {
+          let setSendResponseData = new sendResponseData(null, 500, error.msg);
+          let responseToSend = encryptionOfData(setSendResponseData.error());
+          res.send(responseToSend);
+        });
+    } catch (err) {
+      // console.log("Error log:     " + err.message);
+
+      let setSendResponseData = new sendResponseData(null, 500, err.message);
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+    // // res.send("test");
+    // // console.log("req.body", req.body);
+    // let setSendResponseData = new sendResponseData("sent", 200, null);
+    // let responseToSend = encryptionOfData(setSendResponseData.success());
+    // res.send(responseToSend);
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/qrfrommobile", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    console.log("/api/qrfrommobile ----- ", req.body);
+
+    await qrData
+      .findOne({
+        qrid: req.body.id,
+      })
+      .then(async (data) => {
+        await qrData
+          .findOneAndUpdate(
+            {
+              qrid: req.body.id,
+            },
+            {
+              $set: {
+                username: req.body.username.replace(" ", "+"),
+              },
+            }
+          )
+          .then((d) => {
+            console.log("d is updated", d);
+            let setSendResponseData = new sendResponseData(
+              "Authorized! You will be redirected.",
+              200,
+              null
+            );
+            let responseToSend = encryptionOfData(
+              setSendResponseData.success()
+            );
+            res.send(responseToSend);
+          })
+          .catch((err) => {
+            // res.send("Not authorized");
+            let setSendResponseData = new sendResponseData(
+              null,
+              500,
+              serverErrMsg
+            );
+            let responseToSend = encryptionOfData(setSendResponseData.error());
+            res.send(responseToSend);
+          });
+      })
+      .catch((e) => {
+        let setSendResponseData = new sendResponseData(null, 404, "No user");
+        let responseToSend = encryptionOfData(setSendResponseData.error());
+        res.send(responseToSend);
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+app.post("/api/qrcheck", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+    let obj;
+    // console.log("qrcheck ----- ", req.body);
+
+    // Generate random 16 bytes to use as IV
+    var IV = CryptoJS.enc.Utf8.parse("1583288699248111");
+    var keyString = "thisIsAverySpecialSecretKey00000";
+    var Key = CryptoJS.enc.Utf8.parse(keyString);
+
+    try {
+      const { request } = req.body.qrdata;
+
+      var decryptedFromText = CryptoJS.AES.decrypt(
+        { ciphertext: CryptoJS.enc.Base64.parse(request.ct) },
+        Key,
+        {
+          iv: IV,
+          mode: CryptoJS.mode.CBC,
+        }
+      );
+
+      obj = decryptedFromText.toString(CryptoJS.enc.Utf8);
+      //  console.log("obj ----", JSON.parse(obj).id);
+    } catch (err) {
+      let setSendResponseData = new sendResponseData(null, 500, err.message);
+      let responseToSend = encryptionOfData(setSendResponseData.error());
+      res.send(responseToSend);
+    }
+
+    qrData
+      .findOne({
+        qrid: JSON.parse(obj).id,
+      })
+      .then(async (data) => {
+        let newAccessToken = uuidv4().replaceAll("-", "");
+        await tokenModel
+          .findOneAndUpdate(
+            {
+              "user.username": data.username,
+            },
+            {
+              $set: {
+                accessToken: newAccessToken,
+              },
+            }
+          )
+          .then(async (data1) => {
+            if (data1) {
+              await tokenModel
+                .findOne({
+                  "user.username": data1.user.username,
+                })
+                .then((data2) => {
+                  if (!data2) {
+                    let matchqrdata = {
+                      data: null,
+                      matched: false,
+                    };
+
+                    let setSendResponseData = new sendResponseData(
+                      matchqrdata,
+                      404,
+                      null
+                    );
+                    let responseToSend = encryptionOfData(
+                      setSendResponseData.success()
+                    );
+                    res.send(responseToSend);
+                  } else {
+                    let matchqrdata = {
+                      data: {
+                        access_token: data2.accessToken,
+                        refresh_token: data2.refreshToken,
+                        user: data2.user.username,
+                      },
+                      matched: true,
+                    };
+
+                    let setSendResponseData = new sendResponseData(
+                      matchqrdata,
+                      200,
+                      null
+                    );
+                    let responseToSend = encryptionOfData(
+                      setSendResponseData.success()
+                    );
+                    res.send(responseToSend);
+                  }
+                })
+                .catch((e) => {
+                  let setSendResponseData = new sendResponseData(
+                    null,
+                    500,
+                    e.msg
+                  );
+                  let responseToSend = encryptionOfData(
+                    setSendResponseData.error()
+                  );
+                  res.send(responseToSend);
+                });
+            } else {
+              let setSendResponseData = new sendResponseData(
+                null,
+                500,
+                serverErrMsg
+              );
+              let responseToSend = encryptionOfData(
+                setSendResponseData.error()
+              );
+              res.send(responseToSend);
+            }
+          });
+      });
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, error.msg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
+
+//? Getting Log Data
 app.get("/api/checklogdata", async (req, res) => {
   let totalusers = await signUpTemplateCopy.count();
   let totalViews = await logData.count();
@@ -5070,6 +5756,8 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   try {
+    console.log(req.query);
+    console.log(req.params);
     res.send("test");
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
@@ -5241,6 +5929,9 @@ function obtainToken(req, res, callback) {
         // console.log("Inside google method", sendResponse);
         return sendResponse;
       } else if (request.body.loginMethod === "facebook") {
+        // console.log("sent from fb" + sendResponse);
+        return sendResponse;
+      } else if (request.body.loginMethod === "apple") {
         // console.log("sent from fb" + sendResponse);
         return sendResponse;
       } else {

@@ -2,7 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -10,19 +9,17 @@ import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import {Link as Routerlink} from "react-router-dom";
+import { Link as Routerlink } from "react-router-dom";
 import { useState, useContext } from "react";
 import api, { login } from "../../api/Axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import "./LoginForm.css";
 import LocalStorageService from "../../api/localstorage";
-
 import {
   Alert,
   AlertTitle,
   InputAdornment,
-  
   IconButton,
   Stack,
   CircularProgress,
@@ -36,6 +33,19 @@ import swal from "sweetalert";
 import { multiStepContext } from "../../pages/StepContext";
 import { MuiTelInput } from "mui-tel-input";
 
+//! my addition
+
+import QRCode from "react-qr-code";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import uuid from "react-uuid";
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+import QrCodeIcon from '@mui/icons-material/QrCode';
+const SEND_QR_DATA_TO_WEB = `/api/qrfromweb`;
+const QR_MATCH_STATUS = `/api/qrcheck`;
+
+//! my addition ends
+
 var CryptoJS = require("crypto-js");
 
 // Generate random 16 bytes to use as IV
@@ -47,21 +57,209 @@ var Key = CryptoJS.enc.Utf8.parse(keyString);
 
 const LOGIN_URL = `/api/oauth/token`;
 const SESSION_CLEAR = `/api/clearalltoken`;
-let CHECK_DEVICE_URL= "/api/checkdeviceanduser"
+let CHECK_DEVICE_URL = "/api/checkdeviceanduser";
 
 const theme = createTheme();
 
-const LoginForm = (props) => {
+//! my addition part 2
 
+function encrypt(data) {
+  var encryptedCP = CryptoJS.AES.encrypt(data, Key, { iv: IV });
+  var cryptText = encryptedCP.toString();
+  var cipherParams = CryptoJS.lib.CipherParams.create({
+    ciphertext: CryptoJS.enc.Base64.parse(cryptText),
+    formatter: JsonFormatter,
+  });
+  return cipherParams.toString();
+}
+
+let encryptionOfData = (data) => {
+  let encryptionData = encrypt(JSON.stringify(data));
+  let encryptedData = {
+    request: encryptionData,
+    passphase: IV.toString(),
+  };
+  return encryptedData;
+};
+
+let qrdata;
+//! my addition part 2
+
+// var myInterval = setInterval(everyTime, 1000);
+
+export function TransitionsModal() {
+  const [open, setOpen] = React.useState(false);
+  const [qrvalue, setQrvalue] = React.useState({});
+  const handleOpen = () => {
+    // setQrvalue({
+    //   id: uuid().replaceAll("-", ""),
+    //   username: "testuser",
+    // });
+
+    let ranid = uuid().replaceAll("-", "")
+
+    qrdata = encryptionOfData({
+      id: ranid
+    });
+
+    // encryptionOfData()
+    // console.log("qrdata",qrdata.request.ct, "ranid ---", ranid);
+
+    async function sendQrToServer() {
+      await api
+        .post(SEND_QR_DATA_TO_WEB, JSON.stringify({ qrdata }), {
+          headers: { "Content-Type": "application/json" },
+          "Access-Control-Allow-Credentials": true,
+        })
+        .then((response) => {
+          console.log("SEND_QR_DATA_TO_WEB ---- ",response);
+        });
+    }
+    sendQrToServer();
+
+    
+
+    async function checkQRmatch(){
+      
+      // console.log("this is printing",n);
+      const localStorageService = LocalStorageService.getService();
+      
+      await api
+      .post(QR_MATCH_STATUS, JSON.stringify({ qrdata }), {
+        headers: { "Content-Type": "application/json" },
+        "Access-Control-Allow-Credentials": true,
+      })
+      .then((response) => {
+         console.log("Response----- ", response.data.data);
+        // console.log("Response if matched ", response.data.data.data);
+        if(response.data.data.matched){
+        localStorageService.setToken(response.data.data.data);
+        // window.location.reload();
+        // swal("Success!", "You will be redirected in a moment", "success").then(()=>{
+        //   window.location.reload();
+        // })
+
+        swal({
+          title: 'Login Success',
+          text: 'Redirecting...',
+          icon: 'success',
+          timer: 2000,
+          buttons: false,
+      })
+      .then(() => {
+        window.location.href = "/";
+      })
+      
+
+        }
+      });
+      
+    }
+
+    setInterval(checkQRmatch, 10*1000);
+    // var myInterval = setInterval(everyTime, 10 * 1000);
+    // clearInterval(myInterval);
+
+    // setQrvalue({
+    //   id: uuid().replaceAll("-", ""),
+    //   username: "testuser",
+    // });
+
+
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    window.location.reload();
+  };
+
+  return (
+    <Box>
+      <Button fullWidth variant="contained"sx={{
+        // maxWidth:"500px",
+        
+        fontSize:"1rem",
+        mt:1, mb:1, color: "other.dark"
+      }} onClick={handleOpen}>
+         {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
+         <QrCodeIcon /> &nbsp;&nbsp;Continue from mobile 
+      {/* &nbsp; &nbsp; &nbsp; &nbsp;  */}
+      </Button>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              // border: "2px solid #000",
+              borderRadius:"5px",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize:"1.2rem",
+                pb:2
+              }}
+            >
+              Scan the QR from app to login and continue your session.
+            </Typography>
+            <Box
+              style={{
+                height: "auto",
+                margin: "0 auto",
+                maxWidth: 120,
+                width: "100%",
+              }}
+            >
+              <QRCode
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                // value={JSON.stringify(qrdata)}
+                value={qrdata?.request?.ct}
+                viewBox={`0 0 256 256`}
+              />
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
+    </Box>
+  );
+}
+
+const LoginForm = (props) => {
   const { t } = useContext(globalContext);
   const {
-     addUserobj, phone, setPhone, validPhone, phoneFocus, setPhoneFocus,phoneNumber
+    addUserobj,
+    phone,
+    setPhone,
+    validPhone,
+    phoneFocus,
+    setPhoneFocus,
+    phoneNumber,
   } = useContext(multiStepContext);
+  const [alert, setAlert] =useState(false)
 
   // mui telnet
   const handleChange = (newPhone) => {
     setPhone(newPhone);
-  }
+  };
   const search = useLocation().search;
   // const nameg = new URLSearchParams(search).get("gusername");
   const gobject = new URLSearchParams(search).get("gobject");
@@ -75,13 +273,13 @@ const LoginForm = (props) => {
   const [fName, setFname] = useState("");
   const [backdrop, setBackdrop] = useState(false);
   // const [fName, setfname] = useState('');
+  const [qrdata, setQrdata] = useState("No result");
 
   let obj = JSON.parse(JSON.parse(JSON.stringify(gobject)));
   let fbObj = JSON.parse(JSON.parse(JSON.stringify(fobject)));
 
   // //// console.log("nameg Object is ------ ", nameg);
   // //// console.log("gobject Object is ------ ", gobject);
-
 
   // //// console.log("namef Object is ------ ", namef);
   // //// console.log("fobject Object is ------ ", fbObj);
@@ -107,6 +305,8 @@ const LoginForm = (props) => {
 
       let googleData = JSON.parse(recievedData);
 
+      console.log("google data", googleData);
+
       const localStorageService = LocalStorageService.getService();
       // //// console.log("Google data : ", googleData.data.result.isError);
 
@@ -117,10 +317,10 @@ const LoginForm = (props) => {
         localStorageService.setToken(googleData.data.data);
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
-        window.opener.document.location.href = "/"
-        window.close();
+        // window.opener.document.location.href = "/";
+        // window.close();
         // window.location.href="/courses"
-        setBackdrop(false)        
+        setBackdrop(false);
       }
     }
   } else if (fbObj) {
@@ -154,7 +354,7 @@ const LoginForm = (props) => {
         localStorageService.setToken(facebookData.data.data);
         // //// console.log(facebookData.reslut);
         // window.opener.location.reload();
-        window.opener.document.location.href = "/"
+        window.opener.document.location.href = "/";
         window.close();
         // window.location.href="/courses"
       }
@@ -167,8 +367,8 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [open, setOpen] = useState(true);
-  const [ isAndroid,setIsAndroid]= React.useState()
- 
+  const [isAndroid, setIsAndroid] = React.useState();
+
   const [sessionFound, setSessionFound] = useState(false);
   //to show pass
   const [showPassword, setShowPassword] = useState(false);
@@ -181,11 +381,11 @@ const LoginForm = (props) => {
     var h = 575;
     var left = (window.screen.width - w) / 2;
     var top = (window.screen.height - h) / 2;
-    
+
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/google`,
     //   "_self",
-      
+
     // );
     window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
@@ -195,7 +395,7 @@ const LoginForm = (props) => {
       top=${top}, 
       left=${left}`
     );
-    setBackdrop(true)
+    setBackdrop(true);
   };
   const facebookAuth = () => {
     var w = 620;
@@ -205,7 +405,7 @@ const LoginForm = (props) => {
     // window.open(
     //   `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
     //   "_self"
-      
+
     // );
     window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
@@ -215,64 +415,64 @@ const LoginForm = (props) => {
       top=${top}, 
       left=${left}`
     );
-    setBackdrop(true)
+    setBackdrop(true);
   };
-//   let fetchDeviceData = async () => {
-//     await api
-//     .post(CHECK_DEVICE_URL, JSON.stringify({ username }), {
-//       headers: { "Content-Type": "application/json" },
-//       "Access-Control-Allow-Credentials": true,
-//     })
-//     .then((data) => {
-//      console.log("device",data.data.data.data.platform)
-//     setIsAndroid(data.data.data.data.platform)
-//     });
-// };
-
+  //   let fetchDeviceData = async () => {
+  //     await api
+  //     .post(CHECK_DEVICE_URL, JSON.stringify({ username }), {
+  //       headers: { "Content-Type": "application/json" },
+  //       "Access-Control-Allow-Credentials": true,
+  //     })
+  //     .then((data) => {
+  //      console.log("device",data.data.data.data.platform)
+  //     setIsAndroid(data.data.data.data.platform)
+  //     });
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await login(username, email, password,phoneNumber, (response) => {
-      const localStorageService = LocalStorageService.getService();
-      // //// console.log("response ", response);
-      // setLoad(false);
-      setBackdrop(false)
-      // console.log(response)
-      if(response=== "Error: Network unreachable"){
-        swal("Server Error!", `${response.data.result.errMsg}`, "warning");
-      }
-      if (response.data.result.status === 409) {
-        setSessionFound(true);
-        setErrMsg(response.data.result.errMsg);
-      } else if (response.data.result.status === 200) {
-        setCurrentuser(response.data.data.user);
-        localStorageService.setToken(response.data.data);
-        if (response.data.data.user) {
-          // setMail(username)
-          // window.location.href = "/courses";
-          addUserobj(response.data.data);
-          // navigate("/courses")
-          navigate("/")
+    const response = await login(
+      username,
+      email,
+      password,
+      phoneNumber,
+      (response) => {
+        const localStorageService = LocalStorageService.getService();
+        // //// console.log("response ", response);
+        // setLoad(false);
+        setBackdrop(false);
+        if (response.data.result.status === 409) {
+          setSessionFound(true);
+          setErrMsg(response.data.result.errMsg);
+        } else if (response.data.result.status === 200) {
+          setCurrentuser(response.data.data.user);
+          localStorageService.setToken(response.data.data);
+          if (response.data.data.user) {
+            // setMail(username)
+            // window.location.href = "/courses";
+            addUserobj(response.data.data);
+            // navigate("/courses")
+            navigate("/");
 
-          // <Navigate to="/courses" />
+            // <Navigate to="/courses" />
+          }
+        } else if (response.data.result.status === 401) {
+          setErrMsg(response.data.result.errMsg);
+          swal("Invalid!", `${response.data.result.errMsg}`, "warning");
+        } else {
+          setErrMsg(response.data.result.errMsg);
+          swal("Error!", `${response.data.result.errMsg}`, "error");
         }
-      } else if (response.data.result.status === 401) {
-        setErrMsg(response.data.result.errMsg);
-        swal("Invalid!", `${response.data.result.errMsg}`, "warning");
-      } else {
-        setErrMsg(response.data.result.errMsg);
-        swal("Error!", `${response.data.result.errMsg}`, "error");
       }
-    });
+    );
   };
 
-
-  const handleLoading=()=>{
-    setBackdrop(true)
-  }
+  const handleLoading = () => {
+    setBackdrop(true);
+  };
 
   const clearSession = async () => {
-    let username=phoneNumber
+    let username = phoneNumber;
     const response = await api
       .post(SESSION_CLEAR, JSON.stringify({ username, phoneNumber }), {
         headers: { "Content-Type": "application/json" },
@@ -292,14 +492,16 @@ const LoginForm = (props) => {
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
           // setTimeout(function () {
-          swal("Sessions cleared!", "You are logged out from other devices", "info");
-          setErrMsg(null)
+          swal(
+            "Sessions cleared!",
+            "You are logged out from other devices",
+            "info"
+          );
+          setErrMsg(null);
           // }, 2000);
-
         }
       });
   };
-
 
   // // for testing
   // useEffect(async()=>{
@@ -310,9 +512,9 @@ const LoginForm = (props) => {
   //       headers: { "Content-Type": "application/json" },
   //       "Access-Control-Allow-Credentials": true,
   //     })
-  //     .then((response) => {  
+  //     .then((response) => {
   //       //// console.log("texting response------",response)
-  //     });   
+  //     });
 
   // },[])
   return (
@@ -356,14 +558,13 @@ const LoginForm = (props) => {
             }}
             onClick={googleAuth}
           >
-            <GoogleIcon
+             <GoogleIcon
               // className="Icons"
-              sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
-            />
-            <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
+              sx={{ color: "other.dark", fontSize: "2rem", width:"10%" }}
+            /> 
+            <Typography sx={{ color: "other.dark", fontSize: "1rem", width:"60%" }}>
               {t("login_with_gmail")}
             </Typography>
-
           </Button>
           <Button
             fullWidth
@@ -373,17 +574,24 @@ const LoginForm = (props) => {
           >
             <FacebookIcon
               // className="Icons"
-              sx={{ color: "other.dark", fontSize: "2rem", margin: "0px 10px" }}
+              sx={{ color: "other.dark", fontSize: "2rem", width:"10%" }}
             />
-            <Typography sx={{ color: "other.dark", fontSize: "1rem" }}>
+            <Typography sx={{ color: "other.dark", fontSize: "1rem", width:"60%" }}>
               {t("login_with_facebook")}
             </Typography>
           </Button>
+          {/* //! my addition */}
+          <Box sx={{width:"100%"}}>
+            <TransitionsModal />
+          </Box>
+          {/* //! my addition */}
           <Typography component="p" variant="p" sx={{ textAlign: "center" }}>
             {t("or")} <br />
             {t("login_with_email")}
           </Typography>
         </Grid>
+        {alert?
+        <Alert severity="info">Login with Google or Facebook if you are outside of Bangladesh</Alert>:<></>}
         {errMsg ? (
           <Stack sx={{ width: "100%" }} spacing={2}>
             <Alert
@@ -408,7 +616,13 @@ const LoginForm = (props) => {
                   <Typography>
                     Do you want to logout from all other devices?
                   </Typography>
-                  <Button sx={{mt:"1rem"}} variant="outlined" onClick={clearSession}>Clear Sessions</Button>
+                  <Button
+                    sx={{ mt: "1rem" }}
+                    variant="outlined"
+                    onClick={clearSession}
+                  >
+                    Clear Sessions
+                  </Button>
                 </>
               ) : (
                 ""
@@ -418,38 +632,26 @@ const LoginForm = (props) => {
         ) : (
           ""
         )}
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           {/* uncomment letter for login with phone  */}
-          
-          <MuiTelInput 
-            sx={{width:"100%", marginY:"1rem", color:"primary.main"}} 
+          <MuiTelInput
+          onClick={()=>{setAlert(true)}}
+            sx={{ width: "100%", marginY: "1rem", color: "primary.main" }}
             label="Phone Number"
-            defaultCountry="BD" 
-            value={phone} 
-            onChange={handleChange} 
+            defaultCountry="BD"
+            value={phone}
+            onChange={handleChange}
             required
             inputProps={{
               maxLength: 16,
             }}
             onFocus={() => setPhoneFocus(true)}
-            error={
-              phoneFocus && !validPhone ? 
-              true : 
-              false
+            error={phoneFocus && !validPhone ? true : false}
+            helperText={
+              phoneFocus && !validPhone ? "Enter valid phone number" : false
             }
-            helperText={phoneFocus && !validPhone?
-              "Enter valid phone number"
-              : false
-            }
-            />
+          />
 
-            
           {/* <TextField
             margin="normal"
             required
@@ -490,11 +692,7 @@ const LoginForm = (props) => {
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
-                    {showPassword ? (
-                      <VisibilityIcon />
-                    ) : (
-                      <VisibilityOffIcon />
-                    )}
+                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -511,18 +709,18 @@ const LoginForm = (props) => {
           ) : ( */}
 
           <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={backdrop}
-           
           >
             <CircularProgress color="inherit" />
           </Backdrop>
           <Button
             type="submit"
             fullWidth
-            onClick={()=>{handleLoading()
-            // fetchDeviceData()
-          }}
+            onClick={() => {
+              handleLoading();
+              // fetchDeviceData()
+            }}
             variant="contained"
             sx={{ mt: 3, mb: 2, fontSize: "1rem" }}
           >
@@ -532,14 +730,25 @@ const LoginForm = (props) => {
           {/* )}  */}
           <Grid container>
             <Grid item xs>
-              <Routerlink to="/forgotpassword" style={{textDecoration:"none"}} variant="body2">
-                <Typography sx={{color:"primary.main"}}>{t("forgot_password")}</Typography>
+              <Routerlink
+                to="/forgotpassword"
+                style={{ textDecoration: "none" }}
+                variant="body2"
+              >
+                <Typography sx={{ color: "primary.main" }}>
+                  {t("forgot_password")}
+                </Typography>
               </Routerlink>
             </Grid>
             <Grid item>
-              <Routerlink to="/registration" style={{textDecoration:"none"}} variant="body2">
-              <Typography sx={{color:"primary.main"}}>{t("no_account")}
-              </Typography>
+              <Routerlink
+                to="/registration"
+                style={{ textDecoration: "none" }}
+                variant="body2"
+              >
+                <Typography sx={{ color: "primary.main" }}>
+                  {t("no_account")}
+                </Typography>
               </Routerlink>
             </Grid>
           </Grid>

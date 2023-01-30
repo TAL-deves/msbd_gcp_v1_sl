@@ -1,7 +1,9 @@
 import { Button, CardMedia, Grid, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Box, Container, width } from "@mui/system";
 import React, { useContext } from "react";
 import appimage_dark from "./downloadappanimation.json";
+import appleStore from "./AS.json";
+import playStore from "./Ps.json"
 import googlebtn from "./playstore.png";
 import applebtn from "./applestore.png";
 import Link from "@mui/material/Link";
@@ -21,6 +23,14 @@ const DownloadApp = () => {
     borderRadius: "50px",
     margin: "5px",
 
+  };
+
+  const appButtonStyle = {
+    height: "70%",
+    width: "100%",
+    borderRadius: "50px",
+    margin: "5px",
+    pointer:"cursor"
   };
   return (
     <Container
@@ -87,44 +97,55 @@ const DownloadApp = () => {
             >
               <motion.div whileHover={{ scale: 1.03 }}>
                 <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
-                  <Box
+                  {/* <Box
                     // onClick={()=>{swal("","App Coming Soon","");}}
                     sx={{
-                      backgroundColor: "other.footercolor",
+                      // backgroundColor: "other.footercolor",
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      padding: "10px",
-                      borderRadius: "20px",
-                      boxShadow: "4",
+                      width:"90%",
+                      // padding: "10px",
+                      // borderRadius: "20px",
+                      // boxShadow: "4",
                       "&:hover": { boxShadow: "5" }
+                      
                     }}
-                  >
-                    <img src={googlebtn} alt="google" width="72%" />
-                  </Box>
+                  > */}
+                    {/* <img src={googlebtn} alt="google" width="72%" /> */}
+                    <Lottie
+                animationData={playStore}
+                style={appButtonStyle}
+              />
+                  {/* </Box> */}
                 </Link>
               </motion.div>
               &nbsp;
               <motion.div whileHover={{ scale: 1.03 }}>
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                <Box
+                {/* <Box
                   onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                   sx={{
                     // backgroundColor: "secondary.main",
-                    backgroundColor: "other.footercolor",
+                    // backgroundColor: "other.footercolor",
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: "10px",
-                    borderRadius: "20px",
-                    boxShadow: "4",
+                    width:"90%",
+                    // padding: "10px",
+                    // borderRadius: "20px",
+                    // boxShadow: "4",
                     "&:hover": { boxShadow: "5" }
                   }}
-                >
-                  <img src={applebtn} alt="google" width="60%" />
-                </Box>
+                > */}
+                  {/* <img src={applebtn} alt="google" width="60%" /> */}
+                  <Lottie
+                animationData={appleStore}
+                style={appButtonStyle}
+              />
+                {/* </Box> */}
                 {/* </Link> */}
               </motion.div>
             </Grid>

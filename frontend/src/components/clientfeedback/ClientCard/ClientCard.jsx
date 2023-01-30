@@ -30,7 +30,7 @@ const ClientCard = (props) => {
           <Avatar src={img?img:<AccountCircleIcon sx={{
             fontSize:"3rem"
         }}/>} sx={{ 
-            bgcolor: "primary.main",
+            // bgcolor: "primary.main",
             width: 56, height: 56
          }} aria-label="client" >
           </Avatar>
