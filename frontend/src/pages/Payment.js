@@ -366,6 +366,7 @@ const Payment = () => {
                         id="name"
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
+                        // type="number"
                         value={phonenumber}
                         name="name"
                         autoComplete="name"
@@ -386,6 +387,7 @@ const Payment = () => {
                         id="name"
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
+                        // type="number"
                         value={phonenumber}
                         name="name"
                         autoComplete="name"
@@ -497,7 +499,6 @@ const Payment = () => {
                       required
                       fullWidth
                       id="city"
-                      // focused
                       label="City"
                       value={city}
                       inputProps={{
@@ -594,7 +595,7 @@ const Payment = () => {
                 setLoad(true);
               }}
 
-            disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber}
+            disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber || !validPhone}
           >
             Checkout
           </Button>
