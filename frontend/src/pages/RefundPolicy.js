@@ -1,8 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const RefundPolicy = () => {
+    useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      }, []);
     return (
         <Container>
             <Box sx={{ m: "3rem",textAlign:"justify" }}>

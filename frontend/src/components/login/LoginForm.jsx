@@ -16,6 +16,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import "./LoginForm.css";
 import LocalStorageService from "../../api/localstorage";
+import appimage_dark from "../downloadApp/downloadappanimation.json";
+import appleStore from "../downloadApp/AS.json";
+import playStore from "../downloadApp/Ps.json";
 import {
   Alert,
   AlertTitle,
@@ -24,6 +27,7 @@ import {
   Stack,
   CircularProgress,
   Backdrop,
+  Link,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -32,7 +36,8 @@ import JsonFormatter from "../../api/jsonFormatter";
 import swal from "sweetalert";
 import { multiStepContext } from "../../pages/StepContext";
 import { MuiTelInput } from "mui-tel-input";
-
+import Lottie from "lottie-react";
+import CancelIcon from '@mui/icons-material/Cancel';
 //! my addition
 
 import QRCode from "react-qr-code";
@@ -41,6 +46,8 @@ import Fade from "@mui/material/Fade";
 import uuid from "react-uuid";
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import QrCodeIcon from '@mui/icons-material/QrCode';
+import { display } from "@mui/system";
+
 const SEND_QR_DATA_TO_WEB = `/api/qrfromweb`;
 const QR_MATCH_STATUS = `/api/qrcheck`;
 
@@ -96,10 +103,10 @@ export function TransitionsModal() {
     //   username: "testuser",
     // });
 
-    let ranid = uuid().replaceAll("-", "")
+    let ranid = uuid().replaceAll("-", "");
 
     qrdata = encryptionOfData({
-      id: ranid
+      id: ranid,
     });
 
     // encryptionOfData()
@@ -112,51 +119,44 @@ export function TransitionsModal() {
           "Access-Control-Allow-Credentials": true,
         })
         .then((response) => {
-          console.log("SEND_QR_DATA_TO_WEB ---- ",response);
+          console.log("SEND_QR_DATA_TO_WEB ---- ", response);
         });
     }
     sendQrToServer();
 
-    
-
-    async function checkQRmatch(){
-      
+    async function checkQRmatch() {
       // console.log("this is printing",n);
       const localStorageService = LocalStorageService.getService();
-      
+
       await api
-      .post(QR_MATCH_STATUS, JSON.stringify({ qrdata }), {
-        headers: { "Content-Type": "application/json" },
-        "Access-Control-Allow-Credentials": true,
-      })
-      .then((response) => {
-         console.log("Response----- ", response.data.data);
-        // console.log("Response if matched ", response.data.data.data);
-        if(response.data.data.matched){
-        localStorageService.setToken(response.data.data.data);
-        // window.location.reload();
-        // swal("Success!", "You will be redirected in a moment", "success").then(()=>{
-        //   window.location.reload();
-        // })
+        .post(QR_MATCH_STATUS, JSON.stringify({ qrdata }), {
+          headers: { "Content-Type": "application/json" },
+          "Access-Control-Allow-Credentials": true,
+        })
+        .then((response) => {
+          console.log("Response----- ", response.data.data);
+          // console.log("Response if matched ", response.data.data.data);
+          if (response.data.data.matched) {
+            localStorageService.setToken(response.data.data.data);
+            // window.location.reload();
+            // swal("Success!", "You will be redirected in a moment", "success").then(()=>{
+            //   window.location.reload();
+            // })
 
-        swal({
-          title: 'Login Success',
-          text: 'Redirecting...',
-          icon: 'success',
-          timer: 2000,
-          buttons: false,
-      })
-      .then(() => {
-        window.location.href = "/";
-      })
-      
-
-        }
-      });
-      
+            swal({
+              title: "Login Success",
+              text: "Redirecting...",
+              icon: "success",
+              timer: 2000,
+              buttons: false,
+            }).then(() => {
+              window.location.href = "/";
+            });
+          }
+        });
     }
 
-    setInterval(checkQRmatch, 10*1000);
+    setInterval(checkQRmatch, 10 * 1000);
     // var myInterval = setInterval(everyTime, 10 * 1000);
     // clearInterval(myInterval);
 
@@ -165,7 +165,6 @@ export function TransitionsModal() {
     //   username: "testuser",
     // });
 
-
     setOpen(true);
   };
   const handleClose = () => {
@@ -173,17 +172,31 @@ export function TransitionsModal() {
     window.location.reload();
   };
 
+    const style = {
+    // height: "50%",
+    // width: "50%",
+    borderRadius: "50px",
+    margin: "5px",
+  };
+
   return (
     <Box>
-      <Button fullWidth variant="contained"sx={{
-        // maxWidth:"500px",
-        
-        fontSize:"1rem",
-        mt:1, mb:1, color: "other.dark"
-      }} onClick={handleOpen}>
-         {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
-         <QrCodeIcon /> &nbsp;&nbsp;Continue from mobile 
-      {/* &nbsp; &nbsp; &nbsp; &nbsp;  */}
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{
+          // maxWidth:"500px",
+
+          fontSize: "1rem",
+          mt: 1,
+          mb: 1,
+          color: "other.dark",
+        }}
+        onClick={handleOpen}
+      >
+        {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
+        <QrCodeIcon /> &nbsp;&nbsp;Continue from mobile
+        {/* &nbsp; &nbsp; &nbsp; &nbsp;  */}
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -206,16 +219,20 @@ export function TransitionsModal() {
               width: 400,
               bgcolor: "background.paper",
               // border: "2px solid #000",
-              borderRadius:"5px",
+              borderRadius: "5px",
               boxShadow: 24,
               p: 4,
+              display: "flex",
+              flexDirection: "column", alignItems: "center"
+
             }}
           >
+            <CancelIcon onClick={handleClose} sx={{ position: 'absolute', cursor: "pointer", color: "white", top: "-5%", right: { xs: "5%", sm: "-5%", md: "-5%", lg: "-3%", xl: "-3%" }, fontSize: "2rem" }} />
             <Typography
               sx={{
                 textAlign: "center",
-                fontSize:"1.2rem",
-                pb:2
+                fontSize: "1.2rem",
+                pb: 2
               }}
             >
               Scan the QR from app to login and continue your session.
@@ -236,7 +253,35 @@ export function TransitionsModal() {
                 viewBox={`0 0 256 256`}
               />
             </Box>
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize: "1.2rem",
+                pb: 2
+              }}
+            >
+              If you don't have our app, please download from the links below.
+            </Typography>
+            <Box sx={{ display: "flex" }}>
+              <Link href="https://play.google.com/store/apps/details?id=com.tal.mindschool.mind_school" target="new">
+                <Lottie
+                  animationData={playStore}
+                  style={style}
+                /></Link>
+              <Box sx={{ cursor: "pointer" }}>
+                <Lottie
+                  animationData={appleStore}
+                  style={style}
+                  onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
+                />
+              </Box>
+            </Box>
+            <Lottie
+              animationData={appimage_dark}
+              style={style}
+            />
           </Box>
+
         </Fade>
       </Modal>
     </Box>
@@ -254,7 +299,6 @@ const LoginForm = (props) => {
     setPhoneFocus,
     phoneNumber,
   } = useContext(multiStepContext);
-  const [alert, setAlert] =useState(false)
 
   // mui telnet
   const handleChange = (newPhone) => {
@@ -429,6 +473,45 @@ const LoginForm = (props) => {
   //     });
   // };
 
+  async function handleLoginNow () {
+
+    const response = await login(
+      username,
+      email,
+      password,
+      phoneNumber,
+      (response) => {
+        const localStorageService = LocalStorageService.getService();
+        // //// console.log("response ", response);
+        // setLoad(false);
+        setBackdrop(true);
+        if (response.data.result.status === 409) {
+          setSessionFound(true);
+          setErrMsg(response.data.result.errMsg);
+        } else if (response.data.result.status === 200) {
+          setCurrentuser(response.data.data.user);
+          localStorageService.setToken(response.data.data);
+          if (response.data.data.user) {
+            // setMail(username)
+            // window.location.href = "/courses";
+            addUserobj(response.data.data);
+            // navigate("/courses")
+            navigate("/");
+
+            // <Navigate to="/courses" />
+          }
+        } else if (response.data.result.status === 401) {
+          setErrMsg(response.data.result.errMsg);
+          swal("Invalid!", `${response.data.result.errMsg}`, "warning");
+        } else {
+          setErrMsg(response.data.result.errMsg);
+          swal("Error!", `${response.data.result.errMsg}`, "error");
+        }
+      }
+    );
+
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await login(
@@ -491,12 +574,20 @@ const LoginForm = (props) => {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user");
-          // setTimeout(function () {
-          swal(
-            "Sessions cleared!",
-            "You are logged out from other devices",
-            "info"
-          );
+         
+
+          swal({
+            title: "Sessions cleared",
+            text: "Logging you in",
+            icon: "success",
+            timer: 1000,
+            buttons: false,
+          })
+          // .then((e) => {
+          // });
+          setBackdrop(true);
+          handleLoginNow();
+
           setErrMsg(null);
           // }, 2000);
         }
@@ -558,11 +649,17 @@ const LoginForm = (props) => {
             }}
             onClick={googleAuth}
           >
-             <GoogleIcon
+            <GoogleIcon
               // className="Icons"
-              sx={{ color: "other.dark", fontSize: "2rem", width:"10%" }}
-            /> 
-            <Typography sx={{ color: "other.dark", fontSize: "1rem", width:"60%" }}>
+              sx={{ color: "other.dark", 
+              fontSize: "2rem", 
+              // marginRight: "2.4rem",
+              width:"10%"
+            }}
+            />
+            <Typography sx={{ color: "other.dark", fontSize: "1rem",
+          width:"60%"
+          }}>
               {t("login_with_gmail")}
             </Typography>
           </Button>
@@ -574,24 +671,28 @@ const LoginForm = (props) => {
           >
             <FacebookIcon
               // className="Icons"
-              sx={{ color: "other.dark", fontSize: "2rem", width:"10%" }}
+              sx={{ color: "other.dark", fontSize: "2rem", 
+              // margin: "0px 10px"
+              // marginRight: ".5rem" 
+              width:"10%"
+             }}
             />
-            <Typography sx={{ color: "other.dark", fontSize: "1rem", width:"60%" }}>
+            <Typography sx={{ color: "other.dark", fontSize: "1rem",
+          width:"60%"
+          }}>
               {t("login_with_facebook")}
             </Typography>
           </Button>
           {/* //! my addition */}
-          <Box sx={{width:"100%"}}>
-            <TransitionsModal />
-          </Box>
+          <Box sx={{ width: "100%", display: { xs: "none", sm: "block" } }}>
+             <TransitionsModal />
+           </Box>
           {/* //! my addition */}
           <Typography component="p" variant="p" sx={{ textAlign: "center" }}>
             {t("or")} <br />
             {t("login_with_email")}
           </Typography>
         </Grid>
-        {alert?
-        <Alert severity="info">Login with Google or Facebook if you are outside of Bangladesh</Alert>:<></>}
         {errMsg ? (
           <Stack sx={{ width: "100%" }} spacing={2}>
             <Alert
@@ -609,19 +710,32 @@ const LoginForm = (props) => {
                 </IconButton>
               }
             >
-              <AlertTitle>Error</AlertTitle>
-              <Typography>{errMsg}</Typography>
+              <AlertTitle>{errMsg}</AlertTitle>
+              {/* <Typography>{errMsg}</Typography> */}
               {sessionFound ? (
                 <>
                   <Typography>
-                    Do you want to logout from all other devices?
+                    Click on proceed to continue on this device
                   </Typography>
                   <Button
-                    sx={{ mt: "1rem" }}
-                    variant="outlined"
-                    onClick={clearSession}
+                    sx={{ mt: "1rem", 
+                    // bgcolor:"secondary.main",
+                    // color:"primary.main",
+
+                    bgcolor:"primary.main",
+                      color:"other.white",
+
+                     "&:hover":{
+                      bgcolor:"secondary.main",
+                      color:"primary.main",
+                    } }}
+                    variant="contained"
+                    onClick={()=>{
+                      clearSession();
+                      // handleSubmit();
+                    }}
                   >
-                    Clear Sessions
+                    Proceed
                   </Button>
                 </>
               ) : (
@@ -635,7 +749,6 @@ const LoginForm = (props) => {
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           {/* uncomment letter for login with phone  */}
           <MuiTelInput
-          onClick={()=>{setAlert(true)}}
             sx={{ width: "100%", marginY: "1rem", color: "primary.main" }}
             label="Phone Number"
             defaultCountry="BD"

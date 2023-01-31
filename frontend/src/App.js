@@ -50,6 +50,7 @@ import VerifyCertificate from "./components/VerifyCertificate/VerifyCertificate"
 import SendMessage from "./components/SendMessage/SendMessage";
 import Lottie from "lottie-react";
 import loadingAnimation from "./assets/loadingAnimation.json";
+import ComingSoon from "./pages/ComingSoon";
 
 
 
@@ -208,6 +209,7 @@ function App() {
                     }
                   />
                   <Route path="cart" element={<Cart />} />
+                  <Route path="comingsoon" element={<ComingSoon />} />
                   <Route path="course-details" element={<CoursesDetails />} />
                   <Route path="payment-info" element={<Payment />} />
                   {/* //! Underconstruction */}

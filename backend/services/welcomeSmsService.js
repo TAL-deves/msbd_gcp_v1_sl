@@ -4,6 +4,7 @@ const crypto = require("crypto");
 
 module.exports.welcomeSmsService = (params) => {
   let reciever = params.reciever;
+  let message = params.message;
   const id = crypto.randomBytes(10).toString("hex");
 //   console.log("from sendsms --  "+reciever+"  "+OTP);
   return new Promise((resolve, reject)=> {
@@ -18,7 +19,7 @@ module.exports.welcomeSmsService = (params) => {
         "api_token": "f55icqnw-1lwnu7du-jnrg4euq-66kmlkdl-06uz5jwo",
         "sid": "TECHLTDMASK",
         "msisdn": `${reciever}`,
-        "sms": `Welcome to Mind School. Please visit our website: https://www.mindschoolbd.com or download our app from Play Store or Appstore.`,
+        "sms": `${message}`,
         "csms_id": `${id}`
       })
     

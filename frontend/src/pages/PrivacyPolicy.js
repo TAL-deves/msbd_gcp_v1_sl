@@ -1,8 +1,11 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const PrivacyPolicy = () => {
+    useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      }, []);
     return (
         <Container>
             <Box sx={{ m: "3rem", textAlign:"justify" }}>

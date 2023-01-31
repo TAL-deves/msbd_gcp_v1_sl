@@ -141,7 +141,7 @@ const DownloadApp = () => {
                   }}
                 > */}
                   {/* <img src={applebtn} alt="google" width="60%" /> */}
-                  <Lottie
+                  <Lottie onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                 animationData={appleStore}
                 style={appButtonStyle}
               />

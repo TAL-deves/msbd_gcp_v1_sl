@@ -96,6 +96,7 @@ const sliderData = require("./Database/models/sliderData");
 const faqData = require("./Database/models/faqData");
 const { welcomeSmsService } = require("./services/welcomeSmsService");
 const qrData = require("./Database/models/qrData");
+const extraData = require("./Database/models/extraData");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -5685,6 +5686,17 @@ app.post("/api/qrcheck", async (req, res) => {
   }
 });
 
+//! Temporary redirect to ios app
+app.get("/api/redirecttoappstore", async (req, res) => {
+  try {
+    let data = await extraData.findOne();
+
+    res.redirect(data.redirectionLink);
+  } catch (error) {
+    res.redirect("https://www.mindschoolbd.com/comingsoon");
+  }
+});
+
 //? Getting Log Data
 app.get("/api/checklogdata", async (req, res) => {
   let totalusers = await signUpTemplateCopy.count();
@@ -5810,9 +5822,18 @@ const validateUserSignUp = async (arg) => {
       },
     };
 
+    //TODO: here
+
     // welcomeSmsService({
     //   reciever: phoneNumber
     // })
+
+    await extraData.findOne().then((data) => {
+      welcomeSmsService({
+        reciever: phoneNumber,
+        message: data.welcomeMessage,
+      });
+    });
 
     return msg;
   }
