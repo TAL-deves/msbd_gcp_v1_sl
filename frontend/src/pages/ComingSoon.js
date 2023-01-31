@@ -102,7 +102,7 @@ const ComingSoon = () => {
               <Typography
                 gutterBottom
                 sx={{
-                  fontSize: { lg: "2rem" },
+                  fontSize: "2rem",
                   fontWeight: "500",
                   textAlign: "center",
                 }}

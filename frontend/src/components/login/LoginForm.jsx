@@ -361,8 +361,8 @@ const LoginForm = (props) => {
         localStorageService.setToken(googleData.data.data);
         // //// console.log(googleData.reslut);
         // window.opener.location.reload();
-        // window.opener.document.location.href = "/";
-        // window.close();
+        window.opener.document.location.href = "/";
+        window.close();
         // window.location.href="/courses"
         setBackdrop(false);
       }
