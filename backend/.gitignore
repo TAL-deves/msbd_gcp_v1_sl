@@ -1,0 +1,8 @@
+node_modules
+backend.zip
+package-lock.json
+requestData.log
+responseData.log
+SMSlogData.log
+SSLlogData.log
+info.log

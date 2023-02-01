@@ -1909,6 +1909,8 @@ app.post("/api/certificate", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
+//! ******* certificate API (For mobile) *******/
 app.get("/api/mobilecertificate", async (req, res) => {
   try {
     var request = req.query.request.replaceAll(" ", "+");
@@ -1940,7 +1942,14 @@ app.get("/api/mobilecertificate", async (req, res) => {
       courseID,
     } = JSON.parse(obj);
 
-    // console.log(req.query);
+    // console.log(username,
+    //   instructorName,
+    //   instructorTitle,
+    //   instructorSign,
+    //   completeDate,
+    //   courseName,
+    //   fullName,
+    //   courseID);
 
     completeDate = new Date().toLocaleDateString("en-US", {
       month: "long",
@@ -1956,8 +1965,26 @@ app.get("/api/mobilecertificate", async (req, res) => {
       size: "A4",
     });
 
-    // Draw the certificate image
-    doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+    // // Draw the certificate image
+    // doc.image("./images/mindschool.png", 0, 0, { width: 841 });
+
+
+    if (courseID == "C006") {
+      // Draw the certificate image
+      doc.image("./images/nazishQazi.png", 0, 0, { width: 841 });
+    } else if (
+      courseID == "C001" ||
+      courseID == "C002" ||
+      courseID == "C003" ||
+      courseID == "C004"
+    ) {
+      // Draw the certificate image
+      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+    } else {
+      // Draw the certificate image
+      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+    }
+
 
     // Set the font to Dancing Script
     doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
