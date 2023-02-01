@@ -322,7 +322,7 @@ const SideCart = (props) => {
           swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
         }
         else{
-          if(data.data.result.status===404){
+          if(data.data.result.status===403){
             swal("Promocode didn't match", "Try Again", "error")
           }
           else{

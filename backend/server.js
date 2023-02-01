@@ -4524,7 +4524,7 @@ app.post("/api/applypromocode", async (req, res) => {
         code : promocode
       }).then((data)=>{
         if(!data){
-          let setSendResponseData = new sendResponseData(null, 404, "Invalid promo code");
+          let setSendResponseData = new sendResponseData(null, 403, "Invalid promo code");
           let responseToSend = encryptionOfData(setSendResponseData.success());
           res.send(responseToSend);
         } else {
@@ -4534,7 +4534,7 @@ app.post("/api/applypromocode", async (req, res) => {
             let responseToSend = encryptionOfData(setSendResponseData.success());
             res.send(responseToSend);
           } else {
-            let setSendResponseData = new sendResponseData(null, 404, "Invalid promo code");
+            let setSendResponseData = new sendResponseData(null, 403, "Invalid promo code");
             let responseToSend = encryptionOfData(setSendResponseData.success());
             res.send(responseToSend);
           }
