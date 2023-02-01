@@ -243,8 +243,8 @@ const InstructorDetails = () => {
                   <Grid
                     container
                     xs={10}
-                    sm={8}
-                    md={6}
+                    sm={4}
+                    md={4}
                     lg={6}
                     xl={6}
                     justifyContent="center"

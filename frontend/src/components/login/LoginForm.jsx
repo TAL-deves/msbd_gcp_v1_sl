@@ -119,7 +119,7 @@ export function TransitionsModal() {
           "Access-Control-Allow-Credentials": true,
         })
         .then((response) => {
-          console.log("SEND_QR_DATA_TO_WEB ---- ", response);
+          // console.log("SEND_QR_DATA_TO_WEB ---- ", response);
         });
     }
     sendQrToServer();
@@ -134,7 +134,7 @@ export function TransitionsModal() {
           "Access-Control-Allow-Credentials": true,
         })
         .then((response) => {
-          console.log("Response----- ", response.data.data);
+          // console.log("Response----- ", response.data.data);
           // console.log("Response if matched ", response.data.data.data);
           if (response.data.data.matched) {
             localStorageService.setToken(response.data.data.data);
@@ -349,7 +349,7 @@ const LoginForm = (props) => {
 
       let googleData = JSON.parse(recievedData);
 
-      console.log("google data", googleData);
+      // console.log("google data", googleData);
 
       const localStorageService = LocalStorageService.getService();
       // //// console.log("Google data : ", googleData.data.result.isError);
@@ -431,7 +431,7 @@ const LoginForm = (props) => {
     //   "_self",
 
     // );
-    window.open(
+    let googleWindow= window.open(
       `${process.env.REACT_APP_API_URL}/api/google`,
       "",
       `width=${w}, 
@@ -440,6 +440,7 @@ const LoginForm = (props) => {
       left=${left}`
     );
     setBackdrop(true);
+    googleWindow.onunload = function(){ setBackdrop(false); };
   };
   const facebookAuth = () => {
     var w = 620;
@@ -451,7 +452,7 @@ const LoginForm = (props) => {
     //   "_self"
 
     // );
-    window.open(
+    let facebookWindow= window.open(
       `${process.env.REACT_APP_API_URL}/api/facebook/callback`,
       "",
       `width=${w}, 
@@ -460,6 +461,7 @@ const LoginForm = (props) => {
       left=${left}`
     );
     setBackdrop(true);
+    facebookWindow.onunload = function(){ setBackdrop(false); };
   };
   //   let fetchDeviceData = async () => {
   //     await api

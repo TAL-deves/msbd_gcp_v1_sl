@@ -151,7 +151,7 @@ const Navigationbar = (props) => {
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             {/* <Link to={"/"} style={{ textDecoration: "none", color: "#fff" }}> */}
               {/* <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-              <Box onClick={()=>{navigate("/")}} sx={{cursor:"pointer", display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
+              <Box onClick={()=>{navigate("/")}} sx={{cursor:"pointer", display: { xs: "none", lg: "flex" }, mr: 1, mt: 1 }}>
                 {localStorage.getItem("theme") === "theme" ?
                   <img src={logonill} alt="logo" width="50" />
                   :
@@ -185,7 +185,7 @@ const Navigationbar = (props) => {
           </Box>
           {/* <h1>{t("welcome")}</h1> */}
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", lg: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -211,7 +211,7 @@ const Navigationbar = (props) => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", lg: "none" },
               }}
             >
               {/* {pages.map((page) => ( */}
@@ -295,7 +295,7 @@ const Navigationbar = (props) => {
                 <Box sx={{
               minWidth: 90,
               marginRight: "5px",
-              display: { xs: "block", md: "none" },
+              display: { xs: "block", lg: "none" },
               cursor:"pointer",
               
             }}>
@@ -341,7 +341,7 @@ const Navigationbar = (props) => {
             href="/"
             sx={{
               mr: 0,
-              display: { xs: "flex", md: "none" },
+              display: { xs: "flex", lg: "none" },
               fontSize: "1.3rem",
               flexGrow: 1,
               color: "inherit",
@@ -381,7 +381,7 @@ const Navigationbar = (props) => {
             sx={{
               flexGrow: 1,
               justifyContent: "center",
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", lg: "flex" },
             }}
           >
             {pages.map((page) => (
@@ -444,7 +444,7 @@ const Navigationbar = (props) => {
          <Box sx={{
               minWidth: 90,
               marginRight: "5px",
-              display: { xs: "none", md: "block" },
+              display: { xs: "none", lg: "block" },
               cursor:"pointer",
               
             }}>
@@ -472,7 +472,7 @@ const Navigationbar = (props) => {
           {userId ? (
             // localstoragedata
             <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ display: { xs: "none", lg: "flex" } }}>
 
                 <Button
                   variant="outlined"
@@ -598,7 +598,7 @@ const Navigationbar = (props) => {
 
 
               </Box>
-              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ display: { xs: "flex", lg: "none" } }}>
                 <Link to="/userprofile">
                 <AccountCircleIcon
                   sx={{
@@ -668,7 +668,7 @@ const Navigationbar = (props) => {
             </Stack>
           ) : (
             <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ display: { xs: "none", lg: "flex" } }}>
                 <Link
                   className="Link"
                   style={{ textDecoration: "none" }}
@@ -711,7 +711,7 @@ const Navigationbar = (props) => {
                   </Button>
                 </Link>
               </Box>
-              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ display: { xs: "flex", lg: "none" } }}>
                 <Link
                   className="Link"
                   style={{ textDecoration: "none" }}

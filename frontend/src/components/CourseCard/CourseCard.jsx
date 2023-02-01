@@ -117,7 +117,10 @@ const CourseCard = (props) => {
             <Typography variant="body2" noWrap color="text.secondary">
               {instructor ? <>{instructor}</> : <>Course instructor</>}
             </Typography>
-            <Typography variant="h6">
+            <Typography variant="h6" 
+            // sx={{color:"green", fontWeight:"600"}}
+            
+            >
               {price ? <>&#x9F3;{price}</> : <>&#x9F3;Course price</>}
             </Typography>
             <Typography variant="body2">

@@ -407,7 +407,7 @@ const UserProfile = (props) => {
                         focused
                         fullWidth
                         id="name"
-                        type="number"
+                        // type="number"
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
                         value={phonenumber}
@@ -420,7 +420,6 @@ const UserProfile = (props) => {
                         inputProps={{
                           maxLength: 14,
                         }}
-
                         autoFocus
                       /> :
                       <TextField
@@ -428,7 +427,7 @@ const UserProfile = (props) => {
                         focused
                         fullWidth
                         id="name"
-                        type="number"
+                        
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
                         value={phonenumber}
