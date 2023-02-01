@@ -122,7 +122,7 @@ const MyCourses = (props) => {
             <Typography
               sx={{
                 fontSize: "2rem",
-                m: "5px",
+                m: "5px", textAlign:"center"
               }}
             >
               My courses
@@ -275,7 +275,9 @@ const MyCourses = (props) => {
 
               </Box> :
               <Box>
+                <Typography sx={{textAlign:"center"}}>
                 no courses
+                </Typography>
               </Box>}
           </Container>
 

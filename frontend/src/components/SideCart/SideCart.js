@@ -30,7 +30,7 @@ import { multiStepContext } from "../../pages/StepContext";
 import swal from "sweetalert";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Modal, TextField } from "@mui/material";
+import { Alert, Divider, Modal, TextField } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import { WindowSharp } from "@mui/icons-material";
 import { navigate, useNavigate, useLocation, Navigate } from "react-router-dom";
@@ -101,6 +101,7 @@ const SideCart = (props) => {
   const [promocode, setPromocode] = React.useState("");
   const [discountAmount, setDiscountAmount] = React.useState(1);
   const [checkpromocode, setCheckPromocode] = React.useState("");
+  const [finalPrice, setFinalPrice]= React.useState()
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [checkBoxStatus, setCheckBoxStatus] = React.useState(false);
@@ -289,6 +290,7 @@ const SideCart = (props) => {
 
   }
 
+
   // let discountedTotal = total;
   // // // console.log("discounted Total", discountAmount)
   // if (promocode === checkpromocode) {
@@ -311,23 +313,29 @@ const SideCart = (props) => {
         }
       )
       .then((data) => {
-        setCheckPromocode(data.data.data.code)
-        // console.log(data.data.data.code, promocode, "new code")
-        if (promocode === data.data.data.code) {
-          setDiscountAmount(data.data.data.amount)
-          // total= (total * data.data.data.amount)         
-          total = (total * data.data.data.amount)
-
+        setCheckPromocode(data.data.data)
+        if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user");
+    
+          swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
         }
-        else {
-          swal("Promocode didn't match", "Try Again", "error")
-
-
+        else{
+          if(data.data.result.status===404){
+            swal("Promocode didn't match", "Try Again", "error")
+          }
+          else{
+            if (promocode === data.data.data.code) {
+              setDiscountAmount(data.data.data.amount)            
+                total = total - (total * data.data.data.amount)               
+            }
+          }
         }
+        
+        
       });
   };
-  // console.log("discounted total", discountAmount)
-
 
 
   return (
@@ -464,47 +472,67 @@ const SideCart = (props) => {
                 </Typography>
               </Box>
 
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Box 
+              sx={{ 
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                mb:2
+                }}
+                >
                 <TextField
-                  margin="normal"
-                  // required
-                  // focused
-                  fullWidth
                   id="name"
                   label="Promocode"
                   size="small"
-                  style={{ width: 110 }}
-                  // value={}
+                  fullWidth
                   onChange={(e) => {
                     setPromocode(e.target.value)
-                    // console.log("promocode", promocode)
                   }}
                   name="name"
                   autoComplete="name"
-                  inputProps={{
-                    maxLength: 7,
-                  }}
-                // autoFocus
                 />
-                <Button variant="contained" sx={{ marginTop: ".3rem", marginLeft: "1rem" }}
-                  onClick={usePromoCode}>
-                  Submit
+                <Button 
+                size="medium"
+                variant="contained" 
+                onClick={usePromoCode}
+                disabled={promocode?false:true}
+                >
+                Submit
                 </Button>
               </Box>
               <Box >
                 {discountAmount !== 1 ?
-                  <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳
-                    {total * discountAmount}</Typography> : ""}
-                {/* <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main" }}>{t("total")}:৳{promocode !== checkpromocode ? total : discountedTotal}</Typography> */}
+                  <>
+                   {discountAmount !== 1 ?
+                  <Alert severity="success" sx={{
+                    mb:2
+                  }}>Applied promocode for {checkpromocode?.discount} discount</Alert>:""}
+                  <Divider variant="middle" sx={{
+                    mb:2
+                  }}/>
+                  <Typography sx={{ fontWeight: "800", fontSize: "1.5rem", color: "primary.main", mb:1 }}>{t("total")}:৳
+                    {total-(total * discountAmount)}
+                    </Typography> 
+                    
+                  </>
+                    : 
+                    ""}
+                
               </Box>
 
               {/* hard launch  */}
               <Button
                 //  onClick={response}
                 onClick={() => {
-                  // // console.log("discounted", discountedTotal)
-                  let price = total * discountAmount
-                  navigate("/payment-info", { state: { total: price } }
+                  
+                   let price
+                   if(discountAmount===1){
+                         price=total
+                   }
+                   else{
+                    price=total-(total * discountAmount)
+                   }
+                  navigate("/payment-info", { state: { total: price }}
                   )
                 }}
                 disabled={(courseList.length === 0) ? true : false || checkBoxStatus === false}

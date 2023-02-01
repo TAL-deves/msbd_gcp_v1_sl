@@ -207,7 +207,9 @@ if(courses!==null && courses.length !== 0){
    newButton=true
 }
 
-
+useEffect(() => {
+  window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+}, []);
 
 return (
    
@@ -216,7 +218,7 @@ return (
       {/* <Typography variant="h3" sx={{display:"flex", justifyContent:"center"}}>Course Details</Typography> */}
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}
-       sx={{marginTop:"5rem"}}>
+       sx={{marginTop:"1rem"}}>
         <Grid item xs={12} lg={6} data-aos="fade-right">
           <Typography variant="h4" sx={{marginBottom:"1rem",color:"primary.main"}}>
           

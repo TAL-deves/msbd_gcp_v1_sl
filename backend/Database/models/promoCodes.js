@@ -4,12 +4,15 @@ const promoCodes = new mongoose.Schema({
   code: {
     type: String,
   },
-  validity: {
+  discount: {
+    type: String,
+  },
+  amount: {
     type: Number,
   },
-  activeStatus: {
+  active: {
     type: Boolean,
-  }
+  },
 });
 
 module.exports = mongoose.model("promoCodes", promoCodes);

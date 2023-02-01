@@ -97,6 +97,7 @@ const faqData = require("./Database/models/faqData");
 const { welcomeSmsService } = require("./services/welcomeSmsService");
 const qrData = require("./Database/models/qrData");
 const extraData = require("./Database/models/extraData");
+const promoCodes = require("./Database/models/promoCodes");
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -4499,7 +4500,7 @@ app.post("/api/applypromocode", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-    console.log(req.body);
+    const { promocode } = req.body;
 
     let userSessionStatus = await tokenChecking(req);
 
@@ -4518,23 +4519,39 @@ app.post("/api/applypromocode", async (req, res) => {
 
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-    if (userSessionStatus) {
-      let promocode = {
-        code: "ABC123",
-        discount: "50%",
-        amount: 0.5,
-      };
+    if (userSessionStatus.data != null) {
+      await promoCodes.findOne({
+        code : promocode
+      }).then((data)=>{
+        if(!data){
+          let setSendResponseData = new sendResponseData(null, 404, "Invalid promo code");
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+          res.send(responseToSend);
+        } else {
 
-      let setSendResponseData = new sendResponseData(promocode, 200, null);
-      let responseToSend = encryptionOfData(setSendResponseData.success());
-      res.send(responseToSend);
-    } else {
-      let setSendResponseData = new sendResponseData(
-        null,
-        404,
-        "Promo code is not valid!"
-      );
-      let responseToSend = encryptionOfData(setSendResponseData.error());
+          if(data.active){
+            let setSendResponseData = new sendResponseData(data, 200, null);
+            let responseToSend = encryptionOfData(setSendResponseData.success());
+            res.send(responseToSend);
+          } else {
+            let setSendResponseData = new sendResponseData(null, 404, "Invalid promo code");
+            let responseToSend = encryptionOfData(setSendResponseData.success());
+            res.send(responseToSend);
+          }
+        }
+      });
+    } 
+    // else {
+    //   let setSendResponseData = new sendResponseData(
+    //     null,
+    //     404,
+    //     "Promo code is not valid!"
+    //   );
+    //   let responseToSend = encryptionOfData(setSendResponseData.error());
+    //   res.send(responseToSend);
+    // }
+    else {
+      let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
   } catch (error) {
@@ -5795,9 +5812,22 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   try {
-    console.log(req.query);
-    console.log(req.params);
-    res.send("test");
+
+    const {promocode } = req.body;
+    
+    // console.log("promocode ---- ",promocode);
+
+    await promoCodes.findOne({
+      code : promocode
+    }).then((data)=>{
+      if(data.active){
+
+      } else {
+
+      }
+    });
+
+
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, error.msg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -5851,16 +5881,17 @@ const validateUserSignUp = async (arg) => {
 
     //TODO: here
 
-    // welcomeSmsService({
-    //   reciever: phoneNumber
-    // })
-
     await extraData.findOne().then((data) => {
-      welcomeSmsService({
-        reciever: phoneNumber,
-        message: data.welcomeMessage,
-      });
+      // data.welcomeMessageActive
+      
+      if(data.welcomeMessageActive){
+        welcomeSmsService({
+          reciever: phoneNumber,
+          message: data.welcomeMessage,
+        });
+      }
     });
+
 
     return msg;
   }

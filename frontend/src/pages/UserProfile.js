@@ -4,10 +4,10 @@ import {
   Button,
   CircularProgress,
   Container,
-  
+
   MenuItem,
   Modal,
-    TextField,
+  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -79,7 +79,7 @@ const UserProfile = (props) => {
   const [load, setLoad] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
- 
+
   const [phonenumber, setPhonenumber] = useState();
   const [userPhone, setUserPhone] = useState();
   const [age, setAge] = useState();
@@ -150,9 +150,9 @@ const UserProfile = (props) => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+      swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
       // navigate("/login")
-      
+
       // console.log("removed sesssion")
     }
     else {
@@ -192,7 +192,7 @@ const UserProfile = (props) => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+      swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
       // navigate("/login")
       // window.location.href = "/login";
       // // console.log("removed sesssion")
@@ -228,7 +228,7 @@ const UserProfile = (props) => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
+      swal("You are logged out", "Your session ended, Please login again", "info").then(() => { window.location.href = "/login"; })
       // navigate("/login")
       // window.location.href = "/login";
       // console.log("removed sesssion")
@@ -308,20 +308,20 @@ const UserProfile = (props) => {
   return (
     <>
       {load ? (
-        <Box sx={{width:"100%"}}>
-        <Container sx={{
+        <Box sx={{ width: "100%" }}>
+          <Container sx={{
 
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginTop: "5rem",
-          marginLeft:"12vw"
-          
-        }}>
-          <CircularProgress sx={{
-            color: "primary.main"
-          }} />
-        </Container>
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "5rem",
+            marginLeft: "12vw"
+
+          }}>
+            <CircularProgress sx={{
+              color: "primary.main"
+            }} />
+          </Container>
         </Box>
       ) : (
         <Box>
@@ -349,7 +349,7 @@ const UserProfile = (props) => {
                 md: "row",
               },
               // alignContent: "center",
-              alignItems:"center"
+              alignItems: "center"
             }}
           >
             <Grid item xs={9} md={8}>
@@ -407,6 +407,7 @@ const UserProfile = (props) => {
                         focused
                         fullWidth
                         id="name"
+                        type="number"
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
                         value={phonenumber}
@@ -427,6 +428,7 @@ const UserProfile = (props) => {
                         focused
                         fullWidth
                         id="name"
+                        type="number"
                         label="Phone Number"
                         onChange={(e) => { setPhonenumber(e.target.value) }}
                         value={phonenumber}
@@ -435,7 +437,7 @@ const UserProfile = (props) => {
                         inputProps={{
                           maxLength: 14,
                         }}
-                        helperText= "Phone number can be added only once"
+                        helperText="Phone number can be added only once"
 
                         // autoFocus
                         onFocus={() => setPhoneFocus(true)}
@@ -444,8 +446,8 @@ const UserProfile = (props) => {
                             true :
                             false
                         }
-                        
-                        
+
+
                       />}
                     <TextField
                       margin="normal"
@@ -539,8 +541,7 @@ const UserProfile = (props) => {
           ) : ( */}
               <>
                 {userprofileimage ?
-                  <>
-
+                  <>                   
                     <img src={userprofileimage} alt="user profile" width={200} height={200}
                     />
                   </>
@@ -616,19 +617,19 @@ const UserProfile = (props) => {
                               />
                             </Grid>
                             <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
-                              {webimage ? 
-                              <>
-                              {webimage.length<2048000?
-                              <img src={webimage} alt=""
-                              style={{
-                                //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
-                                //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
-                                height: "200px",
-                                width: "200px",
-                                objectFit: "contain"
-                              }} />:<Typography sx={{color:"red"}}>Image is too big, try an image smaller than 2MB</Typography>}
-                              
-                              </> :
+                              {webimage ?
+                                <>
+                                  {webimage.length < 2048000 ?
+                                    <img src={webimage} alt=""
+                                      style={{
+                                        //  width: {md:"200",lg:"200", sm:"100" ,xs:"100"}, 
+                                        //  height: {md:"200",lg:"200", sm:"100" ,xs:"100"},
+                                        height: "200px",
+                                        width: "200px",
+                                        objectFit: "contain"
+                                      }} /> : <Typography sx={{ color: "red" }}>Image is too big, try an image smaller than 2MB</Typography>}
+
+                                </> :
                                 <>{image ? <img src={(image)} alt=""
                                 // style={{maxWidth: "100%", height:"auto"
                                 //  }}
@@ -670,7 +671,7 @@ const UserProfile = (props) => {
                             <Button
                               variant="outlined"
                               component="label"
-                              disabled={image === '' && webimage === '' || webimage.length>2048000 ? true : false}
+                              disabled={image === '' && webimage === '' || webimage.length > 2048000 ? true : false}
                               onClick={handleApiWeb}
 
                             >
