@@ -230,26 +230,32 @@ const InstructorDetails = () => {
             >
               Courses List of {instructorInfo?.name}
             </Typography>
+
             <Grid
+              xs={10}
+                    sm={10}
+                    md={10}
+                    lg={10}
+                     xl={8}
               sx={{
                 display: "flex", justifyContent: "space-around", alignItems: "center",
                 flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
               }}
             >
+                  <Grid
+                    container
+                    xs={10}
+                    sm={10}
+                    md={10}
+                    lg={10}
+                     xl={8}
+                    justifyContent="center"
+                  >
 
               {courses.map((course) => {
                 // console.log("first course", course)
                 return (
-                  <Grid
-                    container
-                    xs={10}
-                    sm={4}
-                    md={4}
-                    lg={6}
-                    xl={6}
-                    justifyContent="center"
-                  >
-                    <Box key={course.id} data-aos="flip-left">
+                <Box key={course.id} data-aos="flip-left">
                       {/* <CardGridStyle> */}
                         <Card sx={{width:"350px", m:".3rem"}}>
                           <CardActionArea>
@@ -342,12 +348,10 @@ const InstructorDetails = () => {
                           </CardActionArea>
                         </Card>
                       {/* </CardGridStyle> */}
-                    </Box>
-                    {/* // <Box key={course.id}>{course.title}</Box> */}
-                  </Grid>
-                );
+                </Box>
+               );
               })}
-
+                </Grid>
             </Grid>
             <Box></Box>
           </Box>

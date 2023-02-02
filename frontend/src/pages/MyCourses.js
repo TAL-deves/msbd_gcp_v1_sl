@@ -122,7 +122,7 @@ const MyCourses = (props) => {
             <Typography
               sx={{
                 fontSize: "2rem",
-                m: "5px", textAlign:"center"
+                m: "5px", textAlign: "center"
               }}
             >
               My courses
@@ -150,7 +150,15 @@ const MyCourses = (props) => {
                         <Table sx={{ minWidth: { xs: "100%", sm: "100%", md: 700, lg: 900, xl: 900 } }} aria-label="simple table">
                           <TableRow>
                             {courses.map((course) => {
-
+                              
+                              // let newDate= (new Date(course.expirationDate).toLocaleDateString("en-US", {
+                              //   month: "long",
+                              //   day: "numeric",
+                              //   year: "numeric",
+                              //   hour: "numeric",
+                              //   minute: "numeric"
+                              // }))
+                              //  console.log(course)
                               return (
 
                                 <Box key={course.courseID} fullWidth
@@ -170,7 +178,7 @@ const MyCourses = (props) => {
                                       hour={course.courseLength}
                                       lecture={course.totalLecture}
                                       fullObject={{ ...course }}
-
+                                      expirationDate={course.expirationDate}
                                     />
                                     {/* </TableCell> */}
                                     {/* <TableCell>
@@ -180,8 +188,10 @@ const MyCourses = (props) => {
                                     {/* <Box sx={{ width: '100%' }}> */}
                                     {/* <LinearProgress variant="determinate" value={9} /> */}
                                     <Box sx={{ width: { xs: "50%", sm: "50%", md: "50%", lg: '50%', xl: "50%" }, margin: "2rem" }}>
-                                      {/* <BorderLinearProgress variant="determinate" value={course.status} /> */}
-                                      <LinearProgress variant="determinate" value={course.status} sx={{
+                                      
+                                    {/* <Box>
+                                        <Typography><b>Expiry Date:</b>{course.expirationDate}</Typography>  </Box> */}
+                                   <LinearProgress variant="determinate" value={course.status} sx={{
                                         height: 10,
                                         borderRadius: "5px"
                                       }} />
@@ -227,24 +237,24 @@ const MyCourses = (props) => {
                                               }
                                             }}
                                           > */}
-                                            {course.status === 0 ?
-                                              <Button
+                                          {course.status === 0 ?
+                                            <Button
                                               variant="contained"
-                                              sx={{ width: 127}}
+                                              sx={{ width: 127 }}
                                             >
-                                              
+
                                               Start
 
                                             </Button>
-                                              :
-                                              <Button
-                                                variant="contained"
-                                                sx={{ width: 127}}
-                                              >
+                                            :
+                                            <Button
+                                              variant="contained"
+                                              sx={{ width: 127 }}
+                                            >
 
-                                                Continue
+                                              Continue
 
-                                              </Button>}
+                                            </Button>}
 
                                           {/* </Button> */}
                                         </Link>
@@ -275,8 +285,8 @@ const MyCourses = (props) => {
 
               </Box> :
               <Box>
-                <Typography sx={{textAlign:"center"}}>
-                no courses
+                <Typography sx={{ textAlign: "center" }}>
+                  no courses
                 </Typography>
               </Box>}
           </Container>

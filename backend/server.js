@@ -4090,6 +4090,7 @@ app.post("/api/usercourses", async (req, res) => {
       });
 
       let userallcourses = [];
+      let courseExpirationDates = [];
 
       //? NO expiry checking
       // userCourses.map((item) => {
@@ -4133,6 +4134,7 @@ app.post("/api/usercourses", async (req, res) => {
             // console.log("expired --- ", item);
             item.coursesList.map((item2) => {
               userallcourses.push(item2);
+              courseExpirationDates.push(item.expirationDate)
             });
           }
         })
@@ -4149,7 +4151,7 @@ app.post("/api/usercourses", async (req, res) => {
         // array3 = [...array2];
         // console.log("array1 ----- ", array1);
 
-        array1.map((e) => {
+        array1.map((e, index) => {
           let objects = array2.find((e2) => e2.courseID == e);
           // console.log("e --- ", e, "objects ---", objects);
 
@@ -4162,6 +4164,11 @@ app.post("/api/usercourses", async (req, res) => {
             instructor: objects.instructor.name,
             complete: false,
             status: 0,
+            expirationDate: new Date(courseExpirationDates[index]).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric"
+            })
           };
 
           array31.push({ ...courses });
@@ -4262,6 +4269,7 @@ app.post("/api/usercourses", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
 //! payment history (encrypiton, token check)
 app.post("/api/paymenthistory", async (req, res) => {
   try {
@@ -4523,6 +4531,7 @@ app.post("/api/applypromocode", async (req, res) => {
       await promoCodes.findOne({
         code : promocode
       }).then((data)=>{
+        console.log("data ----", data);
         if(!data){
           let setSendResponseData = new sendResponseData(null, 403, "Invalid promo code");
           let responseToSend = encryptionOfData(setSendResponseData.success());

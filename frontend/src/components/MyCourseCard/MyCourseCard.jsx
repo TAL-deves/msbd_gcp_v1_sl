@@ -21,7 +21,7 @@ const MyCourseCard = (props) => {
   let hour = props.hour;
   let lecture = props.lecture;
   let img = props.img;
-
+  let expirationDate= props.expirationDate
 
  //// console.log("fullObject.id", fullObject)
   const dispatch= useDispatch()
@@ -112,9 +112,15 @@ const MyCourseCard = (props) => {
           {instructor ? <>{instructor}</> : <>Course instructor</>}
         </Typography>
         <Typography variant="body2">
-          {hour ? <>Total {hour} hours</> : <>Course hour</>} |{" "}
+          {hour ? <>Total {hour} hours</> : <>Course hour</>}
+           <br/>
           {lecture ? <>{lecture} lessons</> : <>Course lecture</>}
         </Typography>
+        <Typography  variant="body2">
+          {expirationDate ? <>
+          <Typography sx={{fontSize:".9rem"}}>Expiry Date:</Typography> <Typography sx={{fontSize:".9rem", color:"red"}}>{expirationDate}</Typography></> : <>Expiry Date</>} 
+        </Typography>
+        
       </CardContent>
       {/* <CardActions sx={{display:"flex", alignItems:"flex-start",
     justifyContent:"space-between"}}>

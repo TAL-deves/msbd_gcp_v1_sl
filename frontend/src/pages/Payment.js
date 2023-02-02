@@ -594,7 +594,6 @@ const Payment = () => {
                 handleUpdateUserProfile();
                 setLoad(true);
               }}
-
             disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber || !validPhone}
           >
             Checkout

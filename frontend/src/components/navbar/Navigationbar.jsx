@@ -380,7 +380,7 @@ const Navigationbar = (props) => {
           <Box
             sx={{
               flexGrow: 1,
-              justifyContent: "center",
+              justifyContent:"space-evenly",
               display: { xs: "none", lg: "flex" },
             }}
           >
@@ -400,7 +400,7 @@ const Navigationbar = (props) => {
                     // py: 2,
                     color: "secondary.main",
                     display: "block",
-                    padding: "0 55px",
+                    padding: "0 40px",
                     fontSize: "1rem",
                     fontWeight:"800"
                   }}
@@ -479,9 +479,13 @@ const Navigationbar = (props) => {
                   onClick={()=>{navigate("/userprofile")}}
                   // onMouseOver={handleOpenUserMenu}
                   sx={{
+                  
+                  letterSpacing:"0px",
                     borderColor: "other.white",
                     color: "other.white",
-                    marginRight: "15px", fontWeight:"800",
+                    marginRight: "15px",
+                     fontWeight:"800",
+                    //  padding:"1px 11px",
                     "&:hover": {
                       color: "other.white",
                       border: "1px solid",
@@ -541,6 +545,7 @@ const Navigationbar = (props) => {
                   className="Login"
                   variant="contained"
                   sx={{
+                    
                     color: "other.white",
                     backgroundColor: "secondary.main",
                     border: "1px solid",

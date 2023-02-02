@@ -273,7 +273,7 @@ const Courses = (props) => {
       >
         <Grid sx={{
           display: "flex",
-          flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "row", xs: "column-reverse" }
+          flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "column-reverse", xs: "column-reverse" }
         }}>
           <Grid
             container
