@@ -1,206 +1,146 @@
-const dotenv = require('dotenv');
-const {
-  createLogger,
-  transports,
-  format
-} = require('winston');
-require('winston-mongodb');
+const dotenv = require("dotenv");
+const { createLogger, transports, format, level } = require("winston");
+require("winston-mongodb");
+var winston = require('winston');
+require('winston-daily-rotate-file');
 
 dotenv.config();
 
+
+// const logger = createLogger({
+//   transports: [
+//       new transports.File({
+//           filename: './logsData/info.log',
+//           level: 'info',
+//           format: format.combine(format.timestamp(), format.json())
+//       })
+//     //   ,
+//     //   new transports.MongoDB({
+//     //       level: 'info',
+//     //       db: process.env.DATABASE_CONNECT,
+//     //       options: {
+//     //           useUnifiedTopology: true
+//     //       },
+//     //       collection: 'logData',
+//     //       format: format.combine(format.timestamp(), format.json())
+//     //   }),
+//     //   new transports.MongoDB({
+//     //     level: 'error',
+//     //     db: process.env.DATABASE_CONNECT,
+//     //     options: {
+//     //         useUnifiedTopology: true
+//     //     },
+//     //     collection: 'logData',
+//     //     format: format.combine(format.timestamp(), format.json())
+//     // })
+//   ]
+// })
+
 const logger = createLogger({
-  transports: [
-      new transports.File({
-          filename: './logsData/info.log',
-          level: 'info',
-          format: format.combine(format.timestamp(), format.json())
-      })
-    //   ,
-    //   new transports.MongoDB({
-    //       level: 'info',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'logData',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   }),
-    //   new transports.MongoDB({
-    //     level: 'error',
-    //     db: process.env.DATABASE_CONNECT,
-    //     options: {
-    //         useUnifiedTopology: true
-    //     },
-    //     collection: 'logData',
-    //     format: format.combine(format.timestamp(), format.json())
-    // })
-  ]
-})
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-info.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
 const SMSlogger = createLogger({
-  transports: [
-      new transports.File({
-          filename: './logsData/SMSlogData.log',
-          level: 'info',
-          format: format.combine(format.timestamp(), format.json())
-      })
-    //   ,
-    //   new transports.MongoDB({
-    //       level: 'info',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'SMSlogData',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   }),
-    //   new transports.MongoDB({
-    //     level: 'error',
-    //     db: process.env.DATABASE_CONNECT,
-    //     options: {
-    //         useUnifiedTopology: true
-    //     },
-    //     collection: 'SMSlogData',
-    //     format: format.combine(format.timestamp(), format.json())
-    // })
-  ]
-})
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-SMSlogData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
 const SSLlogger = createLogger({
-  transports: [
-      new transports.File({
-          filename: './logsData/SSLlogData.log',
-          level: 'info',
-          format: format.combine(format.timestamp(), format.json())
-      })
-    //   ,
-    //   new transports.MongoDB({
-    //       level: 'info',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'SSLlogData',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   }),
-    //   new transports.MongoDB({
-    //     level: 'error',
-    //     db: process.env.DATABASE_CONNECT,
-    //     options: {
-    //         useUnifiedTopology: true
-    //     },
-    //     collection: 'SSLlogData',
-    //     format: format.combine(format.timestamp(), format.json())
-    // })
-  ]
-})
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-SSLlogData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
+
 
 const requestLogger = createLogger({
-  transports: [
-      new transports.File({
-          filename: './logsData/requestData.log',
-          level: 'info',
-          format: format.combine(format.timestamp(), format.json())
-      })
-    //   ,
-    //   new transports.MongoDB({
-    //       level: 'info',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'requestLogData',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   }),
-    //   new transports.MongoDB({
-    //     level: 'error',
-    //     db: process.env.DATABASE_CONNECT,
-    //     options: {
-    //         useUnifiedTopology: true
-    //     },
-    //     collection: 'requestLogData',
-    //     format: format.combine(format.timestamp(), format.json())
-    // })
-  ]
-})
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-requestData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
 const responseLogger = createLogger({
-  transports: [
-      new transports.File({
-          filename: './logsData/responseData.log',
-          level: 'info',
-          format: format.combine(format.timestamp(), format.json())
-      })
-    //   ,
-    //   new transports.MongoDB({
-    //       level: 'info',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'responseLogData',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   }),
-    //   new transports.MongoDB({
-    //     level: 'error',
-    //     db: process.env.DATABASE_CONNECT,
-    //     options: {
-    //         useUnifiedTopology: true
-    //     },
-    //     collection: 'responseLogData',
-    //     format: format.combine(format.timestamp(), format.json())
-    // })
-  ]
-})
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-responseData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
 const videoLogger = createLogger({
-    transports: [
-        new transports.File({
-            filename: './logsData/videoLogData.log',
-            level: 'info',
-            format: format.combine(format.timestamp(), format.json())
-        })
-    ]
-  })
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-videoLogData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
-  const userAuditLogger = createLogger({
-    transports: [
-        new transports.File({
-            filename: './logsData/userAuditLogger.log',
-            level: 'info',
-            format: format.combine(format.timestamp(), format.json())
-        })
-    //     ,
-    //     new transports.MongoDB({
-    //         level: 'info',
-    //         db: process.env.DATABASE_CONNECT,
-    //         options: {
-    //             useUnifiedTopology: true
-    //         },
-    //         collection: 'userAudtLogger',
-    //         format: format.combine(format.timestamp(), format.json())
-    //     }),
-    //     new transports.MongoDB({
-    //       level: 'error',
-    //       db: process.env.DATABASE_CONNECT,
-    //       options: {
-    //           useUnifiedTopology: true
-    //       },
-    //       collection: 'userAudtLogger',
-    //       format: format.combine(format.timestamp(), format.json())
-    //   })
-    ]
-  })
+const userAuditLogger = createLogger({
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-userAuditLogger.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
 
-  const mobileDataLogger = createLogger({
-    transports: [
-        new transports.File({
-            filename: './logsData/mobileLogData.log',
-            level: 'info',
-            format: format.combine(format.timestamp(), format.json())
-        })
-    ]
-  })
+const mobileDataLogger = createLogger({
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new winston.transports.DailyRotateFile({
+    level: "info",
+    filename: 
+      `./logsData/%DATE%-mobileLogData.log`,
+    datePattern: "YYYY-MM-DD",
+    timestamp: new Date(),
+  })],
+  exitOnError: false,
+});
+
 
 module.exports = {
   logger: logger,
@@ -210,5 +150,5 @@ module.exports = {
   responseLogger: responseLogger,
   videoLogger: videoLogger,
   userAuditLogger: userAuditLogger,
-  mobileDataLogger: mobileDataLogger
-}
+  mobileDataLogger: mobileDataLogger,
+};

@@ -5803,7 +5803,7 @@ app.post("/api/sessioncheck", async (req, res) => {
 
 //! Testing point
 
-app.post("/api/testpostreq", async (req, res) => {
+app.post("/api/testpostreq", async (req, res) => {  
   let data = {
     data: req.body,
     send: "Sent from backend",
