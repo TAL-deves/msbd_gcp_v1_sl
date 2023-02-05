@@ -4190,6 +4190,8 @@ app.post("/api/usercourses", async (req, res) => {
               ],
             });
 
+            // console.log("userCompletedLessons",userCompletedLessons);
+            
             let userCompletedLessonsUpdated = [];
 
             if (userCompletedLessons[0] !== null) {
@@ -4204,17 +4206,20 @@ app.post("/api/usercourses", async (req, res) => {
                 (item, index) =>
                   userCompletedLessonsUpdated.indexOf(item) === index
               );
-
+              
+              // console.log(" userCompletedLessonUpdatedFiltered ", userCompletedLessonUpdatedFiltered);
             //? if language is en then send bn data
 
             coursedetailsData = data[0].coursesData.en;
 
             let result = coursedetailsData.find(
-              (item) => item.courseID == item.courseID
+              (item5) => item5.courseID == item.courseID
             );
 
             let total_course = userCompletedLessonUpdatedFiltered.length;
             let total_completed = parseInt(result.totalLecture);
+
+            // console.log(" total_course ", result.courseID);
 
             let progress = (total_course / total_completed) * 100;
 
@@ -5820,28 +5825,24 @@ app.get("/api/testgetreq", async (req, res) => {
 });
 
 app.post("/api/testingpoint", async (req, res) => {
-  try {
+  
+  let data = await subscribers.find().count()
+  // let newUsers = await signUpTemplateCopy.find({
+  //   creation_date:{
+  //      "$gte" : new Date("2013-10-0T00:00:00Z"), 
+  //      "$lt" : new Date("2013-10-02T00:00:00Z") 
+  //     }
+  // })
 
-    const {promocode } = req.body;
-    
-    // console.log("promocode ---- ",promocode);
+  var date = new Date();
+  console.log(date.toLocaleDateString("en-US"));
+  
+  date.setDate(date.getDate() - 1);
 
-    await promoCodes.findOne({
-      code : promocode
-    }).then((data)=>{
-      if(data.active){
+  console.log(date.toLocaleDateString("en-US"));
 
-      } else {
+  res.send("okay "+data)
 
-      }
-    });
-
-
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, error.msg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
 });
 
 //* <---  Token portoion  --->
