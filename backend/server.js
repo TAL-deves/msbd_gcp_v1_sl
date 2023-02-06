@@ -3725,6 +3725,97 @@ app.post("/api/buy", async (req, res) => {
   }
 });
 
+app.post("/api/inapppayment", async (req, res) => {
+  try{
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+  
+    const {
+      tran_id,
+      val_id,
+      amount,
+      bank_tran_id,
+      tran_date,
+      status,
+      value_a,
+      value_b,
+      value_c,
+    } = req.body;
+  
+    console.log("req.body --- ", req.body);
+  
+    let currentDate = new Date();
+    let currentDateMiliseconds = currentDate.getTime();
+    let courseExpiresMiliseconds =
+      currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    let courseExpires = new Date(courseExpiresMiliseconds);
+  
+    // let userPurchasedCourses = new usersPurchasedCourses({
+    //   username: `${value_a}`,
+    //   phoneNumber: `${value_b}`,
+    //   coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    //   expirationDate: `${courseExpires}`,
+    //   amount: `${amount}`,
+    //   bank_tran_id: bank_tran_id,
+    //   base_fair: "0.00",
+    //   card_brand: "",
+    //   card_issuer: "",
+    //   card_issuer_country: "",
+    //   card_issuer_country_code: "",
+    //   card_no: "",
+    //   card_sub_brand: "",
+    //   card_type: "",
+    //   currency: "",
+    //   currency_amount: "",
+    //   currency_rate: "",
+    //   currency_type: "",
+    //   error: "",
+    //   risk_level: "",
+    //   risk_title: "",
+    //   status: status,
+    //   store_amount: "",
+    //   store_id: process.env.STORE_ID,
+    //   tran_date: tran_date,
+    //   tran_id: `${tran_id}`,
+    //   val_id: val_id,
+    //   value_a: value_a,
+    //   value_b: value_b,
+    //   value_c: value_c,
+    //   value_d: "",
+    //   verify_sign: "",
+    //   verify_sign_sha2: "",
+    //   verify_key: "",
+    // });
+    // await userPurchasedCourses.save();
+  
+    // let userAuditLoggerData = {
+    //   username: req.body.username,
+    //   url: req.originalUrl,
+    //   timestamp: new Date().toLocaleDateString("en-US", {
+    //     month: "long",
+    //     day: "numeric",
+    //     year: "numeric",
+    //     hour: "numeric",
+    //     minute: "numeric",
+    //     second: "numeric",
+    //   }),
+    // };
+  
+    // userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+  
+    let setSendResponseData = new sendResponseData("okay", 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend)
+  } catch {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    res.send(responseToSend)
+  }
+  
+});
+
 app.post("/api/ssl-payment-notification", async (req, res) => {
   // console.log("ssl-payment-notification", req.body);
 
