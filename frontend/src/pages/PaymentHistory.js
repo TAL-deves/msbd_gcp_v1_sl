@@ -140,7 +140,7 @@ const PaymentHistory = () => {
           }} />
         </Container>
       ) : (
-        <TableContainer component={Paper} sx={{ marginTop: "2rem", width: { xs: "100%", sm: 600, md: "100%", lg: "100%", xl: 650 } }}>
+        <TableContainer component={Paper} sx={{ marginTop: "2rem" }}>
           <Table sx={{ minWidth: { xs: "100%", sm: 250, md: 100, lg: 650, xl: 650 } }} aria-label="simple table">
             <TableHead>
               <TableRow>

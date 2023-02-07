@@ -9,17 +9,19 @@
         "title": "Welcome To Meditation",
         "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
         "description": [
-          "In just 6 easy workshops, you can learn how to meditate and begin to transform every aspect of your life: Increase your intuition, mental focus, inner confidence and problem solving abilities. The course will help you to release stress, improve health, become more centered and attract more happiness. ",
+          "● Do you often find yourself stressed, tired or overwhelmed?",
+          "● Do you long for more calm, peace and an easier life?",
+          "● Do you feel that there is more to life but simply don't know where to start?",
           "You will be guided through learning the best methods to sit, breathe, relax, calm the mind, visualize and more. It also includes six unique guided meditations all designed and presented by Nazish S. Qazi.  For beginners and improvers to develop their meditating practice."
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome%20to%20meditation.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
         "courseLength": "2.5",
         "totalLecture": "12",
-        "price": "5000",
+        "price": "4000",
         "available": true,
         "instructor": {
-          "_id": 10006,
+          "_id": 10004,
           "name": "Nazish Shameem Qazi",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "Psychologist and Life Coach",
@@ -38,25 +40,30 @@
         "title": "Fearless Believe",
         "introduction": "Practical mindfulness meditation course showing the method how to increase concentration and reduce stress",
         "description": [
-          "By the end of this programme you will have experienced and practiced all of the key mindfulness meditations. You will have learned how to",
-          "Develop your mental capacity, concentration, capability and focus",
-          "Calm yourself in moments of anger, high stress and anxiety",
-          "Develop ongoing resilience to stress and anxiety",
-          "Deal calmly with stressful communications"
+          "Do you feel detached from your work? Do you fail to complete your day-to-day tasks successfully? DO you think you are uncapable of doing something? Do you sense uncertainty, doubt or indecision in everything in your life? The core reasons behind finding your life difficult in all situations are your inner fear and limited belief.",
+          "We lead our life according to our belief system. Our belief drives our every action. But most of us hold limited belief in our life which brings many obstacles in your life, and we do not know the remedy of it. The power and ability to clear out this inner fear, apprehension, doubt and scepticism lies within you, all you need to learn are the techniques of applying it by yourself. In this course “Fearless Belief” you will learn how to become a confident individual by exercising the proven formulas to eliminate all your fears and uncertainty within you. You will live a happy and enjoyable life. ",
+          "What will you learn:",
+          "● By evoking your inner awareness and using it at full potential how to remove every barrier from your life and free your will power",
+          "● Deeply relaxing your mind to control your inner emotions and techniques to use your emotion positively",
+          "● Understand what fear is and how fear is created within us. How to apply small formulas to get rid of the feeling of fear.",
+          "● Putting an end to the fear of examinations, fear of rejection and controversy, fear of losing or failing",
+          "● Removing the fear of poverty, inadequacy or health issues by training your inner mind to live an active life",
+          "● Finally, balancing your life completely by establishing the power of positive believe system within your core"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless%20Believe.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Fearless%20Believe%20intro.mp4",
         "courseLength": "07",
         "totalLecture": "15",
-        "price": "5000",
-        "available": false,
+        "price": "6000",
+        "available": true,
         "instructor": {
           "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+            "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
           ],
           "courses": [
             "C001"
@@ -76,10 +83,10 @@
         "courseIntro": "https://youtu.be/XP6BvzptxR8",
         "courseLength": "6",
         "totalLecture": "10",
-        "price": "5000",
+        "price": "4000",
         "available": false,
         "instructor": {
-          "_id": 10005,
+          "_id": 10002,
           "name": "D. Almasur Rahman",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "Life Coach and Author",
@@ -114,12 +121,13 @@
         "price": "6000",
         "available": true,
         "instructor": {
-          "_id": 10003,
+          "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+            "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
           ],
           "courses": [
             "C003"
@@ -131,23 +139,33 @@
         "title": "Self Healing in a Natural Way",
         "introduction": "A simple, heart-centered relaxation and meditation you can do every day",
         "description": [
-          "Relax and relieve stress using a simple relaxation and meditation technique",
-          "Connect mind and heart, naturally and gently",
-          "Practice self-observation and meditation with compassion and clarity"
+          "A person is considered completely in sound and healthy state when he or she can live a balanced life physically, mentally, emotionally and spiritually. But do we know with the help of mind techniques by activating our inner physical power we can cure ourselves from many diseases naturally and without any side effect?",
+          "Today science tells us 90% of the diseases human body get affected to are psychophical disease or psychosomatic symptoms. Once you learn how to control your mind and can implement those in your day-to-day life, gradually and efficiently you will automatically you will develop prevention from many diseases. In this course we aim to teach you the methods of using your natural inner power and it’s application through which you will find the route to cure your health instinctively.",
+          "What will you learn:",
+          "● Staying Stress-Free through Deep Relaxation",
+          "● Reprogramming your unconscious mind to keep yourself healthy",
+          "● Healing your internal Organ System, Tissue and Cell using your mind",
+          "● Atomic Habit Management and repairing DNA though mind power",
+          "● Procedure to create a flow between brain, mind, body and nature",
+          "● Controlling your food habit and activity pattern",
+          "● Scanning your inner body through your mind and identify any disturbance",
+          "● Keeping yourself healthy while applying healing energy for others",
+          "● Living an active, balanced and enjoyable life with a healthy body and tranquil soul"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self%20Healing%20in%20aNatural%20Way.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/cure%20Yourself%20in%20a%20creative%20away%20Intro.mp4",
         "courseLength": "04",
         "totalLecture": "06",
         "price": "5000",
-        "available": false,
+        "available": true,
         "instructor": {
-          "_id": 10004,
+          "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+            "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
           ],
           "courses": [
             "C004"
@@ -184,12 +202,13 @@
         "price": "8000",
         "available": true,
         "instructor": {
-          "_id": 10002,
+          "_id": 10001,
           "name": "Dr. Abul Kalam",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "Mind Trainer and NLP Coach",
           "description": [
-            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
+            "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+            "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
           ],
           "courses": [
             "C002"
@@ -203,22 +222,25 @@
         "title": "মেডিটেশনে স্বাগতম",
         "introduction": "কিভাবে সহজে ধ্যান/মেডিটেশন করতে হয় তা ধাপে ধাপে শিখুন, ঠিক কি করা উচিত এবং কি করা উচিত নয়।",
         "description": [
-          "মাত্র ছয়টি ওয়ার্কশপের মাধ্যমে আপনি শিখবেন কিভাবে মেডিটেশন করা যায় এবং এর মাধ্যমে জীবনের প্রতিটি ক্ষেত্রে রূপান্তর ঘটানো যায়: যেমন ইন্টিউশন বা অন্তর্দৃষ্টি বৃদ্ধি করা,মনকে কেন্দ্রীভূত করা, আত্মবিশ্বাস বৃদ্ধি করা এবং সমস্যা সমাধানের দক্ষতা বৃদ্ধি করা। এই কোর্স আপনাকে সাহায্য করবে মানসিকভাবে চাপমুক্ত রাখতে, সুস্বাস্থ্যতা বৃদ্ধিতে এবং সুখ সমৃদ্ধি অর্জনে ।",
-          "আপনি আরও শিখবেন কিভাবে সঠিক পদ্ধতিতে মেডিটেশনের সময় বসতে হয়, নিঃশ্বাস নিতে হয়, মনকে শান্ত ও স্থির করতে হয়, কল্পনা করতে হয় এবং আরো অনেক কিছু । এই কোর্সের মধ্যে আরো থাকছে ছয়টি অসাধারণ নিয়ন্ত্রিত মেডিটেশন যা স্বয়ং ইন্সট্রাক্টর নাজিশ এস. কাজী করিয়েছেন ,তাদের জন্য যারা মেডিটেশন প্রাথমিকভাবে শুরু করছেন এবং যারা মেডিটেশনে আরো দক্ষতা অর্জন করতে চান।"
+          "● আপনি কি প্রায়ই অতিরিক্ত চাপ, অবসাদ বা ক্লান্তি অনুভব করেন?",
+          "● আপনি কি শান্তিময়, সুন্দর এবং সহজ একটি জীবন উপভোগ করতে চান?",
+          "● আপনি কি জীবনের অপ্রাপ্তিগুলো অর্জন করতে চান, কিন্তু কোথা থেকে শুরু করবেন তা জানেন না?",
+          "এই প্রশ্ন গুলোর যেকোনো একটির উত্তর যদি আপনি “হ্যাঁ” দেন তাহলে নির্দিধায় বলা যায় যে মেডিটেশন আপনাকে সাহায্য করতে পারবে। আপনি যখন দিনে মাত্র কয়েক মিনিটের জন্য মেডিটেশন করবেন তখন আপনার জীবন আরও উন্নতির দিকে এগিয়ে যাবে, আপনি মানসিক এবং শারীরিক ভাবে আরো প্রফুল্ল থাকতে পারবেন, আপনার স্মৃতিশক্তি হবে আরো প্রখর, এমনকি জীবনের কঠিন সময় গুলোর মধ্যেও আপনি থাকতে পারবেন আরো শান্ত যা আপনাকে সঠিক সময়ে সঠিক সিদ্ধান্ত নিতে সাহায্য করবে।এছাড়াও মেডিটেশন আপনাকে সাহায্য করবে আপনার মনের শক্তি বৃদ্ধিতে, অন্তর্দৃষ্টি অর্জনে এবং বিভিন্ন সমস্যা সমাধানের দক্ষতা বৃদ্ধিতে।",
+          "এই কোর্সের মাধ্যমে, আপনি সঠিক মেডিটেশনের কিছু সহজ কৌশল শিখবেন। এই কোর্সটিতে মোট ছয়টি লেসনের সাথে সহজে অনুসরণযোগ্য আরো ছয়টি মেডিটেশনের কৌশল রয়েছে।কোর্সটি আপনাকে ধাপে ধাপে প্রাথমিক অবস্থা থেকে শুরু করে মেডিটেশনে অভিজ্ঞ হতে সাহায্য করবে। আপনি শিখবেন কীভাবে আরো একাগ্র হতে হয় এবং আপনার মনের শক্তিশালী ক্ষমতাগুলি ব্যবহার করতে হয়।"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome%20to%20meditation.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
         "courseLength": "২.৫",
         "totalLecture": "১২",
-        "price": "5000",
+        "price": "4000",
         "available": true,
         "instructor": {
-          "_id": 10007,
+          "_id": 10004,
           "name": "নাজিশ শামীম কাজী",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "মনোবিজ্ঞানী এবং লাইফ কোচ",
           "description": [
-            "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে'",
+            "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে' - নাজিশ শামীম কাজী",
             "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন। তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপূর্ণতা আনতে সাহায্য করা।",
             "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।"
           ],
@@ -232,25 +254,31 @@
         "title": "নির্ভীক বেলিভ",
         "introduction": "প্রাকটিক্যাল মাইন্ডফুলনেস মেডিটেশন কোর্স যে পদ্ধতিটি দেখায় কীভাবে ঘনত্ব বাড়ানো যায় এবং চাপ কমানো যায়",
         "description": [
-          "এই প্রোগ্রামের শেষে আপনি সমস্ত মূল মাইন্ডফুলনেস মেডিটেশনের অভিজ্ঞতা এবং অনুশীলন করবেন। আপনি কিভাবে শিখেছেন হবে",
-          "আপনার মানসিক ক্ষমতা, একাগ্রতা, ক্ষমতা এবং ফোকাস বিকাশ করুন",
-          "রাগ, উচ্চ চাপ এবং উদ্বেগের মুহূর্তে নিজেকে শান্ত করুন",
-          "চাপ এবং উদ্বেগের জন্য চলমান স্থিতিস্থাপকতা বিকাশ করুন",
-          "চাপযুক্ত যোগাযোগের সাথে শান্তভাবে ডিল করুন"
+          "আপনার কি এমন হয় যে আপনি কোন কাজে আগ্রহ পাচ্ছেন না, সফলভাবে কোন কাজ শেষ পর্যন্ত করতে পারছেন না, মনে হচ্ছে কাজটা আমার দ্বারা হবে না বা আমি পারবো না, সবকিছুতেই যেন আপনার মধ্যে এক ধরনের অনিশ্চয়তা কাজ করছে। জীবনকে অনেক কঠিন বলে মনে হচ্ছে এ সবকিছুর মূল কারন হল আমাদের মনের মধ্যে জমে থাকা অজানা শঙ্কা বা ভয় বা Inner fear এবং সীমাবদ্ধ বিশ্বাস বা Limiting Belief.",
+          "আমাদের জীবনে আমরা যাই কিছুই করি, তার মূলে রয়েছে বিশ্বাস, বিশ্বাসই আমাদের জীবনকে পরিচালিত করে। কিন্তু আমাদের বেশীর ভাগ বিশ্বাসই হল সীমাবদ্ধ বিশ্বাস বা Limiting Belief. এই সীমাবদ্ধ বিশ্বাসের কারনে আমাদের মধ্যে তৈরি হয় নানা প্রতিবন্ধকতা যার প্রতিকারের সম্ভাব্য উপায়গুলো আমরা অনেকেই জানিনা। কিন্তু নিজের ভিতরের এই অজানা ভয়, শঙ্কা, বিশ্বাসহীনতা, সন্দেহ এগুলো থেকে বেরিয়ে আসার সকল ক্ষমতা আপনার মধ্যেই রয়েছে। শুধু জানা প্রয়োজন সেগুলো ব্যবহারের কৌশল। ফেয়ারলেস বিলিভ এই কোর্সে আপনি শিখবেন ভয় ও অনিশ্চয়তা থেকে বেরিয়ে আসার সহজ সব কৌশল যা আপনাকে একজন আত্ববিশ্বাসী মানুষ হতে দারুনভাবে সাহায্য করবে। ফলে আপনার জীবন হবে আনন্দময় আর উপভোগ্য।",
+          "এই কোর্সে আপনি আরো শিখবেনঃ ",
+          "● আপনার মনের গভীর সচেতনতা বোধকে জাগ্রত করে পরিপূর্ণভাবে এর ব্যবহারের মাধ্যমে জীবনের সকল জড়তা ও প্রতিবন্ধকতাকে দূর করে নিজের ইচ্ছা শক্তিকে স্বাধীন করে দেয়া।",
+          "● গভীরভাবে মনকে শিথিল করার মাধ্যমে নিজের আবেগগুলোকে নিয়ন্ত্রণ করা এবং এই আবেগকে ইতিবাচকভাবে ব্যবহার করার কৌশল অর্জন করা।",
+          "● ভয় কি এবং মনের ভেতরে কিভাবে ভয় তৈরি হয় সেটাকে খুঁজে বের করার প্রক্রিয়া রপ্ত করা এবংছোট ছোট সহজ টেকনিকের মাধ্যমে মুহূর্তেই ভয়ের মানসিকতা থেকে বেরিয়ে আসা।",
+          "● পরীক্ষার ভয়, প্রত্যাখান ও সমালোচনার ভয়, হারানোর ভয়,ব্যার্থতা ও অসুস্থতা এই ভয় থেকে বেরিয়ে নিজের আত্মবিশ্বাসকে বৃদ্ধি করা।",
+          "● দারিদ্র্যতা এবং অভাবের ভয় কে  পরিবর্তন করে কর্মময় জীবনকে উপভোগ করা।",
+          "● মৃত্যু সহ যেকোনো ভয় নিয়ে কিভাবে মনের গভীরে গিয়ে কাজ করতে হয় সেই প্রক্রিয়াকে রপ্ত করা।",
+          "● সর্বোপরি অন্তরের গভীরে নিরঙ্কুশ বিশ্বাসের বীজ বপন করার মাধ্যমে  জীবনের  ভারসাম্যকে নিয়ন্ত্রণ করা।"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Fearless%20Believe.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Fearless%20Believe%20intro.mp4",
         "courseLength": "০৭",
         "totalLecture": "১৫",
-        "price": "5000",
-        "available": false,
+        "price": "6000",
+        "available": true,
         "instructor": {
           "_id": 10001,
           "name": "ডাঃ আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+            "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
           ],
           "courses": [
             "C001"
@@ -270,10 +298,10 @@
         "courseIntro": "https://youtu.be/XP6BvzptxR8",
         "courseLength": "৬",
         "totalLecture": "১০",
-        "price": "5000",
+        "price": "4000",
         "available": false,
         "instructor": {
-          "_id": 10005,
+          "_id": 10002,
           "name": "ড. আলমাসুর রহমান",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "লাইফ কোচ এবং লেখক",
@@ -306,12 +334,13 @@
         "price": "6000",
         "available": true,
         "instructor": {
-          "_id": 10003,
+          "_id": 10001,
           "name": "ডাঃ আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+            "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
           ],
           "courses": [
             "C003"
@@ -323,23 +352,33 @@
         "title": "একটি প্রাকৃতিক উপায়ে স্ব নিরাময়",
         "introduction": "একটি সহজ, হৃদয়-কেন্দ্রিক শিথিলকরণ এবং ধ্যান আপনি প্রতিদিন করতে পারেন",
         "description": [
-          "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
-          "স্বাভাবিকভাবে এবং মৃদুভাবে মন এবং হৃদয় সংযোগ করুন",
-          "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
+          "একজন মানুষ যখন শারীরিক, মানষিক, আবেগিক এবং আধ্যাত্মিক এই সকল স্তরে সামঞ্জস্যপূর্ণ জীবনযাপন করে তখনই তাকে প্রকৃত সুস্থ মানুষ বলা হয়।কিন্তু আমরা জানিনা আমাদের দেহের ভেতরের অফুরন্ত শক্তিগুলো ব্যবহারের প্রাকৃতিক কৌশল যা আমাদের শরীরকে কোনো রকম পার্শ্ব প্রতিক্রিয়া ছাড়াই সুস্থ করে তুলতে সক্ষম।",
+          "গবেষনায় দেখা গেছে যে মানুষের দেহে যে রোগ তৈরি হয় তার ৯০ শতাংশই হল মনোদৈহিক রোগ বা সাইকোসোমেটিক সিম্পটম। আপনি যখন আপনার মনকে নিয়ন্ত্রনের টেকনিক গুলো রপ্ত করতে শিখবেন এবং নিজের জীবনে তার প্রয়োগ করবেন তখন ধীরে ধীরে স্বয়ংক্রিয় ভাবে বা অটোমেটিক্যালি অনেক রোগ থেকে আপনি নিজেকে মুক্ত রাখতে পারবেন। এই কোর্সের উদ্দেশ্যই হল আপনার ভেতরের শক্তিগুলো ব্যবহারের প্রাকৃতিক কৌশল শেখানো, যার ব্যবহার আপনাকে প্রাকৃতিকভাবে সুস্থতা অর্জনের নতুন পথ দেখাবে।",
+          "এ কোর্সে আপনি আরো শিখবেনঃ",
+          "● Deep রিলাক্সেশন টেকনিকের মাধ্যমে প্রশান্তিতে থাকার প্রক্রিয়া রপ্ত করা।",
+          "● দেহকে সুস্থ রাখার জন্য আপনার অবচেতন মনকে রিপ্রোগ্রামিং করা।",
+          "● মনের অপার শক্তিকে ব্যবহার করে শরীরের বিভিন্ন অঙ্গ-প্রত্যঙ্গ, গ্লান্ড এবং টিস্যু-সেলগুলোকে হিলিং করা।",
+          "● মনকে ব্যবহারের মাধ্যমে DNA কে রিপেয়ার করা এবং এটমিক লেভেলে হ্যাবিটকে পরিবর্তন করা।",
+          "● ব্রেন, মাইন্ড, বডি ও ন্যাচারের মধ্যে ছন্দ তৈরি করার প্রক্রিয়া শেখা।",
+          "● ফুড হেবিট ও ফিজিক্যাল অ্যাক্টিভিটিস কে নিয়ন্ত্রণ করা।",
+          "● নিজের মনকে ব্যবহার করে দেহকে স্ক্যান করা এবং এর ভেতরের অসুবিধাগুলোকে সনাক্ত করা।",
+          "● নিজের হিলিং এনার্জিকে ব্যবহার করে আরেকজনকে সুস্থ রাখার জন্য কাজ করা।",
+          "● সর্বোপরি সুস্থ মন, সুস্থ দেহ ও প্রশান্তিকর আত্মিক সত্তা নিয়ে জীবনকে উপভোগ করা, যা হবে এক কর্মময় এবং ব্যালেন্স লাইফ"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Self%20Healing%20in%20aNatural%20Way.webp",
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/cure%20Yourself%20in%20a%20creative%20away%20Intro.mp4",
         "courseLength": "৪",
         "totalLecture": "০৬",
         "price": "5000",
-        "available": false,
+        "available": true,
         "instructor": {
-          "_id": 10004,
+          "_id": 10001,
           "name": "ডাঃ আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+            "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
           ],
           "courses": [
             "C004"
@@ -377,12 +416,13 @@
         "price": "8000",
         "available": true,
         "instructor": {
-          "_id": 10002,
+          "_id": 10001,
           "name": "ডাঃ আবুল কালাম",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
           "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
           "description": [
-            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
+            "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+            "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
           ],
           "courses": [
             "C002"
@@ -399,9 +439,10 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "Mind Trainer and NLP Coach",
         "description": [
-          "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life."
+          "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+          "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
         ],
-        "available": false,
+        "available": true,
         "courses": [
           "C001",
           "C002",
@@ -457,9 +498,10 @@
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
         "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
         "description": [
-          "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।"
+          "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+          "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
         ],
-        "available": false,
+        "available": true,
         "courses": [
           "C001",
           "C002",
@@ -512,13 +554,13 @@
   "courseData": [
     {
       "courseID": "C001",
-      "title": "Fearless Believe",
+      "title": "Fearless Belive",
       "lessons": [
         {
           "title": "Lesson 1",
           "episode": 1,
-          "videoID": "07b4636c3a8a4424a80168b02b123dc3",
-          "length": "33:02"
+          "videoID": "cb4ac5ed563148e2959bf21dc799105f",
+          "length": "33:26"
         },
         {
           "title": "Lesson 2",
@@ -535,14 +577,14 @@
         {
           "title": "Lesson 4",
           "episode": 4,
-          "videoID": "81f15e6d7b7c4f56b6df2d5ae5676196",
+          "videoID": "e0eb0c13c3724e36996230a4b793957c",
           "length": "44:57"
         },
         {
           "title": "Lesson 5",
           "episode": 5,
-          "videoID": "854e2205f1194cc9a2a181d34c8f5ec7",
-          "length": "34:48"
+          "videoID": "f72a5b4e94c94f03b584760df5c6cfe0",
+          "length": "34:41"
         },
         {
           "title": "Lesson 6",
@@ -554,7 +596,7 @@
           "title": "Lesson 7",
           "episode": 7,
           "videoID": "8cff68be96e948959a557e5ad7073464",
-          "length": "22:50"
+          "length": "22:5"
         },
         {
           "title": "Lesson 8",
@@ -577,8 +619,8 @@
         {
           "title": "Lesson 11",
           "episode": 11,
-          "videoID": "c25adcb30d744f95a139748e3b390811",
-          "length": "36:31"
+          "videoID": "418234635d9a4f0f8ee877db7d5acf42",
+          "length": "36:17"
         },
         {
           "title": "Lesson 12",
@@ -589,8 +631,8 @@
         {
           "title": "Lesson 13",
           "episode": 13,
-          "videoID": "ed2e4462836e4070a18ec72d5e0cbe87",
-          "length": "31:14"
+          "videoID": "2f615fc92f794ed9889fecbce4563c0d",
+          "length": "31:05"
         },
         {
           "title": "Lesson 14",
@@ -638,13 +680,13 @@
           "title": "Lesson 5",
           "episode": 5,
           "videoID": "31fb415f8cc24e5eb48b3041e68c5f5e",
-          "length": "34:20"
+          "length": "34:2"
         },
         {
           "title": "Lesson 6",
           "episode": 6,
           "videoID": "e681edc8f29c4e4b9bce356ce1c8366e",
-          "length": "41:30"
+          "length": "41:3"
         },
         {
           "title": "Lesson 7",
@@ -662,7 +704,7 @@
           "title": "Lesson 9",
           "episode": 9,
           "videoID": "a22a99f6cb60454e93b60cb534504271",
-          "length": "27:1532"
+          "length": "27:32"
         },
         {
           "title": "Lesson 10",
@@ -698,73 +740,73 @@
     },
     {
       "courseID": "C003",
-      "title": "Creative Meditation",
+      "title": "Dynamic Meditation",
       "lessons": [
         {
-          "title": "Course no 3 Episode no 1",
+          "title": "Lesson 1",
           "episode": 1,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "679c54a14c3646f8a0a818b67caaab1b",
+          "length": "01:05:08"
         },
         {
-          "title": "Course no 3 Episode no 2",
+          "title": "Lesson 2",
           "episode": 2,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "e605663c8f1a45c9a06f45c1298af77a",
+          "length": "46:29"
         },
         {
-          "title": "Course no 3 Episode no 3",
+          "title": "Lesson 3",
           "episode": 3,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "01:25"
+          "videoID": "a9c2e846c6384954a2df9e4aa4a2a37f",
+          "length": "41:21"
         },
         {
-          "title": "Course no 3 Episode no 4",
+          "title": "Lesson 4",
           "episode": 4,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:14"
+          "videoID": "aa345b28f36b45a0bbf347f5d403eb03",
+          "length": "46:4"
         },
         {
-          "title": "Course no 3 Episode no 5",
+          "title": "Lesson 5",
           "episode": 5,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "1c7d6b5575b74223a6498b73124b74d5",
+          "length": "34:26"
         },
         {
-          "title": "Course no 3 Episode no 6",
+          "title": "Lesson 6",
           "episode": 6,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "f0e4a1c7e53449b3802bb129f26cc671",
+          "length": "36:17"
         },
         {
-          "title": "Course no 3 Episode no 7",
+          "title": "Lesson 7",
           "episode": 7,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "c8744bacfbaf4a91a42a298b4a4eac88",
+          "length": "59:14"
         },
         {
-          "title": "Course no 3 Episode no 8",
+          "title": "Lesson 8",
           "episode": 8,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "c9ec2e3a945244edab679df03d4f8521",
+          "length": "46:03"
         },
         {
-          "title": "Course no 3 Episode no 9",
+          "title": "Lesson 9",
           "episode": 9,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "290344eebf2045c6a1a31a6ad17a3b23",
+          "length": "43:42"
         },
         {
-          "title": "Course no 3 Episode no 10",
+          "title": "Lesson 10",
           "episode": 10,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "cf68c2b932a74266a070de783b0bb7f2",
+          "length": "37:54"
         },
         {
-          "title": "Course no 3 Episode no 11",
+          "title": "Lesson 11",
           "episode": 11,
-          "videoID": "2e9a5ded35a46db6f14188fcee0d9167",
-          "length": "00:15"
+          "videoID": "f5b54a2155124d1db58c302c9dcf000f",
+          "length": "55:1"
         }
       ]
     },
@@ -889,8 +931,8 @@
         {
           "title": "Meditation Exercise 1",
           "episode": 2,
-          "videoID": "684de8600add48359615e124101e1457",
-          "length": "05:55"
+          "videoID": "b43e3fbeb6624cf590a65e1f809df5af",
+          "length": "5:55"
         },
         {
           "title": "Lesson 2",
@@ -901,8 +943,8 @@
         {
           "title": "Meditation Exercise 2",
           "episode": 4,
-          "videoID": "2166971535ac4c65bcdd48a5252319c5",
-          "length": "08:06"
+          "videoID": "f0f466297ecd44898e8a387037027d0c",
+          "length": "8:06"
         },
         {
           "title": "Lesson 3",
@@ -914,7 +956,7 @@
           "title": " Meditation Exercise 3 ",
           "episode": 6,
           "videoID": "a3cb8937bacf4e8aad47631e2249bec1",
-          "length": "07:52"
+          "length": "7:52"
         },
         {
           "title": "Lesson 4",
@@ -926,7 +968,7 @@
           "title": "Meditation Exercise 4 ",
           "episode": 8,
           "videoID": "659ed402e433451ab92671b2e2eb5f87",
-          "length": "09:51"
+          "length": "9:51"
         },
         {
           "title": "Lesson 5",

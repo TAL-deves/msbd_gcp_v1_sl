@@ -29,6 +29,9 @@ const InstructorCard = (props) => {
     <Card 
     //  data-aos="slide-up"
      sx={{ margin: "0 5px", "&:hover":{boxShadow:"5", position:"top"} }}>
+      <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
+              textDecoration:"none"
+            }}>
       <CardMedia
         component="img"
         // height="290"
@@ -45,6 +48,7 @@ const InstructorCard = (props) => {
          width:{xs:"100%",sm:"100%", md:"100%"}
         }}
       />
+      </Link>
       <Box sx={{display:"flex", 
       flexDirection:"column",
       alignItems:"center"

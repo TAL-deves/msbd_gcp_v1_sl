@@ -288,7 +288,7 @@ const InstructorDetails = () => {
                             />
                             
                           </CardMediaStyle>}
-                            <CardContent >
+                            <CardContent sx={{cursor:"default"}}>
                               <Box sx={{ height: "8rem" }}>
                                 <Typography variant="h6" component="Box">
                                   {course.title}

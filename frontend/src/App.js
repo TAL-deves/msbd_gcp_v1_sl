@@ -159,7 +159,7 @@ function App() {
                   darkmode={darkmode}
                 />
                 <Routes>
-                  ¸<Route exact path="/" element={<Home n={n} setN={setN}/>}></Route>
+                  <Route exact path="/" element={<Home n={n} setN={setN}/>}></Route>
                   <Route
                     path="registration"
                     element={user ? <Navigate to="/courses" /> : <Register />}

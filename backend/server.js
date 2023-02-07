@@ -70,7 +70,6 @@ const multer = require("multer");
 
 const fs = require("fs");
 const Jimp = require("jimp");
-const path = require("path");
 const { vdochiper } = require("./services/vdoChipher");
 const axios = require("axios");
 
@@ -98,6 +97,43 @@ const { welcomeSmsService } = require("./services/welcomeSmsService");
 const qrData = require("./Database/models/qrData");
 const extraData = require("./Database/models/extraData");
 const promoCodes = require("./Database/models/promoCodes");
+
+//!mongoDB backup
+// const { spawn } = require('child_process');
+// const path = require("path");
+
+// const DB_NAME = "test";
+// const ARCHIVE_PATH = path.join(__dirname, "./backup/", `${DB_NAME}.gzip`);
+
+// backupmongoDB();
+
+// function backupmongoDB(){
+//   const child = spawn('mongodump', [
+//     `--db=${DB_NAME}`,
+//     `--archive=${ARCHIVE_PATH}`,
+//     '--gzip'
+//   ]);
+  
+//   child.stdout.on('data',(data)=>{
+//     console.log('stdout:\n', data);
+//   });
+
+//   child.stderr.on('data', (data)=>{
+//     console.log('stdout:\n', data);
+//   });
+
+//   child.on('error', (error)=>{
+//     console.log('error:\n', error);
+//   });
+
+//   child.on('exit', (code,signal)=>{
+//     if(code) console.log("process exit with code:", code);
+//     else if (signal) console.log("process killed with signal:", signal);
+//     else console.log("Backup is successfull!");
+//   })
+
+// }
+//!
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -5917,22 +5953,14 @@ app.get("/api/testgetreq", async (req, res) => {
 
 app.post("/api/testingpoint", async (req, res) => {
   
-  let data = await subscribers.find().count()
-  // let newUsers = await signUpTemplateCopy.find({
-  //   creation_date:{
-  //      "$gte" : new Date("2013-10-0T00:00:00Z"), 
-  //      "$lt" : new Date("2013-10-02T00:00:00Z") 
-  //     }
-  // })
+//  await new promoCodes({
+//   code:"MS25WELCOME",
+//   discount:"25%",
+//   amount: 0.25,
+//   active:true
+//  }).save()
 
-  var date = new Date();
-  console.log(date.toLocaleDateString("en-US"));
-  
-  date.setDate(date.getDate() - 1);
-
-  console.log(date.toLocaleDateString("en-US"));
-
-  res.send("okay "+data)
+  res.send("okay ")
 
 });
 

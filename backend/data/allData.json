@@ -21,10 +21,10 @@
           "name": "Nazish Shameem Qazi",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "The 'Mind Coach'",
-          "description": "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life.",
-          "description1": "Nazish is an expert life coach, business trainer, psychologist and author. She has helped hundreds of people from many different backgrounds and disciplines to transform their lives for the better. Her passion is helping people discover their true purpose, build inner confidence and bring more happiness and fulfilment into their lives.",
-          "description2": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
-          "description3": "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs.",
+          "description": [
+            "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life."
+            "",
+          ],
           "courses": [
             "C006"
           ]
@@ -156,8 +156,11 @@
         "title": "মেডিটেশনে স্বাগতম",
         "introduction": "কিভাবে সহজে ধ্যান/মেডিটেশন করতে হয় তা ধাপে ধাপে শিখুন, ঠিক কি করা উচিত এবং কি করা উচিত নয়।",
         "description": [
-          "মাত্র ছয়টা ওয়ার্কশপের মাধ্যমে আপনি শিখবেন কিভাবে মেডিটেশন করা যায় এবং এর মাধ্যমে জীবনের প্রতিটি ক্ষেত্রে রূপান্তর ঘটানো যায়: যেমন ইন্টিউশন বা অন্তর্দৃষ্টি বৃদ্ধি করা,মনকে কেন্দ্রীভূত করা, আত্মবিশ্বাস বৃদ্ধি করা এবং সমস্যা সমাধানের দক্ষতা বৃদ্ধি করা। এই কোর্স আপনাকে সাহায্য করবে মানসিকভাবে চাপমুক্ত রাখতে, সুস্বাস্থ্যতা বৃদ্ধিতে এবং সুখ সমৃদ্ধি অর্জনে ।",
-          "আপনি আরও শিখবেন কিভাবে সঠিক পদ্ধতিতে মেডিটেশনের সময় বসতে হয়, নিঃশ্বাস নিতে হয়, মনকে শান্ত ও স্থির করতে হয়, কল্পনা করতে হয় এবং আরো অনেক কিছু । এই কোর্সের মধ্যে আরো থাকছে ছয়টি অসাধারণ নিয়ন্ত্রিত মেডিটেশন যা স্বয়ং ইন্সট্রাক্টর নাজিশ এস. কাজী করিয়েছেন ,তাদের জন্য যারা মেডিটেশন প্রাথমিকভাবে শুরু করছেন এবং যারা মেডিটেশনে আরো দক্ষতা অর্জন করতে চান।"
+          "● আপনি কি প্রায়ই অতিরিক্ত চাপ, অবসাদ বা ক্লান্তি অনুভব করেন?",
+          "● আপনি কি শান্তিময়, সুন্দর এবং সহজ একটি জীবন উপভোগ করতে চান?",
+          "● আপনি কি জীবনের অপ্রাপ্তিগুলো অর্জন করতে চান, কিন্তু কোথা থেকে শুরু করবেন তা জানেন না?",
+          "এই প্রশ্ন গুলোর যেকোনো একটির উত্তর যদি আপনি “হ্যাঁ” দেন তাহলে নির্দিধায় বলা যায় যে মেডিটেশন আপনাকে সাহায্য করতে পারবে। আপনি যখন দিনে মাত্র কয়েক মিনিটের জন্য মেডিটেশন করবেন তখন আপনার জীবন আরও উন্নতির দিকে এগিয়ে যাবে, আপনি মানসিক এবং শারীরিক ভাবে আরো প্রফুল্ল থাকতে পারবেন, আপনার স্মৃতিশক্তি হবে আরো প্রখর, এমনকি জীবনের কঠিন সময় গুলোর মধ্যেও আপনি থাকতে পারবেন আরো শান্ত যা আপনাকে সঠিক সময়ে সঠিক সিদ্ধান্ত নিতে সাহায্য করবে।এছাড়াও মেডিটেশন আপনাকে সাহায্য করবে আপনার মনের শক্তি বৃদ্ধিতে, অন্তর্দৃষ্টি অর্জনে এবং বিভিন্ন সমস্যা সমাধানের দক্ষতা বৃদ্ধিতে।",
+          "এই কোর্সের মাধ্যমে, আপনি সঠিক মেডিটেশনের কিছু সহজ কৌশল শিখবেন। এই কোর্সটিতে মোট ছয়টি লেসনের সাথে সহজে অনুসরণযোগ্য আরো ছয়টি মেডিটেশনের কৌশল রয়েছে।কোর্সটি আপনাকে ধাপে ধাপে প্রাথমিক অবস্থা থেকে শুরু করে মেডিটেশনে অভিজ্ঞ হতে সাহায্য করবে। আপনি শিখবেন কীভাবে আরো একাগ্র হতে হয় এবং আপনার মনের শক্তিশালী ক্ষমতাগুলি ব্যবহার করতে হয়।"
         ],
         "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome.webp",
         "courseLength": "২.৫",
@@ -168,9 +171,12 @@
           "name": "নাজিশ শামীম কাজী",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
           "designation": "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে'",
-          "description": "নাজিশ এস. কাজী গান গাওয়ার জন্য একটি উদ্ভাবনী পদ্ধতির মাধ্যমে লোকেদের সাহায্য করার জন্য তার আবেগকে প্রকাশ করার জন্য সঙ্গীত ব্যবসায় 40 বছরের নিরাময় শিল্পে 23 বছরের ক্যারিয়ারকে একত্রিত করেছেন। তিনি একটি আধুনিক সমাজকে রূপান্তর, স্ট্রেস-মুক্তি এবং বিশুদ্ধ উপস্থিতি খুঁজে পেতে সাহায্য করার জন্য গানের বাটি সহ থেরাপিউটিক কৌশল ব্যবহারে অগ্রগামী।",
-          "description1": "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন।  তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপরণত আনত সহযয কর।",
-          "description2": "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।",
+          "description": [
+            "নাজিশ শামীম কাজী - 'মাইন্ড কোচ'",
+            "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে' - নাজিশ শামীম কাজী",
+            "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন।  তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপূর্ণতা আনতে সাহায্য করা।",
+            " তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন।  তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।"
+          ],
           "courses": [
             "C006"
           ]
