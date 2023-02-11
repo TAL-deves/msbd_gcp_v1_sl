@@ -1,4 +1,4 @@
-import { Api } from "@mui/icons-material";
+import { Api, CleaningServices } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import api from "../../api/Axios";
@@ -95,21 +95,21 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
       //  e.preventDefault();
       status = "ended";
       setCount((count)=>!count)
-      if(episode===""){
-        // window.location.reload();
-         console.log(episode)
-        // <></>
-      }
-      else{
+      // if(episode===""){
+      //   // window.location.reload();
+      //    console.log(episode)
+      //   // <></>
+      // }
+      // else{
         actionVdoData(courseID, videoID, status, username, currentTime)
-        if(totalTimeCovered===totalVdoDuration){
+        // if(totalTimeCovered===totalVdoDuration){
+        if(status==="ended"){
           setStatusChanged(true)
           setCount((count)=>!count)
-          // console.log(totalTimeCovered,
-          // totalVdoDuration, statusChanged)
-          window.location.reload();
-        }
-      }
+          // console.log(courseID, videoID, status, username, currentTime)
+          //  window.location.reload();
+         }
+      // }
       
 
     });

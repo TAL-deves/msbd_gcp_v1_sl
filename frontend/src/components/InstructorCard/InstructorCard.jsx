@@ -29,6 +29,7 @@ const InstructorCard = (props) => {
     <Card 
     //  data-aos="slide-up"
      sx={{ margin: "0 5px", "&:hover":{boxShadow:"5", position:"top"} }}>
+      {fullObject.available?
       <Link to={"/instructor-details"} state={{ instructorId: fullObject }} style={{
               textDecoration:"none"
             }}>
@@ -49,6 +50,25 @@ const InstructorCard = (props) => {
         }}
       />
       </Link>
+      :
+      <Box sx={{cursor:"pointer"}} onClick={()=>{swal("Instructor details coming soon","Thank You","info")}}>
+      <CardMedia
+        component="img"
+        // height="290"
+        image={
+          img
+            ? `${img}`
+            : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+        }
+        alt="image"
+        sx={{
+          // maxWidth: "50%",
+          // width:"100%",
+        //  height:"25vh",
+         width:{xs:"100%",sm:"100%", md:"100%"}
+        }}
+      />
+      </Box>}
       <Box sx={{display:"flex", 
       flexDirection:"column",
       alignItems:"center"

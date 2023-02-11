@@ -98,42 +98,49 @@ const qrData = require("./Database/models/qrData");
 const extraData = require("./Database/models/extraData");
 const promoCodes = require("./Database/models/promoCodes");
 
-//!mongoDB backup
-// const { spawn } = require('child_process');
+// //!mongoDB backup
+// const { spawn } = require("child_process");
 // const path = require("path");
 
-// const DB_NAME = "test";
+// const DB_NAME = "msbd_database";
 // const ARCHIVE_PATH = path.join(__dirname, "./backup/", `${DB_NAME}.gzip`);
 
-// backupmongoDB();
+// try {
+//   backupmongoDB();
 
-// function backupmongoDB(){
-//   const child = spawn('mongodump', [
-//     `--db=${DB_NAME}`,
-//     `--archive=${ARCHIVE_PATH}`,
-//     '--gzip'
-//   ]);
-  
-//   child.stdout.on('data',(data)=>{
-//     console.log('stdout:\n', data);
-//   });
+//   function backupmongoDB() {
+//     const child = spawn("mongodump", [
+//       `--db=${DB_NAME}`,
+//       `--archive=${ARCHIVE_PATH}`,
+//       "--gzip",
+//     ]);
 
-//   child.stderr.on('data', (data)=>{
-//     console.log('stdout:\n', data);
-//   });
+//     child.stdout.on("data", (data) => {
+//       console.log("stdout:\n", Buffer.from(data).toString());
+//     });
 
-//   child.on('error', (error)=>{
-//     console.log('error:\n', error);
-//   });
+//     child.stderr.on("data", (data) => {
+//       console.log("stdout:\n", Buffer.from(data).toString());
+//     });
 
-//   child.on('exit', (code,signal)=>{
-//     if(code) console.log("process exit with code:", code);
-//     else if (signal) console.log("process killed with signal:", signal);
-//     else console.log("Backup is successfull!");
-//   })
+//     child.on("error", (error) => {
+//       console.log("error:\n", error);
+//     });
 
+//     child.on("exit", (code, signal) => {
+//       if (code) console.log("process exit with code:", code);
+//       else if (signal) console.log("process killed with signal:", signal);
+//       else console.log("Backup is successfull!");
+//     });
+//   }
+// } catch (error) {
+//   // fs.writeFile('mynewfile3.txt', 'error', function (err) {
+//   //   if (err) throw err;
+//   //   console.log('Saved!');
+//   // });  
 // }
-//!
+
+// //!
 
 // const apiMetrics = require('prometheus-api-metrics');
 
@@ -1836,13 +1843,13 @@ app.post("/api/certificate", async (req, res) => {
         align: "center",
       });
     // Draw the course name
-    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
+    doc.font("Times-Roman").fontSize(16).text(`"${courseName}"`, -60, 365, {
       align: "center",
     });
     // doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
 
     // Draw the date
-    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
+    doc.font("Times-Roman").fontSize(17).text(completeDate, -60, 430, {
       align: "center",
     });
     // Draw the certificateNumber
@@ -2005,7 +2012,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
     // // Draw the certificate image
     // doc.image("./images/mindschool.png", 0, 0, { width: 841 });
 
-
     if (courseID == "C006") {
       // Draw the certificate image
       doc.image("./images/nazishQazi.png", 0, 0, { width: 841 });
@@ -2021,7 +2027,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
       // Draw the certificate image
       doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
     }
-
 
     // Set the font to Dancing Script
     doc.font("./fonts/DancingScript-VariableFont_wght.ttf");
@@ -3762,10 +3767,10 @@ app.post("/api/buy", async (req, res) => {
 });
 
 app.post("/api/inapppayment", async (req, res) => {
-  try{
+  try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-  
+
     const {
       tran_id,
       val_id,
@@ -3777,15 +3782,15 @@ app.post("/api/inapppayment", async (req, res) => {
       value_b,
       value_c,
     } = req.body;
-  
+
     console.log("req.body --- ", req.body);
-  
+
     let currentDate = new Date();
     let currentDateMiliseconds = currentDate.getTime();
     let courseExpiresMiliseconds =
       currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
     let courseExpires = new Date(courseExpiresMiliseconds);
-  
+
     // let userPurchasedCourses = new usersPurchasedCourses({
     //   username: `${value_a}`,
     //   phoneNumber: `${value_b}`,
@@ -3823,7 +3828,7 @@ app.post("/api/inapppayment", async (req, res) => {
     //   verify_key: "",
     // });
     // await userPurchasedCourses.save();
-  
+
     // let userAuditLoggerData = {
     //   username: req.body.username,
     //   url: req.originalUrl,
@@ -3836,20 +3841,19 @@ app.post("/api/inapppayment", async (req, res) => {
     //     second: "numeric",
     //   }),
     // };
-  
+
     // userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
-  
+
     let setSendResponseData = new sendResponseData("okay", 200, null);
     let responseToSend = encryptionOfData(setSendResponseData.success());
 
-    res.send(responseToSend)
+    res.send(responseToSend);
   } catch {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
 
-    res.send(responseToSend)
+    res.send(responseToSend);
   }
-  
 });
 
 app.post("/api/ssl-payment-notification", async (req, res) => {
@@ -4261,7 +4265,7 @@ app.post("/api/usercourses", async (req, res) => {
             // console.log("expired --- ", item);
             item.coursesList.map((item2) => {
               userallcourses.push(item2);
-              courseExpirationDates.push(item.expirationDate)
+              courseExpirationDates.push(item.expirationDate);
             });
           }
         })
@@ -4291,11 +4295,13 @@ app.post("/api/usercourses", async (req, res) => {
             instructor: objects.instructor.name,
             complete: false,
             status: 0,
-            expirationDate: new Date(courseExpirationDates[index]).toLocaleDateString("en-US", {
+            expirationDate: new Date(
+              courseExpirationDates[index]
+            ).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",
-              year: "numeric"
-            })
+              year: "numeric",
+            }),
           };
 
           array31.push({ ...courses });
@@ -4318,7 +4324,7 @@ app.post("/api/usercourses", async (req, res) => {
             });
 
             // console.log("userCompletedLessons",userCompletedLessons);
-            
+
             let userCompletedLessonsUpdated = [];
 
             if (userCompletedLessons[0] !== null) {
@@ -4333,8 +4339,8 @@ app.post("/api/usercourses", async (req, res) => {
                 (item, index) =>
                   userCompletedLessonsUpdated.indexOf(item) === index
               );
-              
-              // console.log(" userCompletedLessonUpdatedFiltered ", userCompletedLessonUpdatedFiltered);
+
+            // console.log(" userCompletedLessonUpdatedFiltered ", userCompletedLessonUpdatedFiltered);
             //? if language is en then send bn data
 
             coursedetailsData = data[0].coursesData.en;
@@ -4660,28 +4666,43 @@ app.post("/api/applypromocode", async (req, res) => {
     userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
     if (userSessionStatus.data != null) {
-      await promoCodes.findOne({
-        code : promocode
-      }).then((data)=>{
-        console.log("data ----", data);
-        if(!data){
-          let setSendResponseData = new sendResponseData(null, 403, "Invalid promo code");
-          let responseToSend = encryptionOfData(setSendResponseData.success());
-          res.send(responseToSend);
-        } else {
-
-          if(data.active){
-            let setSendResponseData = new sendResponseData(data, 200, null);
-            let responseToSend = encryptionOfData(setSendResponseData.success());
+      await promoCodes
+        .findOne({
+          code: promocode,
+        })
+        .then((data) => {
+          console.log("data ----", data);
+          if (!data) {
+            let setSendResponseData = new sendResponseData(
+              null,
+              403,
+              "Invalid promo code"
+            );
+            let responseToSend = encryptionOfData(
+              setSendResponseData.success()
+            );
             res.send(responseToSend);
           } else {
-            let setSendResponseData = new sendResponseData(null, 403, "Invalid promo code");
-            let responseToSend = encryptionOfData(setSendResponseData.success());
-            res.send(responseToSend);
+            if (data.active) {
+              let setSendResponseData = new sendResponseData(data, 200, null);
+              let responseToSend = encryptionOfData(
+                setSendResponseData.success()
+              );
+              res.send(responseToSend);
+            } else {
+              let setSendResponseData = new sendResponseData(
+                null,
+                403,
+                "Invalid promo code"
+              );
+              let responseToSend = encryptionOfData(
+                setSendResponseData.success()
+              );
+              res.send(responseToSend);
+            }
           }
-        }
-      });
-    } 
+        });
+    }
     // else {
     //   let setSendResponseData = new sendResponseData(
     //     null,
@@ -4781,9 +4802,27 @@ app.post("/api/videologdata", async (req, res) => {
 
       await logVideData.save();
 
+      // console.log("video calculation --- ", status, "episode",  episode, " total watched", totalTimeCovered," total length ", totalVdoDuration, " %coverd", Math.ceil((totalTimeCovered/totalVdoDuration)*100));
+
+      //? catching just the end status of the video
+      
+      /* 
+      if (
+        req.body.status === "ended"
+      )  
+      */
+      
+      //? video must be fully watched and status ended
+      /*  
       if (
         req.body.status === "ended" &&
         req.body.totalTimeCovered === req.body.totalVdoDuration
+      )  
+      */
+
+
+      if (
+        req.body.status === "ended"
       ) {
         let lessonProgressData = await lessonProgress.find({
           $and: [
@@ -5935,7 +5974,7 @@ app.post("/api/sessioncheck", async (req, res) => {
 
 //! Testing point
 
-app.post("/api/testpostreq", async (req, res) => {  
+app.post("/api/testpostreq", async (req, res) => {
   let data = {
     data: req.body,
     send: "Sent from backend",
@@ -5952,16 +5991,14 @@ app.get("/api/testgetreq", async (req, res) => {
 });
 
 app.post("/api/testingpoint", async (req, res) => {
-  
-//  await new promoCodes({
-//   code:"MS25WELCOME",
-//   discount:"25%",
-//   amount: 0.25,
-//   active:true
-//  }).save()
+  //  await new promoCodes({
+  //   code:"MS25WELCOME",
+  //   discount:"25%",
+  //   amount: 0.25,
+  //   active:true
+  //  }).save()
 
-  res.send("okay ")
-
+  res.send("okay ");
 });
 
 //* <---  Token portoion  --->
@@ -6012,15 +6049,14 @@ const validateUserSignUp = async (arg) => {
 
     await extraData.findOne().then((data) => {
       // data.welcomeMessageActive
-      
-      if(data.welcomeMessageActive){
+
+      if (data.welcomeMessageActive) {
         welcomeSmsService({
           reciever: phoneNumber,
           message: data.welcomeMessage,
         });
       }
     });
-
 
     return msg;
   }

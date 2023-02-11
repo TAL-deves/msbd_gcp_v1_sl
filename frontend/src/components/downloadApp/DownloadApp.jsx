@@ -123,7 +123,6 @@ const DownloadApp = () => {
               </motion.div>
               &nbsp;
               <motion.div whileHover={{ scale: 1.03 }}>
-                {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
                 {/* <Box
                   onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                   sx={{
@@ -141,12 +140,15 @@ const DownloadApp = () => {
                   }}
                 > */}
                   {/* <img src={applebtn} alt="google" width="60%" /> */}
-                  <Lottie onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
+
+                    <Link href="https://apps.apple.com/app/id1667470558" target="new">
+                  <Lottie 
+                  // onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                 animationData={appleStore}
                 style={appButtonStyle}
               />
                 {/* </Box> */}
-                {/* </Link> */}
+                </Link>
               </motion.div>
             </Grid>
           </Grid>

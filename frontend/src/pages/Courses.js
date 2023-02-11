@@ -216,8 +216,9 @@ const Courses = (props) => {
 
                     <motion.div whileHover={{ scale: 1.03 }}>
                       {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
+                      <Link href="https://apps.apple.com/app/id1667470558" target="new">
                       <Box
-                        onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
+                        // onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                         sx={{
                           // backgroundColor: "secondary.main",
                           backgroundColor: "other.footercolor",
@@ -233,7 +234,7 @@ const Courses = (props) => {
                       >
                         <img src={applebtn} alt="google" width="60%" />
                       </Box>
-                      {/* </Link> */}
+                      </Link>
                     </motion.div>}
                   <Lottie
                     animationData={appimage_dark}

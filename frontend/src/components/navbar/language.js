@@ -78,8 +78,8 @@ export const translationsEn = {
     validity:"Validity",
     days:"120 Days",
     refer:"Refer to your friends",
-    refer_button:"Refer"
-
+    refer_button:"Refer",
+    continue_from_mobile:"Continue From Mobile"
   };
   
 export const translationsBn = {
@@ -162,5 +162,6 @@ export const translationsBn = {
     validity:"মেয়াদ",
     days:"১২০ দিন",
     refer:"রেফার করুন আপনার বন্ধুদের​",
-    refer_button:"রেফার"
+    refer_button:"রেফার",
+    continue_from_mobile:"মোবাইল থেকে কন্টিনিউ করুন​"
   };

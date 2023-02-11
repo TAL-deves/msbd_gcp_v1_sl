@@ -144,11 +144,11 @@ export default function Wavefooter() {
                 <Typography sx={{color:"other.white"}} display="inline">Verify Certificate</Typography>
                 </Routerlink>
               </Box>
-              {/* <Box>
-                <Routerlink to="/store" style={{ textDecoration: "none" }} color="inherit">
-                <Typography sx={{color:"other.white"}} display="inline">Store</Typography>
+              <Box>
+                <Routerlink to="/contact" style={{ textDecoration: "none" }} color="inherit">
+                <Typography sx={{color:"other.white"}} display="inline">Contact</Typography>
                 </Routerlink>
-              </Box> */}
+              </Box>
             </Grid>
             <Grid sx={{ textDecoration: "none" }} >
               <Box  sx={{borderBottom:1,borderColor:"other.logocolor",color:"other.logocolor", fontWeight:"800", marginBottom:".5rem"}}>Terms</Box>
@@ -181,27 +181,33 @@ export default function Wavefooter() {
                 <img src={Ms_logo} alt="logo"
                   width="50" />
               </Box>
+              <Routerlink to="/" style={{ textDecoration: "none" }} color="inherit">
+                
+                
               <Typography
                 noWrap
                 component="a"
-                href="/"
+                
                 sx={{
                   mr: 0,
                   display: { xs: "flex" },
                   fontSize: "2rem",
                   flexGrow: 1,
-                  color: "inherit",
+                  color: "white",
                   textDecoration: "none",
                 }}
               >
+                
                 {/* //!  This is mobile view */}
+               
                 <Typography
-
                   variant='h5'
+                  sx={{textDecoration:"none"}}
                 >
                   Mind School
                 </Typography>
               </Typography>
+              </Routerlink>
               <Typography>
                 Download Our Mobile App
               </Typography>
@@ -226,11 +232,12 @@ export default function Wavefooter() {
                   </Box>
                 </Link>
                 {/* <Link href="https://techanalyticaltd.com/" target="new"> */}
-                  <Box onClick={()=>
+                <Link href="https://apps.apple.com/app/id1667470558" target="new">
+                  <Box 
+                  // onClick={()=>
+                  // // {swal("iOS App Coming Soon","Thank You","");}
                   // {swal("iOS App Coming Soon","Thank You","");}
-                  {swal("iOS App Coming Soon","Thank You","");}
-                  
-                }
+                 
                     sx={{
                       // backgroundColor: "other.footercolor",
                       backgroundColor: "secondary.main",
@@ -245,7 +252,7 @@ export default function Wavefooter() {
                   >
                     <img src={applebtn} alt="google" width="90vw" />
                   </Box>
-                {/* </Link> */}
+                </Link>
               </Box>
 
             </Grid>

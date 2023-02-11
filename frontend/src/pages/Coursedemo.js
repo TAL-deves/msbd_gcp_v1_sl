@@ -342,9 +342,10 @@ const Coursedemo = () => {
 
                         });
 
-                      videoRef.remove();
-                      setVideoRef(null);
-                      videoContainerRef.current.classList.remove("haveVideo");
+                        videoRef.remove();
+                        setVideoRef(null);
+                        videoContainerRef.current.classList.remove("haveVideo");
+                      
                     }}
                   >
                     <Box sx={{ display: "flex" }}>
@@ -363,6 +364,7 @@ const Coursedemo = () => {
                     <AccordionDetails>
                       <Typography sx={{ cursor: "pointer" }} onClick={async () => {
                         videoContainerRef.current.classList.add("haveVideo");
+                        
                         // const { otp, playbackInfo } = await dummyAPICall();
                         const video = loadVideo({
                           otp,

@@ -47,6 +47,7 @@ import uuid from "react-uuid";
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { display } from "@mui/system";
+import { t } from "i18next";
 
 const SEND_QR_DATA_TO_WEB = `/api/qrfromweb`;
 const QR_MATCH_STATUS = `/api/qrcheck`;
@@ -195,7 +196,8 @@ export function TransitionsModal() {
         onClick={handleOpen}
       >
         {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
-        <QrCodeIcon /> &nbsp;&nbsp;Continue from mobile
+        
+        <QrCodeIcon /> &nbsp;&nbsp;{t("continue_from_mobile")}
         {/* &nbsp; &nbsp; &nbsp; &nbsp;  */}
       </Button>
       <Modal
@@ -269,11 +271,13 @@ export function TransitionsModal() {
                   style={style}
                 /></Link>
               <Box sx={{ cursor: "pointer" }}>
+              <Link href="https://apps.apple.com/app/id1667470558" target="new">
                 <Lottie
                   animationData={appleStore}
                   style={style}
-                  onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
+                  // onClick={() => { swal("iOS App Coming Soon", "Thank You", ""); }}
                 />
+                </Link>
               </Box>
             </Box>
             <Lottie
