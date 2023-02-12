@@ -119,7 +119,7 @@ const SideCart = (props) => {
 
     ).then(() => {
     
-      navigate("/courses")
+      navigate("/userprofile")
       // window.close();
     })
     // localStorage.setItem("course",[[]])
@@ -127,14 +127,14 @@ const SideCart = (props) => {
     swal("Error!", "Payment is not successfull", "error",).then(() => {
 
       // window.close();
-      navigate("/courses")
+      navigate("/payment-status")
     })
   }
   else if(payment === "cancel"){
     swal("Error!", "Payment is cancelled", "error",).then(() => {
 
       // window.close();
-      navigate("/courses")
+      navigate("/payment-status")
     })
   }
 

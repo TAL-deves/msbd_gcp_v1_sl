@@ -223,7 +223,7 @@ const Coursedemo = () => {
      setInterval(() => {
       setCount(!count)
 
-    }, 300000)
+    }, 30000)
 
   }, [count]);
 
@@ -341,11 +341,12 @@ const Coursedemo = () => {
 
 
                         });
+                        console.log(videoRef);
 
                         videoRef.remove();
                         setVideoRef(null);
-                        videoContainerRef.current.classList.remove("haveVideo");
-                      
+                        // setVideoID("")
+                        // videoContainerRef.current.classList.remove("haveVideo");
                     }}
                   >
                     <Box sx={{ display: "flex" }}>
@@ -362,7 +363,7 @@ const Coursedemo = () => {
                   </AccordionSummary>
                   {videoRef === null ?
                     <AccordionDetails>
-                      <Typography sx={{ cursor: "pointer" }} onClick={async () => {
+                      <Box sx={{ cursor: "pointer" }} onClick={async () => {
                         videoContainerRef.current.classList.add("haveVideo");
                         
                         // const { otp, playbackInfo } = await dummyAPICall();
@@ -375,7 +376,8 @@ const Coursedemo = () => {
                           }
                         });
                         setVideoRef(video);
-                        // console.log("new course ID", courseVdo)
+                        console.log("add video");
+                        console.log("new course ID", courseVdo)
                       }}>
                         {/* {courseData.description[0]}<br/> */}
                         {/* {courseVdo.videoID} */}
@@ -387,7 +389,7 @@ const Coursedemo = () => {
                         <Button variant="contained"> Play</Button>
                         <br />
 
-                      </Typography>
+                      </Box>
                     </AccordionDetails> :
                     <AccordionDetails>
                       <Box sx={{ display: "flex" }}>

@@ -34,7 +34,9 @@ const AboutUs = () => {
   {name:"Shafayet Jefreey Al Mehdi", position:"CEO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/mehdi.webp"},
   {name:"Moin Mostakim", position:"CTO and Director",image:"https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/managementTeam/moin.webp"}])
   
-
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  }, []);
     return (
        <Box>
         {/* <Container> */}

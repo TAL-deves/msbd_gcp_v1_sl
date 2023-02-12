@@ -51,6 +51,7 @@ import SendMessage from "./components/SendMessage/SendMessage";
 import Lottie from "lottie-react";
 import loadingAnimation from "./assets/loadingAnimation.json";
 import ComingSoon from "./pages/ComingSoon";
+import PaymentStatus from "./pages/PaymentStatus";
 
 
 
@@ -238,6 +239,10 @@ function App() {
                   <Route
                     path="instructor-details"
                     element={<InstructorDetails />}
+                  />
+                  <Route
+                    path="payment-status"
+                    element={<PaymentStatus />}
                   />
                   <Route
                     path="verify-certificate"

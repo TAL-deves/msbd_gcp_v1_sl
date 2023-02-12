@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Container, Paper, Table, TableBody, TableCell, TableContainer, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import swal from 'sweetalert'
 import api from '../../api/Axios'
@@ -102,6 +102,10 @@ export default function VerifyCertificate() {
     if(certificateIDparam.get("certificateIDparam")){
        verifyCertificateWithParam()
     }
+
+    useEffect(() => {
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    }, []);
    
     return (
         <Box>

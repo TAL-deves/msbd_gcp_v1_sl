@@ -106,7 +106,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
         if(status==="ended"){
           setStatusChanged(true)
           setCount((count)=>!count)
-          // console.log(courseID, videoID, status, username, currentTime)
+           console.log(courseID, videoID, status, username, currentTime)
           //  window.location.reload();
          }
       // }

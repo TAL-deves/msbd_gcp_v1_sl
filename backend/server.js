@@ -137,7 +137,7 @@ const promoCodes = require("./Database/models/promoCodes");
 //   // fs.writeFile('mynewfile3.txt', 'error', function (err) {
 //   //   if (err) throw err;
 //   //   console.log('Saved!');
-//   // });  
+//   // });
 // }
 
 // //!
@@ -3772,18 +3772,15 @@ app.post("/api/inapppayment", async (req, res) => {
     req.body = recievedResponseData;
 
     const {
-      tran_id,
-      val_id,
-      amount,
-      bank_tran_id,
-      tran_date,
-      status,
-      value_a,
+      trans_id, // purchaseId
       value_b,
       value_c,
+      username,
+      courseId,
+      recheck,
     } = req.body;
 
-    console.log("req.body --- ", req.body);
+    // console.log("req.body --- ", req.body);
 
     let currentDate = new Date();
     let currentDateMiliseconds = currentDate.getTime();
@@ -3791,63 +3788,60 @@ app.post("/api/inapppayment", async (req, res) => {
       currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
     let courseExpires = new Date(courseExpiresMiliseconds);
 
-    // let userPurchasedCourses = new usersPurchasedCourses({
-    //   username: `${value_a}`,
-    //   phoneNumber: `${value_b}`,
-    //   coursesList: JSON.parse(value_c.replaceAll(".", '"')),
-    //   expirationDate: `${courseExpires}`,
-    //   amount: `${amount}`,
-    //   bank_tran_id: bank_tran_id,
-    //   base_fair: "0.00",
-    //   card_brand: "",
-    //   card_issuer: "",
-    //   card_issuer_country: "",
-    //   card_issuer_country_code: "",
-    //   card_no: "",
-    //   card_sub_brand: "",
-    //   card_type: "",
-    //   currency: "",
-    //   currency_amount: "",
-    //   currency_rate: "",
-    //   currency_type: "",
-    //   error: "",
-    //   risk_level: "",
-    //   risk_title: "",
-    //   status: status,
-    //   store_amount: "",
-    //   store_id: process.env.STORE_ID,
-    //   tran_date: tran_date,
-    //   tran_id: `${tran_id}`,
-    //   val_id: val_id,
-    //   value_a: value_a,
-    //   value_b: value_b,
-    //   value_c: value_c,
-    //   value_d: "",
-    //   verify_sign: "",
-    //   verify_sign_sha2: "",
-    //   verify_key: "",
-    // });
-    // await userPurchasedCourses.save();
+    let userAuditLoggerData = {
+      username: req.body.username,
+      url: req.originalUrl,
+      timestamp: new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      }),
+    };
 
-    // let userAuditLoggerData = {
-    //   username: req.body.username,
-    //   url: req.originalUrl,
-    //   timestamp: new Date().toLocaleDateString("en-US", {
-    //     month: "long",
-    //     day: "numeric",
-    //     year: "numeric",
-    //     hour: "numeric",
-    //     minute: "numeric",
-    //     second: "numeric",
-    //   }),
-    // };
+    userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-    // userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+    let checkIfAlreadyExists = usersPurchasedCourses
+      .findOne({
+        value_b: recheck,
+      })
+      .then(async (data) => {
+        if (!data) {
+          let userPurchasedCourses = new usersPurchasedCourses({
+            username: username,
+            coursesList: JSON.parse(
+              courseId.replaceAll("[", '["').replaceAll("]", '"]')
+            ),
+            expirationDate: `${courseExpires}`,
+            store_id: process.env.STORE_ID,
+            tran_date: currentDate,
+            status: "VALID",
+            tran_id: `${trans_id}`,
+            value_a: username,
+            value_b: recheck,
+            value_c: value_c,
+            value_d: "APPLE_IN_APP",
+          });
 
-    let setSendResponseData = new sendResponseData("okay", 200, null);
-    let responseToSend = encryptionOfData(setSendResponseData.success());
+          await userPurchasedCourses.save();
 
-    res.send(responseToSend);
+          let setSendResponseData = new sendResponseData("okay", 200, null);
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+
+          res.send(responseToSend);
+        } else {
+          let setSendResponseData = new sendResponseData(
+            "Already availed",
+            200,
+            null
+          );
+          let responseToSend = encryptionOfData(setSendResponseData.success());
+
+          res.send(responseToSend);
+        }
+      });
   } catch {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -4122,7 +4116,7 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
 
   userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-  res.redirect(process.env.CLIENT_URL + `courses?payment=failed`);
+  res.redirect(process.env.CLIENT_URL + `payment-status?payment=failed`);
 });
 
 app.post("/api/ssl-payment-cancel", async (req, res) => {
@@ -4198,7 +4192,7 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
 
   userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
 
-  res.redirect(process.env.CLIENT_URL + `courses?payment=cancel`);
+  res.redirect(process.env.CLIENT_URL + `payment-status?payment=cancel`);
 });
 
 //! ********** User courses and payment history part ***********/
@@ -4805,13 +4799,13 @@ app.post("/api/videologdata", async (req, res) => {
       // console.log("video calculation --- ", status, "episode",  episode, " total watched", totalTimeCovered," total length ", totalVdoDuration, " %coverd", Math.ceil((totalTimeCovered/totalVdoDuration)*100));
 
       //? catching just the end status of the video
-      
+
       /* 
       if (
         req.body.status === "ended"
       )  
       */
-      
+
       //? video must be fully watched and status ended
       /*  
       if (
@@ -4820,10 +4814,7 @@ app.post("/api/videologdata", async (req, res) => {
       )  
       */
 
-
-      if (
-        req.body.status === "ended"
-      ) {
+      if (req.body.status === "ended") {
         let lessonProgressData = await lessonProgress.find({
           $and: [
             { username: username },
