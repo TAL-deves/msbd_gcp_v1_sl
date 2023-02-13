@@ -341,7 +341,7 @@ const Coursedemo = () => {
 
 
                         });
-                        console.log(videoRef);
+                        // console.log(videoRef);
 
                         videoRef.remove();
                         setVideoRef(null);
@@ -376,8 +376,8 @@ const Coursedemo = () => {
                           }
                         });
                         setVideoRef(video);
-                        console.log("add video");
-                        console.log("new course ID", courseVdo)
+                        // console.log("add video");
+                        // console.log("new course ID", courseVdo)
                       }}>
                         {/* {courseData.description[0]}<br/> */}
                         {/* {courseVdo.videoID} */}

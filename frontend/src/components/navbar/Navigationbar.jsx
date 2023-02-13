@@ -402,8 +402,13 @@ const Navigationbar = (props) => {
                     display: "block",
                     padding: "0 40px",
                     fontSize: "1rem",
-                    fontWeight:"800"
+                    fontWeight:"800",
+                    // "&:hover": {
+                    //   textDecoration: "underline",
+                    //   textUnderlineOffset: ".5rem"
+                    // }
                   }}
+                  
                 >
                   {page.title}
                 </Button>

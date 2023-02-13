@@ -40,7 +40,7 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
-  
+ 
         swal("You are logged out", "Your session ended, Please login again", "info").then(()=>{window.location.href = "/login";})
       }
       });
@@ -102,11 +102,11 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
       // }
       // else{
         actionVdoData(courseID, videoID, status, username, currentTime)
-        // if(totalTimeCovered===totalVdoDuration){
+        // if(totalTimeCovered===totalVdoDuration/.3){
         if(status==="ended"){
           setStatusChanged(true)
           setCount((count)=>!count)
-           console.log(courseID, videoID, status, username, currentTime)
+          //  console.log(courseID, videoID, status, username, currentTime)
           //  window.location.reload();
          }
       // }
