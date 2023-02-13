@@ -5986,13 +5986,7 @@ app.get("/api/testgetreq", async (req, res) => {
 });
 
 app.post("/api/testingpoint", async (req, res) => {
-  //  await new promoCodes({
-  //   code:"MS25WELCOME",
-  //   discount:"25%",
-  //   amount: 0.25,
-  //   active:true
-  //  }).save()
-
+  
   res.send("okay ");
 });
 

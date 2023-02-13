@@ -20,7 +20,7 @@ module.exports.sendSms = (params) => {
         "api_token": "f55icqnw-1lwnu7du-jnrg4euq-66kmlkdl-06uz5jwo",
         "sid": "TECHLTDMASK",
         "msisdn": `${reciever}`,
-        "sms": `Your OTP is ${OTP} to verify your phone number for Mind School.\n${hashTag}`, //Added hashtag
+        "sms": `Your OTP is ${req.body.OTP} to verify your phone number for Mind School.${req.body.hashTag? `\n${req.body.hashTag}` : ""}`, //Added hashtag
         "csms_id": `${id}`
       })
     
