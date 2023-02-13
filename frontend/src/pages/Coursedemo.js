@@ -223,7 +223,7 @@ const Coursedemo = () => {
      setInterval(() => {
       setCount(!count)
 
-    }, 30000)
+    }, 300000)
 
   }, [count]);
 
