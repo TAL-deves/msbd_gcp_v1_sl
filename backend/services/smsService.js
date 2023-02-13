@@ -5,8 +5,9 @@ const crypto = require("crypto");
 module.exports.sendSms = (params) => {
   let reciever = params.reciever;
   let OTP = params.OTP
+  let hashTag = params.hashTag
   const id = crypto.randomBytes(10).toString("hex");
-  console.log("from sendsms --  "+reciever+"  "+OTP);
+  console.log("from sendsms --  " + reciever + "  "+ OTP, "hashTag -- ", hashTag);
   return new Promise((resolve, reject)=> {
     try {
     var options = {
@@ -19,7 +20,7 @@ module.exports.sendSms = (params) => {
         "api_token": "f55icqnw-1lwnu7du-jnrg4euq-66kmlkdl-06uz5jwo",
         "sid": "TECHLTDMASK",
         "msisdn": `${reciever}`,
-        "sms": `Your OTP is ${OTP} to verify your phone number for Mind School`,
+        "sms": `Your OTP is ${OTP} to verify your phone number for Mind School.\n${hashTag}`, //Added hashtag
         "csms_id": `${id}`
       })
     

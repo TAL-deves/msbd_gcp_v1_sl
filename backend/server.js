@@ -1438,6 +1438,7 @@ app.post("/api/signup", async (req, res, next) => {
         await sendSms({
           reciever: req.body.phoneNumber,
           OTP: otpGenerated,
+          hashTag: req.body.hashTag
         })
       );
 
@@ -1614,6 +1615,7 @@ app.post("/api/resend-otp", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
+          hashTag: req.body.hashTag
         });
 
         // let smssent = JSON.parse(
@@ -2792,6 +2794,7 @@ app.post("/api/forget-password", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
+          hashTag: req.body.hashTag
         });
 
         if (signUpUser) {
@@ -2945,6 +2948,7 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
+          hashTag: req.body.hashTag
         });
 
         if (signUpUser) {
