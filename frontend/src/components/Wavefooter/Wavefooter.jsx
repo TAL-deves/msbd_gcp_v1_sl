@@ -5,7 +5,8 @@ import Container from '@mui/material/Container';
 import { Paper, Typography } from '@mui/material';
 import googlebtn from "../downloadApp/playstore.png"
 import applebtn from "../downloadApp/applestore.png";
-import facebook_yellow from "../downloadApp/facebook_yellow.json";
+// import facebook_yellow from "../downloadApp/facebook_yellow.json";
+import facebook_yellow from "../downloadApp/fbms.json";
 import yellow_youtube from "../downloadApp/yellow_youtube.json";
 import yellow_insta from "../downloadApp/yellow_insta.json";
 import yellow_twitter from "../downloadApp/yellow_twitter.json";
@@ -80,7 +81,10 @@ export default function Wavefooter() {
                   
                   <Lottie
           animationData={facebook_yellow}
-          style={style}          
+          style={{height: 57,
+            width: 57,
+            borderRadius: "50px",
+            margin:"5px"}}          
         />
                 </Link>
                 <Link href='https://www.instagram.com/mindschoolbd/' target="_blank">
