@@ -10,7 +10,7 @@ const VIDEO_LOG_DATA_URL = "/api/videologdata";
 
 export default function VideoStatusUsingAPI({count, setCount, statusChanged,setCourseId, setStatusChanged, totalCoveredStatus,setTotalCoveredStatus,totalVideoDurationStatus,setVideoDurationStatus,videoID, courseID, videoRef, isAPIReady, videoTitle, lessonTitle, episode }) {
   // const [status, setStatus] = useState("NA");
- 
+  //  console.log("status er videoID",videoID);
   let username = localStorage.getItem("user")
   // // console.log(username, "username")
   const [player, setPlayer] = useState(null);
@@ -94,7 +94,8 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
     player.video.addEventListener("ended", (e) => {
       //  e.preventDefault();
       status = "ended";
-      setCount((count)=>!count)
+      // setCount((count)=>!count)
+
       // if(episode===""){
       //   // window.location.reload();
       //    console.log(episode)
@@ -104,10 +105,12 @@ export default function VideoStatusUsingAPI({count, setCount, statusChanged,setC
         actionVdoData(courseID, videoID, status, username, currentTime)
         // if(totalTimeCovered===totalVdoDuration/.3){
         if(status==="ended"){
+          console.log("ended");
           setStatusChanged(true)
           setCount((count)=>!count)
-          //  console.log(courseID, videoID, status, username, currentTime)
+            console.log("status", status)
           //  window.location.reload();
+          //  setInterval( window.location.reload(), 8000);
          }
       // }
       

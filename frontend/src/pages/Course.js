@@ -129,12 +129,12 @@ const Courses = () => {
 <Grid item xs={6}>
       {courses.map((course) => {
               return (
-                <Accordion key={course.title}>
+      <Accordion key={course.title}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
-        >
+      >
           <Typography>{course?.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>

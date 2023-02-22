@@ -83,6 +83,8 @@ const Coursedemo = () => {
   const [count, setCount] = React.useState(true);
   const [completedEpisode, setCompletedEpisode] = React.useState([]);
   const [load, setLoad] = useState(true);
+  const [disablePlaybtn, setDisablePlaybtn] = useState();
+
   // let n=0;
 
   let location = useLocation();
@@ -152,7 +154,7 @@ const Coursedemo = () => {
         // completedEpisodeCount = (data.data.data.lessonsCompleted).length
         setStatusChanged(false)
         setLoad(false)
-
+        // console.log(data.data.data);
         if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
@@ -220,11 +222,11 @@ const Coursedemo = () => {
   useEffect(() => {
     courseVideo();
 
-     setInterval(() => {
-      setCount(!count)
-
-    }, 300000)
-
+    //  setInterval(() => {
+    //   setCount(!count)
+    // }, 300000)
+    // setCount(!count)
+console.log("count", count);
   }, [count]);
 
   // console.log("hellooooo", coursesVdoList.length)
@@ -294,7 +296,7 @@ const Coursedemo = () => {
             {/* {count? "true":"false"} */}
             {coursesVdoList.map((courseVdo, index) => {
               courseVdo["isVdoAdded"] = false
-              // console.log("completedEpisode", completedEpisode.length, " index", index);
+              // console.log("course vdo",courseVdo);
               return (
                 <Accordion
 
@@ -318,7 +320,10 @@ const Coursedemo = () => {
                           }
                         )
                         .then((data) => {
-                          // console.log(data.data.result.status, "data---------")
+                          // console.log(courseVdo.videoID, "data---------")
+                          
+
+                          setInterval( setDisablePlaybtn(true), 3000);
                           if (data.data.result.status === 401 || data.data.result.status === 400 || data.data.result.status === 404) {
                             localStorage.removeItem("access_token");
                             localStorage.removeItem("refresh_token");
@@ -328,7 +333,7 @@ const Coursedemo = () => {
                             // navigate("/login")
                             // console.log("removed sesssion")
                           }
-
+                          // console.log("video id gettning",`${courseVdo.videoID}`);
                           setOtp(data.data.data.otp);
                           setPlaybackInfo(data.data.data.playbackInfo);
                           handleClick(data.data.data.otp, data.data.data.playbackInfo, courseVdo);
@@ -338,15 +343,15 @@ const Coursedemo = () => {
                           // // console.log("vdo id -----------",`${courseVdo.videoID}`)
                           // setCount(count++)
                           // changecount()
-
+                         
 
                         });
-                        // console.log(videoRef);
-
+                       
                         videoRef.remove();
                         setVideoRef(null);
+                        
                         // setVideoID("")
-                        // videoContainerRef.current.classList.remove("haveVideo");
+                        videoContainerRef.current.classList.remove("haveVideo");
                     }}
                   >
                     <Box sx={{ display: "flex" }}>
@@ -363,6 +368,7 @@ const Coursedemo = () => {
                   </AccordionSummary>
                   {videoRef === null ?
                     <AccordionDetails>
+                      {disablePlaybtn?
                       <Box sx={{ cursor: "pointer" }} onClick={async () => {
                         videoContainerRef.current.classList.add("haveVideo");
                         
@@ -376,7 +382,7 @@ const Coursedemo = () => {
                           }
                         });
                         setVideoRef(video);
-                        // console.log("add video");
+                        setDisablePlaybtn(false)
                         // console.log("new course ID", courseVdo)
                       }}>
                         {/* {courseData.description[0]}<br/> */}
@@ -387,9 +393,14 @@ const Coursedemo = () => {
                           <Typography>Duration: {courseVdo.length}</Typography>
                         </Box>
                         <Button variant="contained"> Play</Button>
+                        {/* {disablePlaybtn?
+                        <Button variant="contained"> Play</Button>
+                        :
+                        <Button disabled variant="contained"> Play</Button>} */}
                         <br />
 
-                      </Box>
+                      </Box>:
+                      <Button disabled variant="contained"> Play</Button>}
                     </AccordionDetails> :
                     <AccordionDetails>
                       <Box sx={{ display: "flex" }}>
@@ -423,12 +434,23 @@ const Coursedemo = () => {
               alignItems: "center",
               justifyContent: "center",
               color: "other.dark",
-              marginBottom: "1rem"
+              marginBottom: "1rem",
+             
+              
             }}
           >
             {/* <Typography>{vdotitle}</Typography>*/}
             {/* Click Add Video button  */}
+            <Box>
             <Player count={count} setCount={setCount} setCourseId={setCourseId} statusChanged={statusChanged} setStatusChanged={setStatusChanged} totalCoveredStatus={totalCoveredStatus} setTotalCoveredStatus={setTotalCoveredStatus} totalVideoDurationStatus={totalVideoDurationStatus} setVideoDurationStatus={setVideoDurationStatus} otp={otp} videoID={videoID} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
+            </Box>
+            <Box>
+            <Button sx={{mt:"1rem"}} variant="contained" onClick={()=>{
+              // window.location.reload();
+              setCount(!count)}}>
+              Refresh
+            </Button>
+            </Box>
           </Box>
 
 

@@ -27,7 +27,7 @@ export default function Hello({count, setCount, setCourseId,statusChanged, setSt
 
   let courseData = location.state.courseId;
   let courseID = courseData.courseID;
-
+ console.log("videoID",videoID);
   // // console.log("coursesVdoList", coursesVdoList)
 
     // vdo list
