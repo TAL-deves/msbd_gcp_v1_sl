@@ -9,11 +9,6 @@ const userNotification = new mongoose.Schema({
   },
   read:{
     type : Boolean
-  },
-  expireAt: {
-    type: Date,
-    default: Date.now,
-    index: { expires: 86400 }
   }
 });
 

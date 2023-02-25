@@ -40,6 +40,11 @@ const notificationMessages = new mongoose.Schema({
   }, 
   date:{
     type: Number
+  },
+  expireAt: {
+    type: Date,
+    default: Date.now,
+    index: { expires: (86400*30) }
   }
 });
 
