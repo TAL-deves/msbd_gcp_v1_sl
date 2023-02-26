@@ -98,6 +98,10 @@ const qrData = require("./Database/models/qrData");
 const extraData = require("./Database/models/extraData");
 const promoCodes = require("./Database/models/promoCodes");
 
+const nodemailer = require('nodemailer');
+
+
+
 // //!mongoDB backup
 // const { spawn } = require("child_process");
 // const path = require("path");
@@ -1988,15 +1992,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
       courseID,
     } = JSON.parse(obj);
 
-    // console.log(username,
-    //   instructorName,
-    //   instructorTitle,
-    //   instructorSign,
-    //   completeDate,
-    //   courseName,
-    //   fullName,
-    //   courseID);
-
     completeDate = new Date().toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -2041,13 +2036,13 @@ app.get("/api/mobilecertificate", async (req, res) => {
         align: "center",
       });
     // Draw the course name
-    doc.font("Times-Roman").fontSize(15).text(courseName, -80, 345, {
+    doc.font("Times-Roman").fontSize(15).text(courseName, -60, 365, {
       align: "center",
     });
     // doc.image("./images/instructorSign.png", 60, 435, { width: 200 });
 
     // Draw the date
-    doc.font("Times-Roman").fontSize(17).text(completeDate, -80, 430, {
+    doc.font("Times-Roman").fontSize(17).text(completeDate, -60, 430, {
       align: "center",
     });
     // Draw the certificateNumber
@@ -2055,43 +2050,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
       align: "center",
     });
 
-    // fullName = fullName.replaceAll(" ", "_");
-
-    // let saveCertificateData = new certificateData({
-    //   username: username,
-    //   courseID: courseID,
-    //   courseName: courseName,
-    //   fullName: fullName.replaceAll("_", " "),
-    //   completeStatus: true,
-    //   certificate: true,
-    //   certificateID: genId,
-    //   certificateDate: completeDate,
-    // });
-
-    // await saveCertificateData.save();
-
-    // res.setHeader("Content-Type", "application/pdf");
-    // res.setHeader("Content-Disposition", `inline; filename=${fullName}.pdf`);
-
-    // doc.pipe(res);
-
-    // let userAuditLoggerData = {
-    //   username: req.body.username,
-    //   url: req.originalUrl,
-    //   timestamp: new Date().toLocaleDateString("en-US", {
-    //     month: "long",
-    //     day: "numeric",
-    //     year: "numeric",
-    //     hour: "numeric",
-    //     minute: "numeric",
-    //     second: "numeric",
-    //   }),
-    // };
-
-    // userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
-
-    // // Finalize the PDF and end the stream
-    // doc.end();
 
     fullName = fullName.replaceAll(" ", "_");
 
@@ -5989,6 +5947,70 @@ app.post("/api/testingpoint", async (req, res) => {
   
   res.send("okay ");
 });
+
+app.post("/api/allusersfortest", async (req, res) => {
+  
+  let userdatas = await signUpTemplateCopy.find()
+
+  let setSendResponseData = new sendResponseData(
+    userdatas.reverse(),
+    200,
+    null
+  );
+  let responseToSend = encryptionOfData(setSendResponseData.success());
+  res.send(responseToSend);
+
+});
+
+app.post('/api/sendanemail', async (req, res) => {
+  const { to } = req.body;
+  const pdf = fs.readFileSync('./data/companyprofile.pdf');
+
+  console.log("to", to);
+
+  // create transporter object using SMTP transport
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.techanalyticaltd.com',
+    port: 465,
+    secure: true,
+    // auth: {
+    //   user: 'manas@techanalyticaltd.com',
+    //   pass: 'T@ltd2628'
+    // },
+    auth: {
+      user: 'info@techanalyticaltd.com',
+      pass: 'T@ltd1100'
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
+  });
+
+  try {
+    // send mail with defined transport object
+    const info = await transporter.sendMail({
+      from: 'info@techanalyticaltd.com',
+      to,
+      subject: `Introduction to Tech Analytica Limited - Technology that makes life better`,
+      text: `Dear client,\nI am pleased to introduce Tech Analytica Limited, a leading IT company that specializes in providing cutting-edge solutions to businesses of all sizes. Our website, www.techanalyticaltd.com, provides an overview of our company, our services, and our expertise.\nWith over 2 years of experience in the industry, Tech Analytica Limited has established itself as a reliable and innovative provider of IT solutions. Our team consists of highly skilled professionals who are dedicated to delivering high-quality services that meet the specific needs of our clients.\nAt Tech Analytica Limited, we offer a wide range of IT services, including software development, web design and development, mobile app development, IT consulting, and cybersecurity solutions. Our services are designed to help businesses streamline their operations, improve their efficiency, and achieve their goals.\nOur team of experts stays up-to-date with the latest trends and technologies in the industry to ensure that our clients receive the most advanced and innovative solutions. We take pride in our ability to provide exceptional customer service and support throughout every project.\nThank you for considering Tech Analytica Limited for your IT needs. We are confident that we can provide you with the best solutions to help you achieve your business objectives. Please feel free to contact us at any time to learn more about our services.\nSincerely,\nTech Analytica Limited\nwww.techanalyticaltd.com`,
+      attachments: [
+        {
+          filename: 'techanalyticalimited.pdf',
+          content: pdf
+        }
+      ]
+
+    });
+    console.log(`Message sent: ${info.messageId}`);
+    res.status(200).send(`Email sent to ${to} with message id: ${info.messageId}`);
+  } catch (err) {
+    console.error(`Error sending email: ${err}`);
+    res.status(500).send('Error sending email');
+  }
+});
+
+
 
 //* <---  Token portoion  --->
 //! ********** Token portoion ***********/
