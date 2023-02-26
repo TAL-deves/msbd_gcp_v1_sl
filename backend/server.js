@@ -3767,11 +3767,13 @@ app.post("/api/inapppayment", async (req, res) => {
 
     let checkIfAlreadyExists = usersPurchasedCourses
       .findOne({
-        value_b: recheck,
+        username: username,
+        value_b: recheck
       })
       .then(async (data) => {
+        // console.log("data-----", data);
         if (!data) {
-          let userPurchasedCourses = new usersPurchasedCourses({
+          let userPurchased = new usersPurchasedCourses({
             username: username,
             coursesList: JSON.parse(
               courseId.replaceAll("[", '["').replaceAll("]", '"]')
@@ -3787,7 +3789,9 @@ app.post("/api/inapppayment", async (req, res) => {
             value_d: "APPLE_IN_APP",
           });
 
-          await userPurchasedCourses.save();
+          await userPurchased.save();
+
+          // console.log("userPurchasedCourses ----", userPurchased);
 
           let setSendResponseData = new sendResponseData("okay", 200, null);
           let responseToSend = encryptionOfData(setSendResponseData.success());
