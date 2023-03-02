@@ -1,4 +1,4 @@
-import  {React, useState} from 'react';
+import  {React, useState, useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,22 +18,28 @@ import { multiStepContext } from '../../pages/StepContext';
 import { multiForgotContext } from '../../pages/ForgotContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, AlertTitle, Backdrop, CircularProgress, Collapse, IconButton, Stack } from '@mui/material';
+import { useCallback } from 'react';
 
 const ForgetVerify = () => {
   const [open, setOpen] = useState(true);
-  const [resendbtn, setResendbtn]= useState(true)
+  const [resendbtn, setResendbtn]= useState(false);
+  
+
   const { backdrop,setBackdrop,renderer,otp, setOTP,handleSubmitMailForget,handleSubmitForgetOTP,handleSubmitVerify, validName, setValidName,
    userFocus, setUserFocus,validEmail, setValidEmail,
      email, setEmail,emailFocus, setEmailFocus,
     password, setPwd,validPwd, setValidPwd,pwdFocus, setPwdFocus,
      validMatch, setValidMatch,matchFocus, setMatchFocus,
     errMsg, setErrMsg, success, setSuccess,handleSubmitRegistration,theme,
-    username, setUser,matchPwd, setMatchPwd, handleSubmitResendVerify}= useContext(multiForgotContext)
+    username, setUser,matchPwd, setMatchPwd, handleSubmitResendVerify, counter, setCounter, formatTime, phoneNumber}= useContext(multiForgotContext)
 
     const handleLoading=()=>{
       setBackdrop(true)
       handleSubmitForgetOTP()
     }
+    
+
+ 
   return (
     <Box>
       <Container sx={{display:"flex", height:"60vh",flexDirection:"column", alignItems:"center"}}>
@@ -94,29 +100,60 @@ const ForgetVerify = () => {
                 maxLength: 5
                 
               }}
-              onChange={(e) => setOTP(e.target.value)}
+              onInput={(e) => {setOTP(e.target.value)
+              }}
+              // onChange={(e) => setOTP(e.target.value)}
             />
           
             <Grid container sx={{display:'flex', alignItems:"center"}}>
               <Grid item xs>
+              {/* cmnt ltr  */}
+              {/* {!resendbtn?
               <Countdown 
                 date={Date.now() + 180000}
                 renderer={renderer}
-                onComplete={()=>setResendbtn(false)}
-              />
+                onComplete={()=>setResendbtn(true)}
+              />:"Time Expired!"} */}
+              {/* uncmnt */}
+              {/* <Countdown 
+                date={Date.now() + 180000}
+                renderer={renderer}
+                onComplete={()=>setResendbtn(true)}
+              /> */}
+              {counter!=0?<Box>{` ${formatTime(counter)}`}</Box>:<p>Code expired!</p>}
               </Grid>
               <Grid item>
                
                {/* <Button variant="contained" disabled={resendbtn} onClick={handleSubmitResendVerify} >
                   {"Resend code"}
                 </Button> */}
-                  <Link
-                  href="/forgotpassword"
-                  variant="body2"
+                {/* cmnt  */}
+                <Box  onClick={() => {                   
+                    setResendbtn(false);
+                   }}>
+                  <Button
+                  variant="outlined"
+                  sx={{padding:"5px", margin:"5px", textTransform:"capitalize"}}
                   onClick={handleSubmitResendVerify}
+                  disabled={counter!=0}
+                  // onClick={() => {
+                  //   setRestartCount(restartCount+1)                    
+                  //   setResendbtn(false);
+                  //    handleSubmitResendVerify();
+                  // }}
                 >
                   {"Resend code"}
-                </Link>
+                </Button>
+                </Box>
+                {/* uncmnt  */}
+                  {/* <Link
+                  href="/ForgotRequestpassword"
+                  variant="body2"
+                  onClick={()=>{handleSubmitResendVerify()
+                    setResendbtn(false)}}
+                >
+                  {"Resend code"}
+                </Link> */}
               </Grid>
             </Grid>
           
@@ -130,15 +167,28 @@ const ForgetVerify = () => {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+          {phoneNumber?
         <Button
             variant="contained"
             color="primary"
             // disabled={password !== matchPwd}
+            
             onClick={handleLoading}
             sx={{ mt: "6rem",mb: "30%" }}
           >
             Submit
-          </Button>
+          </Button>:
+          <Button
+          variant="contained"
+          color="primary"
+          // disabled={password !== matchPwd}
+          href="/login"
+          // onClick={handleLoading}
+          sx={{ mt: "6rem",mb: "30%" }}
+        >
+          Submit
+        </Button>
+          }
           </Box>
       </Container>
        

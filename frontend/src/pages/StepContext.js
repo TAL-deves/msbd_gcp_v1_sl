@@ -50,9 +50,11 @@ const Completionist = () => <span>Code expired!</span>;
 const renderer = ({ hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
+    console.log("rendere off")
     return <Completionist />;
   } else {
     // Render a countdown
+    console.log(" renderer start")
     return <span>{hours}:{minutes}:{seconds}</span>;
   }
 };

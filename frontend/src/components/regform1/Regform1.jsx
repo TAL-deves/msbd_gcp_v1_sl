@@ -92,6 +92,8 @@ const Regform1 = () => {
     setPhone(newPhone);
     // //// console.log(phone)
   }
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset", WebkitTextFillColor:"black" };  
+  const inputDarkStyle = { WebkitBoxShadow: "0 0 0 1000px #002054 inset", WebkitTextFillColor:"#F8B100" };
 
   return (
     <Box
@@ -259,7 +261,7 @@ const Regform1 = () => {
             required
             inputProps={{
               maxLength: 16,
-              // minLength:12
+              style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
             }}
             onFocus={() => {setPhoneFocus(true) ;
             // swal("bd","","info")
@@ -310,6 +312,8 @@ const Regform1 = () => {
               }}
               inputProps={{
                 maxLength: 50,
+                style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+               
               }}
               onChange={(e) => setUser(e.target.value)}
               // aria-describedby="uidnote"
@@ -350,6 +354,8 @@ const Regform1 = () => {
               }}
               inputProps={{
                 maxLength: 320,
+                style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+               
               }}
               onChange={(e) =>
                  setEmail(e.target.value)}

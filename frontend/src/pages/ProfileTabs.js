@@ -23,6 +23,7 @@ import applebtn from "../components/downloadApp/applestore.png";
 
 import Lottie from "lottie-react";
 import appimage_dark from "../components/downloadApp/downloadappanimation.json";
+import ChangePassword from "./ChangePassword";
 
 const DEV_CHECK_URL = "/api/userprofile"
 function TabPanel(props) {
@@ -65,6 +66,9 @@ export default function ProfileTabs() {
   const [fullName, setFullName] = React.useState("")
   const [isAndroid, setIsAndroid] = React.useState()
   const [isDev, setIsDev] = React.useState()
+  const [isGmail, setIsGmail]= React.useState()
+  const [isFacebook, setIsFacebook]= React.useState()
+  const [isApple, setIsApple]= React.useState()
 
   const style = {
     height: { xs: 320 },
@@ -86,8 +90,10 @@ export default function ProfileTabs() {
         'Access-Control-Allow-Credentials': true
       }
     )
-    setIsDev(response.data.data.developer)
-
+    setIsDev(response.data.data.developer)  
+    setIsGmail(response.data.data.googleId)
+    setIsFacebook(response.data.data.facebookId)
+    setIsApple(response.data.data.appleId)
   }
 
   React.useEffect(() => {
@@ -109,10 +115,12 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
+            <Tab label="Change Password" {...a11yProps(4)} />
             {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-            <Tab label="Push Notification" {...a11yProps(4)} />
-            <Tab label="Messages" {...a11yProps(5)} />
-            <Tab label="Subscribers" {...a11yProps(6)} />
+            <Tab label="Push Notification" {...a11yProps(5)} />
+            <Tab label="Messages" {...a11yProps(6)} />
+            <Tab label="Subscribers" {...a11yProps(7)} />
+           
           </Tabs>
           :
           <Tabs
@@ -127,6 +135,7 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
+            {isGmail || isFacebook || isApple?"":<Tab label="Change Password" {...a11yProps(4)} />}
           </Tabs>}
         <TabPanel value={value} index={0}>
           <UserProfile />
@@ -229,18 +238,22 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
+        <TabPanel value={value} index={4}>
+          <ChangePassword />
+        </TabPanel>
         {/* <TabPanel value={value} index={4}>
           <DataEntry />
         </TabPanel> */}
-        <TabPanel value={value} index={4}>
+        <TabPanel value={value} index={5}>
           <PushNotification />
         </TabPanel>
-        <TabPanel value={value} index={5}>
+        <TabPanel value={value} index={6}>
           <UserMessages />
         </TabPanel>
-        <TabPanel value={value} index={6}>
+        <TabPanel value={value} index={7}>
           <SubscriberList />
         </TabPanel>
+       
       </Box>
 
       <Box
@@ -269,10 +282,12 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
+            <Tab label="Change Password" {...a11yProps(4)} />
             {/* <Tab label="Data Entry" {...a11yProps(4)} /> */}
-            <Tab label="Push Notification" {...a11yProps(4)} />
-            <Tab label="Messages" {...a11yProps(5)} />
-            <Tab label="Subscribers" {...a11yProps(6)} />
+            <Tab label="Push Notification" {...a11yProps(5)} />
+            <Tab label="Messages" {...a11yProps(6)} />
+            <Tab label="Subscribers" {...a11yProps(7)} />
+            
           </Tabs> :
           <Tabs
             orientation="vertical"
@@ -286,6 +301,7 @@ export default function ProfileTabs() {
             <Tab label="My Courses" {...a11yProps(1)} />
             <Tab label="Payment" {...a11yProps(2)} />
             <Tab label="Feedbacks" {...a11yProps(3)} />
+           {isGmail || isFacebook || isApple?"": <Tab label="Change Password" {...a11yProps(4)} />}
           </Tabs>}
         <TabPanel value={value} index={0}>
           <UserProfile setFullName={setFullName} />
@@ -322,18 +338,22 @@ export default function ProfileTabs() {
         <TabPanel value={value} index={3}>
           <MyFeedbacks />
         </TabPanel>
+        <TabPanel value={value} index={4}>
+          <ChangePassword />
+        </TabPanel>
         {/* <TabPanel value={value} index={4}>
           <DataEntry />
         </TabPanel> */}
-        <TabPanel value={value} index={4}>
+        <TabPanel value={value} index={5}>
           <PushNotification />
         </TabPanel>
-        <TabPanel value={value} index={5}>
+        <TabPanel value={value} index={6}>
           <UserMessages />
         </TabPanel>
-        <TabPanel value={value} index={6}>
+        <TabPanel value={value} index={7}>
           <SubscriberList />
         </TabPanel>
+                
       </Box>
     </Box>
   );

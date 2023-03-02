@@ -136,7 +136,7 @@ const Navigationbar = (props) => {
     { title: `${t("about")}`, href: "/about" },
     { title: `${t("contact")}`, href: "/contact" },
   ];
-
+  
   return (
     <AppBar
       position="sticky"
@@ -766,6 +766,7 @@ const Navigationbar = (props) => {
               </Box>
             </Stack>
           )}
+          {window.location.pathname==="/course-video"?<></>:
           <MaterialUISwitch
             sx={{ m: 0 }}
             checked={!props.darkmode}
@@ -780,7 +781,7 @@ const Navigationbar = (props) => {
 
               // setmode
             }}
-          />
+          />}
         </Toolbar>
       </Container>
     </AppBar>

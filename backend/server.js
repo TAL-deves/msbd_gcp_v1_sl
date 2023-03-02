@@ -1523,7 +1523,7 @@ app.post("/api/verify", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-    console.log(req.body);
+    console.log("/api/verify",req.body);
 
     const user = await validateUserSignUp(req.body);
 
@@ -3016,6 +3016,55 @@ app.post("/api/reset-password", async (req, res) => {
     res.send(responseToSend);
   }
 });
+
+//! ******* Change password *******/
+app.post("/api/changepassword", async (req, res) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    let userSessionStatus = await tokenChecking(req);
+
+    if (userSessionStatus.data != null) {
+
+    const { username, password } = req.body;
+
+    console.log(req.body);
+
+    let newPassword = await bcrypt.hash(password, 12);
+    const user = await signUpTemplateCopy.findOneAndUpdate(
+      {
+        username: username
+      },
+      {
+        $set: {
+          password: newPassword,
+          otpretrycount: 3,
+          resetotpcount: 3,
+        },
+      }
+    );
+
+      let setSendResponseData = new sendResponseData(
+        "Password reset successful!",
+        202,
+        null
+      );
+      let responseToSend = encryptionOfData(setSendResponseData.success());
+      res.send(responseToSend);
+    } else {
+      let responseToSend = encryptionOfData(userSessionStatus);
+      res.send(responseToSend);
+    }
+    
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+
+    res.send(responseToSend);
+  }
+});
+
 //* <---  Forget password, request password, resend OTP, reset password --->
 
 //* <---  Start course video, details --->
@@ -5966,6 +6015,20 @@ app.post("/api/allusersfortest", async (req, res) => {
 
 });
 
+app.post("/api/allpaymentfortest", async (req, res) => {
+  
+  let userdatas = await usersPurchasedCourses.find()
+
+  let setSendResponseData = new sendResponseData(
+    userdatas.reverse(),
+    200,
+    null
+  );
+  let responseToSend = encryptionOfData(setSendResponseData.success());
+  res.send(responseToSend);
+
+});
+
 app.post('/api/sendanemail', async (req, res) => {
   const { to } = req.body;
   const pdf = fs.readFileSync('./data/companyprofile.pdf');
@@ -6014,7 +6077,269 @@ app.post('/api/sendanemail', async (req, res) => {
   }
 });
 
+app.get('/api/infohitofday', async (req, res) => {
+  try{
 
+    const today = new Date();
+    const year = today.getFullYear().toString().padStart(4, '0');
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    
+    const logData = `${year}-${month}-${day}-info.log`;
+    
+    let logDatalines;
+    let logDatatotalLines;
+    
+    let datatosend = {
+      info: 0
+    }
+    
+    fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      try {
+        logDatalines = data.trim().split('\n');
+        logDatatotalLines = logDatalines.length;
+        datatosend.info = logDatatotalLines;
+        
+        return res.json(datatosend)  
+      } catch {
+        return res.json(`No data`)  
+      }
+    }); 
+  } catch {
+    return res.json(`error`)  
+  }
+  })
+  
+app.get('/api/mobilehitofday', async (req, res) => {
+    try {
+
+  const today = new Date();
+  const year = today.getFullYear().toString().padStart(4, '0');
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  
+  const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
+  
+ 
+  let mobileDatalines;
+  let mobileDatatotalLines;
+
+  let datatosend = {
+    mobile: 0
+  }
+
+  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    try{
+      mobileDatalines = data.trim().split('\n');
+      mobileDatatotalLines = mobileDatalines.length;
+      datatosend.mobile = mobileDatatotalLines;
+
+      return res.json(datatosend)  
+    } catch {
+      return res.json(`No data`)  
+    }
+  }); 
+} catch (error) {
+  return res.json(`error`)  
+}
+})
+
+app.get('/api/infohitofdayunique', async (req, res) => {
+  try { 
+  const today = new Date();
+  const year = today.getFullYear().toString().padStart(4, '0');
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  
+  const logData = `${year}-${month}-${day}-info.log`;
+  
+
+  fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    try {
+  
+    const lines = data.trim().split('\n');
+    let count = 0;
+  
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const json = JSON.parse(line);
+  
+      if (
+        json &&
+        json.message &&
+        typeof json.message === 'string' &&
+        json.message.includes('x-real-ip') &&
+        (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
+      ) {
+        // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
+        continue;
+      }
+  
+      count++;
+    }
+  
+    return res.json(`Total lines in ${logData}: ${count}`)  
+
+  } catch {
+    return res.json(`No data`)  
+  }
+  });
+  } catch {
+  return res.json(`error`)  
+}
+})
+
+app.get('/api/mobilehitofdayunique', async (req, res) => {
+  try {
+  const today = new Date();
+  const year = today.getFullYear().toString().padStart(4, '0');
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  
+  const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
+  
+
+  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+   try {
+    
+     const lines = data.trim().split('\n');
+     let count = 0;
+     
+     for (let i = 0; i < lines.length; i++) {
+       const line = lines[i];
+       const json = JSON.parse(line);
+       
+       if (
+         json &&
+         json.message &&
+         typeof json.message === 'string' &&
+         json.message.includes('ip-address') &&
+         (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
+         ) {
+           continue;
+          }
+          
+          count++;
+        }
+        
+        return res.json(`Total lines in ${mobileLogData}: ${count}`)  
+      } catch (error) {
+        return res.json(`No data`)
+     }
+      });
+
+    } catch {
+      return res.json(`error`)  
+    }
+})
+
+app.post('/api/findinfoofaday', async (req, res) => {
+  try { 
+    let date = req.body.date;
+  
+  const logData = `${date}-info.log`;
+
+  fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    try {
+  
+    const lines = data.trim().split('\n');
+    let count = 0;
+  
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const json = JSON.parse(line);
+  
+      if (
+        json &&
+        json.message &&
+        typeof json.message === 'string' &&
+        json.message.includes('x-real-ip') &&
+        (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
+      ) {
+        // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
+        continue;
+      }
+  
+      count++;
+    }
+  
+    return res.json(`Total lines in ${logData}: ${count}`)  
+
+  } catch {
+    return res.json(`No data`)  
+  }
+  });
+  } catch {
+  return res.json(`error`)  
+}
+})
+
+app.post('/api/findmobileofaday', async (req, res) => {
+  try {
+    let date = req.body.date;
+  
+  const mobileLogData = `${date}-mobileLogData.log`;
+  
+
+  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+   try {
+    
+     const lines = data.trim().split('\n');
+     let count = 0;
+     
+     for (let i = 0; i < lines.length; i++) {
+       const line = lines[i];
+       const json = JSON.parse(line);
+       
+       if (
+         json &&
+         json.message &&
+         typeof json.message === 'string' &&
+         json.message.includes('ip-address') &&
+         (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
+         ) {
+           continue;
+          }
+          
+          count++;
+        }
+        
+        return res.json(`Total lines in ${mobileLogData}: ${count}`)  
+      } catch (error) {
+        return res.json(`No data`)
+     }
+      });
+
+    } catch {
+      return res.json(`error`)  
+    }
+})
 
 //* <---  Token portoion  --->
 //! ********** Token portoion ***********/

@@ -77,9 +77,9 @@ const UserProfile = (props) => {
   const [facebookId, setFacebookId] = useState("")
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = useState(true);
-  const handleOpen = () => setOpen(true);
+  
   const handleClose = () => setOpen(false);
-
+  
   const [phonenumber, setPhonenumber] = useState();
   const [userPhone, setUserPhone] = useState();
   const [age, setAge] = useState();
@@ -89,12 +89,12 @@ const UserProfile = (props) => {
   const [phoneFocus, setPhoneFocus] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
-
-
+  const [hasCameraPermission, setHasCameraPermission] = React.useState(false);
+  
 
   useEffect(() => {
     setValidAge(AGE_REGEX.test(age));
-    // // console.log(validAge)
+
   }, [age])
   useEffect(() => {
     setValidPhone(PHONE_REGEX.test(phonenumber));
@@ -103,14 +103,16 @@ const UserProfile = (props) => {
     setValidEmail(EMAIL_REGEX.test(email));
     // // console.log(validEmail)
   }, [email])
+    
 
+  const handleOpen = () => {setOpen(true);
+  };
   const capture = React.useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot();
       setWebImage(imageSrc)
-
     },
-
+    
 
     [webcamRef]
   );
@@ -203,7 +205,17 @@ const UserProfile = (props) => {
   useEffect(() => {
     handleGetUser();
     handleGetUserImage();
+    const checkCameraPermission = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        setHasCameraPermission(true);
+        stream.getTracks().forEach(track => track.stop());
+      } catch (error) {
+        setHasCameraPermission(false);
+      }
+    };
 
+    checkCameraPermission();
   }, [])
 
 
@@ -303,10 +315,18 @@ const UserProfile = (props) => {
   }
 
 
-
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset", WebkitTextFillColor:"black" };  
+  const inputDarkStyle = { WebkitBoxShadow: "0 0 0 1000px #002054 inset", WebkitTextFillColor:"#F8B100" };
 
   return (
     <>
+    {/* <>
+    {hasCameraPermission ? (
+        <p>Camera permission granted.</p>
+      ) : (
+        <p>Camera permission denied.</p>
+      )}
+    </> */}
       {load ? (
         <Box sx={{ width: "100%" }}>
           <Container sx={{
@@ -316,7 +336,6 @@ const UserProfile = (props) => {
             alignItems: "center",
             marginTop: "5rem",
             marginLeft: "12vw"
-
           }}>
             <CircularProgress sx={{
               color: "primary.main"
@@ -376,6 +395,8 @@ const UserProfile = (props) => {
                       autoComplete="name"
                       inputProps={{
                         maxLength: 320,
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                       
                       }}
                     // autoFocus
                     />
@@ -389,6 +410,9 @@ const UserProfile = (props) => {
                       label="Email"
                       id="email"
                       value={email}
+                      inputProps={{
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                      }}
                       onFocus={() => setEmailFocus(true)}
                       error={
                         emailFocus && !validEmail ?
@@ -419,6 +443,7 @@ const UserProfile = (props) => {
                         }}
                         inputProps={{
                           maxLength: 14,
+                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                         }}
                         autoFocus
                       /> :
@@ -435,6 +460,7 @@ const UserProfile = (props) => {
                         autoComplete="name"
                         inputProps={{
                           maxLength: 14,
+                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                         }}
                         helperText="Phone number can be added only once"
 
@@ -456,6 +482,9 @@ const UserProfile = (props) => {
                       id="profession"
                       focused
                       value={profession}
+                      inputProps={{
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                      }}
                       // value={userInfo.profession?userInfo.profession:""}
                       // defaultValue={profession}
                       onChange={(e) => { setProfession(e.target.value) }}
@@ -468,7 +497,9 @@ const UserProfile = (props) => {
                         focused
                         inputProps={{
                           maxLength: 2,
+                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                         }}
+                        
 
                         id="age"
                         // width="16rem"
@@ -493,6 +524,9 @@ const UserProfile = (props) => {
                         focused
                         label="Select"
                         value={gender}
+                        inputProps={{
+                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        }}
                         sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" }, marginTop: ".4rem" }}
                         onChange={(e) => {
                           // setGender(e.target.value)
@@ -561,7 +595,8 @@ const UserProfile = (props) => {
                       variant="outlined"
                       component="label"
                       sx={{ marginTop: "1rem" }}
-                      onClick={handleOpen}
+                      onClick={()=>{handleOpen()
+                        }}
                     >
 
                       Select Photo
@@ -604,6 +639,7 @@ const UserProfile = (props) => {
                             flexDirection: { md: "row", lg: "row", sm: "column", xs: "column" }
                           }}>
                             <Grid xs={4} md={4}>
+                              {hasCameraPermission?
                               <Webcam
                                 audio={false}
                                 height={200}
@@ -613,7 +649,20 @@ const UserProfile = (props) => {
                                 width={220}
                                 videoConstraints={videoConstraints}
                                 sx={{ margin: "1rem" }}
-                              />
+                              />:
+                              <>
+                                <Container sx={{
+                        
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  marginTop:"5rem"
+                                }}>
+                                  <CircularProgress sx={{
+                                  color: "primary.main"
+                                }} />
+                                </Container>
+                              </>}
                             </Grid>
                             <Grid xs={8} md={8} sx={{ marginLeft: { xs: "0rem", md: "8rem", lg: "8rem" } }}>
                               {webimage ?
@@ -656,6 +705,20 @@ const UserProfile = (props) => {
                               >
                                 Retake Image
                               </Button> :
+                              <>
+                              {hasCameraPermission?
+                                <Button onClick={(e) => {
+                                e.preventDefault();
+                                capture();
+                                setImage('')
+
+                              }}
+                                variant="outlined"
+                                component="label"
+                                
+                              >
+                                Capture
+                              </Button>:
                               <Button onClick={(e) => {
                                 e.preventDefault();
                                 capture();
@@ -664,9 +727,11 @@ const UserProfile = (props) => {
                               }}
                                 variant="outlined"
                                 component="label"
+                                disabled
                               >
                                 Capture
                               </Button>}
+                              </>}
                             <Button
                               variant="outlined"
                               component="label"

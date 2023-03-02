@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,6 +21,7 @@ import LocalStorageService from "../../api/localstorage";
 import { login } from "../../api/Axios";
 import swal from "sweetalert";
 
+
 //verify
 const VERIFY_URL = "/api/verify";
 const RESEND_VERIFY_URL = "/api/resend-otp";
@@ -28,6 +29,7 @@ const RESEND_VERIFY_URL = "/api/resend-otp";
 // const theme = createTheme();
 
 function Copyright(props) {
+  
   return (
     <Typography
       variant="body2"
@@ -73,13 +75,27 @@ const VerifyForm = () => {
   const [open, setOpen] = useState(true);
   const [currentuser, setCurrentuser] = useState("");
   const [backdrop, setBackdrop] = useState(false);
+  const [resendbtn, setResendbtn]= useState(false);
+  const [counter, setCounter] = useState(180);
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
 
+    return () => clearInterval(timer);
+  }, [counter]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
   const {
     userRef,
     emailRef,
     errRef,
     renderer,
-
     validName,
     setValidName,
     userFocus,
@@ -110,7 +126,7 @@ const VerifyForm = () => {
     setUser,
     matchPwd,
     setMatchPwd,
-    registerapiresponse,phoneNumber, resendbtn, setResendbtn
+    registerapiresponse,phoneNumber
   } = useContext(multiStepContext);
   const [otp, setOTP] = useState("");
 
@@ -167,7 +183,7 @@ const navigate = useNavigate();
       .then((response) => {
         // console.log(response);
         let data = response.data.result.status
-
+        setCounter(180)
         setBackdrop(false)
         if(data === 302){
           swal("OTP sent!", `Please verify to continue, ${response.data.data} try left`, "warning")
@@ -215,7 +231,7 @@ const navigate = useNavigate();
           <Typography sx={{fontSize:"1rem",fontSize:"2rem", fontWeight:"800"}}>
             Verification
           </Typography>
-          <p>OTP sent to your given mail!</p>
+          <p>OTP sent to your given phone number!</p>
           {errMsg ? (
             <Stack sx={{ width: "100%" }} spacing={2}>
               {/* <Collapse in={open}> */}
@@ -269,65 +285,47 @@ const navigate = useNavigate();
               inputProps={{
                 maxLength: 5,
               }}
-              onChange={(e) => setOTP(e.target.value)}
+              // onChange={(e) => setOTP(e.target.value)}
+              onChange={(e) => 
+                {
+                 setOTP(e.target.value)}
+                }
             />
-
-            <Grid container sx={{ display: "flex" }}>
+         
+            <Grid container sx={{ display: "flex", alignItems:"center" }}>
               <Grid item xs>
-                <Countdown
-                  // date={Date.now() + 10000}
-                  date={Date.now() + 180000}
+              {/* {!resendbtn?
+              <Countdown
+                  date={Date.now() + 20000}
+                  // date={Date.now() + 180000}
                   renderer={renderer}
-                  onComplete={()=>setResendbtn(false)}
-                  // onStart={()=>{
-                  //   setResendbtn(true)
-                   
-                  // }}
-                  // autoStart
-                />
+                  onComplete={()=>setResendbtn(true)}
+                  
+                />:"Code Expired!"} */}
+                {counter!=0?<Box>{` ${formatTime(counter)}`}</Box>:<p>Code expired!</p>}
               </Grid>
               <Grid item 
               >
-                {/* <Button
-                  // href="/forgotpassword"
-                  variant="contained"
+                <Box onClick={() => {                   
+                    setResendbtn(false);
+                   }}>
+                <Button
+                  variant="outlined"
+                  sx={{padding:"5px", margin:"5px", textTransform:"capitalize"}}
                   onClick={handleSubmitResendVerify}
-                  disabled={resendbtn}
-                >
+                  disabled={counter!=0}>
                   {"Resend code"}
-                </Button> */}
+                  </Button>
+                </Box>
                 
-                  <Link
-                  href="/forgotpassword"
-                  variant="body2"
-                  onClick={handleSubmitResendVerify}
-                >
-                  {"Resend code"}
-                </Link>
-
-                {/* <Button 
-                variant="contained" 
-                onClick={handleSubmitResendVerify} 
-                // disabled="true"
-              >
-                  {"Resend code"}
-                </Button> */}
               </Grid>
             </Grid>
-          </Box>
+            </Box>
         </Box>
       </Container>
       <Box>
-        {/* {resendbtn? <Button
-        // className={classes.button}
-        variant="contained"
-        color="primary"
-        onClick={handleSubmitVerify}
-        sx={{ mt: "5rem" }}
-      >
-        Submit
-      </Button>: */}
-      <Button
+        
+      {phoneNumber?<Button
       // className={classes.button}
       variant="contained"
       color="primary"
@@ -337,15 +335,20 @@ const navigate = useNavigate();
     >
       Submit
     </Button>
-      {/* <Button
-        // className={classes.button}
-        variant="contained"
-        color="primary"
-        onClick={handleSubmitVerify}
-        sx={{ mt: "5rem" }}
-      >
-        Submit
-      </Button> */}
+    :
+    <>
+    <Button
+      href="/registration"
+      variant="contained"
+      color="primary"
+      // onClick={()=>{swal("Invalid OTP", `Please check again`, "error");}}
+      sx={{ mt: "5rem" }}      
+    >
+      Submit
+    </Button>
+    
+    </>}
+    
       </Box>
     {/* </ThemeProvider> */}
     </Box>

@@ -249,7 +249,8 @@ const Payment = () => {
     // return response.data.data
 
   }
-
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset", WebkitTextFillColor:"black" };  
+  const inputDarkStyle = { WebkitBoxShadow: "0 0 0 1000px #002054 inset", WebkitTextFillColor:"#F8B100" };
 
   return (
     <>
@@ -470,6 +471,7 @@ const Payment = () => {
                       label="Street Address"
                       inputProps={{
                         maxLength: 420,
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                       }}
                       value={staddress}
                       onChange={(e) => {
@@ -487,6 +489,7 @@ const Payment = () => {
                       value={postcode}
                       inputProps={{
                         maxLength: 5,
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                       }}
                       onChange={(e) => {
                         setPostcode(e.target.value);
@@ -503,6 +506,7 @@ const Payment = () => {
                       value={city}
                       inputProps={{
                         maxLength: 420,
+                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
                       }}
                       onChange={(e) => {
                         setCity(e.target.value);
@@ -594,7 +598,8 @@ const Payment = () => {
                 handleUpdateUserProfile();
                 setLoad(true);
               }}
-            disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber || !validPhone}
+            disabled={ !email || !fullname || !phonenumber || !validPhone}
+            // disabled={!postcode || !staddress || !city || !email || !fullname || !phonenumber || !validPhone}
           >
             Checkout
           </Button>

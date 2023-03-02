@@ -304,6 +304,12 @@ const LoginForm = (props) => {
     phoneNumber,
   } = useContext(multiStepContext);
 
+     const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset", WebkitTextFillColor:"black" };  
+     const inputDarkStyle = { WebkitBoxShadow: "0 0 0 1000px #002054 inset", WebkitTextFillColor:"#F8B100" };
+
+
+
+
   // mui telnet
   const handleChange = (newPhone) => {
     setPhone(newPhone);
@@ -600,20 +606,11 @@ const LoginForm = (props) => {
       });
   };
 
-  // // for testing
-  // useEffect(async()=>{
+  React.useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  }, []);
 
-  //   //// console.log("JSON.stringify({ userrrrname })", ({ username }))
-  //   const response = await api
-  //     .post("/api/userdetails", JSON.stringify({ username }), {
-  //       headers: { "Content-Type": "application/json" },
-  //       "Access-Control-Allow-Credentials": true,
-  //     })
-  //     .then((response) => {
-  //       //// console.log("texting response------",response)
-  //     });
-
-  // },[])
+  
   return (
     // <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs" sx={{ mb: 35 }}>
@@ -763,7 +760,10 @@ const LoginForm = (props) => {
             required
             inputProps={{
               maxLength: 16,
+              style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+             
             }}
+            
             onFocus={() => setPhoneFocus(true)}
             error={phoneFocus && !validPhone ? true : false}
             helperText={

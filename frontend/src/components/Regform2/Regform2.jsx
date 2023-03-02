@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Collapse,InputAdornment, CssBaseline, IconButton, Stack } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { multiStepContext } from '../../pages/StepContext';
 import Avatar from '@mui/material/Avatar';
@@ -41,6 +41,10 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
          validMatch, setValidMatch,matchFocus, setMatchFocus,
         errMsg, setErrMsg, success, setSuccess,handleSubmit,theme,
         username, setUser,matchPwd, setMatchPwd}= useContext(multiStepContext)
+
+        useEffect(() => {
+          window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        }, []);
    
     return (
         // <div>
@@ -110,6 +114,7 @@ const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2);
               type={showPassword ? "text" : "password"}
               id="password1"
               InputProps={{
+                
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
