@@ -261,7 +261,7 @@ const Regform1 = () => {
             required
             inputProps={{
               maxLength: 16,
-              style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+              style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
             }}
             onFocus={() => {setPhoneFocus(true) ;
             // swal("bd","","info")
@@ -312,7 +312,7 @@ const Regform1 = () => {
               }}
               inputProps={{
                 maxLength: 50,
-                style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                
               }}
               onChange={(e) => setUser(e.target.value)}
@@ -354,7 +354,7 @@ const Regform1 = () => {
               }}
               inputProps={{
                 maxLength: 320,
-                style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                
               }}
               onChange={(e) =>

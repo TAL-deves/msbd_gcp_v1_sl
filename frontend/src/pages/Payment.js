@@ -471,7 +471,7 @@ const Payment = () => {
                       label="Street Address"
                       inputProps={{
                         maxLength: 420,
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                       }}
                       value={staddress}
                       onChange={(e) => {
@@ -489,7 +489,7 @@ const Payment = () => {
                       value={postcode}
                       inputProps={{
                         maxLength: 5,
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                       }}
                       onChange={(e) => {
                         setPostcode(e.target.value);
@@ -506,7 +506,7 @@ const Payment = () => {
                       value={city}
                       inputProps={{
                         maxLength: 420,
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                       }}
                       onChange={(e) => {
                         setCity(e.target.value);

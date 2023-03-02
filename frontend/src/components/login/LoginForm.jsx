@@ -760,7 +760,7 @@ const LoginForm = (props) => {
             required
             inputProps={{
               maxLength: 16,
-              style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+              style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
              
             }}
             

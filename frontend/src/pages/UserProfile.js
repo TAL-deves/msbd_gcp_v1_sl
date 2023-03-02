@@ -395,7 +395,7 @@ const UserProfile = (props) => {
                       autoComplete="name"
                       inputProps={{
                         maxLength: 320,
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                        
                       }}
                     // autoFocus
@@ -411,7 +411,7 @@ const UserProfile = (props) => {
                       id="email"
                       value={email}
                       inputProps={{
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                       }}
                       onFocus={() => setEmailFocus(true)}
                       error={
@@ -443,7 +443,7 @@ const UserProfile = (props) => {
                         }}
                         inputProps={{
                           maxLength: 14,
-                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                          style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                         }}
                         autoFocus
                       /> :
@@ -460,7 +460,7 @@ const UserProfile = (props) => {
                         autoComplete="name"
                         inputProps={{
                           maxLength: 14,
-                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                          style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                         }}
                         helperText="Phone number can be added only once"
 
@@ -483,7 +483,7 @@ const UserProfile = (props) => {
                       focused
                       value={profession}
                       inputProps={{
-                        style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                        style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                       }}
                       // value={userInfo.profession?userInfo.profession:""}
                       // defaultValue={profession}
@@ -497,7 +497,7 @@ const UserProfile = (props) => {
                         focused
                         inputProps={{
                           maxLength: 2,
-                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                          style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                         }}
                         
 
@@ -525,7 +525,7 @@ const UserProfile = (props) => {
                         label="Select"
                         value={gender}
                         inputProps={{
-                          style: (localStorage.getItem("theme") === "darkTheme"?inputStyle:inputDarkStyle),
+                          style: (localStorage.getItem("theme") === "theme"?inputDarkStyle:inputStyle),
                         }}
                         sx={{ width: { xs: "100%", sm: "48%", md: "48%", lg: "48%", xl: "48%" }, marginTop: ".4rem" }}
                         onChange={(e) => {
