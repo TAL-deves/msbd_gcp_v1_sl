@@ -98,8 +98,9 @@ const qrData = require("./Database/models/qrData");
 const extraData = require("./Database/models/extraData");
 const promoCodes = require("./Database/models/promoCodes");
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
+const path = require('path');
 
 
 // //!mongoDB backup
@@ -1442,7 +1443,7 @@ app.post("/api/signup", async (req, res, next) => {
         await sendSms({
           reciever: req.body.phoneNumber,
           OTP: otpGenerated,
-          hashTag: req.body.hashTag
+          hashTag: req.body.hashTag,
         })
       );
 
@@ -1523,7 +1524,7 @@ app.post("/api/verify", async (req, res) => {
   try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
-    console.log("/api/verify",req.body);
+    console.log("/api/verify", req.body);
 
     const user = await validateUserSignUp(req.body);
 
@@ -1619,7 +1620,7 @@ app.post("/api/resend-otp", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
-          hashTag: req.body.hashTag
+          hashTag: req.body.hashTag,
         });
 
         // let smssent = JSON.parse(
@@ -2049,7 +2050,6 @@ app.get("/api/mobilecertificate", async (req, res) => {
     doc.font("Times-Roman").fontSize(10).text(certificateNumber, -80, 400, {
       align: "center",
     });
-
 
     fullName = fullName.replaceAll(" ", "_");
 
@@ -2752,7 +2752,7 @@ app.post("/api/forget-password", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
-          hashTag: req.body.hashTag
+          hashTag: req.body.hashTag,
         });
 
         if (signUpUser) {
@@ -2906,7 +2906,7 @@ app.post("/api/resend-otp-forgotpassword", async (req, res) => {
         sendSms({
           reciever: user.phoneNumber,
           OTP: otpGenerated,
-          hashTag: req.body.hashTag
+          hashTag: req.body.hashTag,
         });
 
         if (signUpUser) {
@@ -3026,24 +3026,23 @@ app.post("/api/changepassword", async (req, res) => {
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
+      const { username, password } = req.body;
 
-    const { username, password } = req.body;
+      console.log(req.body);
 
-    console.log(req.body);
-
-    let newPassword = await bcrypt.hash(password, 12);
-    const user = await signUpTemplateCopy.findOneAndUpdate(
-      {
-        username: username
-      },
-      {
-        $set: {
-          password: newPassword,
-          otpretrycount: 3,
-          resetotpcount: 3,
+      let newPassword = await bcrypt.hash(password, 12);
+      const user = await signUpTemplateCopy.findOneAndUpdate(
+        {
+          username: username,
         },
-      }
-    );
+        {
+          $set: {
+            password: newPassword,
+            otpretrycount: 3,
+            resetotpcount: 3,
+          },
+        }
+      );
 
       let setSendResponseData = new sendResponseData(
         "Password reset successful!",
@@ -3056,7 +3055,6 @@ app.post("/api/changepassword", async (req, res) => {
       let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
-    
   } catch (error) {
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
     let responseToSend = encryptionOfData(setSendResponseData.success());
@@ -3523,9 +3521,9 @@ app.post("/api/sandboxbuy", async (req, res) => {
         total_amount: parseFloat(price),
         // currency: "BDT",
         tran_id: newId,
-        success_url: `${process.env.SSL_URL}api/ssl-payment-success`,
-        fail_url: `${process.env.SSL_URL}api/ssl-payment-fail`,
-        cancel_url: `${process.env.SSL_URL}api/ssl-payment-cancel`,
+        success_url: `${process.env.SSL_URL}api/ssl-payment-success-sandbox`,
+        fail_url: `${process.env.SSL_URL}api/ssl-payment-fail-sandbox`,
+        cancel_url: `${process.env.SSL_URL}api/ssl-payment-cancel-sandbox`,
         // ipn_url: `${process.env.SSL_URL}api/ssl-payment-notification`,
         // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
         shipping_method: "No",
@@ -3583,6 +3581,7 @@ app.post("/api/sandboxbuy", async (req, res) => {
         verify_sign: "",
         verify_sign_sha2: "",
         verify_key: "",
+        developer: true
       });
 
       await userPurchasedCourses.save();
@@ -3817,7 +3816,7 @@ app.post("/api/inapppayment", async (req, res) => {
     let checkIfAlreadyExists = usersPurchasedCourses
       .findOne({
         username: username,
-        value_b: recheck
+        value_b: recheck,
       })
       .then(async (data) => {
         // console.log("data-----", data);
@@ -4189,6 +4188,238 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
     verify_sign: "",
     verify_sign_sha2: "",
     verify_key: "",
+  });
+  await userPurchasedCourses.save();
+
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+  res.redirect(process.env.CLIENT_URL + `payment-status?payment=cancel`);
+});
+
+//? SANDBOX 
+app.post("/api/ssl-payment-success-sandbox", async (req, res) => {
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "DEVELOPER",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: ""
+  });
+  await userPurchasedCourses.save();
+
+  let setSendResponseData = new sendResponseData(req.body, 200, null);
+  let responseToSend = encryptionOfData(setSendResponseData.success());
+
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+  res.redirect(process.env.CLIENT_URL + `courses?payment=success`);
+});
+
+app.post("/api/ssl-payment-fail-sandbox", async (req, res) => {
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "DEVELOPER",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: ""
+  });
+
+  await userPurchasedCourses.save();
+
+  let userAuditLoggerData = {
+    username: req.body.username,
+    url: req.originalUrl,
+    timestamp: new Date().toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }),
+  };
+
+  userAuditLogger.log("info", `${JSON.stringify(userAuditLoggerData)}`);
+
+  res.redirect(process.env.CLIENT_URL + `payment-status?payment=failed`);
+});
+
+app.post("/api/ssl-payment-cancel-sandbox", async (req, res) => {
+  const {
+    tran_id,
+    val_id,
+    amount,
+    bank_tran_id,
+    tran_date,
+    status,
+    value_a,
+    value_b,
+    value_c,
+  } = req.body;
+
+  let currentDate = new Date();
+  let currentDateMiliseconds = currentDate.getTime();
+
+  let courseExpiresMiliseconds =
+    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+  let courseExpires = new Date(courseExpiresMiliseconds);
+
+  let userPurchasedCourses = new usersPurchasedCourses({
+    username: `${value_a}`,
+    phoneNumber: `${value_b}`,
+    coursesList: JSON.parse(value_c.replaceAll(".", '"')),
+    expirationDate: `${courseExpires}`,
+    amount: `${amount}`,
+    bank_tran_id: bank_tran_id,
+    base_fair: "0.00",
+    card_brand: "",
+    card_issuer: "",
+    card_issuer_country: "",
+    card_issuer_country_code: "",
+    card_no: "",
+    card_sub_brand: "",
+    card_type: "",
+    currency: "",
+    currency_amount: "",
+    currency_rate: "",
+    currency_type: "",
+    error: "",
+    risk_level: "",
+    risk_title: "",
+    status: status,
+    store_amount: "",
+    store_id: process.env.STORE_ID,
+    tran_date: tran_date,
+    tran_id: `${tran_id}`,
+    val_id: val_id,
+    value_a: value_a,
+    value_b: value_b,
+    value_c: value_c,
+    value_d: "DEVELOPER",
+    verify_sign: "",
+    verify_sign_sha2: "",
+    verify_key: ""
   });
   await userPurchasedCourses.save();
 
@@ -5997,13 +6228,11 @@ app.get("/api/testgetreq", async (req, res) => {
 });
 
 app.post("/api/testingpoint", async (req, res) => {
-  
   res.send("okay ");
 });
 
 app.post("/api/allusersfortest", async (req, res) => {
-  
-  let userdatas = await signUpTemplateCopy.find()
+  let userdatas = await signUpTemplateCopy.find();
 
   let setSendResponseData = new sendResponseData(
     userdatas.reverse(),
@@ -6012,12 +6241,10 @@ app.post("/api/allusersfortest", async (req, res) => {
   );
   let responseToSend = encryptionOfData(setSendResponseData.success());
   res.send(responseToSend);
-
 });
 
 app.post("/api/allpaymentfortest", async (req, res) => {
-  
-  let userdatas = await usersPurchasedCourses.find()
+  let userdatas = await usersPurchasedCourses.find();
 
   let setSendResponseData = new sendResponseData(
     userdatas.reverse(),
@@ -6026,18 +6253,17 @@ app.post("/api/allpaymentfortest", async (req, res) => {
   );
   let responseToSend = encryptionOfData(setSendResponseData.success());
   res.send(responseToSend);
-
 });
 
-app.post('/api/sendanemail', async (req, res) => {
+app.post("/api/sendanemail", async (req, res) => {
   const { to } = req.body;
-  const pdf = fs.readFileSync('./data/companyprofile.pdf');
+  const pdf = fs.readFileSync("./data/companyprofile.pdf");
 
   console.log("to", to);
 
   // create transporter object using SMTP transport
   const transporter = nodemailer.createTransport({
-    host: 'smtp.techanalyticaltd.com',
+    host: "smtp.techanalyticaltd.com",
     port: 465,
     secure: true,
     // auth: {
@@ -6045,8 +6271,8 @@ app.post('/api/sendanemail', async (req, res) => {
     //   pass: 'T@ltd2628'
     // },
     auth: {
-      user: 'info@techanalyticaltd.com',
-      pass: 'T@ltd1100'
+      user: "info@techanalyticaltd.com",
+      pass: "T@ltd1100",
     },
     tls: {
       // do not fail on invalid certs
@@ -6057,289 +6283,768 @@ app.post('/api/sendanemail', async (req, res) => {
   try {
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: 'info@techanalyticaltd.com',
+      from: "info@techanalyticaltd.com",
       to,
       subject: `Introduction to Tech Analytica Limited - Technology that makes life better`,
       text: `Dear client,\nI am pleased to introduce Tech Analytica Limited, a leading IT company that specializes in providing cutting-edge solutions to businesses of all sizes. Our website, www.techanalyticaltd.com, provides an overview of our company, our services, and our expertise.\nWith over 2 years of experience in the industry, Tech Analytica Limited has established itself as a reliable and innovative provider of IT solutions. Our team consists of highly skilled professionals who are dedicated to delivering high-quality services that meet the specific needs of our clients.\nAt Tech Analytica Limited, we offer a wide range of IT services, including software development, web design and development, mobile app development, IT consulting, and cybersecurity solutions. Our services are designed to help businesses streamline their operations, improve their efficiency, and achieve their goals.\nOur team of experts stays up-to-date with the latest trends and technologies in the industry to ensure that our clients receive the most advanced and innovative solutions. We take pride in our ability to provide exceptional customer service and support throughout every project.\nThank you for considering Tech Analytica Limited for your IT needs. We are confident that we can provide you with the best solutions to help you achieve your business objectives. Please feel free to contact us at any time to learn more about our services.\nSincerely,\nTech Analytica Limited\nwww.techanalyticaltd.com`,
       attachments: [
         {
-          filename: 'techanalyticalimited.pdf',
-          content: pdf
-        }
-      ]
-
+          filename: "techanalyticalimited.pdf",
+          content: pdf,
+        },
+      ],
     });
     console.log(`Message sent: ${info.messageId}`);
-    res.status(200).send(`Email sent to ${to} with message id: ${info.messageId}`);
+    res
+      .status(200)
+      .send(`Email sent to ${to} with message id: ${info.messageId}`);
   } catch (err) {
     console.error(`Error sending email: ${err}`);
-    res.status(500).send('Error sending email');
+    res.status(500).send("Error sending email");
   }
 });
 
-app.get('/api/infohitofday', async (req, res) => {
-  try{
+//! API's for dashboard logs
 
+app.get("/api/infohitofday", async (req, res) => {
+  try {
     const today = new Date();
-    const year = today.getFullYear().toString().padStart(4, '0');
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    
+    const year = today.getFullYear().toString().padStart(4, "0");
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+
     const logData = `${year}-${month}-${day}-info.log`;
-    
+
     let logDatalines;
     let logDatatotalLines;
-    
+
     let datatosend = {
-      info: 0
-    }
-    
-    fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
+      info: 0,
+    };
+
+    fs.readFile(`./logsData/${logData}`, "utf8", (err, data) => {
       if (err) {
         console.error(err);
         return;
       }
       try {
-        logDatalines = data.trim().split('\n');
+        logDatalines = data.trim().split("\n");
         logDatatotalLines = logDatalines.length;
         datatosend.info = logDatatotalLines;
-        
-        return res.json(datatosend)  
+
+        return res.json(datatosend);
       } catch {
-        return res.json(`No data`)  
+        return res.json(`No data`);
       }
-    }); 
+    });
   } catch {
-    return res.json(`error`)  
+    return res.json(`error`);
   }
-  })
-  
-app.get('/api/mobilehitofday', async (req, res) => {
-    try {
+});
 
-  const today = new Date();
-  const year = today.getFullYear().toString().padStart(4, '0');
-  const month = (today.getMonth() + 1).toString().padStart(2, '0');
-  const day = today.getDate().toString().padStart(2, '0');
-  
-  const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
-  
+app.get("/api/mobilehitofday", async (req, res) => {
+  try {
+    const today = new Date();
+    const year = today.getFullYear().toString().padStart(4, "0");
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+
+    const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
+
+    let mobileDatalines;
+    let mobileDatatotalLines;
+
+    let datatosend = {
+      mobile: 0,
+    };
+
+    fs.readFile(`./logsData/${mobileLogData}`, "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      try {
+        mobileDatalines = data.trim().split("\n");
+        mobileDatatotalLines = mobileDatalines.length;
+        datatosend.mobile = mobileDatatotalLines;
+
+        return res.json(datatosend);
+      } catch {
+        return res.json(`No data`);
+      }
+    });
+  } catch (error) {
+    return res.json(`error`);
+  }
+});
+
+app.get("/api/infohitofdayunique", async (req, res) => {
+  try {
+    const today = new Date();
+    const year = today.getFullYear().toString().padStart(4, "0");
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+
+    const logData = `${year}-${month}-${day}-info.log`;
+
+    fs.readFile(`./logsData/${logData}`, "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      try {
+        const lines = data.trim().split("\n");
+        let count = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const json = JSON.parse(line);
+
+          if (
+            json &&
+            json.message &&
+            typeof json.message === "string" &&
+            json.message.includes("x-real-ip") &&
+            (json.message.includes("103.91.231.117") ||
+              json.message.includes("103.91.231.118"))
+          ) {
+            // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
+            continue;
+          }
+
+          count++;
+        }
+
+        return res.json(`Total lines in ${logData}: ${count}`);
+      } catch {
+        return res.json(`No data`);
+      }
+    });
+  } catch {
+    return res.json(`error`);
+  }
+});
+
+app.get("/api/mobilehitofdayunique", async (req, res) => {
+  try {
+    const today = new Date();
+    const year = today.getFullYear().toString().padStart(4, "0");
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+
+    const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
+
+    fs.readFile(`./logsData/${mobileLogData}`, "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      try {
+        const lines = data.trim().split("\n");
+        let count = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const json = JSON.parse(line);
+
+          if (
+            json &&
+            json.message &&
+            typeof json.message === "string" &&
+            json.message.includes("ip-address") &&
+            (json.message.includes("103.91.231.117") ||
+              json.message.includes("103.91.231.118"))
+          ) {
+            continue;
+          }
+
+          count++;
+        }
+
+        return res.json(`Total lines in ${mobileLogData}: ${count}`);
+      } catch (error) {
+        return res.json(`No data`);
+      }
+    });
+  } catch {
+    return res.json(`error`);
+  }
+});
+
+app.post("/api/findinfoofaday", async (req, res) => {
+  try {
+    let date = req.body.date;
+
+    const logData = `${date}-info.log`;
+
+    fs.readFile(`./logsData/${logData}`, "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      try {
+        const lines = data.trim().split("\n");
+        let count = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const json = JSON.parse(line);
+
+          if (
+            json &&
+            json.message &&
+            typeof json.message === "string" &&
+            json.message.includes("x-real-ip") &&
+            (json.message.includes("103.91.231.117") ||
+              json.message.includes("103.91.231.118"))
+          ) {
+            // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
+            continue;
+          }
+
+          count++;
+        }
+
+        return res.json(`Total lines in ${logData}: ${count}`);
+      } catch {
+        return res.json(`No data`);
+      }
+    });
+  } catch {
+    return res.json(`error`);
+  }
+});
+
+app.post("/api/findmobileofaday", async (req, res) => {
+  try {
+    let date = req.body.date;
+
+    const mobileLogData = `${date}-mobileLogData.log`;
+
+    fs.readFile(`./logsData/${mobileLogData}`, "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      try {
+        const lines = data.trim().split("\n");
+        let count = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const json = JSON.parse(line);
+
+          if (
+            json &&
+            json.message &&
+            typeof json.message === "string" &&
+            json.message.includes("ip-address") &&
+            (json.message.includes("103.91.231.117") ||
+              json.message.includes("103.91.231.118"))
+          ) {
+            continue;
+          }
+
+          count++;
+        }
+
+        return res.json(`Total lines in ${mobileLogData}: ${count}`);
+      } catch (error) {
+        return res.json(`No data`);
+      }
+    });
+  } catch {
+    return res.json(`error`);
+  }
+});
+
+app.get("/api/allpurchasedata", async (req, res) => {
+  try{
+
+  let purchaseData = await usersPurchasedCourses.find();
+
+  let validPurchase = purchaseData.filter(obj => obj.status === "VALID");
+
+  let validPurchaseFromSSL = validPurchase.filter(obj => obj.value_d !== "APPLE_IN_APP" && obj.value_d !== "DEVELOPER" && obj.value_d !== "PROMOTION");
+
+  let developersAvaildCourses = validPurchase.filter(obj => obj.value_d === "DEVELOPER" );
+
+  let promotionAvailedCourse = validPurchase.filter(obj => obj.value_d === "PROMOTION");
+
+  let validPurchaseFromApple = purchaseData.filter(obj => obj.status === "VALID" && obj.value_d === "APPLE_IN_APP");
+
+  let unattemptedPurchase = purchaseData.filter(obj => obj.status === "UNATTEMPTED");
  
-  let mobileDatalines;
-  let mobileDatatotalLines;
+  let failedPurchase = purchaseData.filter(obj => obj.status === "FAILED");
 
-  let datatosend = {
-    mobile: 0
+  let cancelledPurchase = purchaseData.filter(obj => obj.status === "CANCELLED");
+
+  let expiredPurchase = purchaseData.filter(obj => obj.status === "EXPIRED");
+
+
+  let amount = [];
+
+  validPurchaseFromSSL.map((d)=>{
+    amount.push(parseInt(d.amount))
+  })
+
+
+  const totalEarningFromSSL = amount.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue;
+  }, 0);
+
+  const today = new Date();
+    const last30Days = new Date(today);
+    last30Days.setDate(last30Days.getDate() - 30);
+    const last7Days = new Date(today);
+    last7Days.setDate(last7Days.getDate() - 7);
+    const last3Days = new Date(today);
+    last3Days.setDate(last3Days.getDate() - 3);
+
+
+  const todayCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > today.setHours(0,0,0,0)).length;
+    const last30DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last30Days).length;
+    const last7DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last7Days).length;
+    const last3DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last3Days).length;
+
+    const response = [
+      { dateRange: 'Today', sell: todayCount },
+      { dateRange: 'Last 3 days', sell: last3DaysCount },
+      { dateRange: 'Last 7 days', sell: last7DaysCount },
+      { dateRange: 'Last 30 days', sell: last30DaysCount }
+    ];
+
+  res.json({
+    data:{
+      purchaseData: {
+        data: purchaseData,
+        count: purchaseData.length,
+      },
+      validPurchase: {
+        data: {
+          totalEarningFromSSL:totalEarningFromSSL,
+          validPurchaseSSL:validPurchase,
+          validPurchaseFromApple:validPurchaseFromApple
+        },
+        count: {
+          validPurchaseCount: validPurchase.length,
+          validPurchaseFromSSL: validPurchaseFromSSL.length,
+          developersAvaildCourses: developersAvaildCourses.length,
+          promotionAvailedCourse: promotionAvailedCourse.length,
+          validPurchaseFromApple: validPurchaseFromApple.length
+        },
+      },
+      unattemptedPurchase: {
+        data: unattemptedPurchase,
+        count: unattemptedPurchase.length,
+      },
+      cancelledPurchase: {
+        data: cancelledPurchase,
+        count: cancelledPurchase.length,
+      },
+      expiredPurchase: {
+        data: expiredPurchase,
+        count: expiredPurchase.length,
+      },
+      failedPurchase: {
+        data: failedPurchase,
+        count: failedPurchase.length,
+      }
+    },
+    hitmap:response
+  });
+} catch(error) {
+  console.error(error);
+  res.status(500).json({ message: "Internal server error" });
+}
+});
+
+app.get("/api/allpurchasedata2", async (req, res) => {
+  try{
+
+  let purchaseData = await usersPurchasedCourses.find();
+
+  let validPurchase = purchaseData.filter(obj => obj.status === "VALID");
+
+  let validPurchaseFromSSL = validPurchase.filter(obj => obj.value_d !== "APPLE_IN_APP" && obj.value_d !== "DEVELOPER" && obj.value_d !== "PROMOTION");
+
+  let developersAvaildCourses = validPurchase.filter(obj => obj.value_d === "DEVELOPER" );
+
+  let promotionAvailedCourse = validPurchase.filter(obj => obj.value_d === "PROMOTION");
+
+  let validPurchaseFromApple = purchaseData.filter(obj => obj.status === "VALID" && obj.value_d === "APPLE_IN_APP");
+
+  let unattemptedPurchase = purchaseData.filter(obj => obj.status === "UNATTEMPTED");
+ 
+  let failedPurchase = purchaseData.filter(obj => obj.status === "FAILED");
+
+  let cancelledPurchase = purchaseData.filter(obj => obj.status === "CANCELLED");
+
+  let expiredPurchase = purchaseData.filter(obj => obj.status === "EXPIRED");
+
+
+  let amount = [];
+
+  validPurchaseFromSSL.map((d)=>{
+    amount.push(parseInt(d.amount))
+  })
+
+
+  const totalEarningFromSSL = amount.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue;
+  }, 0);
+
+    const today = new Date();
+    const last30Days = new Date(today);
+    last30Days.setDate(last30Days.getDate() - 30);
+    const last7Days = new Date(today);
+    last7Days.setDate(last7Days.getDate() - 7);
+    const last3Days = new Date(today);
+    last3Days.setDate(last3Days.getDate() - 3);
+
+
+  const todayCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > today.setHours(0,0,0,0)).length;
+    const last30DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last30Days).length;
+    const last7DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last7Days).length;
+    const last3DaysCount = validPurchaseFromSSL.filter(obj => new Date(obj.dateOfPurchase) > last3Days).length;
+
+    const response = [
+      { dateRange: 'Today', sell: todayCount },
+      { dateRange: 'Last 3 days', sell: last3DaysCount },
+      { dateRange: 'Last 7 days', sell: last7DaysCount },
+      { dateRange: 'Last 30 days', sell: last30DaysCount }
+    ];
+
+  res.json([
+      {
+        data: validPurchaseFromSSL.reverse(),
+        name:"Valid Purchases from SSL"
+      },
+      {
+        data: validPurchaseFromApple.reverse(),
+        name:"Valid Purchase From Apple"
+      },
+      {
+        data: validPurchase.reverse(),
+        name:"All Valid Purchases (sandbox included)"
+      },
+      {
+        data: promotionAvailedCourse.reverse(),
+        name:"Promotional Purchases"
+      },
+      {
+        data: unattemptedPurchase.reverse(),
+        name:"Unattempted Purchase"
+      },
+      {
+        data: failedPurchase.reverse(),
+        name:"failed Purchase"
+      },
+      {
+        data: cancelledPurchase.reverse(),
+        name:"cancelled Purchase"
+      },
+      {
+        data: expiredPurchase.reverse(),
+        name:"expired Purchase"
+      },
+      {
+        data: developersAvaildCourses.reverse(),
+        name:"Developers Purchases"
+      }
+    ]
+  );
+} catch(error) {
+  console.error(error);
+  res.status(500).json({ message: "Internal server error" });
+}
+});
+
+app.get("/api/monthwisevalidpurchases", async (req, res) => {
+  try {
+    let purchaseData = await usersPurchasedCourses.find();
+    let validPurchase = purchaseData.filter(obj => obj.status === "VALID");
+    let validPurchaseFromSSL = validPurchase.filter(obj => obj.value_d !== "APPLE_IN_APP" && obj.value_d !== "DEVELOPER" && obj.value_d !== "PROMOTION");
+
+    let monthCounts = {};
+    validPurchaseFromSSL.forEach(purchase => {
+      const purchaseDate = new Date(purchase.dateOfPurchase);
+      const monthName = purchaseDate.toLocaleString('default', { month: 'long' });
+      if (monthCounts[monthName]) {
+        monthCounts[monthName]++;
+      } else {
+        monthCounts[monthName] = 1;
+      }
+    });
+
+    const monthCountsArray = Object.entries(monthCounts).map(([monthName, count]) => ({ month: monthName, count: count }));
+    res.json(monthCountsArray);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
   }
+});
 
-  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    try{
-      mobileDatalines = data.trim().split('\n');
-      mobileDatatotalLines = mobileDatalines.length;
-      datatosend.mobile = mobileDatatotalLines;
+app.get("/api/alluserdatas", async (req, res) => {
+  try {
+  let users = await signUpTemplateCopy.find();
 
-      return res.json(datatosend)  
-    } catch {
-      return res.json(`No data`)  
-    }
-  }); 
+  // Get the count of users created today
+  const todayCount = users.filter(user => moment(user.creation_date).isSame(moment(), "day"));
+
+  // Get the count of users created in the last 3 days
+  const last3DaysCount = users.filter(user => moment(user.creation_date).isSameOrAfter(moment().subtract(3, "days")));
+
+  // Get the count of users created in the last 7 days
+  const last7DaysCount = users.filter(user => moment(user.creation_date).isSameOrAfter(moment().subtract(7, "days")));
+
+  // Get the count of users created in the last 30 days
+  const last30DaysCount = users.filter(user => moment(user.creation_date).isSameOrAfter(moment().subtract(30, "days")));
+
+  // Combine the counts into an object
+  const counts = 
+    [{ date: "today",
+      
+      usersCount: todayCount.length,
+    },{
+      date: "Last 3 days",
+      
+      usersCount: last3DaysCount.length,
+    },{
+      date: "Last 7 days",
+      
+      usersCount: last7DaysCount.length,
+    },{
+      date: "Last 30 days",
+      
+      usersCount: last30DaysCount.length,
+    },{
+      date: "All",
+      
+      usersCount: users.length,
+    }];
+
+  // Return the counts and the users array as JSON
+  res.json(counts);
 } catch (error) {
-  return res.json(`error`)  
+  console.error(error);
+  res.status(500).json({ message: "Internal server error" });
 }
-})
 
-app.get('/api/infohitofdayunique', async (req, res) => {
-  try { 
-  const today = new Date();
-  const year = today.getFullYear().toString().padStart(4, '0');
-  const month = (today.getMonth() + 1).toString().padStart(2, '0');
-  const day = today.getDate().toString().padStart(2, '0');
-  
-  const logData = `${year}-${month}-${day}-info.log`;
-  
+});
 
-  fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    try {
-  
-    const lines = data.trim().split('\n');
-    let count = 0;
-  
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const json = JSON.parse(line);
-  
-      if (
-        json &&
-        json.message &&
-        typeof json.message === 'string' &&
-        json.message.includes('x-real-ip') &&
-        (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
-      ) {
-        // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
-        continue;
-      }
-  
-      count++;
-    }
-  
-    return res.json(`Total lines in ${logData}: ${count}`)  
-
-  } catch {
-    return res.json(`No data`)  
-  }
-  });
-  } catch {
-  return res.json(`error`)  
-}
-})
-
-app.get('/api/mobilehitofdayunique', async (req, res) => {
+app.get("/api/getallusers", async (req, res) => {
   try {
-  const today = new Date();
-  const year = today.getFullYear().toString().padStart(4, '0');
-  const month = (today.getMonth() + 1).toString().padStart(2, '0');
-  const day = today.getDate().toString().padStart(2, '0');
-  
-  const mobileLogData = `${year}-${month}-${day}-mobileLogData.log`;
-  
+    const pageSize = 10;
+    const page = parseInt(req.query.page) || 1;
 
-  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-   try {
-    
-     const lines = data.trim().split('\n');
-     let count = 0;
-     
-     for (let i = 0; i < lines.length; i++) {
-       const line = lines[i];
-       const json = JSON.parse(line);
-       
-       if (
-         json &&
-         json.message &&
-         typeof json.message === 'string' &&
-         json.message.includes('ip-address') &&
-         (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
-         ) {
-           continue;
-          }
-          
-          count++;
-        }
-        
-        return res.json(`Total lines in ${mobileLogData}: ${count}`)  
-      } catch (error) {
-        return res.json(`No data`)
-     }
-      });
+    const users = await signUpTemplateCopy
+      .find()
+      .sort({ creation_date: -1 }) // Sort by creation_date in descending order
+      .select("username email creation_date googleId facebookId appleId phoneNumber")
+      // .skip((page - 1) * pageSize) //for pagination
+      // .limit(pageSize)  //for pagination
+      .lean();
 
-    } catch {
-      return res.json(`error`)  
-    }
-})
-
-app.post('/api/findinfoofaday', async (req, res) => {
-  try { 
-    let date = req.body.date;
-  
-  const logData = `${date}-info.log`;
-
-  fs.readFile(`./logsData/${logData}`, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    try {
-  
-    const lines = data.trim().split('\n');
-    let count = 0;
-  
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const json = JSON.parse(line);
-  
-      if (
-        json &&
-        json.message &&
-        typeof json.message === 'string' &&
-        json.message.includes('x-real-ip') &&
-        (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
-      ) {
-        // Skip this line since it contains x-real-ip:203.221.139.183 or x-real-ip:203.221.139.184
-        continue;
+    const updatedUsers = users.map((user) => {
+      if (user.googleId) {
+        user.registeredWith = "Google";
+      } else if (user.facebookId) {
+        user.registeredWith = "Facebook";
+      } else if (user.appleId) {
+        user.registeredWith = "Apple";
+      } else if (user.phoneNumber) {
+        user.registeredWith = "Phone Number";
+      } else {
+        user.registeredWith = null;
       }
-  
-      count++;
-    }
-  
-    return res.json(`Total lines in ${logData}: ${count}`)  
+      // user.creation_date = new Date(user.creation_date).toLocaleString(); 
 
-  } catch {
-    return res.json(`No data`)  
+      const date = new Date(user.creation_date);
+      const day = date.getUTCDate().toString().padStart(2, "0");
+      const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+      const year = date.getUTCFullYear().toString();
+
+      user.creation_date = `${day}-${month}-${year}`;
+
+      delete user.googleId;
+      delete user.facebookId;
+      delete user.appleId;
+      delete user.phoneNumber;
+      return user;
+    });
+
+    res.json(updatedUsers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
+});
+
+app.get("/api/getalluserssorted", async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const users = await signUpTemplateCopy
+  .find()
+  .select("username email creation_date googleId facebookId appleId phoneNumber")
+  .sort({ creation_date: -1 })
+  // .limit(limit)
+  // .skip(startIndex)
+  .lean();
+
+  const count = await signUpTemplateCopy.countDocuments();
+
+  const lastPageNumber = Math.ceil(count / limit);
+
+  const updatedUsers = users.map((user) => {
+    if (user.googleId) {
+      user.registeredWith = "Google";
+    } else if (user.facebookId) {
+      user.registeredWith = "Facebook";
+    } else if (user.appleId) {
+      user.registeredWith = "Apple";
+    } else if (user.phoneNumber) {
+      user.registeredWith = "Phone Number";
+    } else {
+      user.registeredWith = null;
+    }
+
+    const date = new Date(user.creation_date);
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    const year = date.getUTCFullYear().toString();
+
+    user.creation_date = `${day}-${month}-${year}`;
+
+    delete user.googleId;
+    delete user.facebookId;
+    delete user.appleId;
+    // delete user.phoneNumber;
+    return user;
   });
-  } catch {
-  return res.json(`error`)  
-}
-})
 
-app.post('/api/findmobileofaday', async (req, res) => {
-  try {
-    let date = req.body.date;
-  
-  const mobileLogData = `${date}-mobileLogData.log`;
-  
+  const result = {
+    data: updatedUsers,
+    currentPage: page,
+    lastPage: lastPageNumber,
+    totalUser: count
+  };
 
-  fs.readFile(`./logsData/${mobileLogData}`, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
+  res.json(result);
+});
+
+
+app.get("/api/todayhitcheck", async (req, res) => {
+try{
+
+  const logsDataFolder = './logsData';
+  const currentDate = new Date().toISOString().slice(0, 10);
+  
+  console.log("currentDate",currentDate);
+
+  const infoLogFileName = `${currentDate}-info.log`;
+  const mobileLogFileName = `${currentDate}-mobileLogData.log`;
+  
+  const getInfoLogFilePath = () => path.join(logsDataFolder, infoLogFileName);
+  const getMobileLogFilePath = () => path.join(logsDataFolder, mobileLogFileName);
+  
+  const countLinesInFile = (filePath) => {
+    try {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      return fileContents.trim().split('\n').length;
+    } catch (err) {
+      console.error(`Error reading file ${filePath}: ${err.message}`);
+      return 0;
     }
-   try {
+  };
+  
+  const getCurrentDayLogsCount = () => {
+    const infoLogFilePath = getInfoLogFilePath();
+    const mobileLogFilePath = getMobileLogFilePath();
     
-     const lines = data.trim().split('\n');
-     let count = 0;
-     
-     for (let i = 0; i < lines.length; i++) {
-       const line = lines[i];
-       const json = JSON.parse(line);
-       
-       if (
-         json &&
-         json.message &&
-         typeof json.message === 'string' &&
-         json.message.includes('ip-address') &&
-         (json.message.includes('103.91.231.117') || json.message.includes('103.91.231.118'))
-         ) {
-           continue;
-          }
-          
-          count++;
-        }
-        
-        return res.json(`Total lines in ${mobileLogData}: ${count}`)  
-      } catch (error) {
-        return res.json(`No data`)
-     }
-      });
+    const infoLogCount = countLinesInFile(infoLogFilePath);
+    const mobileLogCount = countLinesInFile(mobileLogFilePath);
+    
+    return {
+      date: currentDate,
+      infoLogCount,
+      mobileLogCount,
+    };
+  };
+  
+  const currentDayLogsCount = getCurrentDayLogsCount();
+  
+  console.log(currentDayLogsCount); // output: { date: '2023-03-06', infoLogCount: 10, mobileLogCount: 5 }
+  
+  res.json(currentDayLogsCount);
+} catch {
+  res.json("error")
+} 
+});
 
-    } catch {
-      return res.json(`error`)  
-    }
-})
+app.get("/api/nthdayhitcheck", async (req, res) => {
+  try{
+    const count = parseInt(req.query.days) || 1;
+    const logsDataFolder = './logsData';
+
+    const countLinesInFile = (filePath) => {
+      try {
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        return fileContents.trim().split('\n').length;
+      } catch (err) {
+        console.error(`Error reading file ${filePath}: ${err.message}`);
+        return 0;
+      }
+    };
+
+    const getLogsCountForDate = (date) => {
+      const infoLogFileName = `${date}-info.log`;
+      const mobileLogFileName = `${date}-mobileLogData.log`;
+
+      const infoLogFilePath = path.join(logsDataFolder, infoLogFileName);
+      const mobileLogFilePath = path.join(logsDataFolder, mobileLogFileName);
+
+      const website = countLinesInFile(infoLogFilePath);
+      const mobile = countLinesInFile(mobileLogFilePath);
+
+      return {
+        date,
+        website,
+        mobile,
+      };
+    };
+
+    const getLastNDaysLogsCount = (n) => {
+      const currentDate = new Date();
+      const logsCountList = [];
+
+      for (let i = 0; i < n; i++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - i);
+        const dateString = date.toISOString().slice(0, 10);
+        const logsCount = getLogsCountForDate(dateString);
+        logsCountList.push(logsCount);
+      }
+
+      return logsCountList;
+    };
+
+    const lastThreeDaysLogsCount = getLastNDaysLogsCount(count);
+
+    console.log(lastThreeDaysLogsCount); 
+    // output: [ { date: '2023-03-06', infoLogCount: 10, mobileLogCount: 5 }, { date: '2023-03-05', infoLogCount: 7, mobileLogCount: 4 }, { date: '2023-03-04', infoLogCount: 8, mobileLogCount: 3 } ]
+
+    res.json(lastThreeDaysLogsCount)
+  } catch {
+    res.json("error")
+  } 
+});
 
 //* <---  Token portoion  --->
 //! ********** Token portoion ***********/
