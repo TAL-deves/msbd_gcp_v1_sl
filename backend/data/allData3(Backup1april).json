@@ -2,6 +2,486 @@
   "_id": {
     "$oid": "638c7b543510413d197d4934"
   },
+  "bundleCourses": {
+    "en": [
+      {
+        "bundleCourse": true,
+        "courseID": "B001",
+        "bundleList": [
+          "C006",
+          "C004"
+        ],
+        "title": "1.Welcome To Meditation\n2. Anger and Stress Management",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● welcome to meditation content",
+          "● anger management content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Anger%26welcome.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1490",
+        "available": true,
+        "instructor": {
+          "name": "Nazish Shameem Qazi and Almasur Rahman"
+        },
+        "instructors": [
+          {
+            "_id": 10004,
+            "name": "Nazish Shameem Qazi",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+            "designation": "Psychologist and Life Coach",
+            "description": [
+              "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life.",
+              "Nazish is an expert life coach, business trainer, psychologist and author. She has helped hundreds of people from many different backgrounds and disciplines to transform their lives for the better. Her passion is helping people discover their true purpose, build inner confidence and bring more happiness and fulfilment into their lives.",
+              "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs."
+            ],
+            "courses": [
+              "C006"
+            ]
+          },
+          {
+            "_id": 10002,
+            "name": "D. Almasur Rahman",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "Life Coach and Author",
+            "description": [
+              "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place."
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B002",
+        "bundleList": [
+          "C001",
+          "C003"
+        ],
+        "title": "1.Dynamic Meditation\n2. Fearless belief",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Fearless belief content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26fear.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1990",
+        "available": true,
+        "instructor": {
+          "name": "Dr. Abul Kalam"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "Dr. Abul Kalam",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "Mind Trainer and NLP Coach",
+            "description": [
+              "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+              "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
+            ],
+            "courses": [
+              "C004"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B003",
+        "bundleList": [
+          "C003",
+          "C004"
+        ],
+        "title": "1. Dynamic Meditation\n2. Self Healing in a Natural Way",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Self Healing in a Natural Way content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26self.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1990",
+        "available": true,
+        "instructor": {
+          "name": "Dr. Abul Kalam"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "Dr. Abul Kalam",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "Mind Trainer and NLP Coach",
+            "description": [
+              "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+              "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
+            ],
+            "courses": [
+              "C004"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B004",
+        "bundleList": [
+          "C003",
+          "C002"
+        ],
+        "title": "1. Dynamic Meditation\n2. Money Mind Mastery",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Money Mind Mastery content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26money.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "2990",
+        "available": true,
+        "instructor": {
+          "name": "Dr. Abul Kalam"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "Dr. Abul Kalam",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "Mind Trainer and NLP Coach",
+            "description": [
+              "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+              "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
+            ],
+            "courses": [
+              "C004"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B005",
+        "bundleList": [
+          "C001",
+          "C002",
+          "C003",
+          "C004",
+          "C005",
+          "C006"
+        ],
+        "title": "All Courses",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Money Mind Mastery content",
+          "● Fearless belief content",
+          "● Anger and stress management content",
+          "● Self healing in a natural way content",
+          "● welcome to meditation content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Ramadan-special-offer.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "4990",
+        "available": true,
+        "instructor": {
+          "name": "1. Dr. Abul Kalam\n2. Nazish Shameem Qazi\n3. D. Almasur Rahman"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "Dr. Abul Kalam",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "Mind Trainer and NLP Coach",
+            "description": [
+              "Dr. Abul Kalam, a Doctor in Alternative Medicine by profession, is currently the Director of Silva Method Bangladesh. He is a renowned Mind Trainer, Life Coach, Psychic Master Trainer and NLP Coach in Bangladesh dedicatedly working on Life Transformation with people of all walks of life.",
+              "Until now more that twenty thousand people participated in various training under him and have transformed their life toward betterment. He is continually researching and practicing  on how human can use their innate abundant capacity through brain, mind and soul power together in balanced living and applying it in his day-to-day life too. Helping humanity, enacting spiritual practice, researching on mind science, travelling to explore are his major hobbies."
+            ],
+            "courses": [
+              "C004"
+            ]
+          },
+          {
+            "_id": 10004,
+            "name": "Nazish Shameem Qazi",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+            "designation": "Psychologist and Life Coach",
+            "description": [
+              "My work is all about helping people discover their true life purpose, true self or find true love so they can create a more fulfilling and rewarding life.",
+              "Nazish is an expert life coach, business trainer, psychologist and author. She has helped hundreds of people from many different backgrounds and disciplines to transform their lives for the better. Her passion is helping people discover their true purpose, build inner confidence and bring more happiness and fulfilment into their lives.",
+              "She has specialized in learning and development since 1996, working with UK based companies such as County Councils, YMCA, BAE Systems as well as Siemens and Adidas in Germany and numerous SME's across many industries. Her qualifications include BS Psychology degree and MSc Occupational Psychology degree as well as Positive Psychology, NLP training, the Silva Method and various business and coaching programs."
+            ],
+            "courses": [
+              "C006"
+            ]
+          },
+          {
+            "_id": 10002,
+            "name": "D. Almasur Rahman",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "Life Coach and Author",
+            "description": [
+              "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place."
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        ]
+      }
+    ],
+    "bn": [
+      {
+        "bundleCourse": true,
+        "courseID": "B001",
+        "bundleList": [
+          "C006",
+          "C004"
+        ],
+        "title": "১. মেডিটেশনে স্বাগতম\n২. Anger and Stress Management",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● welcome to meditation content",
+          "● anger management content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Anger%26welcome.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1490",
+        "available": true,
+        "instructor": {
+          "name": "নাজিশ শামীম কাজী এবং ড. আলমাসুর রহমান"
+        },
+        "instructors": [
+          {
+            "_id": 10004,
+            "name": "নাজিশ শামীম কাজী",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+            "designation": "মনোবিজ্ঞানী এবং লাইফ কোচ",
+            "description": [
+              "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে' - নাজিশ শামীম কাজী",
+              "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন। তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপূর্ণতা আনতে সাহায্য করা।",
+              "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।"
+            ],
+            "courses": [
+              "C006"
+            ]
+          },
+          {
+            "_id": 10002,
+            "name": "ড. আলমাসুর রহমান",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "লাইফ কোচ এবং লেখক",
+            "description": [
+              "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত"
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B002",
+        "bundleList": [
+          "C001",
+          "C003"
+        ],
+        "title": "১. ডায়নামিক মেডিটেশন\n২. নির্ভীক বেলিভ",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Fearless belief content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26fear.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1990",
+        "available": true,
+        "instructor": {
+          "name": "ডাঃ আবুল কালাম"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "ডাঃ আবুল কালাম",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
+            "description": [
+              "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+              "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
+            ],
+            "courses": [
+              "C003"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B003",
+        "bundleList": [
+          "C003",
+          "C004"
+        ],
+        "title": "১. ডায়নামিক মেডিটেশন\n2. একটি প্রাকৃতিক উপায়ে স্ব নিরাময়",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Self Healing in a Natural Way content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26self.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "1990",
+        "available": true,
+        "instructor": {
+          "name": "ডাঃ আবুল কালাম"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "ডাঃ আবুল কালাম",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
+            "description": [
+              "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+              "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
+            ],
+            "courses": [
+              "C003"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B004",
+        "bundleList": [
+          "C003",
+          "C002"
+        ],
+        "title": "১. ডায়নামিক মেডিটেশন\n২. মানি মাইন্ড মাস্টারি",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Money Mind Mastery content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Dynamic%26money.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "2990",
+        "available": true,
+        "instructor": {
+          "name": "ডাঃ আবুল কালাম"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "ডাঃ আবুল কালাম",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
+            "description": [
+              "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+              "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
+            ],
+            "courses": [
+              "C003"
+            ]
+          }
+        ]
+      },
+      {
+        "bundleCourse": true,
+        "courseID": "B005",
+        "bundleList": [
+          "C001",
+          "C002",
+          "C003",
+          "C004",
+          "C005",
+          "C006"
+        ],
+        "title": "রমজানের বিশেষ অফার (সকল কোর্স)",
+        "introduction": "Learn step-by-step of how to meditate easily; exactly what to do and not do.",
+        "description": [
+          "● Dynamic Meditation content",
+          "● Money Mind Mastery content",
+          "● Fearless belief content",
+          "● Anger and stress management content",
+          "● Self healing in a natural way content",
+          "● welcome to meditation content"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome%20to%20meditation.webp",
+        "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
+        "courseLength": "6",
+        "totalLecture": "24",
+        "price": "4990",
+        "available": true,
+        "instructor": {
+          "name": "১. ডাঃ আবুল কালাম\n২. নাজিশ শামীম কাজী\n৩. ড. আলমাসুর রহমান"
+        },
+        "instructors": [
+          {
+            "_id": 10001,
+            "name": "ডাঃ আবুল কালাম",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/abulKalam.webp",
+            "designation": "মাইন্ড ট্রেইনার এবং এন.এল.পি. কোচ",
+            "description": [
+              "ডাঃ আবুল কালাম, যিনি পেশায় অল্টারনেটিভ মেডিসিনে একজন চিকিৎসক, বর্তমানে “সিলভা মেথড বাংলাদেশ” এ পরিচালক হিসেবে দায়িত্ব পালন করছেন। তিনি বাংলাদেশের একজন সুপরিচিত মাইন্ড ট্রেইনার, লাইফ কোচ, মানসিক নিয়ন্ত্রণ প্রশিক্ষক এবং এন এল পি কোচ, যিনি নিয়মিত সমাজের বিভিন্ন স্তরের মানুষদের উন্নত জীবনযাপনের প্রশিক্ষণ দিয়ে যাচ্ছেন।",
+              "এ যাবত ২০ হাজারেরও বেশী মানুষ তার কাছে প্রশিক্ষণ নিয়ে নিজেদের জীবনকে উন্নত করেছেন। কিভাবে মানুষ তার নিজের ভেতরের অন্তর্নিহিত অসীম ক্ষমতা কে এবং তার ব্রেইন, মাইন্ড এবং Soul power কে  সঠিকভাবে ব্যবহার করে একটি ব্যালেন্স লিভিং করবে সেই বিষয় নিয়ে তিনি গভীর গবেষণা করেন, চর্চা করেন এবং নিজের জীবনেও তা প্রয়োগ করতে থাকেন।মানুষকে সাহায্য করা, আধ্যাত্মিক   চর্চা করা, এই বিষয়ে গবেষণা করা, ভ্রমন করা তার বিশেষ শখ।"
+            ],
+            "courses": [
+              "C003"
+            ]
+          },
+          {
+            "_id": 10004,
+            "name": "নাজিশ শামীম কাজী",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/nazish.webp",
+            "designation": "মনোবিজ্ঞানী এবং লাইফ কোচ",
+            "description": [
+              "'আমার কাজ হল মানুষকে  তাদের জীবনের প্রকৃত উদ্দেশ্য, সত্যিকারের নিজেকে আবিষ্কার করতে বা সত্যিকারের ভালবাসা খুঁজে পেতে সাহায্য করা যাতে তারা আরও পরিপূর্ণ এবং ফলপ্রসূ জীবন তৈরি করতে পারে' - নাজিশ শামীম কাজী",
+              "নাজিশ একজন বিশেষজ্ঞ লাইফ কোচ, ব্যবসায়িক প্রশিক্ষক, মনোবিজ্ঞানী এবং লেখক।  তিনি বিভিন্ন ক্ষেত্রে শত শত মানুষকে তাদের জীবনকে আরও উন্নত করতে সাহায্য করেছেন। তার ভালোবাসা হলো মানুষকে তাদের প্রকৃত উদ্দেশ্য আবিষ্কার করতে, অভ্যন্তরীণ আত্মবিশ্বাস তৈরি করতে এবং তাদের জীবনে আরও সুখ এবং পরিপূর্ণতা আনতে সাহায্য করা।",
+              "তিনি ১৯৯৬ সাল থেকে বিভিন্ন বিষয় নিয়ে পড়াশুনার পাশাপাশি আত্ম উন্নয়নে কাজ করেছেন, যুক্তরাজ্য ভিত্তিক কোম্পানি যেমন কাউন্টি কাউন্সিল, ওয়াইএমসিএ, BAE সিস্টেমের পাশাপাশি জার্মানিতে সিমেন্স এবং অ্যাডিডাস এবং অনেক শিল্পে অসংখ্য এসএমই-এর সাথে কাজ করেছেন। তার যোগ্যতার মধ্যে রয়েছে বিএসসি সাইকোলজি ডিগ্রি এবং এমএসসি পেশাগত মনোবিজ্ঞান ডিগ্রির পাশাপাশি ইতিবাচক মনোবিজ্ঞান, এনএলপি প্রশিক্ষণ, সিলভা পদ্ধতি এবং বিভিন্ন ব্যবসা এবং কোচিং প্রোগ্রাম।"
+            ],
+            "courses": [
+              "C006"
+            ]
+          },
+          {
+            "_id": 10002,
+            "name": "ড. আলমাসুর রহমান",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "লাইফ কোচ এবং লেখক",
+            "description": [
+              "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত"
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "coursesData": {
     "en": [
       {
@@ -19,7 +499,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
         "courseLength": "3",
         "totalLecture": "12",
-        "price": "4000",
+        "price": "990",
         "available": true,
         "instructor": {
           "_id": 10004,
@@ -55,7 +535,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Fearless%20Believe%20intro.mp4",
         "courseLength": "07",
         "totalLecture": "15",
-        "price": "6000",
+        "price": "1490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -73,22 +553,60 @@
       },
       {
         "courseID": "C005",
-        "title": "Anger Management And Power of Positive Thinking",
+        "title": "Anger and Stress Management",
+        "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
+        "description": [
+          "Do you ever get angry or agitated at the slightest thing, start talking loudly, lose your patience, hurt others with your words, or feel restless all the time? Do not enjoy your daily work, do not feel like eating or sleeping? If these things are in you, then you are under stress and anger.",
+          "Anger is a negative emotion and destructive instinct. It can be caused genetically or the environment you live in. Also, you may develop anger issue due to long term physical illness or various mental reasons.",
+          "Anger problem can lead you to various complex physical diseases including high blood pressure. Also it may affect your marital and family relations, job, business and social relations. As a result of anger issues, mental diseases like hypertension, anxiety and depression can become permanent.",
+          "Stress and Anger Management course consists of 12 lessons where simple and easy formulas are discussed and practiced through which anger and stress can be comfortably controlled.",
+          "What else will you learn in the course?",
+          "• What is anger? What are the reasons behind anger?",
+          "• How does anger harm us physically and mentally?",
+          "• What is gratitude journal? How the gratitude journal can assist in Anger Management",
+          "• How meditation helps you control anger and stress.",
+          "• Simple and effective anger management formulas and techniques.",
+          "• 3 complete guided meditations to better control your anger and stress.",
+          "Total Course Length: 3 hours or 180 minutes",
+          "Course Duration: 6 months or 180 days"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+        "courseIntro": "https://youtu.be/XP6BvzptxR8",
+        "courseLength": "6",
+        "totalLecture": "10",
+        "price": "990",
+        "available": false,
+        "instructor": {
+          "_id": 10002,
+          "name": "D. Almasur Rahman",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "Life Coach and Author",
+          "description": [
+            "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place."
+          ],
+          "courses": [
+            "C005"
+          ]
+        }
+      },
+      {
+        "courseID": "C007",
+        "title": "Power of Positive Thinking",
         "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
         "description": [
           "Relax and relieve stress using a simple relaxation and meditation technique",
           "You will learn what mindfulness meditation is all about and how to practice it.",
           "Practice self-observation and meditation with compassion and clarity"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power-of-positive-thinking.webp",
         "courseIntro": "https://youtu.be/XP6BvzptxR8",
         "courseLength": "6",
         "totalLecture": "10",
-        "price": "4000",
+        "price": "990",
         "available": false,
         "instructor": {
           "_id": 10002,
-          "name": "Dr. Almasur Rahman",
+          "name": "D. Almasur Rahman",
           "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
           "designation": "Life Coach and Author",
           "description": [
@@ -119,7 +637,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Dynamic%20Meditation%20Intro%20.mp4",
         "courseLength": "07",
         "totalLecture": "11",
-        "price": "6000",
+        "price": "1190",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -157,7 +675,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/cure%20Yourself%20in%20a%20creative%20away%20Intro.mp4",
         "courseLength": "04",
         "totalLecture": "06",
-        "price": "5000",
+        "price": "1490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -200,7 +718,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Money%20Mind%20Mastery%20Intro.mp4",
         "courseLength": "07",
         "totalLecture": "14",
-        "price": "8000",
+        "price": "2490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -233,7 +751,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
         "courseLength": "৩",
         "totalLecture": "১২",
-        "price": "4000",
+        "price": "990",
         "available": true,
         "instructor": {
           "_id": 10004,
@@ -252,7 +770,7 @@
       },
       {
         "courseID": "C001",
-        "title": "ভয়হীন বিশ্বাস",
+        "title": "নির্ভীক বেলিভ",
         "introduction": "প্রাকটিক্যাল মাইন্ডফুলনেস মেডিটেশন কোর্স যে পদ্ধতিটি দেখায় কীভাবে ঘনত্ব বাড়ানো যায় এবং চাপ কমানো যায়",
         "description": [
           "আপনার কি এমন হয় যে আপনি কোন কাজে আগ্রহ পাচ্ছেন না, সফলভাবে কোন কাজ শেষ পর্যন্ত করতে পারছেন না, মনে হচ্ছে কাজটা আমার দ্বারা হবে না বা আমি পারবো না, সবকিছুতেই যেন আপনার মধ্যে এক ধরনের অনিশ্চয়তা কাজ করছে। জীবনকে অনেক কঠিন বলে মনে হচ্ছে এ সবকিছুর মূল কারন হল আমাদের মনের মধ্যে জমে থাকা অজানা শঙ্কা বা ভয় বা Inner fear এবং সীমাবদ্ধ বিশ্বাস বা Limiting Belief.",
@@ -270,7 +788,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Fearless%20Believe%20intro.mp4",
         "courseLength": "০৭",
         "totalLecture": "১৫",
-        "price": "6000",
+        "price": "1490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -288,18 +806,56 @@
       },
       {
         "courseID": "C005",
-        "title": "ইতিবাচক চিন্তার শক্তি ",
+        "title": "রাগ ও মানসিক চাপ নিয়ন্ত্রণ",
+        "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
+        "description": [
+          "আপনার কি কখনো এমন হয় যে, আপনি সামান্য কথাতেই রেগে যান বা উত্তেজিত হয়ে পড়েন, উচ্চস্বরে কথা বলেন, ধৈর্য ধরে রাখতে পারেন না, অন্যকে কষ্ট দিয়ে কথা বলেন কিংবা সবসময় অস্থিরতা বোধ করেন। দৈনন্দিন যে কোন কাজ, খাওয়া, ঘুম কোনোটাই উপভোগ করেন না? এসব বিষয়গুলো যদি আপনার মধ্যে থাকে তবে আপনি মানষিক চাপ ও রাগের মধ্যে আছেন।",
+          "রাগ হলো একধরনের নেতিবাচক আবেগ এবং ধ্বংসাত্মক প্রবৃত্তি। রাগের অন্যতম কারণ জেনেটিক্যাল এবং পরিবেশগত। এছাড়াও দীর্ঘদিন ধরে শারীরিক সমস্যা বা নানাবিধ মানসিক কারনে রাগ হতে পারে।",
+          "রাগের ফলে উচ্চরক্তচাপসহ নানা জটিল শারীরিক রোগ হতে পারে। এছাড়াও দাম্পত্য ও পারিবারিক সম্পর্ক, চাকরি, ব্যবসা, সামাজিক সম্পর্ক নষ্ট হতে পারে। রাগের ফলে তৈরি হয় টেনশন, দুঃচিন্তা, বিষন্নতার মত মানষিক রোগ।",
+          "মানষিক চাপ ও রাগের নিয়ন্ত্রনে এই কোর্সে আছে ১২ টি লেসন। যেখানে সহজ ও সরল সুত্রের মাধ্যমে আলোচনা করা হয়েছে, কিভাবে রাগ ও মানষিক চাপ নিয়ন্ত্রন করা যায়।",
+          "কোর্সে আরো যা শিখবেন?",
+          "• রাগ কি? রাগের পিছনের কারণগুলো কি কি?",
+          "• রাগ আমাদের শারীরিক ও মানষিকভাবে কি ক্ষতি করছে?",
+          "• Graduate Journal কি? Graduate Journal কিভাবে রাগ নিয়ন্ত্রনে সহায়তা করে।",
+          "• Meditation বা ধ্যান কিভাবে রাগ ও মানসিক চাপ নিয়ন্ত্রন করে।",
+          "• রাগ নিয়ন্ত্রনের আরো সহজ ও সঠিক কিছু সূত্র এবং কৌশল।",
+          "• এছাড়াও থাকছে রাগ ও মানসিক চাপ নিয়ন্ত্রণের ৩ টি সম্পূর্ণ গাইডেট মেডিটেশন।",
+          "কোর্সের মোট দৈর্ঘ্যঃ ৩ ঘন্টা বা ১৮০ মিনিট",
+          "কোর্সের মেয়াদঃ ৬ মাস বা ১৮০ দিন"
+        ],
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+        "courseIntro": "https://youtu.be/XP6BvzptxR8",
+        "courseLength": "৬",
+        "totalLecture": "১০",
+        "price": "990",
+        "available": false,
+        "instructor": {
+          "_id": 10002,
+          "name": "ড. আলমাসুর রহমান",
+          "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+          "designation": "লাইফ কোচ এবং লেখক",
+          "description": [
+            "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত"
+          ],
+          "courses": [
+            "C005"
+          ]
+        }
+      },
+      {
+        "courseID": "C007",
+        "title": "ইতিবাচক চিন্তার শক্তি",
         "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
         "description": [
           "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
           "আপনি মাইন্ডফুলনেস মেডিটেশন কী এবং কীভাবে এটি অনুশীলন করবেন তা শিখবেন।",
           "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
         ],
-        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+        "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power-of-positive-thinking.webp",
         "courseIntro": "https://youtu.be/XP6BvzptxR8",
         "courseLength": "৬",
         "totalLecture": "১০",
-        "price": "4000",
+        "price": "990",
         "available": false,
         "instructor": {
           "_id": 10002,
@@ -332,7 +888,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Dynamic%20Meditation%20Intro%20.mp4",
         "courseLength": "৭",
         "totalLecture": "১১",
-        "price": "6000",
+        "price": "1190",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -370,7 +926,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/cure%20Yourself%20in%20a%20creative%20away%20Intro.mp4",
         "courseLength": "৪",
         "totalLecture": "০৬",
-        "price": "5000",
+        "price": "1490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -414,7 +970,7 @@
         "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseIntroVideos/Money%20Mind%20Mastery%20Intro.mp4",
         "courseLength": "৭",
         "totalLecture": "১৪",
-        "price": "8000",
+        "price": "2490",
         "available": true,
         "instructor": {
           "_id": 10001,
@@ -453,7 +1009,7 @@
       },
       {
         "_id": 10002,
-        "name": "Dr. Almasur Rahman",
+        "name": "D. Almasur Rahman",
         "designation": "Life Coach and Author",
         "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
         "description": [

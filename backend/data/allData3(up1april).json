@@ -190,7 +190,7 @@
             "● Self healing in a natural way content",
             "● welcome to meditation content"
           ],
-          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Welcome%20to%20meditation.webp",
+          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/bundleCoursesThumbnail/Ramadan-special-offer.webp",
           "courseIntro": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/introVideo/nazishIntroVideo.mp4",
           "courseLength": "6",
           "totalLecture": "24",
@@ -553,14 +553,52 @@
         },
         {
           "courseID": "C005",
-          "title": "Anger Management And Power of Positive Thinking",
+          "title": "Anger and Stress Management",
+          "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
+          "description": [
+            "Do you ever get angry or agitated at the slightest thing, start talking loudly, lose your patience, hurt others with your words, or feel restless all the time? Do not enjoy your daily work, do not feel like eating or sleeping? If these things are in you, then you are under stress and anger.",
+            "Anger is a negative emotion and destructive instinct. It can be caused genetically or the environment you live in. Also, you may develop anger issue due to long term physical illness or various mental reasons.",
+            "Anger problem can lead you to various complex physical diseases including high blood pressure. Also it may affect your marital and family relations, job, business and social relations. As a result of anger issues, mental diseases like hypertension, anxiety and depression can become permanent.",
+            "Stress and Anger Management course consists of 12 lessons where simple and easy formulas are discussed and practiced through which anger and stress can be comfortably controlled.",
+            "What else will you learn in the course?",
+            "• What is anger? What are the reasons behind anger?",
+            "• How does anger harm us physically and mentally?",
+            "• What is gratitude journal? How the gratitude journal can assist in Anger Management",
+            "• How meditation helps you control anger and stress.",
+            "• Simple and effective anger management formulas and techniques.",
+            "• 3 complete guided meditations to better control your anger and stress.",
+            "Total Course Length: 3 hours or 180 minutes",
+            "Course Duration: 6 months or 180 days"
+          ],
+          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+          "courseIntro": "https://youtu.be/XP6BvzptxR8",
+          "courseLength": "6",
+          "totalLecture": "10",
+          "price": "4000",
+          "available": false,
+          "instructor": {
+            "_id": 10002,
+            "name": "D. Almasur Rahman",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "Life Coach and Author",
+            "description": [
+              "My name is D. Almasur Rahman and I am the founder of peace inside me online retreats and I am super excited to be a part of the Udemy community and cultivate inner peace and balance through powerful meditative practices that me and my team collected from around the world to help you get in touch with yourself and find your happy place."
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        },
+        {
+          "courseID": "C007",
+          "title": "Power of Positive Thinking",
           "introduction": "Retrain your brain to reduce stress and improve your focus and concentration.",
           "description": [
             "Relax and relieve stress using a simple relaxation and meditation technique",
             "You will learn what mindfulness meditation is all about and how to practice it.",
             "Practice self-observation and meditation with compassion and clarity"
           ],
-          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power-of-positive-thinking.webp",
           "courseIntro": "https://youtu.be/XP6BvzptxR8",
           "courseLength": "6",
           "totalLecture": "10",
@@ -768,14 +806,52 @@
         },
         {
           "courseID": "C005",
-          "title": "ইতিবাচক চিন্তার শক্তি ",
+          "title": "রাগ ও মানসিক চাপ নিয়ন্ত্রণ",
+          "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
+          "description": [
+            "আপনার কি কখনো এমন হয় যে, আপনি সামান্য কথাতেই রেগে যান বা উত্তেজিত হয়ে পড়েন, উচ্চস্বরে কথা বলেন, ধৈর্য ধরে রাখতে পারেন না, অন্যকে কষ্ট দিয়ে কথা বলেন কিংবা সবসময় অস্থিরতা বোধ করেন। দৈনন্দিন যে কোন কাজ, খাওয়া, ঘুম কোনোটাই উপভোগ করেন না? এসব বিষয়গুলো যদি আপনার মধ্যে থাকে তবে আপনি মানষিক চাপ ও রাগের মধ্যে আছেন।",
+            "রাগ হলো একধরনের নেতিবাচক আবেগ এবং ধ্বংসাত্মক প্রবৃত্তি। রাগের অন্যতম কারণ জেনেটিক্যাল এবং পরিবেশগত। এছাড়াও দীর্ঘদিন ধরে শারীরিক সমস্যা বা নানাবিধ মানসিক কারনে রাগ হতে পারে।",
+            "রাগের ফলে উচ্চরক্তচাপসহ নানা জটিল শারীরিক রোগ হতে পারে। এছাড়াও দাম্পত্য ও পারিবারিক সম্পর্ক, চাকরি, ব্যবসা, সামাজিক সম্পর্ক নষ্ট হতে পারে। রাগের ফলে তৈরি হয় টেনশন, দুঃচিন্তা, বিষন্নতার মত মানষিক রোগ।",
+            "মানষিক চাপ ও রাগের নিয়ন্ত্রনে এই কোর্সে আছে ১২ টি লেসন। যেখানে সহজ ও সরল সুত্রের মাধ্যমে আলোচনা করা হয়েছে, কিভাবে রাগ ও মানষিক চাপ নিয়ন্ত্রন করা যায়।",
+            "কোর্সে আরো যা শিখবেন?",
+            "• রাগ কি? রাগের পিছনের কারণগুলো কি কি?",
+            "• রাগ আমাদের শারীরিক ও মানষিকভাবে কি ক্ষতি করছে?",
+            "• Graduate Journal কি? Graduate Journal কিভাবে রাগ নিয়ন্ত্রনে সহায়তা করে।",
+            "• Meditation বা ধ্যান কিভাবে রাগ ও মানসিক চাপ নিয়ন্ত্রন করে।",
+            "• রাগ নিয়ন্ত্রনের আরো সহজ ও সঠিক কিছু সূত্র এবং কৌশল।",
+            "• এছাড়াও থাকছে রাগ ও মানসিক চাপ নিয়ন্ত্রণের ৩ টি সম্পূর্ণ গাইডেট মেডিটেশন।",
+            "কোর্সের মোট দৈর্ঘ্যঃ ৩ ঘন্টা বা ১৮০ মিনিট",
+            "কোর্সের মেয়াদঃ ৬ মাস বা ১৮০ দিন"
+          ],
+          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+          "courseIntro": "https://youtu.be/XP6BvzptxR8",
+          "courseLength": "৬",
+          "totalLecture": "১০",
+          "price": "4000",
+          "available": false,
+          "instructor": {
+            "_id": 10002,
+            "name": "ড. আলমাসুর রহমান",
+            "image": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/instructors/almasur.webp",
+            "designation": "লাইফ কোচ এবং লেখক",
+            "description": [
+              "আমার নাম ডি. আলমাসুর রহমান এবং আমি অনলাইন রিট্রিটস এর মধ্যে শান্তির প্রতিষ্ঠাতা এবং আমি উডেমি সম্প্রদায়ের একটি অংশ হতে পেরে এবং আমি এবং আমার দল চারপাশ থেকে সংগৃহীত শক্তিশালী ধ্যান অনুশীলনের মাধ্যমে অভ্যন্তরীণ শান্তি ও ভারসাম্য গড়ে তুলতে পেরে অত্যন্ত উত্তেজিত"
+            ],
+            "courses": [
+              "C005"
+            ]
+          }
+        },
+        {
+          "courseID": "C007",
+          "title": "ইতিবাচক চিন্তার শক্তি",
           "introduction": "মানসিক চাপ কমাতে এবং আপনার ফোকাস এবং ঘনত্ব উন্নত করতে আপনার মস্তিষ্ককে পুনরায় প্রশিক্ষণ দিন।",
           "description": [
             "একটি সহজ শিথিলকরণ এবং ধ্যানের কৌশল ব্যবহার করে শিথিল করুন এবং স্ট্রেস উপশম করুন",
             "আপনি মাইন্ডফুলনেস মেডিটেশন কী এবং কীভাবে এটি অনুশীলন করবেন তা শিখবেন।",
             "সহানুভূতি এবং স্পষ্টতার সাথে স্ব-পর্যবেক্ষণ এবং ধ্যান অনুশীলন করুন"
           ],
-          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Anger%20Management.webp",
+          "thumbnail": "https://storage.googleapis.com/artifacts.xenon-sentry-364311.appspot.com/assets/courseThumbnail/Power-of-positive-thinking.webp",
           "courseIntro": "https://youtu.be/XP6BvzptxR8",
           "courseLength": "৬",
           "totalLecture": "১০",
