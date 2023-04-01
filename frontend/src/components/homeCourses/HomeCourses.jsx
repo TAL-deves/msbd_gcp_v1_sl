@@ -80,19 +80,13 @@ const HomeCourses = () => {
     ],
   };
   const [courses, setCourses] = useState([]);
+  const [courses2, setCourses2] = useState([]);
   const [load, setLoad] = useState(true);
 
-  // let fetchData = async () => {
-  //   await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
-  //     .then((data) => {
-  //       setCourses(data.data.data.coursesData)
-  //       //// console.log(data)
-  //       setLoad(false);
-  //     });
-  // }; 
+ 
   let fetchData = async () => {
 
-    await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
+    await api.post(`${process.env.REACT_APP_API_URL}/api/seeallcourses`)
       // .then((res) => res.json())
       .then((data) => {
         // //// console.log(" THis is the data -----  "+data.data.data.coursesData);
@@ -102,12 +96,12 @@ const HomeCourses = () => {
 
         let listOfCourse;
         if(localStorage.getItem("language")==="bn"){
-           listOfCourse = data.data.data.coursesData.en;
+           listOfCourse = data.data.data.allEnCourses;
            //// console.log("coursesbn",listOfCourse)
 
         }
         else{
-          listOfCourse = data.data.data.coursesData.bn;
+          listOfCourse = data.data.data.allBnCourses;
           //// console.log("coursesen",listOfCourse)
         }
         let localCourseList = JSON.parse(localStorage.getItem("courselist"));
@@ -129,8 +123,18 @@ const HomeCourses = () => {
       });
   };
 
+  let fetchLocalData = async () => {
+
+    await api.post(`${process.env.REACT_APP_API_URL}/api/seeallcourses`)
+      // .then((res) => res.json())
+      .then((data) => {
+        setCourses2(data.data.data.allEnCourses)
+      });
+  };
+
   useEffect(() => {
     fetchData();
+    fetchLocalData()
   }, [language]);
 
   let updateCourse = (course, isSelected) => {
@@ -148,6 +152,8 @@ const HomeCourses = () => {
 
   }
 
+
+  const homeCourses = courses.filter(course => course.bundleCourse !== true);
   // //// console.log(courses);
   return (
     <Box
@@ -234,7 +240,7 @@ const HomeCourses = () => {
             <>
             <Container>
         <Slider {...settings} ref={sliderRef}>
-          {courses.map((course) => {
+          {homeCourses.map((course) => {
             return (
               <Box key={course.courseID} sx={{padding:".5rem"}}>
                 <CourseCard

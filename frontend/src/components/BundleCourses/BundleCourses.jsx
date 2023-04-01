@@ -99,7 +99,7 @@ const BundleCourses = () => {
         // let listOfCourse = data.data.data.coursesData;
         // let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         //// console.log(localCourseList);
-       console.log("data bundle", data)
+      
         let listOfCourse;
         if(localStorage.getItem("language")==="bn"){
           //  listOfCourse = data.data.data.bundleCourses.en;
@@ -150,8 +150,9 @@ const BundleCourses = () => {
     //// console.log("update", update)
 
   }
+  // const bundleCourses = courses.filter(courses.bundleCourse===true);
   const bundleCourses = courses.filter(course => course.bundleCourse === true);
-  
+  // //// console.log(courses);
   return (
     <Box
       sx={{

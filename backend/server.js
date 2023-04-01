@@ -4717,7 +4717,7 @@ app.post("/api/ssl-payment-cancel-sandbox", async (req, res) => {
 
 //! ********** User courses and payment history part ***********/
 app.post("/api/usercourses", async (req, res) => {
-  try {
+  // try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
@@ -4733,6 +4733,41 @@ app.post("/api/usercourses", async (req, res) => {
       let userCourses = await usersPurchasedCourses.find({
         $and: [{ username: req.body.username }, { status: "VALID" }],
       });
+
+      // console.log("userCourses - ",userCourses);
+
+
+      let datavaluec;
+
+      userCourses.map((data)=>{
+        console.log("courses data")
+        console.log("courses data",JSON.parse((data.value_c).replaceAll('.','"')))
+
+
+        const courseMapping = {
+          B001: ["C006", "C004"],
+          B002: ["C001", "C003"],
+          B003: ["C003", "C004"],
+          B004: ["C003", "C002"],
+          B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+        };
+  
+        let updatedCourses = JSON.parse((data.value_c).replaceAll('.','"')).map((course) => {
+          if (courseMapping[course]) {
+            return courseMapping[course];
+          }
+          return course;
+        });
+  
+        // Flattening the updated courses array
+        datavaluec = updatedCourses.flat();
+
+        data.coursesList = datavaluec;
+        data.value_c = JSON.stringify(datavaluec).replaceAll("'",".");
+      })
+
+      console.log("courses data modified",datavaluec)
+        //?
 
       let userallcourses = [];
       let courseExpirationDates = [];
@@ -4915,11 +4950,11 @@ app.post("/api/usercourses", async (req, res) => {
       res.send(responseToSend);
     }
     //! This is for token checking END
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
+  // } catch (error) {
+  //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+  //   let responseToSend = encryptionOfData(setSendResponseData.error());
+  //   res.send(responseToSend);
+  // }
 });
 
 //! payment history (encrypiton, token check)

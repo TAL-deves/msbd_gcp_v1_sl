@@ -23,7 +23,7 @@ export default function BundleCourseDetails() {
     useEffect(() => {
         setBundleIdList(fullobject.bundleList)
     }, [])
-    console.log("bundleIdList,", bundleCourse)
+    // console.log("bundleIdList,", bundleCourse)
 
 
 
@@ -62,7 +62,7 @@ export default function BundleCourseDetails() {
                 console.error(error);
             });
     }, [bundleIdList])
-    console.log("courses aray", courses)
+    // console.log("courses aray", courses)
 
 
     return (

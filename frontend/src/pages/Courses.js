@@ -54,7 +54,6 @@ const Courses = (props) => {
     await api.post(`${process.env.REACT_APP_API_URL}/api/seeallcourses`)
       
       .then((data) => {
-        console.log(" THis is the data -----  ", data.data.data);
         let listOfCourse;
         if (localStorage.getItem("language") === "bn") {
           // listOfCourse = data.data.data.coursesData.en;
@@ -81,7 +80,7 @@ const Courses = (props) => {
           }
         })
         setCourses(listOfCourse)
-        console.log("listOfCourse", listOfCourse)
+        // console.log("listOfCourse", listOfCourse)
         setLoad(false);
 
         // bundle courses
@@ -108,43 +107,9 @@ const Courses = (props) => {
       // .then((res) => res.json())
       .then((data) => {
         setCourses2(data.data.data.allEnCourses)
-        console.log("setcourse", data.data.data.allEnCourses)
       });
   };
-  // let fetchBundleData = async () => {
 
-  //   await api.post(`${process.env.REACT_APP_API_URL}/api/allcourses`)
-  //     // .then((res) => res.json())
-  //     .then((data) => {
-
-  //       let listOfBundleCourse;
-  //       if (localStorage.getItem("language") === "bn") {
-  //         listOfBundleCourse = data.data.data.bundleCourses.en;
-  //         // console.log("coursesbn",listOfCourse)
-
-  //       }
-  //       else {
-  //         listOfBundleCourse = data.data.data.bundleCourses.bn;
-  //         //  console.log("coursesen",listOfCourse)
-  //       }
-  //       let localCourseList = JSON.parse(localStorage.getItem("courselist"));
-  //       //// console.log(localCourseList);
-  //       listOfBundleCourse.map((course) => {
-  //         if (localCourseList !== null) {
-  //           let localCourse = localCourseList.find(obj => obj.courseID === course.courseID)
-  //           course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
-
-  //         }
-  //         else {
-  //           course["isSelected"] = true
-  //         }
-  //       })
-  //       setCourses(listOfBundleCourse)
-  //       console.log("listOfCourse",listOfBundleCourse)
-  //       setLoad(false);
-
-  //     });
-  // };
 
 
 
@@ -160,8 +125,6 @@ const Courses = (props) => {
     setCourses(update)
     localStorage.setItem("courselist", JSON.stringify(update));
 
-    //// console.log("update", update)
-
   }
   let updateCourse2 = (course, isSelected) => {
     //// console.log(course, isSelected)
@@ -174,8 +137,6 @@ const Courses = (props) => {
     })
     setCourses(update)
     localStorage.setItem("courselist", JSON.stringify(update));
-
-
   }
 
   let fetchDeviceData = async () => {
@@ -207,8 +168,6 @@ const Courses = (props) => {
 
   useEffect(() => {
     fetchData();
-    // fetchBundleData();
-
     fetchLocalData()
     fetchDeviceData();
     if (open) {

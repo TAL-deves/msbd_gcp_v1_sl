@@ -397,7 +397,7 @@ const SideCart = (props) => {
                       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <CardContent sx={{ flex: '1 0 auto' }}>
                           <Typography sx={{ fontSize: "1rem" }}>
-                            {course.title}
+                            {course.title.split(/(?<=\d\.)\s+/)}
                           </Typography>
                           <Typography sx={{ fontSize: ".8rem", color: "other.dark" }}
                             color="text.secondary">

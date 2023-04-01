@@ -33,7 +33,6 @@ const CourseCard = (props) => {
   let bundleCourse = props.bundleCourse
   let fullObject = props.fullObject;
   let bundleBtnDisable = props.bundleBtnDisable
-  console.log("full obj for bundle", fullObject.bundleCourse)
 
   // console.log("fullObject.id", fullObject)
   const dispatch = useDispatch()
@@ -116,7 +115,7 @@ const CourseCard = (props) => {
                 fontWeight: "500",
               }}
             >
-              {title ? <>{title.replace(/(\d\.)\s+/g, "$1\n")}</> : <>Course title</>}
+              {title ? <>{title.split(/(?<=\d\.)\s+/)}</> : <>Course title</>}
             </Typography>
             <Typography variant="body2" noWrap color="text.secondary">
               {instructor ? <>{instructor}</> : <>Course instructor</>}
