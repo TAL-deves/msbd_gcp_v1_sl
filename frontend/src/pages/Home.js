@@ -9,6 +9,7 @@ import ClientFeedback from '../components/clientfeedback/ClientFeedback'
 import Subscribe from '../components/Subscribe/Subscribe'
 import api from "../api/Axios"
 import Faq from '../components/Faq/Faq'
+import BundleCourses from '../components/BundleCourses/BundleCourses'
 
 const WEB_NOTIFICATION_URL = "/api/webnotification"
 
@@ -43,6 +44,7 @@ const Home = (props) => {
       {webNotificationData.read || !webNotificationData ?
       <PopWindow n={props.n} setN={props.setN} webNotificationData={webNotificationData}/>:<></>}</>:<></>} */}
       <HomeCourses/>
+      <BundleCourses/>
       <Instructor/>
       <Portfolio/>
       <ClientFeedback/>

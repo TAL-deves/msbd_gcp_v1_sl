@@ -52,6 +52,7 @@ import Lottie from "lottie-react";
 import loadingAnimation from "./assets/loadingAnimation.json";
 import ComingSoon from "./pages/ComingSoon";
 import PaymentStatus from "./pages/PaymentStatus";
+import BundleCourseDetails from "./pages/BundleCourseDetails";
 
 
 
@@ -212,6 +213,7 @@ function App() {
                   <Route path="cart" element={<Cart />} />
                   <Route path="comingsoon" element={<ComingSoon />} />
                   <Route path="course-details" element={<CoursesDetails />} />
+                  <Route path="bundle-details" element={<BundleCourseDetails />} />
                   <Route path="payment-info" element={<Payment />} />
                   {/* //! Underconstruction */}
                   <Route path="live" element={<Underconstruction />} />

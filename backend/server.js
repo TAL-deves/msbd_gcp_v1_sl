@@ -3070,7 +3070,7 @@ app.post("/api/changepassword", async (req, res) => {
 app.post("/api/allcourses", async (req, res, next) => {
   try {
     let data = await allData.find();
-    // console.log(data[0].coursesData);
+    // console.log(data[0]);
 
     // if (data) {
     let setSendResponseData = new sendResponseData(data[0], 200, null);
@@ -3089,6 +3089,56 @@ app.post("/api/allcourses", async (req, res, next) => {
     res.send(responseToSend);
   }
 });
+app.post("/api/bundlecourses", async (req, res, next) => {
+  try {
+    let data = await allData.find();
+    // console.log(data[0].bundleCourses);
+
+    // if (data) {
+    let setSendResponseData = new sendResponseData(data[0].bundleCourses, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+    // } else {
+    //   let setSendResponseData = new sendResponseData(allCourses, 200, null);
+    //   let responseToSend = encryptionOfData(setSendResponseData.success());
+    //   res.send(responseToSend);
+    // }
+  } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    res.send(responseToSend);
+  }
+});
+app.post("/api/seeallcourses", async (req, res, next) => {
+  try {
+    let data = await allData.find();
+
+    let bundleEnCourses = [...data[0].bundleCourses.en]
+    let bundleBnCourses = [...data[0].bundleCourses.bn]
+    let coursesEn = [...data[0].coursesData.en]
+    let coursesBn = [...data[0].coursesData.bn]
+
+    let allEnCourses = [...coursesEn,...bundleEnCourses]
+    let allBnCourses = [...coursesBn,...bundleBnCourses]
+            
+    let response = {
+      allEnCourses:allEnCourses,
+      allBnCourses:allBnCourses
+    }
+
+    let setSendResponseData = new sendResponseData(response, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+    
+  } catch (error) {
+    console.log(error.message);
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+    res.send(responseToSend);
+  }
+});
 
 app.post("/api/coursedetails", async (req, res, next) => {
   try {
@@ -3097,7 +3147,7 @@ app.post("/api/coursedetails", async (req, res, next) => {
 
     const { courseID, language } = req.body;
 
-    // console.log(courseID, language);
+    console.log(courseID, language);
 
     let data = await allData.find();
     let coursedetailsData;
@@ -3124,6 +3174,40 @@ app.post("/api/coursedetails", async (req, res, next) => {
     //   res.send(responseToSend);
     // }
   } catch (error) {
+    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+
+    let responseToSend = encryptionOfData(setSendResponseData.error());
+
+    res.send(responseToSend);
+  }
+});
+app.post("/api/coursedetailslist", async (req, res, next) => {
+  try {
+    let recievedResponseData = decryptionOfData(req, res);
+    req.body = recievedResponseData;
+
+    const { courseID, language } = req.body;
+    console.log(courseID, language);
+
+    let data = await allData.find();
+
+    let coursesEn = [...data[0].coursesData.en]
+    let coursesBn = [...data[0].coursesData.bn]
+
+
+    let getEnCourses = coursesEn.filter(obj => courseID.includes(obj.courseID));
+    let getBnCourses = coursesBn.filter(obj => courseID.includes(obj.courseID));
+
+    let coursedetailslist = {
+      getEnCourses:getEnCourses,
+      getBnCourses:getBnCourses
+    }
+
+    let setSendResponseData = new sendResponseData(coursedetailslist, 200, null);
+    let responseToSend = encryptionOfData(setSendResponseData.success());
+    res.send(responseToSend);
+  } catch (error) {
+    console.log(error.message);
     let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
 
     let responseToSend = encryptionOfData(setSendResponseData.error());
@@ -3378,7 +3462,7 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
-      const {
+      let {
         fullname,
         username,
         phonenumber,
@@ -3420,6 +3504,45 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
         verify_sign_sha2,
         verify_key,
       } = req.body;
+
+
+      console.log("req. body -mobile buy -----", req.body);
+
+      //? bundle courses remaped
+      const courseMapping = {
+        B001: ["C006", "C004"],
+        B002: ["C001", "C003"],
+        B003: ["C003", "C004"],
+        B004: ["C003", "C002"],
+        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+      };
+
+      let updatedCourses = courses.map((course) => {
+        if (courseMapping[course]) {
+          return courseMapping[course];
+        }
+        return course;
+      });
+
+      // Flattening the updated courses array
+      courses = updatedCourses.flat();
+      //? bundle courses remaped
+
+      const courseDataNames = [
+        {id: "C001", name: "Fearless Believe"},
+        {id: "C002", name: "Money Mind Mastery"},
+        {id: "C003", name: "Dynamic Meditation"},
+        {id: "C004", name: "Self Healing in a Naural Way"},
+        {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+        {id: "C006", name: "Welcome to Meditation"}
+      ];
+
+      const productNames = courses
+        .map(id => courseDataNames.find(course => course.id === id).name)
+        .join(", ");
+
+        console.log("courses ",courses)
+        //?
 
       //? Saving this to database as payment pending status.
       let currentDate = new Date();
@@ -3500,7 +3623,7 @@ app.post("/api/sandboxbuy", async (req, res) => {
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
-      const {
+      let {
         fullname,
         username,
         phonenumber,
@@ -3514,7 +3637,44 @@ app.post("/api/sandboxbuy", async (req, res) => {
         discountedPrice,
       } = req.body; //getting data from request
 
-      // console.log("req buy---- ", req.body);
+      console.log("buy body ----", req.body);
+
+     //? bundle courses remaped
+      const courseMapping = {
+        B001: ["C006", "C004"],
+        B002: ["C001", "C003"],
+        B003: ["C003", "C004"],
+        B004: ["C003", "C002"],
+        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+      };
+
+      let updatedCourses = courses.map((course) => {
+        if (courseMapping[course]) {
+          return courseMapping[course];
+        }
+        return course;
+      });
+
+      // Flattening the updated courses array
+      courses = updatedCourses.flat();
+      //? bundle courses remaped
+
+      const courseDataNames = [
+        {id: "C001", name: "Fearless Believe"},
+        {id: "C002", name: "Money Mind Mastery"},
+        {id: "C003", name: "Dynamic Meditation"},
+        {id: "C004", name: "Self Healing in a Naural Way"},
+        {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+        {id: "C006", name: "Welcome to Meditation"}
+      ];
+
+      const productNames = courses
+        .map(id => courseDataNames.find(course => course.id === id).name)
+        .join(", ");
+
+        console.log("courses ",courses," productNames ", productNames)
+        //?
+
       const newId = uuidv4().replaceAll("-", "");
 
       const data = {
@@ -3527,7 +3687,7 @@ app.post("/api/sandboxbuy", async (req, res) => {
         // ipn_url: `${process.env.SSL_URL}api/ssl-payment-notification`,
         // ipn_url: `${process.env.ROOT}/api/ssl-payment-notification`,
         shipping_method: "No",
-        product_name: JSON.stringify(courses).replaceAll('"', "."),
+        product_name: productNames,
         product_category: "Courses",
         product_profile: "general",
         cus_name: fullname,
@@ -3546,6 +3706,8 @@ app.post("/api/sandboxbuy", async (req, res) => {
         value_c: JSON.stringify(courses).replaceAll('"', "."),
         // value_d: "ref004_D",
       };
+
+      console.log("sandbox buy data ----", data);
 
       //? Saving this to database as payment pending status.
       let currentDate = new Date();
@@ -3643,7 +3805,7 @@ app.post("/api/buy", async (req, res) => {
     let userSessionStatus = await tokenChecking(req);
 
     if (userSessionStatus.data != null) {
-      const {
+      let {
         fullname,
         username,
         phonenumber,
@@ -3656,6 +3818,43 @@ app.post("/api/buy", async (req, res) => {
         price,
         discountedPrice,
       } = req.body; //getting data from request
+
+      // console.log("buy body ----", req.body);
+
+      //? bundle courses remaped
+    const courseMapping = {
+      B001: ["C006", "C004"],
+      B002: ["C001", "C003"],
+      B003: ["C003", "C004"],
+      B004: ["C003", "C002"],
+      B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+    };
+
+    let updatedCourses = courseId.map((course) => {
+      if (courseMapping[course]) {
+        return courseMapping[course];
+      }
+      return course;
+    });
+
+    // Flattening the updated courses array
+    courses = updatedCourses.flat();
+    //? bundle courses remaped
+
+    // const courseDataNames = [
+    //   {id: "C001", name: "Fearless Believe"},
+    //   {id: "C002", name: "Money Mind Mastery"},
+    //   {id: "C003", name: "Dynamic Meditation"},
+    //   {id: "C004", name: "Self Healing in a Naural Way"},
+    //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+    //   {id: "C006", name: "Welcome to Meditation"}
+    // ];
+
+    // const productNames = courses
+    //   .map(id => courseDataNames.find(course => course.id === id).name)
+    //   .join(", ");
+
+      //?
 
       const newId = uuidv4().replaceAll("-", "");
 
@@ -3781,7 +3980,7 @@ app.post("/api/inapppayment", async (req, res) => {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
-    const {
+    let {
       trans_id, // purchaseId
       value_b,
       value_c,
@@ -3791,6 +3990,42 @@ app.post("/api/inapppayment", async (req, res) => {
     } = req.body;
 
     // console.log("req.body --- ", req.body);
+
+
+    //? bundle courses remaped
+    const courseMapping = {
+      B001: ["C006", "C004"],
+      B002: ["C001", "C003"],
+      B003: ["C003", "C004"],
+      B004: ["C003", "C002"],
+      B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+    };
+
+    let updatedCourses = courseId.map((course) => {
+      if (courseMapping[course]) {
+        return courseMapping[course];
+      }
+      return course;
+    });
+
+    // Flattening the updated courses array
+    courses = updatedCourses.flat();
+    //? bundle courses remaped
+
+    // const courseDataNames = [
+    //   {id: "C001", name: "Fearless Believe"},
+    //   {id: "C002", name: "Money Mind Mastery"},
+    //   {id: "C003", name: "Dynamic Meditation"},
+    //   {id: "C004", name: "Self Healing in a Naural Way"},
+    //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+    //   {id: "C006", name: "Welcome to Meditation"}
+    // ];
+
+    // const productNames = courses
+    //   .map(id => courseDataNames.find(course => course.id === id).name)
+    //   .join(", ");
+
+      //?
 
     let currentDate = new Date();
     let currentDateMiliseconds = currentDate.getTime();
@@ -4228,6 +4463,45 @@ app.post("/api/ssl-payment-success-sandbox", async (req, res) => {
   let courseExpiresMiliseconds =
     currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
+
+  // //? bundle courses remaped
+  // let courses = JSON.parse(value_c.replaceAll(".", '"'))
+  // const courseMapping = {
+  //   B001: ["C006", "C004"],
+  //   B002: ["C001", "C003"],
+  //   B003: ["C003", "C004"],
+  //   B004: ["C003", "C002"],
+  //   B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+  // };
+
+  // let updatedCourses = courses.map((course) => {
+  //   if (courseMapping[course]) {
+  //     return courseMapping[course];
+  //   }
+  //   return course;
+  // });
+
+  // // Flattening the updated courses array
+  // courses = updatedCourses.flat();
+  // //? bundle courses remaped
+
+  // const courseDataNames = [
+  //   {id: "C001", name: "Fearless Believe"},
+  //   {id: "C002", name: "Money Mind Mastery"},
+  //   {id: "C003", name: "Dynamic Meditation"},
+  //   {id: "C004", name: "Self Healing in a Naural Way"},
+  //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+  //   {id: "C006", name: "Welcome to Meditation"}
+  // ];
+
+  // const productNames = courses
+  //   .map(id => courseDataNames.find(course => course.id === id).name)
+  //   .join(", ");
+
+  //   console.log("courses ",courses," productNames ", productNames)
+  //   //?
+
+
 
   let userPurchasedCourses = new usersPurchasedCourses({
     username: `${value_a}`,

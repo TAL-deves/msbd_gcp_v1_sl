@@ -14,6 +14,9 @@ const userPurchasedCourses = new mongoose.Schema(
     coursesList: {
       type: Array,
     },
+    productNames: {
+      type: String,
+    },
     tran_date: {
       type: String,
     },

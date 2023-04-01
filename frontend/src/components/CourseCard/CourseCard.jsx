@@ -30,8 +30,10 @@ const CourseCard = (props) => {
   let hour = props.hour;
   let lecture = props.lecture;
   let img = props.img;
+  let bundleCourse = props.bundleCourse
   let fullObject = props.fullObject;
-
+  let bundleBtnDisable = props.bundleBtnDisable
+  console.log("full obj for bundle", fullObject.bundleCourse)
 
   // console.log("fullObject.id", fullObject)
   const dispatch = useDispatch()
@@ -49,7 +51,7 @@ const CourseCard = (props) => {
   const handleAdd = (course) => {
     props.updateCourse(course.fullObject, false)
     dispatch(add({ ...course }));
-    
+
   }
 
   localStorage.setItem("course", JSON.stringify(courses));
@@ -63,35 +65,36 @@ const CourseCard = (props) => {
           margin: "0", width: "100%",
           "&:hover": { boxShadow: "5" }
         }}   >
-          {fullObject.available?
-          <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
-                textDecoration: "none"
-              }}>
-          <CardMedia
-            component="img"
-            height="auto"
+          {fullObject.available ?
+            <Link to={"/course-details"} state={{ courseId: fullObject, bundleCourse: bundleCourse }} style={{
+              textDecoration: "none"
+            }}>
+              <CardMedia
+                component="img"
+                height="auto"
 
-            image={
-              img
-                ? `${img}`
-                : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-            }
-            alt="image"
-          />
-          </Link>
-          :
-          <>
-          <CardMedia
-            component="img"
-            height="auto"
-            image={
-              img
-                ? `${img}`
-                : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-            }
-            alt="image"
-          />
-          </>}
+                image={
+                  img
+                    ? `${img}`
+                    : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                }
+                alt="image"
+              />
+            </Link>
+            :
+            <>
+              <CardMedia
+                component="img"
+                height="auto"
+                image={
+                  img
+                    ? `${img}`
+                    : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                }
+                alt="image"
+              />
+            </>
+          }
           <CardContent sx={{
             display: "flex",
             flexDirection: "column",
@@ -100,11 +103,12 @@ const CourseCard = (props) => {
           }}>
             <Typography
               gutterBottom
-              height={50}
+              height={80}
+              // height="auto"
               sx={{
                 fontSize: "1.2rem",
                 // overflow: "inherit",
-                
+
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
                 WebkitLineClamp: "2",
@@ -112,14 +116,14 @@ const CourseCard = (props) => {
                 fontWeight: "500",
               }}
             >
-              {title ? <>{title}</> : <>Course title</>}
+              {title ? <>{title.replace(/(\d\.)\s+/g, "$1\n")}</> : <>Course title</>}
             </Typography>
             <Typography variant="body2" noWrap color="text.secondary">
               {instructor ? <>{instructor}</> : <>Course instructor</>}
             </Typography>
-            <Typography variant="h6" 
+            <Typography variant="h6"
             // sx={{color:"green", fontWeight:"600"}}
-            
+
             >
               {price ? <>&#x9F3;{price}</> : <>&#x9F3;Course price</>}
             </Typography>
@@ -134,108 +138,141 @@ const CourseCard = (props) => {
           }}>
 
             <Box item mb={1} mr={1}>
-            {fullObject.available?
-              <Button size="small" variant="contained"
-                sx={{
-                  backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
-                    backgroundColor: "primary.main",
-                    color: "secondary.main"
+              {fullObject.available ?
+                <>
+                  {bundleBtnDisable ? <></> :
+                    <Button size="small" variant="contained"
+                      sx={{
+                        backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
+                          backgroundColor: "primary.main",
+                          color: "secondary.main"
+                        }
+                      }}
+                      onClick={() => handleAdd(props)
+
+                      }
+
+
+                    >
+
+                      <Typography
+                        sx={{
+                          fontSize: "1rem",
+                        }}
+                      >
+                        {fullObject.isSelected === true ? <>{t("buy")}</> : <>{t("selected")}</>}
+                      </Typography>
+
+                    </Button>
                   }
-                }}
-                onClick={() => handleAdd(props)
-
-                }
-
-
-              >
-                
-                <Typography
+                </>
+                :
+                <Button size="small" variant="contained"
                   sx={{
-                    fontSize: "1rem",
+                    backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
+                      backgroundColor: "primary.main",
+                      color: "secondary.main"
+                    }
                   }}
-                >
-                  {fullObject.isSelected === true ? <>{t("buy")}</> : <>{t("selected")}</>}
-                </Typography>
-   
-              </Button>
-              :
-              <Button size="small" variant="contained"
-              sx={{
-                backgroundColor: "secondary.main", color: "primary.main", "&:hover": {
-                  backgroundColor: "primary.main",
-                  color: "secondary.main"
-                }
-              }}
-              onClick={() => swal("This course is coming soon","Thank You", "info")
+                  onClick={() => swal("This course is coming soon", "Thank You", "info")
 
-              }
-            >
-              <Typography
-                  sx={{
-                    fontSize: "1rem",
-                  }}
+                  }
                 >
-                  {t("buy")}
-                </Typography>
-            </Button>
+                  <Typography
+                    sx={{
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {t("buy")}
+                  </Typography>
+                </Button>
               }
             </Box>
             <Box item>
               {/* uncomment again  */}
-              {!fullObject.available?
-              <>
-              <Button size="small" variant="contained"
-                  sx={{
-                    color: "secondary.main",
-                    "&:hover": {
-                      backgroundColor: "secondary.main",
-                      color: "primary.main"
-                    }
-                  }}
-                  onClick={()=>{swal("This course is Coming Soon","Thank You","info")}}
-                >
-
-                  <Typography
+              {!fullObject.available ?
+                <>
+                  <Button size="small" variant="contained"
                     sx={{
-                      fontSize: "1rem",
+                      color: "secondary.main",
+                      "&:hover": {
+                        backgroundColor: "secondary.main",
+                        color: "primary.main"
+                      }
                     }}
+                    onClick={() => { swal("This course is Coming Soon", "Thank You", "info") }}
                   >
 
-                    {t("course_details")}
+                    <Typography
+                      sx={{
+                        fontSize: "1rem",
+                      }}
+                    >
 
-                  </Typography>
+                      {t("course_details")}
 
-                </Button>
-              </>
-              :
-              <Link to={"/course-details"} state={{ courseId: fullObject }} style={{
-                textDecoration: "none"
-              }}>
+                    </Typography>
 
-                <Button size="small" variant="contained"
-                  sx={{
-                    color: "secondary.main",
-                    "&:hover": {
-                      backgroundColor: "secondary.main",
-                      color: "primary.main"
-                    }
-                  }}
-                >
+                  </Button>
+                </>
+                :
+                <>
+                  {fullObject.bundleCourse === true ?
+                    <Link to={"/bundle-details"} state={{ courseId: fullObject, bundleCourse: fullObject.bundleCourse }} style={{
+                      textDecoration: "none"
+                    }}>
 
-                  <Typography
-                    sx={{
-                      fontSize: "1rem",
-                    }}
-                  >
+                      <Button size="small" variant="contained"
+                        sx={{
+                          color: "secondary.main",
+                          "&:hover": {
+                            backgroundColor: "secondary.main",
+                            color: "primary.main"
+                          }
+                        }}
+                      >
 
-                    {t("course_details")}
+                        <Typography
+                          sx={{
+                            fontSize: "1rem",
+                          }}
+                        >
+                          {t("bundle_details")}
+                        </Typography>
+                      </Button>
+                    </Link>
+                    :
+                    <Link to={"/course-details"} state={{ courseId: fullObject, bundleBtnDisable: bundleBtnDisable }} style={{
+                      textDecoration: "none"
+                    }}>
 
-                  </Typography>
+                      <Button size="small" variant="contained"
+                        sx={{
+                          color: "secondary.main",
+                          "&:hover": {
+                            backgroundColor: "secondary.main",
+                            color: "primary.main"
+                          }
+                        }}
+                      >
 
-                </Button>
-              </Link>}
+                        <Typography
+                          sx={{
+                            fontSize: "1rem",
+                          }}
+                        >
 
-              
+                          {t("course_details")}
+
+                        </Typography>
+
+                      </Button>
+                    </Link>
+                  }
+                </>
+              }
+
+
 
 
 

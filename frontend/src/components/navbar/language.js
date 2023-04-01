@@ -26,6 +26,7 @@ export const translationsEn = {
     when_meditation_mastered:"When meditation is mastered, the mind is unwavering like the flame of a candle in a windless place",
     sign_up_now:"Sign Up Now",
     our_courses:"Our Courses",
+    bundle_courses:"Bundle Courses",
     see_all:"See All",
     buy:"Buy",
     course_details:"Course Details",
@@ -79,7 +80,8 @@ export const translationsEn = {
     days:"120 Days",
     refer:"Refer to your friends",
     refer_button:"Refer",
-    continue_from_mobile:"Continue From Mobile"
+    continue_from_mobile:"Continue From Mobile",
+    bundle_details:"Bundle Details"
   };
   
 export const translationsBn = {
@@ -110,6 +112,7 @@ export const translationsBn = {
     when_meditation_mastered:"যখন ধ্যান আয়ত্ত করা হয়, তখন মন বাতাসহীন জায়গায় মোমবাতির শিখার মতো অটল থাকে",
     sign_up_now:"এখনই সাইন আপ করুন",
     our_courses:"আমাদের কোর্সগুলি",
+    bundle_courses:"বান্ডেল কোর্সগুলি",
     see_all:"সবগুলো দেখুন",
     buy:"কিনুন",
     course_details:"কোর্স ডিটেলস",
@@ -163,5 +166,6 @@ export const translationsBn = {
     days:"১২০ দিন",
     refer:"রেফার করুন আপনার বন্ধুদের​",
     refer_button:"রেফার",
-    continue_from_mobile:"মোবাইল থেকে কন্টিনিউ করুন​"
+    continue_from_mobile:"মোবাইল থেকে কন্টিনিউ করুন​",
+    bundle_details:"বান্ডেল ডিটেলস"
   };

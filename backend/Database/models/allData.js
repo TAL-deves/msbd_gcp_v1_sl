@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const allData = new mongoose.Schema({
+  bundleCourses: {
+    type: Object,
+  },
   coursesData: {
     type: Object,
   },
