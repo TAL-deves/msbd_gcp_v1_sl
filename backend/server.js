@@ -3989,8 +3989,11 @@ app.post("/api/inapppayment", async (req, res) => {
       recheck,
     } = req.body;
 
-    // console.log("req.body --- ", req.body);
+    console.log("req.body in app payment --- ", req.body);
+    console.log("req.body in app payment --- ", courseId, typeof(courseId));
+    // console.log("req.body in app payment --- ", JSON.parse(courseId));
 
+    let courses;
 
     //? bundle courses remaped
     const courseMapping = {
@@ -4001,7 +4004,7 @@ app.post("/api/inapppayment", async (req, res) => {
       B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
     };
 
-    let updatedCourses = courseId.map((course) => {
+    let updatedCourses = (courseId).map((course) => {
       if (courseMapping[course]) {
         return courseMapping[course];
       }
@@ -4010,27 +4013,19 @@ app.post("/api/inapppayment", async (req, res) => {
 
     // Flattening the updated courses array
     courses = updatedCourses.flat();
+
+    courseId = courses;
+    recheck = JSON.stringify(courses).replaceAll('"',".");
+
+    // console.log("courses ----", courses, typeof(courses));
+    // console.log("recheck ----", JSON.stringify(courses).replaceAll('"',"."))
     //? bundle courses remaped
 
-    // const courseDataNames = [
-    //   {id: "C001", name: "Fearless Believe"},
-    //   {id: "C002", name: "Money Mind Mastery"},
-    //   {id: "C003", name: "Dynamic Meditation"},
-    //   {id: "C004", name: "Self Healing in a Naural Way"},
-    //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
-    //   {id: "C006", name: "Welcome to Meditation"}
-    // ];
-
-    // const productNames = courses
-    //   .map(id => courseDataNames.find(course => course.id === id).name)
-    //   .join(", ");
-
-      //?
 
     let currentDate = new Date();
     let currentDateMiliseconds = currentDate.getTime();
     let courseExpiresMiliseconds =
-      currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+      currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
     let courseExpires = new Date(courseExpiresMiliseconds);
 
     let userAuditLoggerData = {
@@ -4051,16 +4046,14 @@ app.post("/api/inapppayment", async (req, res) => {
     let checkIfAlreadyExists = usersPurchasedCourses
       .findOne({
         username: username,
-        value_b: recheck,
+        value_c: recheck,
       })
       .then(async (data) => {
         // console.log("data-----", data);
         if (!data) {
           let userPurchased = new usersPurchasedCourses({
             username: username,
-            coursesList: JSON.parse(
-              courseId.replaceAll("[", '["').replaceAll("]", '"]')
-            ),
+            coursesList: courseId,
             expirationDate: `${courseExpires}`,
             store_id: process.env.STORE_ID,
             tran_date: currentDate,
@@ -4068,7 +4061,7 @@ app.post("/api/inapppayment", async (req, res) => {
             tran_id: `${trans_id}`,
             value_a: username,
             value_b: recheck,
-            value_c: value_c,
+            value_c: recheck,
             value_d: "APPLE_IN_APP",
           });
 
@@ -4080,6 +4073,7 @@ app.post("/api/inapppayment", async (req, res) => {
           let responseToSend = encryptionOfData(setSendResponseData.success());
 
           res.send(responseToSend);
+
         } else {
           let setSendResponseData = new sendResponseData(
             "Already availed",
@@ -4146,7 +4140,7 @@ app.post("/api/ssl-payment-notification", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   if (value_d === "mobile") {
@@ -4229,7 +4223,7 @@ app.post("/api/ssl-payment-success", async (req, res) => {
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4308,7 +4302,7 @@ app.post("/api/ssl-payment-fail", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4385,7 +4379,7 @@ app.post("/api/ssl-payment-cancel", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4461,7 +4455,7 @@ app.post("/api/ssl-payment-success-sandbox", async (req, res) => {
   let currentDate = new Date();
   let currentDateMiliseconds = currentDate.getTime();
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   // //? bundle courses remaped
@@ -4579,7 +4573,7 @@ app.post("/api/ssl-payment-fail-sandbox", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4656,7 +4650,7 @@ app.post("/api/ssl-payment-cancel-sandbox", async (req, res) => {
   let currentDateMiliseconds = currentDate.getTime();
 
   let courseExpiresMiliseconds =
-    currentDateMiliseconds + 120 * 24 * 60 * 60 * 1000;
+    currentDateMiliseconds + 180 * 24 * 60 * 60 * 1000;
   let courseExpires = new Date(courseExpiresMiliseconds);
 
   let userPurchasedCourses = new usersPurchasedCourses({
@@ -4734,7 +4728,7 @@ app.post("/api/usercourses", async (req, res) => {
         $and: [{ username: req.body.username }, { status: "VALID" }],
       });
 
-      // console.log("userCourses - ",userCourses);
+      console.log("userCourses - ",userCourses);
 
 
       let datavaluec;
