@@ -15,24 +15,9 @@ import { globalContext } from './GlobalContext'
 const WEB_NOTIFICATION_URL = "/api/webnotification"
 
 const Home = (props) => {
+  localStorage.removeItem("courselist")
   const { language } = useContext(globalContext);
-  // const [webNotificationData, setWebNotificationData]= useState({})
-  // let handleWebNotification = async () => {       
-  //   await api.post(WEB_NOTIFICATION_URL, JSON.stringify({ }), {
-  //       headers: { "Content-Type": "application/json" },
-  //       "Access-Control-Allow-Credentials": true,
-  //     })
-  //     .then((data) => {
-  //       setWebNotificationData(data.data.data[0])
-  //       // console.log(data.data.data[0])
-  //     });
-     
-  // };
-
-  // useEffect(()=>{
-  //   handleWebNotification()
-    
-  // },[])
+ 
   let fetchData = async () => {
 
     await api.post(`${process.env.REACT_APP_API_URL}/api/seeallcourses`)
