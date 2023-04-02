@@ -13,27 +13,27 @@ import { globalContext } from "../../pages/GlobalContext";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'; import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 const BundleCourses = () => {
   const { language } = useContext(globalContext);
-  AOS.init({duration:2000});
-  const {t}= useContext(globalContext)
+  AOS.init({ duration: 2000 });
+  const { t } = useContext(globalContext)
   const sliderRef = useRef(null);
 
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     // <img src={LeftArrow} alt="prevArrow" {...props} />
     <Box >
-    <KeyboardDoubleArrowLeftIcon sx={{color:"primary.main",border:"1px solid black",borderRadius:"50%",fontSize:"1.5rem", "&:hover":{color:"primary.main"}}} {...props}/>
+      <KeyboardDoubleArrowLeftIcon sx={{ color: "primary.main", border: "1px solid black", borderRadius: "50%", fontSize: "1.5rem", "&:hover": { color: "primary.main" } }} {...props} />
     </Box>
   );
 
   const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
-    
+
     // <img src={RightArrow} alt="nextArrow" {...props} />
     <Box sx={{}}>
-    <KeyboardDoubleArrowRightIcon sx={{color:"primary.main",border:"1px solid black",borderRadius:"50%",fontSize:"1.5rem", "&:hover":{color:"primary.main"}}} {...props}/>
+      <KeyboardDoubleArrowRightIcon sx={{ color: "primary.main", border: "1px solid black", borderRadius: "50%", fontSize: "1.5rem", "&:hover": { color: "primary.main" } }} {...props} />
     </Box>
   );
   var settings = {
@@ -99,36 +99,54 @@ const BundleCourses = () => {
         // let listOfCourse = data.data.data.coursesData;
         // let localCourseList = JSON.parse(localStorage.getItem("courselist"));
         //// console.log(localCourseList);
-      
+
         let listOfCourse;
-        if(localStorage.getItem("language")==="bn"){
+        if (localStorage.getItem("language") === "bn") {
           //  listOfCourse = data.data.data.bundleCourses.en;
-           listOfCourse = data.data.data.allEnCourses;
-           //// console.log("coursesbn",listOfCourse)
+          listOfCourse = data.data.data.allEnCourses;
+          //// console.log("coursesbn",listOfCourse)
 
         }
-        else{
-          // listOfCourse = data.data.data.bundleCourses.bn;
+        else {
           listOfCourse = data.data.data.allBnCourses;
-          //// console.log("coursesen",listOfCourse)
         }
         let localCourseList = JSON.parse(localStorage.getItem("courselist"));
-        
+
         listOfCourse.map((course) => {
           if (localCourseList !== null) {
             let localCourse = localCourseList.find(obj => obj.courseID === course.courseID)
-            //// console.log(localCourse.courseID,course.courseID)
+
             course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
-             
-          } 
-          else{
-            course["isSelected"] =true
+
+          }
+          else {
+            course["isSelected"] = true
           }
         })
-        console.log("homepage", listOfCourse)
         setCourses(listOfCourse)
+        // let newListOfCourses = listOfCourse.map(obj => ({...obj, isSelected: true}));
+        // localStorage.setItem("courselist",JSON.stringify(newListOfCourses))
+
         setLoad(false);
-        //// console.log((courses))
+    // //bundle courses local
+    //     if(localStorage.getItem("courselist"))
+    //     {
+    //       let localCourse= localStorage.getItem("course")
+    //     let localCourselist= localStorage.getItem("courselist")
+
+    //     let newListOfCourses = localCourselist.map((obj1) => {
+    //       let matchingObj = localCourse.filter((obj2) => obj2.id === obj1.courseID);
+    //       return {
+    //         ...obj1,
+    //         isSelected: matchingObj.length > 0,
+    //       };
+
+    //     });
+    //     localStorage.setItem("courselist",JSON.stringify(newListOfCourses))
+    //     }
+    //     else{
+    //     localStorage.setItem("courselist",JSON.stringify(listOfCourse))
+    //     }
       });
   };
 
@@ -147,12 +165,12 @@ const BundleCourses = () => {
     })
     setCourses(update)
     localStorage.setItem("courselist", JSON.stringify(update));
-    //// console.log("update", update)
-
+    
   }
   // const bundleCourses = courses.filter(courses.bundleCourse===true);
   const bundleCourses = courses.filter(course => course.bundleCourse === true);
   // //// console.log(courses);
+ 
   return (
     <Box
       sx={{
@@ -171,9 +189,9 @@ const BundleCourses = () => {
             gutterBottom
             // gutter
             sx={{
-              fontSize:"1.8rem",
+              fontSize: "1.8rem",
               color: "primary.main",
-              fontWeight:"500"
+              fontWeight: "500"
             }}
           >
             {t("bundle_courses")}
@@ -185,7 +203,7 @@ const BundleCourses = () => {
               justifyContent: "space-between",
             }}
           >
-            <Link to={"/courses"} style={{textDecoration:"none"}}>
+            <Link to={"/courses"} style={{ textDecoration: "none" }}>
               <Typography
                 mr={2}
                 sx={{
@@ -223,45 +241,45 @@ const BundleCourses = () => {
           </Box>
         </Box>
         {load ? (
-            <Container sx={{
+          <Container sx={{
 
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginTop:"5rem"
-            }}>
-              <CircularProgress sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "5rem"
+          }}>
+            <CircularProgress sx={{
               color: "primary.main"
             }} />
-            </Container>
-          ) : (
-            <>
+          </Container>
+        ) : (
+          <>
             <Container>
-        <Slider {...settings} ref={sliderRef}>
-          {bundleCourses.map((course) => {
-            return (
-              <Box key={course.courseID} sx={{padding:".5rem"}}>
-                
-                <CourseCard
-                title={course.title}
-                id={course.courseID}
-                img={course.thumbnail}
-                instructor={course.instructor.name}
-                price={course.price}
-                hour={course.courseLength}
-                lecture={course.totalLecture}
-                bundleCourse={course.bundleCourse}
-                fullObject={{ ...course }}
-                updateCourse={updateCourse}
-                  margin={2}
-                />
-                
-              </Box>
-            );
-          })}
-        </Slider>
-        </Container>
-        </>)}
+              <Slider {...settings} ref={sliderRef}>
+                {bundleCourses.map((course) => {
+                  return (
+                    <Box key={course.courseID} sx={{ padding: ".5rem" }}>
+
+                      <CourseCard
+                        title={course.title}
+                        id={course.courseID}
+                        img={course.thumbnail}
+                        instructor={course.instructor.name}
+                        price={course.price}
+                        hour={course.courseLength}
+                        lecture={course.totalLecture}
+                        bundleCourse={course.bundleCourse}
+                        fullObject={{ ...course }}
+                        updateCourse={updateCourse}
+                        margin={2}
+                      />
+
+                    </Box>
+                  );
+                })}
+              </Slider>
+            </Container>
+          </>)}
         {/* </Grid>
       </Grid> */}
       </Container>

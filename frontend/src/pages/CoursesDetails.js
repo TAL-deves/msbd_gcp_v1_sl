@@ -239,9 +239,7 @@ const CoursesDetails = () => {
                  <Button sx={{ marginLeft: "0rem" }}
                           //  onClick={response}
                           onClick={() => {
-                            // navigate("/bundle-details"
-                            navigate("/"
-                            )
+                            navigate(-1)
                           }}
                           variant="contained">Back
                         </Button>
@@ -418,17 +416,12 @@ const CoursesDetails = () => {
             </Grid>
             <Grid item xs={12} lg={6} sx={{ position: "relative" }} data-aos="fade-left">
               <Item sx={{ paddingTop: { xs: "1rem", sm: "1rem", md: "1rem", lg: "6rem" }, position: "sticky", top: 0 }}>
-                {/* <VideoGridWrapper> */}
-                {/* <Grid > */}
-                {/* <VdoPlayerStyle> */}
+                
                 <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", height: "100%", paddingTop: ".8rem", paddingBottom: ".5rem", }}>
                   {/* <iframe ref={videoRef} width="100%" height="315" src={state?.courseIntro} title="YouTube video player" frameborder="0" ></iframe> */}
                   <ReactPlayer width='100%'
                     height='100%' controls="true" url={state?.courseIntro} />
                 </Box>
-                {/* </VdoPlayerStyle> */}
-                {/* </Grid> */}
-                {/* </VideoGridWrapper> */}
               </Item>
             </Grid>
 

@@ -54,9 +54,6 @@ import ComingSoon from "./pages/ComingSoon";
 import PaymentStatus from "./pages/PaymentStatus";
 import BundleCourseDetails from "./pages/BundleCourseDetails";
 
-
-
-
 const Home = lazy(() => import("./pages/Home"));
 
 function App() {
@@ -66,12 +63,7 @@ function App() {
   const [darkmode, setDarkMode] = useState(false);
   const [mail, setMail] = useState("");
   const [n, setN]=useState(0)
-  
-
-
-
-
-  
+    // localStorage.setItem("courselist", [])
   // test dark theme
   const darkTheme = createTheme({
     palette: {

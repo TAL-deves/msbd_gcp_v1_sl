@@ -65,7 +65,10 @@ const CourseCard = (props) => {
           "&:hover": { boxShadow: "5" }
         }}   >
           {fullObject.available ?
-            <Link to={"/course-details"} state={{ courseId: fullObject, bundleCourse: bundleCourse }} style={{
+          <>
+          {fullObject.bundleCourse === true ?
+          <>
+          <Link to={"/bundle-details"} state={{ courseId: fullObject, bundleCourse: fullObject.bundleCourse }} style={{
               textDecoration: "none"
             }}>
               <CardMedia
@@ -80,6 +83,25 @@ const CourseCard = (props) => {
                 alt="image"
               />
             </Link>
+          </>
+          :
+            <Link to={"/course-details"} state={{ courseId: fullObject, bundleCourse: bundleCourse, bundleBtnDisable: bundleBtnDisable }} style={{
+              textDecoration: "none"
+            }}>
+              <CardMedia
+                component="img"
+                height="auto"
+
+                image={
+                  img
+                    ? `${img}`
+                    : "https://images.unsplash.com/photo-1659242536509-04df338adfea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                }
+                alt="image"
+              />
+            </Link>
+}
+            </>
             :
             <>
               <CardMedia

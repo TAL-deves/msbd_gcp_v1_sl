@@ -23,7 +23,6 @@ export default function BundleCourseDetails() {
     useEffect(() => {
         setBundleIdList(fullobject.bundleList)
     }, [])
-    // console.log("bundleIdList,", bundleCourse)
 
 
 
@@ -86,7 +85,7 @@ export default function BundleCourseDetails() {
                     {courses.map((course) => {
                         return (
                             <Box key={course.courseID}
-                                sx={{ m: 3, width: { xs: "80%", sm: "47%", md: "45%", lg: "40%", xl: "40%" }, mb: "1rem", mr: { xs: "0rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1rem" } }}
+                                sx={{ m: 3, width: { xs: "80%", sm: "60%", md: "30%", lg: "25%", xl: "25%" }, mb: "1rem", mr: { xs: "0rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1rem" } }}
                             >
 
                                 <CourseCard

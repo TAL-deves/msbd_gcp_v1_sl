@@ -73,30 +73,21 @@ const Courses = (props) => {
             let localCourse = localCourseList.find(obj => obj.courseID === course.courseID)
             //// console.log(localCourse.courseID,course.courseID)
             course["isSelected"] = localCourse !== null ? localCourse["isSelected"] : true;
-
+        
           }
           else {
             course["isSelected"] = true
           }
         })
         setCourses(listOfCourse)
-        // console.log("listOfCourse", listOfCourse)
+        // let newListOfCourses = listOfCourse.map(obj => ({...obj, isSelected: true}));
+        // localStorage.setItem("courselist",JSON.stringify(newListOfCourses))
+      
         setLoad(false);
-
+        
         // bundle courses
-
-        // let listOfBundleCourse
-        // if (localStorage.getItem("language") === "bn") {
-        //   listOfBundleCourse = data.data.data.bundleCourses.en;
-        //   // console.log("coursesbn",listOfCourse)
-
-        // }
-        // else {
-        //   listOfBundleCourse = data.data.data.bundleCourses.bn;
-        //   //  console.log("coursesen",listOfCourse)
-        // }
-        // setBundleCourses(listOfBundleCourse)
-        // console.log("listOfBundleCourse",listOfBundleCourse)
+        
+        
       });
   };
 
@@ -153,7 +144,7 @@ const Courses = (props) => {
   const [open, setOpen] = React.useState(true);
   const [scroll, setScroll] = React.useState('paper');
   const { t } = React.useContext(globalContext)
-
+  
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -431,9 +422,9 @@ const Courses = (props) => {
 
           </Grid>
           <Grid
-            xs={1}
+            xs={1} sx={{ position: "relative" }} 
           >
-
+            <Box sx={{ position: "sticky", top: 100, paddingBottom:"5px" }}>
             <Box sx={{
               border: "1px solid rgb(210 206 206 / 87%)",
               borderRadius: "10px", marginBottom: "2rem", width: { md: "90%" }
@@ -444,13 +435,22 @@ const Courses = (props) => {
                   <SideCart
                     mail={mail}
                     setCourses={setCourses}
-                  // setBundleCourses={setBundleCourses}
                   /></>
-
-                {/* </StepContext>        */}
               </Box>
             </Box>
+            </Box>
           </Grid>
+
+
+          {/* <Grid item xs={12} lg={6} sx={{ position: "relative" }} data-aos="fade-left">
+              <Item sx={{ paddingTop: { xs: "1rem", sm: "1rem", md: "1rem", lg: "6rem" }, position: "sticky", top: 0 }}>
+                
+                <Box sx={{ backgroundColor: "primary.main", borderRadius: "10px", width: "100%", height: "100%", paddingTop: ".8rem", paddingBottom: ".5rem", }}>
+                  <ReactPlayer width='100%'
+                    height='100%' controls="true" url={state?.courseIntro} />
+                </Box>
+              </Item>
+            </Grid> */}
         </Grid>
       </Box>
     </Container>
