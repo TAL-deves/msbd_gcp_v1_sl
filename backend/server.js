@@ -3822,39 +3822,26 @@ app.post("/api/buy", async (req, res) => {
       // console.log("buy body ----", req.body);
 
       //? bundle courses remaped
-    const courseMapping = {
-      B001: ["C006", "C004"],
-      B002: ["C001", "C003"],
-      B003: ["C003", "C004"],
-      B004: ["C003", "C002"],
-      B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
-    };
+      const courseMapping = {
+        B001: ["C006", "C004"],
+        B002: ["C001", "C003"],
+        B003: ["C003", "C004"],
+        B004: ["C003", "C002"],
+        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+      };
 
-    let updatedCourses = courseId.map((course) => {
-      if (courseMapping[course]) {
-        return courseMapping[course];
-      }
-      return course;
-    });
+      let updatedCourses = courses.map((course) => {
+        if (courseMapping[course]) {
+          return courseMapping[course];
+        }
+        return course;
+      });
 
-    // Flattening the updated courses array
-    courses = updatedCourses.flat();
-    //? bundle courses remaped
+      // Flattening the updated courses array
+      courses = updatedCourses.flat();
 
-    // const courseDataNames = [
-    //   {id: "C001", name: "Fearless Believe"},
-    //   {id: "C002", name: "Money Mind Mastery"},
-    //   {id: "C003", name: "Dynamic Meditation"},
-    //   {id: "C004", name: "Self Healing in a Naural Way"},
-    //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
-    //   {id: "C006", name: "Welcome to Meditation"}
-    // ];
-
-    // const productNames = courses
-    //   .map(id => courseDataNames.find(course => course.id === id).name)
-    //   .join(", ");
-
-      //?
+      // console.log("courses ",courses)
+      //? 
 
       const newId = uuidv4().replaceAll("-", "");
 
