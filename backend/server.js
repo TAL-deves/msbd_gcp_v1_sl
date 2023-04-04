@@ -1836,7 +1836,7 @@ app.post("/api/certificate", async (req, res) => {
       doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
     } else {
       // Draw the certificate image
-      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+      doc.image("./images/almasurRahman.png", 0, 0, { width: 841 });
     }
 
     // Set the font to Dancing Script
@@ -2023,7 +2023,7 @@ app.get("/api/mobilecertificate", async (req, res) => {
       doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
     } else {
       // Draw the certificate image
-      doc.image("./images/abulKalam.png", 0, 0, { width: 841 });
+      doc.image("./images/almasurRahman.png", 0, 0, { width: 841 });
     }
 
     // Set the font to Dancing Script
@@ -3510,11 +3510,11 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
 
       //? bundle courses remaped
       const courseMapping = {
-        B001: ["C006", "C004"],
+        B001: ["C006", "C005"],
         B002: ["C001", "C003"],
         B003: ["C003", "C004"],
         B004: ["C003", "C002"],
-        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+        B005: ["C001", "C002", "C003", "C004", "C005", "C006", "C007"],
       };
 
       let updatedCourses = courses.map((course) => {
@@ -3640,13 +3640,13 @@ app.post("/api/sandboxbuy", async (req, res) => {
       console.log("buy body ----", req.body);
 
      //? bundle courses remaped
-      const courseMapping = {
-        B001: ["C006", "C004"],
-        B002: ["C001", "C003"],
-        B003: ["C003", "C004"],
-        B004: ["C003", "C002"],
-        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
-      };
+     const courseMapping = {
+      B001: ["C006", "C005"],
+      B002: ["C001", "C003"],
+      B003: ["C003", "C004"],
+      B004: ["C003", "C002"],
+      B005: ["C001", "C002", "C003", "C004", "C005", "C006", "C007"],
+    };
 
       let updatedCourses = courses.map((course) => {
         if (courseMapping[course]) {
@@ -3823,11 +3823,11 @@ app.post("/api/buy", async (req, res) => {
 
       //? bundle courses remaped
       const courseMapping = {
-        B001: ["C006", "C004"],
+        B001: ["C006", "C005"],
         B002: ["C001", "C003"],
         B003: ["C003", "C004"],
         B004: ["C003", "C002"],
-        B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+        B005: ["C001", "C002", "C003", "C004", "C005", "C006", "C007"],
       };
 
       let updatedCourses = courses.map((course) => {
@@ -3984,11 +3984,11 @@ app.post("/api/inapppayment", async (req, res) => {
 
     //? bundle courses remaped
     const courseMapping = {
-      B001: ["C006", "C004"],
+      B001: ["C006", "C005"],
       B002: ["C001", "C003"],
       B003: ["C003", "C004"],
       B004: ["C003", "C002"],
-      B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+      B005: ["C001", "C002", "C003", "C004", "C005", "C006", "C007"],
     };
 
     let updatedCourses = (courseId).map((course) => {
@@ -4726,11 +4726,11 @@ app.post("/api/usercourses", async (req, res) => {
 
 
         const courseMapping = {
-          B001: ["C006", "C004"],
+          B001: ["C006", "C005"],
           B002: ["C001", "C003"],
           B003: ["C003", "C004"],
           B004: ["C003", "C002"],
-          B005: ["C001", "C002", "C003", "C004", "C005", "C006"],
+          B005: ["C001", "C002", "C003", "C004", "C005", "C006", "C007"],
         };
   
         let updatedCourses = JSON.parse((data.value_c).replaceAll('.','"')).map((course) => {
