@@ -306,7 +306,7 @@ const InstructorDetails = () => {
                                 </Typography>
                               </Box>
                               <br />
-                              {course.instructor.name === "D. Almasur Rahman" ?
+                              {/* {course.instructor.name === "D. Almasur Rahman" ?
                                 <>
                                   <Button
                                     size="small"
@@ -317,7 +317,7 @@ const InstructorDetails = () => {
                                     Course Details
                                   </Button>
                                 </>
-                                :
+                                : */}
                                 <>
                                 {course.available?
                                 <Link
@@ -343,7 +343,7 @@ const InstructorDetails = () => {
                                     Course Details
                                   </Button>
                                 </>}
-                                </>}
+                                </>
                             </CardContent>
                           </CardActionArea>
                         </Card>
