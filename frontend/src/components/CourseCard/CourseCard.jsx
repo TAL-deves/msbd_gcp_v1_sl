@@ -33,8 +33,21 @@ const CourseCard = (props) => {
   let bundleCourse = props.bundleCourse
   let fullObject = props.fullObject;
   let bundleBtnDisable = props.bundleBtnDisable
+  
+  const formattedTitle = title.split('\n').map((line, index) => (
+    <span key={index}>
+      {line}
+      <br />
+    </span>
+  ));
 
-  // console.log("fullObject.id", fullObject)
+  const formattedInstructor = instructor.split('\n').map((line, index) => (
+    <span key={index}>
+      {line}
+      <br />
+    </span>
+  ));
+  
   const dispatch = useDispatch()
 
   // course id finder
@@ -63,7 +76,7 @@ const CourseCard = (props) => {
         <Card sx={{
           margin: "0", width: "100%",
           "&:hover": { boxShadow: "5" }
-        }}   >
+        }}>
           {fullObject.available ?
           <>
           {fullObject.bundleCourse === true ?
@@ -74,7 +87,6 @@ const CourseCard = (props) => {
               <CardMedia
                 component="img"
                 height="auto"
-
                 image={
                   img
                     ? `${img}`
@@ -91,7 +103,6 @@ const CourseCard = (props) => {
               <CardMedia
                 component="img"
                 height="auto"
-
                 image={
                   img
                     ? `${img}`
@@ -124,12 +135,10 @@ const CourseCard = (props) => {
           }}>
             <Typography
               gutterBottom
-              height={80}
+              height={bundleCourse ? 80 : 45}
               // height="auto"
               sx={{
                 fontSize: "1.2rem",
-                // overflow: "inherit",
-
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
                 WebkitLineClamp: "2",
@@ -137,7 +146,8 @@ const CourseCard = (props) => {
                 fontWeight: "500",
               }}
             >
-              {title ? <>{title.split(/(?<=\d\.)\s+/)}</> : <>Course title</>}
+              {/* {title ? <>{title.split(/(?<=\d\.)\s+/)}</> : <>Course title</>} */}
+              {title ? <>{formattedTitle}</> : <>Course title</>}
             </Typography>
             <Typography variant="body2" noWrap color="text.secondary">
               {instructor ? <>{instructor}</> : <>Course instructor</>}

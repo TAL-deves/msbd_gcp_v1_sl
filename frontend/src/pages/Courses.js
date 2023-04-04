@@ -80,9 +80,7 @@ const Courses = (props) => {
           }
         })
         setCourses(listOfCourse)
-        // let newListOfCourses = listOfCourse.map(obj => ({...obj, isSelected: true}));
-        // localStorage.setItem("courselist",JSON.stringify(newListOfCourses))
-      
+        
         setLoad(false);
         
         // bundle courses
@@ -323,6 +321,14 @@ const Courses = (props) => {
               <>
 
                 {courses.map((course) => {
+                  let formattedTitle = course.title.split('\n').map((line, index) => (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  )); 
+                  // console.log("formattedTitle", ...course.title.split('\n'))
+                  // console.log("course.title", course.title)
                   if (course.bundleCourse && isFirstActive === true) {
                     isFirstActive = false
                     return (
@@ -345,12 +351,14 @@ const Courses = (props) => {
 
                           <CourseCard
                             title={course.title}
+                            // title={formattedTitle}
                             id={course.courseID}
                             img={course.thumbnail}
                             instructor={course.instructor.name}
                             price={course.price}
                             hour={course.courseLength}
                             lecture={course.totalLecture}
+                            bundleCourse={course.bundleCourse}
                             fullObject={{ ...course }}
                             updateCourse={updateCourse}
                           />
@@ -369,12 +377,14 @@ const Courses = (props) => {
 
                           <CourseCard
                             title={course.title}
+                            // title={formattedTitle}
                             id={course.courseID}
                             img={course.thumbnail}
                             instructor={course.instructor.name}
                             price={course.price}
                             hour={course.courseLength}
                             lecture={course.totalLecture}
+                            bundleCourse={course.bundleCourse}
                             fullObject={{ ...course }}
                             updateCourse={updateCourse}
                           />

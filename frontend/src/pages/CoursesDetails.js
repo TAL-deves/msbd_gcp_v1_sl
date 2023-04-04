@@ -461,16 +461,11 @@ const CoursesDetails = () => {
                 <CheckCircleOutlineIcon />{t("validity")}:</Typography>
               <Typography variant="h6">
                 {/* {state?.validity} Days */}
-                {t("days")}
+                {bundleBtnDisable?`${t("days180")}`:`${t("days120")}`}
+                {/* {t("days")} */}
               </Typography>
               <Typography variant="h6">
-                {/* <Typography variant="h6" 
-          sx={{color:"primary.main", marginTop:"1rem",
-           display:"flex",alignItems:"center"}}>
-            <CheckCircleOutlineIcon/>{t("course_description")}:
-            </Typography> */}
-                {/* <Typography variant="h6" sx={{textAlign:"justify"}}>
-         {state?.description}</Typography> */}
+                
               </Typography>
               <Typography variant="h6">
                 <Typography variant="h6"

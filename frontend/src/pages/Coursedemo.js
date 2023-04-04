@@ -445,6 +445,10 @@ console.log("count", count);
             <Player count={count} setCount={setCount} setCourseId={setCourseId} statusChanged={statusChanged} setStatusChanged={setStatusChanged} totalCoveredStatus={totalCoveredStatus} setTotalCoveredStatus={setTotalCoveredStatus} totalVideoDurationStatus={totalVideoDurationStatus} setVideoDurationStatus={setVideoDurationStatus} otp={otp} videoID={videoID} vdotitle={vdotitle} episode={episode} coursesVdoList={coursesVdoList} playbackInfo={playbackInfo} videoRef={videoRef} videoContainerRef={videoContainerRef} />
             </Box>
             <Box>
+            <Typography sx={{fontSize:"1rem", color:"grey"}}>Please watch the video till end to unlock the next video. If it doesn't press "Refresh" button</Typography>
+            </Box>
+            <Box>
+              
             <Button sx={{mt:"1rem"}} variant="contained" onClick={()=>{
               // window.location.reload();
               setCount(!count)}}>

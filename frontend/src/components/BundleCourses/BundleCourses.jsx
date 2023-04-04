@@ -257,6 +257,14 @@ const BundleCourses = () => {
             <Container>
               <Slider {...settings} ref={sliderRef}>
                 {bundleCourses.map((course) => {
+                  // const formattedTitle = course.title.split('\n').map((line, index) => (
+                  //   <span key={index}>
+                  //     {line}
+                  //     <br />
+                  //   </span>
+                  // ));
+      
+                
                   return (
                     <Box key={course.courseID} sx={{ padding: ".5rem" }}>
 

@@ -385,6 +385,21 @@ const SideCart = (props) => {
             );
           })}</> :
           <>{LScourses.map((course) => {
+            const formattedTitle = course.title.split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ));
+
+            const formattedInstructor = course.instructor.split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ));
+
+            
             return (
               <>
 
@@ -397,11 +412,13 @@ const SideCart = (props) => {
                       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <CardContent sx={{ flex: '1 0 auto' }}>
                           <Typography sx={{ fontSize: "1rem" }}>
-                            {course.title.split(/(?<=\d\.)\s+/)}
+                            {/* {course.title.split(/(?<=\d\.)\s+/)} */}
+                            {formattedTitle}
+                            
                           </Typography>
                           <Typography sx={{ fontSize: ".8rem", color: "other.dark" }}
                             color="text.secondary">
-                            {course.instructor}
+                            {formattedInstructor}
                           </Typography>
                           <Typography sx={{ fontSize: "1rem", color: "secondary.main" }}
                             color="text.secondary">
