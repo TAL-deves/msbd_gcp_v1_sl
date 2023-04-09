@@ -6576,8 +6576,23 @@ app.post("/api/sendanemail", async (req, res) => {
     const info = await transporter.sendMail({
       from: "info@techanalyticaltd.com",
       to,
-      subject: `Introduction to Tech Analytica Limited - Technology that makes life better`,
-      text: `Dear client,\nI am pleased to introduce Tech Analytica Limited, a leading IT company that specializes in providing cutting-edge solutions to businesses of all sizes. Our website, www.techanalyticaltd.com, provides an overview of our company, our services, and our expertise.\nWith over 2 years of experience in the industry, Tech Analytica Limited has established itself as a reliable and innovative provider of IT solutions. Our team consists of highly skilled professionals who are dedicated to delivering high-quality services that meet the specific needs of our clients.\nAt Tech Analytica Limited, we offer a wide range of IT services, including software development, web design and development, mobile app development, IT consulting, and cybersecurity solutions. Our services are designed to help businesses streamline their operations, improve their efficiency, and achieve their goals.\nOur team of experts stays up-to-date with the latest trends and technologies in the industry to ensure that our clients receive the most advanced and innovative solutions. We take pride in our ability to provide exceptional customer service and support throughout every project.\nThank you for considering Tech Analytica Limited for your IT needs. We are confident that we can provide you with the best solutions to help you achieve your business objectives. Please feel free to contact us at any time to learn more about our services.\nSincerely,\nTech Analytica Limited\nwww.techanalyticaltd.com`,
+      subject: `Tech Analytica Limited - Technology that makes life better`,
+      text: `Dear Concern,\n
+      Thank you for your interest in Tech Analytica Limited. Please find attached herewith the Company Profile soft copy for your ready reference. May there be any query from your end, feel free to contact us.\n
+      \n
+      Visit Us @ https://www.techanalyticaltd.com\n
+      Email Us info@techanalyticaltd.com\n
+      \n
+      Office Address:\n
+      Tech Analytica Limited\n
+      Progress Tower (4th Floor)\n
+      House # 1, Road # 23, Gulshan 1,\n
+      Dhaka 1212, Bangladesh.\n
+      Tel: +8802 48811161, 48811162\n
+      \n
+      Thanking you.\n
+      \n
+      - Team, Tech Analytica Limited\n`,
       attachments: [
         {
           filename: "techanalyticalimited.pdf",
