@@ -23,7 +23,6 @@ import Button from "@mui/material/Button";
 import api from "../api/Axios";
 import { blue } from "@mui/material/colors";
 import { styled, alpha } from "@mui/material/styles";
-
 import { withRouter } from "../components/routing/withRouter";
 import { Container } from "@mui/system";
 import googlebtn from "../components/downloadApp/playstore.png"
@@ -31,7 +30,6 @@ import applebtn from "../components/downloadApp/applestore.png";
 import { Link as Routerlink } from "react-router-dom";
 import Link from '@mui/material/Link';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-
 import { instructorData } from "../data/instructorData";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -252,7 +250,6 @@ const CoursesDetails = () => {
                       {/* {Object.keys(existingCourse).length === 0 && existingCourse.constructor === Object ? */}
                       {existingCourse === undefined ?
                         <Button sx={{ marginLeft: "0rem" }}
-                          //  onClick={response}
                           onClick={() => {
                             navigate("/payment-info", { state: { total: state?.price, singleCourse: state?.courseID } }
                             )

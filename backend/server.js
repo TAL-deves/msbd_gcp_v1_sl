@@ -3528,20 +3528,20 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
       courses = updatedCourses.flat();
       //? bundle courses remaped
 
-      const courseDataNames = [
-        {id: "C001", name: "Fearless Believe"},
-        {id: "C002", name: "Money Mind Mastery"},
-        {id: "C003", name: "Dynamic Meditation"},
-        {id: "C004", name: "Self Healing in a Naural Way"},
-        {id: "C005", name: "Anger Management And Power of Positive Thinking"},
-        {id: "C006", name: "Welcome to Meditation"}
-      ];
+      // const courseDataNames = [
+      //   {id: "C001", name: "Fearless Believe"},
+      //   {id: "C002", name: "Money Mind Mastery"},
+      //   {id: "C003", name: "Dynamic Meditation"},
+      //   {id: "C004", name: "Self Healing in a Naural Way"},
+      //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
+      //   {id: "C006", name: "Welcome to Meditation"}
+      // ];
 
-      const productNames = courses
-        .map(id => courseDataNames.find(course => course.id === id).name)
-        .join(", ");
+      // const productNames = courses
+      //   .map(id => courseDataNames.find(course => course.id === id).name)
+      //   .join(", ");
 
-        console.log("courses ",courses)
+      //   console.log("courses ",courses)
         //?
 
       //? Saving this to database as payment pending status.
@@ -3616,7 +3616,7 @@ app.post("/api/mobilepaymentdata", async (req, res) => {
 });
 
 app.post("/api/sandboxbuy", async (req, res) => {
-  try {
+  // try {
     let recievedResponseData = decryptionOfData(req, res);
     req.body = recievedResponseData;
 
@@ -3665,7 +3665,8 @@ app.post("/api/sandboxbuy", async (req, res) => {
       //   {id: "C003", name: "Dynamic Meditation"},
       //   {id: "C004", name: "Self Healing in a Naural Way"},
       //   {id: "C005", name: "Anger Management And Power of Positive Thinking"},
-      //   {id: "C006", name: "Welcome to Meditation"}
+      //   {id: "C006", name: "Welcome to Meditation"},
+      //   {id: "C007", name: "Power of Positive Thinking"}
       // ];
 
       // const productNames = courses
@@ -3790,11 +3791,11 @@ app.post("/api/sandboxbuy", async (req, res) => {
       let responseToSend = encryptionOfData(userSessionStatus);
       res.send(responseToSend);
     }
-  } catch (error) {
-    let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
-    let responseToSend = encryptionOfData(setSendResponseData.error());
-    res.send(responseToSend);
-  }
+  // } catch (error) {
+  //   let setSendResponseData = new sendResponseData(null, 500, serverErrMsg);
+  //   let responseToSend = encryptionOfData(setSendResponseData.error());
+  //   res.send(responseToSend);
+  // }
 });
 
 app.post("/api/buy", async (req, res) => {
@@ -3819,7 +3820,7 @@ app.post("/api/buy", async (req, res) => {
         discountedPrice,
       } = req.body; //getting data from request
 
-      // console.log("buy body ----", req.body);
+       console.log("buy body ----", req.body);
 
       //? bundle courses remaped
       const courseMapping = {

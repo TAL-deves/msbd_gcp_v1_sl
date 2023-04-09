@@ -1,8 +1,8 @@
-import { Container, Grid } from '@mui/material';
+import { Button, CircularProgress, Container, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useContext, useEffect, useState } from 'react'
 import {
-    useLocation,
+    useLocation, useNavigate,
 } from "react-router-dom";
 import api from "../api/Axios"
 import CourseCard from '../components/CourseCard/CourseCard';
@@ -12,13 +12,14 @@ import { globalContext } from './GlobalContext';
 const BUNDLE_ID_URL = "/api/coursedetails"
 export default function BundleCourseDetails() {
     const [bundleIdList, setBundleIdList] = useState([]);
+    const [load, setLoad] = useState(true);
     const [courses, setCourses] = useState();
     let location = useLocation();
     let fullobject = location.state.courseId;
     let bundleCourse = location.state.bundleCourse;
-
+    
     const { language } = useContext(globalContext);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         setBundleIdList(fullobject.bundleList)
@@ -46,6 +47,7 @@ export default function BundleCourseDetails() {
                 headers: { "Content-Type": "application/json" },
                 "Access-Control-Allow-Credentials": true,
             }
+            
         );
         return response.data.data;
     });
@@ -53,8 +55,8 @@ export default function BundleCourseDetails() {
     useEffect(() => {
         Promise.all(promises)
             .then((data) => {
-
                 setCourses(data)
+                setLoad(false);
                 // Do something with the data
             })
             .catch((error) => {
@@ -67,10 +69,24 @@ export default function BundleCourseDetails() {
     return (
         <div>
             {/* <>helo</> */}
-            {courses ?
+            {/* {courses ? */}
                 <Container 
                 // sx={{ display: "flex", flexDirection: { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" } }}
                 >
+                     {load ? (
+              <Container sx={{
+
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "10%"
+              }}>
+                <CircularProgress sx={{
+                  color: "primary.main"
+                }} />
+              </Container>
+              // <Skeleton variant="rectangular" width={210} height={118} /> 
+            ) : (<>
                     <Grid sx={{
           display: "flex",
           flexDirection: { sm: "column-reverse", lg: "row", xl: "row", md: "column-reverse", xs: "column-reverse" }
@@ -82,6 +98,7 @@ export default function BundleCourseDetails() {
             // lg={8}
             justifyContent="center"
           >
+
                     {courses.map((course) => {
                         return (
                             <Box key={course.courseID}
@@ -104,10 +121,23 @@ export default function BundleCourseDetails() {
                             </Box>
                         );
                     })}
+                
                     </Grid>
+                   
                     </Grid>
+                    <Box sx={{textAlign:"center", display:"flex", justifyContent:"center", mr:"5rem", mt: { xs: "0rem", sm: "2rem", md: "3rem", lg: "3rem", xl: "3rem"}}}>
+                    <Button 
+                          onClick={() => {
+                            navigate("/payment-info", { state: { total: fullobject?.price, singleCourse: fullobject?.courseID } }
+                            )
+                          }}
+                          variant="contained">Buy Now
+                        </Button>
+                        </Box>
+                        </>)}
+                    
                 </Container>
-                : <>nothing</>}
+                {/* : <>No Course Available</>} */}
             {/* {courses.map((course)=>{
         <>{course.courseID}</>
 

@@ -31,6 +31,7 @@ const Payment = () => {
   const location = useLocation();
   const total = location.state.total;
   const singleCourse = location.state.singleCourse;
+  // console.log("singleCourse", singleCourse)
   // // console.log(discountedPrice,"discountedPrice")
   // const [userprofileimage, setUserprofileimage] = useState("")
   // const [image, setImage] = useState("")
