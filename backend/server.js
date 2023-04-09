@@ -6577,18 +6577,16 @@ app.post("/api/sendanemail", async (req, res) => {
       from: "info@techanalyticaltd.com",
       to,
       subject: `Tech Analytica Limited - Technology that makes life better`,
-      text: `Dear Concern,\nThank you for your interest in Tech Analytica Limited. Please find attached herewith the Company Profile soft copy for your ready reference. May there be any query from your end, feel free to contact us.\n
+      text: `Dear Concern,\nThank you for your interest in Tech Analytica Limited. Please find attached herewith the Company Profile soft copy for your ready reference. May there be any query from your end, feel free to contact us.
       \n
-      Visit Us @ https://www.techanalyticaltd.com\n
-      Email Us info@techanalyticaltd.com\n
-      \n
+      Visit Us @ https://www.techanalyticaltd.com
+      Email Us info@techanalyticaltd.com
       Office Address
       Tech Analytica Limited
       Progress Tower (4th Floor)
       House # 1, Road # 23, Gulshan 1,
       Dhaka 1212, Bangladesh.
       Tel: +8802 48811161, 48811162
-      \n
       Thanking you.
       - Team, Tech Analytica Limited\n`,
       attachments: [
